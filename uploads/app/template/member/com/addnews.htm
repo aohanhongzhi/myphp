@@ -1,0 +1,71 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+	<div class="admin_mainbody"> 
+		{yun:}include file="$comstyle/left.htm"{/yun} 
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+
+ 		<script language="javascript">
+		UE.getEditor('description',{
+			toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|','link', 'unlink', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],
+			wordCount:false,
+			elementPathEnabled:false,
+			initialFrameHeight:300
+		});
+		</script>
+		<div class=right_box>
+			<div class=admincont_box>         
+				<div class="com_tit"><span class="com_tit_span">添加新闻</span></div>
+                <div class="job_list_tit">
+                 <ul class="">
+                 <li ><a href="index.php?c=info">基本信息</a></li>
+                 <li><a href="index.php?c=map">企业地图</a></li>
+                 <li class="job_list_tit_cur"><a href="index.php?c=news">企业新闻</a></li>
+                 <li><a href="index.php?c=show">企业环境</a></li>
+                 <li><a href="index.php?c=product">企业产品</a></li>
+                 </ul>
+                 </div>   
+				<div class="com_body">    
+					<div class="com_release_box">
+						<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+						<form name="MyForm" target="supportiframe" method="post" action="{yun:}$now_url{/yun}&act=save" onsubmit="return CheckPost();">
+							<input name="action" type="hidden" value="save">
+							<ul>
+								<li>
+									<div class="com_release_name"><i class="ff0">*</i> 新闻标题 </div>
+									<input type="text" size="45" name="title" value="{yun:}$editrow.title{/yun}"class="com_info_text" style="width:280px;">
+								</li>
+								<li>
+									<div class="com_release_name"><i class="ff0">*</i> 新闻描述 </div>
+ 									<script id="description" name="body" type="text/plain" style="width:560px; height:200px;"> {yun:}$editrow.body{/yun} </script>
+								</li>  
+								<li>
+									<input name="id" value="{yun:}$smarty.get.id{/yun}" type="hidden"/>
+									<input class="btn_01" type="submit" name="submitBtn" value=" 提 交 操 作 "> 
+								</li>  
+							</ul>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script language=javascript>
+function CheckPost(){
+	var title=$.trim($("input[name='title']").val());
+	if(title==''){
+		layer.msg('标题不能为空！', 2, 8);return false;
+	}
+	if(title.length>30){
+		layer.msg('请将标题控制在30字以内！', 2, 8);return false;
+	}
+
+	var html = UE.getEditor('description').getContent();
+	if(html==''){
+		layer.msg('内容不能为空！', 2, 8);return false;
+	}
+}
+</script> 
+{yun:}include file="$comstyle/footer.htm"{/yun}

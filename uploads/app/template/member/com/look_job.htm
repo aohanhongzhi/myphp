@@ -1,0 +1,92 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<link href="{yun:}$comstyle{/yun}/images/index_style.css?v={yun:}$config.cachecode{/yun}" type=text/css rel=stylesheet>
+
+<div class="w1000">
+	<div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+		<div class=right_box>
+			<div class=admincont_box>
+				<div class="com_tit"> <span class="com_tit_span">被浏览的职位</span> </div>
+      
+				<div class="com_body">
+        
+				<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form action="index.php?c=look_job&act=del" method="post" target="supportiframe" id='myform'>
+					<table class="com_table"id="job_checkbokid" >
+						{yun:}if $rows{/yun}
+							<tr>
+								<th width="20">&nbsp;</th>
+								<th>被浏览的职位名称</th>
+								<th>姓名</th>
+								<th>意向职位</th>
+								<th>工作经验</th>
+								<th>期望薪资</th>
+								<th>浏览时间</th>
+								<th>邀请面试</th>
+								<th>操作</th>
+							</tr>
+						{yun:}/if{/yun}
+						
+						{yun:}foreach item=v from=$rows{/yun}
+							<tr>
+								<td>
+									<input type='checkbox' name="delid[]" value="{yun:}$v.id{/yun}" class="com_Release_job_qx_check" >
+								</td> 
+								<td>{yun:}$v.jobname{/yun}&nbsp;</td> 
+								<td><a href="{yun:}url m=resume c=show uid='`$v.uid`'{/yun}" target="_blank" class="uesr_name_a">&nbsp;{yun:}$v.name{/yun}</a></td>
+								<td align="center"><span class="yxjob_name">&nbsp;{yun:}$v.jobclassidname{/yun}</span></td> 
+								<td align="center">{yun:}$v.exp{/yun}</td>
+								<td align="center">
+									{yun:}if $v.minsalary&&$v.maxsalary{/yun}
+										￥{yun:}$v.minsalary{/yun}-{yun:}$v.maxsalary{/yun}
+									{yun:}else if $v.minsalary{/yun}
+										￥{yun:}$v.minsalary{/yun}以上
+									{yun:}else{/yun}
+										面议
+									{yun:}/if{/yun}
+								</td> 
+								<td align="center">{yun:}$v.datetime|date_format:'%Y-%m-%d %H:%M'{/yun}</td> 
+								
+								<td align="center">
+									{yun:}if $v.userid_msg==1{/yun} 
+										<font color="red">已邀请</font> 
+									{yun:}else{/yun} 
+										<a href="javascript:;" uid="{yun:}$v.uid{/yun}" username="{yun:}$v.name{/yun}" class=" com_bth cblue sq_resume"> 邀请面试</a>
+									{yun:}/if{/yun}
+								</td>
+								<td align="center"> 
+									<a href="javascript:void(0)" onclick="layer_del('确定要删除？', '{yun:}$now_url{/yun}&act=del&id={yun:}$v.id{/yun}')" class=" com_bth cblue">删除</a>
+								</td> 
+							</tr>
+						{yun:}foreachelse{/yun}
+							<tr>
+								<td colspan="8" class="table_end">
+									<div class="msg_no">
+										亲爱的用户，目前还没有人才浏览您。
+										<p>您可以主动邀请人才面试</p>
+										<a href="{yun:}url m=resume{/yun}" class="com_msg_no_bth com_submit">我要主动找人才</a>
+									</div>
+								</td>
+							</tr>
+						{yun:}/foreach{/yun}
+           
+						{yun:}if $rows{/yun}
+							<tr>
+								<td colspan="8" class="table_end">
+									<div class="com_Release_job_bot"> 
+										<span class="com_Release_job_qx">
+											<input id='checkAll'  type="checkbox" onclick='m_checkAll(this.form)'class="com_Release_job_qx_check">全选
+										</span>
+										<input class="c_btn_02" type="button" name="subdel" value="批量删除" onclick="return really('delid[]');">
+									</div>
+									<div class="diggg">{yun:}$pagenav{/yun}</div>
+								</td>
+							</tr>
+						{yun:}/if{/yun}
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{yun:}include file="$comstyle/yqms.htm"{/yun}
+{yun:}include file="$comstyle/footer.htm"{/yun} 

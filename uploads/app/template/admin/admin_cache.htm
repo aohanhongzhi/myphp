@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">生成请确保/plus,/cache目录有可写权限，否则无法生成。生成所有的类别，时间较长，建议分批更新。</div>
+</div>
+</div>
+<div class="clear"></div>
+<div style="height:10px;"></div>
+
+
+<div class="main_tag" >
+<div class="tag_box">
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form action="index.php?m=cache&c=cache" target="supportiframe" method="post" class="layui-form">
+<table width="100%" class="table_form">
+    <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+      <tr>
+    	<td class="ud">
+        <div class="layui-form-item">
+        	<div class="layui-input-block"> 
+            {yun:}foreach item=v key=k from=$type{/yun}
+            <input type="checkbox" class="checkbox" name="cache[]"  title="{yun:}$v{/yun}" value="{yun:}$k{/yun}" id="cache_{yun:}$k{/yun}"/>
+            {yun:}/foreach{/yun}</div>
+          </div>
+	   </td>
+      </tr>
+    <tr>
+    	<td class="ud" align="center">
+			<input class="layui-btn layui-btn-normal" type="button" name="select" value="全选"/>&nbsp;&nbsp;
+            <input class="layui-btn layui-btn-normal" type="submit" name="madeall" value="更新"/>&nbsp;&nbsp;
+        </td>
+      </tr>
+  </table>
+ </form>
+  </div></div></div>
+  <div style="clear:both"></div>
+
+  <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+  <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+  <script language="javascript">
+    var checked_all = false;
+    
+    layui.use(['form'], function(){});//end layui.use()
+
+    $(document).ready(function(){
+	    $("input[name=select]").click(function(){
+	        var codewebarr = "";
+	        checked_all = !checked_all;
+			$(".checkbox").attr("checked",checked_all);
+
+            layui.use(['form'], function(){
+                var form = layui.form
+                    ,$ = layui.$;
+                form.render();
+            });
+	    })
+	    $("input[name=madeall]").click(function(){
+		    var codewebarr="";
+		    $(".checkbox:checked").each(function(){
+			    if(codewebarr==""){codewebarr=1;}else{codewebarr++;}
+		    });
+		    if(!codewebarr){
+			    parent.layer.alert('至少选择一项', 8);
+			    return false;
+		    }
+	    })
+    })
+   </script>
+
+  <script>
+    
+    </script>
+</body>
+</html>

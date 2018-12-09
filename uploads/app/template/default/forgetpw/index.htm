@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>{yun:}$title{/yun}</title>
+        <meta name="keywords" content="{yun:}$keywords{/yun}" />
+        <meta name="description" content="{yun:}$description{/yun}" />
+        <link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link rel="stylesheet" href="{yun:}$style{/yun}/style/login.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+    </head>
+
+    <body>
+        {yun:}include file="$tplstyle/header.htm"{/yun}
+        <!--内容部分-->
+        <div class="yun_content">
+            <form class="layui-form">
+                <div class="password_content_cont fl m15">
+                    <div class="password_content_cpd">
+                        <div class="password_content_h1"><span class="password_content_h1_span">找回密码</span></div>
+
+                        <div class="password">
+                            <div class="flowsteps">
+
+                                <ul>
+                          <li class="flowsfrist" id="nav1">
+                          <i class="flowsfrist_icon flowsfrist_icon_zh"></i>
+                          <span class="flowsfrist_line"></span><em>填写账号</em>
+                          </li>
+                     
+                      <li id="nav2">
+                      <i class="flowsfrist_icon flowsfrist_icon_ps"></i>
+                      <span class="flowsfrist_line"></span><em>重置密码</em>
+                      </li>
+                     
+                     <li id="nav3">
+                     <i class="flowsfrist_icon flowsfrist_icon_cg"></i><em id="shensu_e">密码修改成功</em>
+                     </li>
+                                </ul>
+
+                            </div>
+
+                            <div class="clear"></div>
+
+                          	<div class="account_all" >
+
+                                <div class="password_chlose"  id="pw_style">
+                                
+                                        <select name="pwtype" lay-filter="pwtype">
+                                            <option value="1">通过手机找回密码</option>
+                                            <option value="2">通过邮箱找回密码</option>
+                                            <option value="3">账号申诉</option>
+                                        </select>
+                                   
+                                    <input type="hidden" id="sendtype" name="sendtype" value="mobile">
+                                </div>
+
+                                <div class="clear"></div>
+
+                                <div class="tele_show listitme_group" id="mobile_type">
+                                    <div class="selec_ttip">系统将发送验证码短信到您的手机上，请注意查收</div>
+
+                                    <div class="validate_group">
+                                        <div class="account_td1">
+                                            <input class="input_295_34" name="mobile" id="mobile" type="text" placeholder="请输入手机号" onblur="isChecked('mobile')">
+                                         </div>
+                                        
+                                        <div class="account_td1">
+                                            <div class="code_all">
+                                                <input name="mobile_vcode" id="mobile_vcode" type="text" class="input_295_35" placeholder="请输入短信验证码" >
+                                                <input type="button" class="btn_yell J_hoverbut" id="send_msg_tip" onclick="send_msg()" value="获取验证码">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="btnbox">
+                                            <input type="button" value="下一步" class="btn_reg J_hoverbut" onclick="forgetPwNext()">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tele_show listitme_group" style="display: none;" id="email_type">
+
+                                    <div class="selec_ttip">系统将发送验证码发到您的邮箱中，请注意查收</div>
+                                    <div class="validate_group">
+                                        <div class="account_td1">
+                                            <input class="input_295_34" name="email" id="email" type="text" placeholder="请输入邮箱账户" onblur="isChecked('email')">
+                                        </div>
+                                        <div class="account_td1">
+                                            <div class="code_all">
+                                                <input name="email_vcode" id="email_vcode" type="text" class="input_295_35" placeholder="请输入邮箱验证码">
+                                                <input type="button" class="btn_yell J_hoverbut" id="send_msg_tip" onclick="send_email()" value="获取验证码">
+                                            </div>
+                                        </div>
+                                        <div class="btnbox">
+                                            <input type="button" value="下一步" class="btn_reg J_hoverbut" onclick="forgetPwNext()">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tele_show listitme_group" style="display: none;" id="shensu_type">
+                                    <div class="selec_ttip">信息提交后 , 客服人员会电话回访 , 确认身份！</div>
+                                    <div class="validate_group">
+                                        <div class="reset_all">
+                                            <input class="reset_chong_zhi" type="text" name="username" id="username" autocomplete="off" maxlength="20" placeholder="请输入用户名" value="">
+                                            <input class="reset_chong_zhi" type="text" name="linkman" id="linkman" autocomplete="off" maxlength="20" placeholder="请输入联系人" value="">
+                                            <input class="reset_chong_zhi" type="text" name="linkphone" id="linkphone" autocomplete="off" maxlength="20" placeholder="请输入联系电话" value="">
+                                            <input class="reset_chong_zhi" type="text" name="linkemail" id="linkemail" autocomplete="off" maxlength="20" placeholder="请输入联系邮箱" value="">
+
+                                            <div class="btnbox">
+                                                <input type="button" value="下一步" class="btn_reg J_hoverbut" onclick="checklink()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="verification" style="display:none;" id="resetpw">
+                        <div class="reset_all">
+                            <input class="reset_chong_zhi" type="password" name="password" id="password" autocomplete="off" maxlength="20" placeholder="请输入新密码" value="" onblur="isChecked('password')" onkeyup="uppassword(2)">
+                        </div>
+                        
+                        <div class="safety">
+							<div id="pass1_2" class="slist_dan">危险</div>
+                            <div id="pass2_2" class="slist_dan">一般</div>
+                            <div id="pass3_2" class="slist_dan">安全</div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="reset_all">
+                            <input class="reset_chong_zhi" type="password" name="passwordconfirm" id="passwordconfirm" autocomplete="off" maxlength="20" placeholder="请确认新密码" value="" onblur="isChecked('passwordconfirm')">
+                        </div>
+                        <div class="btnbox">
+                            <input type="hidden" id="uname" value="">
+							<input type="hidden" id="fuid" value="">
+
+							<input type="hidden" id="fmobile" value="">
+							<input type="hidden" id="femail" value="">
+							<input type="hidden" id="fcode" value="">
+
+                            <input type="button" value="下一步" class="btn_reg J_hoverbut" onclick="editpw()">
+                        </div>
+                    </div>
+                    
+                    <div class="password_cont none" id="pw_success">
+                    	<div class="password_cgd_i"></div>
+                       	<div class="password_cgd_w">恭喜您！密码重置成功！</div>
+                       	<div class="password_cgd_w_bth">
+                         	<a href="{yun:}url m=login{/yun}" class="uesr_submit">立即登录</a>
+                    	</div>
+                 	</div>
+                        
+                 	<div class="password_cont none" id="finish">
+                       	<div class="password_cgd">请耐心等待，稍后客服人员会联系您！</div>
+                      	<div class="password_cgd_bth">
+                        	<a href="{yun:}$config.sy_weburl{/yun}" class="uesr_submit">返回首页</a>
+                     	</div>
+                 	</div>
+                    <div class="clear"></div>
+                     <div class="password_tip">
+                                    <div class="password_tip_t">温馨提示</div>
+                                    <p>如手机号码已丢失且未绑定邮箱</p>
+                                    <p>请联系在线客服,或拨打全国统一服务热线</p>
+                                    <div class="password_tip_tel">{yun:}$config.sy_freewebtel{/yun} </div>
+                                </div>
+                </div>
+            </form>
+        </div>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$style{/yun}/js/forgetpw.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/geetest/gt.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/geetest/pc.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+        <!--[if IE 6]>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script>
+		DD_belatedPNG.fix('.png');
+		</script>
+		<![endif]-->
+
+        <script>
+            layui.use(['form', 'layer'], function() {
+                var $ = layui.$,
+                    form = layui.form;
+
+                form.on('select(pwtype)', function(data) {
+                    if(data.value == 1) {
+                        $("#mobile_type").show();
+                        $("#email_type").hide();
+                        $("#shensu_type").hide();
+                        $("#sendtype").val("mobile");
+                    } else if(data.value == 2) {
+                        $("#mobile_type").hide();
+                        $("#email_type").show();
+                        $("#shensu_type").hide();
+                        $("#sendtype").val("email");
+                    } else if(data.value == 3) {
+                        $("#mobile_type").hide();
+                        $("#email_type").hide();
+                        $("#shensu_type").show();
+                        $("#sendtype").val("shensu");
+                    }
+                });
+            });
+        </script>
+        {yun:}include file="$tplstyle/footer.htm"{/yun}

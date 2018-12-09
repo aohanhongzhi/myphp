@@ -1,0 +1,412 @@
+<script>
+ 
+//加减乘除
+function accAdd(arg1,arg2){ 
+	var r1,r2,m; 
+	try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0} 
+	try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0} 
+	m=Math.pow(10,Math.max(r1,r2)) 
+	return (arg1*m+arg2*m)/m 
+} 
+function accSub(arg1,arg2){ 
+	return accAdd(arg1,-arg2); 
+} 
+function accMul(arg1, arg2) {
+	var m = 0, s1 = arg1.toString(), s2 = arg2.toString();
+	try { m += s1.split(".")[1].length } catch (e) { }
+	try { m += s2.split(".")[1].length } catch (e) { }
+	return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
+}
+function accDiv(arg1,arg2){    
+	var t1=0,t2=0,r1,r2;    
+	try{t1=arg1.toString().split(".")[1].length}catch(e){}    
+	try{t2=arg2.toString().split(".")[1].length}catch(e){}    
+	with(Math){        
+		r1=Number(arg1.toString().replace(".",""));        
+		r2=Number(arg2.toString().replace(".",""));        
+		return (r1/r2)*pow(10,t2-t1);    
+	}
+}
+
+function myFunction(_this) {
+    _this.value = _this.value.replace(/[^0-9]/g, '');
+}
+
+
+// 刷新职位积分抵扣填写
+function checkSxNum(integral,integral_pro){
+	var dkjf = $("#sxdkjf").val();
+ 	if(dkjf){
+		$(".sxjfdkh_m").show();
+	} 
+	var need = $("#sxneed").text();
+	var need_jifen = accMul(need, integral_pro);
+  	if(parseInt(integral) >= parseInt(need_jifen)){
+		if(parseInt(dkjf) > parseInt(need_jifen)){
+			$("#sxdkjf").val(need_jifen);
+			var dkjfh = accSub(need , accDiv(need_jifen,integral_pro));
+		}else{
+			var dkjfh = accSub(need, accDiv(dkjf,integral_pro));
+		}	
+ 	}else{
+		if(parseInt(dkjf) > parseInt(integral)){
+			$("#sxdkjf").val(integral);
+			var dkjfh = accSub(need , accDiv(integral,integral_pro));
+		}else{
+			var dkjfh = accSub(need, accDiv(dkjf,integral_pro));
+ 		}
+ 	}
+	 
+	if(dkjfh<=0){
+		$("#sxdkjfh").html(0);
+		$("#sxzf_div").hide();
+		$("#sxzf_btn").show();
+	}else{
+		$("#sxdkjfh").html(dkjfh);
+		$("#sxzf_div").show();
+		$("#sxzf_btn").hide();
+	}
+ 
+}
+
+// 刷新兼职积分抵扣填写
+function checkSxpNum(integral,integral_pro){
+	var dkjf = $("#sxpdkjf").val();
+ 	if(dkjf){
+		$(".sxpjfdkh_m").show();
+	} 
+	var need = $("#sxpneed").text();
+	var need_jifen = accMul(need, integral_pro);
+	
+	if(parseInt(integral) >= parseInt(need_jifen)){
+		if(parseInt(dkjf) > parseInt(need_jifen)){
+			$("#sxpdkjf").val(need_jifen);
+			var dkjfh = accSub(need , accDiv(need_jifen,integral_pro));
+		}else{
+			var dkjfh = accSub(need, accDiv(dkjf,integral_pro));
+		}	
+ 	}else{
+		if(parseInt(dkjf) > parseInt(integral)){
+			$("#sxpdkjf").val(integral);
+			var dkjfh = accSub(need , accDiv(integral,integral_pro));
+		}else{
+			var dkjfh = accSub(need, accDiv(dkjf,integral_pro));
+ 		}
+ 	}
+
+	if(dkjfh<=0){
+		$("#sxpdkjfh").html(0);
+		$("#sxpzf_div").hide();
+		$("#sxpzf_btn").show();
+	}else{
+		$("#sxpdkjfh").html(dkjfh);
+		$("#sxpzf_div").show();
+		$("#sxpzf_btn").hide();
+	}
+}
+
+ 
+/**
+ * 积分抵扣，全额积分付费
+ */
+function sxzf(){//刷新职位
+	var sxjobid = $('#sxjobid').val();
+  	var index = layer.load('执行中，请稍候...',0);
+	var url = "index.php?c=job&act=dkBuy";
+	$.post(url,{sxjobid:sxjobid},function(data){
+		if(data){
+			layer.closeAll('loading');
+			data=eval('('+data+')'); 
+			if(data.error==1){
+				if(data.url){
+					layer.msg(data.msg, 2,8,function(){
+						window.location.href=data.url;
+					});
+				}else{
+					layer.msg(data.msg, 2,8);
+				}
+     			
+     		}else if(data.error==0){
+     			layer.msg(data.msg, 2,9,function(){
+					window.location.href='';
+				}); 
+    		}
+		}
+	})
+}
+
+function sxpzf(){//刷新兼职
+	var sxpartid = $('#partjobid').val();
+  	var index = layer.load('执行中，请稍候...',0);
+	var url = "index.php?c=job&act=dkBuy";
+	$.post(url,{sxpartid:sxpartid},function(data){
+		if(data){
+			layer.closeAll('loading');
+			data=eval('('+data+')'); 
+			if(data.error==1){
+				if(data.url){
+					layer.msg(data.msg, 2,8,function(){
+						window.location.href=data.url;
+					});
+				}else{
+					layer.msg(data.msg, 2,8);
+				}
+     			
+     		}else if(data.error==0){
+     			layer.msg(data.msg, 2,9,function(){
+					window.location.href='';
+				}); 
+    		}
+		}
+	})
+}
+
+function refreshPartOrder(pay_type){//刷新兼职
+ 	$('#pay_type').val(pay_type);
+ 	var sxpartid = $('#partjobid').val();
+  	var sxpdkjf = $('#sxpdkjf').val();
+  	var index = layer.load('执行中，请稍候...',0);
+ 	
+ 	$.ajax({
+  		async: false, //设置ajax同步  
+        type: 'POST',  
+        global:false,
+        url: "index.php?c=job&act=buyJob",  
+        data: {sxpartid:sxpartid,sxpdkjf:sxpdkjf},  
+        success: function(data){  
+          layer.close(index);
+        	var data=eval('('+data+')'); 
+          
+        	if(data.error==1){
+     			layer.msg(data.msg, 2,8);
+     		}else if(data.error==0){
+     			$('#order_refreshpart_id').val(data.orderid);
+    			$('#orderid').val(data.id);
+    			//提交表单
+    			$('#payform_refresh').submit();
+    		}
+        }  
+  	});
+}
+
+function refreshJobOrder(pay_type){//刷新职位
+ 	$('#pay_type').val(pay_type);
+ 	var sxjobid = $('#sxjobid').val();
+  	var sxdkjf = $('#sxdkjf').val();
+  	var index = layer.load('执行中，请稍候...',0);
+ 	
+ 	$.ajax({
+  		async: false, //设置ajax同步  
+        type: 'POST',  
+        global:false,
+        url: "index.php?c=job&act=buyJob",  
+        data: {sxjobid:sxjobid,sxdkjf:sxdkjf},  
+        success: function(data){  
+          layer.close(index);
+        	var data=eval('('+data+')'); 
+          
+        	if(data.error==1){
+     			layer.msg(data.msg, 2,8);
+     		}else if(data.error==0){
+     			$('#order_refresh_id').val(data.orderid);
+    			$('#orderid').val(data.id);
+    			//提交表单
+    			$('#payform_refresh').submit();
+    		}
+        }  
+  	});
+}
+ 
+
+function pay_forms(){
+	var pay_type=$("#pay_type").val();
+	if(pay_type==''){
+		layer.msg('请选择支付方式！', 2,8);
+	} else{
+		$.layer({
+			type : 1,
+			title :'提示',
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area : ['450px','280px'],
+			page : {dom :"#payshow"}
+		});
+	}
+}
+function rePay(){
+	var orderId = $("#orderid").val();
+	location.href="index.php?c=payment&id="+orderId;
+}
+</script>
+
+
+<!--刷新职位弹出框-->
+<div id="refresh"  style="display:none; ">
+	<div class="job_recom_box">
+		<input type="hidden" name="sxjobid" id="sxjobid" value=""/>
+ 
+ 		<div class="job_recom_list">
+
+			
+			{yun:}if $config.com_integral_online==3{/yun}
+			<span class="job_recom_s">账户{yun:}$config.integral_pricename{/yun}：</span>
+			<div class="job_recom_list_jobtime">
+				<div class="job_recom_list_jobtime_money">
+					<span class="job_recom_list_jobtime_s">{yun:}$statis.integral{/yun} </span>{yun:}$config.integral_pricename{/yun}
+					（1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）
+					<a href="index.php?c=pay&type=integral" class="comindex_money_pd_a cblue">充值</a>
+ 				</div>
+			</div>
+			{yun:}/if{/yun}
+
+			<span class="job_recom_s">所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun}</span>
+			<div class="job_recom_list_jobtime">
+				<div class="job_recom_list_jobtime_money">
+					{yun:}if $config.com_integral_online==3{/yun}
+						<span id="sxneed" class="job_recom_list_jobtime_s">{yun:}$config.integral_proportion * $config.integral_jobefresh{/yun} </span>{yun:}$config.integral_pricename{/yun}
+					{yun:}else{/yun}
+						<span id="sxneed" class="job_recom_list_jobtime_s">{yun:}$config.integral_jobefresh{/yun}</span>元
+					{yun:}/if{/yun}
+				</div>
+			</div>
+		</div>
+
+		<!-- 可用积分抵扣 -->
+		{yun:}if $config.com_integral_online==1{/yun}
+			<div class="job_recom_list">
+				<span class="job_recom_s">抵扣{yun:}$config.integral_pricename{/yun}：</span>
+				<input type="text" value="" id="sxdkjf" name="sxdkjf" onkeyup="checkSxNum('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" class="com_jf_text">账户{yun:}$config.integral_pricename{/yun}{yun:}$statis.integral{/yun}（1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）
+			</div>
+		{yun:}/if{/yun}
+
+		<div class="job_recom_list sxjfdkh_m" style="display:none">
+			<span class="job_recom_s">抵扣后金额：</span>
+			<div class="job_recom_list_jobtime">
+				<div class="job_recom_list_jobtime_money">
+					<span id="sxdkjfh" class="job_recom_list_jobtime_s"></span>元
+				</div>
+			</div>
+		</div>
+
+		<div id="sxzf_div" {yun:}if $config.integral_jobefresh==0 || $config.com_integral_online==3{/yun} style="display:none" {yun:}/if{/yun}>
+			<form name="alipayment"  id="payform_refresh" action="../api/alipay/alipayto.php" method="post" target="_blank" onsubmit="return pay_forms();">
+				<div class="job_redpack_list">
+					{yun:}if $config.alipay=='1'{/yun}
+						<div class="job_redpack_list_name">支付方式：</div>
+						
+						
+
+						{yun:}if $config.alipay=='1'{/yun}
+						<div class="job_redpack_pay">
+							<a href="javascript:;" onclick="refreshJobOrder('alipay');"><div class="job_redpack_pay_bor job_redpack_pay_bor_pd"><img src="{yun:}$com_style{/yun}/images/ap_pay.png"></div>支付宝支付</a>
+						</div>
+						{yun:}/if{/yun}
+
+					{yun:}else{/yun}
+
+						<div class="con_banner_no" style="width:300px;"><span></span><em>网站已关闭支付接口，请联系管理员</em></div>
+
+					{yun:}/if{/yun}
+					<input type="hidden" value="" id="pay_type" name="pay_type"/>
+					<input type="hidden" name="dingdan" id="order_refresh_id" value=""/>
+					<input type="hidden" value="刷新职位金额"  name="subject"/>
+					<input type="hidden" name="pay_bank" value="directPay">
+				</div>
+			</form>
+		</div>
+		<div id="sxzf_btn" {yun:}if $config.integral_jobefresh!=0 && $config.com_integral_online!=3{/yun} style="display:none" {yun:}/if{/yun} class="job_tck_bth_pd">
+			<input type='button' value='确认支付' onClick="sxzf();" class='job_redpack_list_c_bth'>
+		</div>
+	</div>
+</div>
+
+
+
+<!--刷新兼职弹出框-->
+<div id="part_refresh"  style="display:none; ">
+	<div class="job_recom_box">
+		<input type="hidden" name="partjobid" id="partjobid" value=""/>
+ 
+ 		<div class="job_recom_list">
+			
+			{yun:}if $config.com_integral_online==3{/yun}
+			<span class="job_recom_s">账户{yun:}$config.integral_pricename{/yun}：</span>
+			<div class="job_recom_list_jobtime">
+				<div class="job_recom_list_jobtime_money">
+					<span class="job_recom_list_jobtime_s">{yun:}$statis.integral{/yun} </span>{yun:}$config.integral_pricename{/yun}
+					（1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）
+					<a href="index.php?c=pay&type=integral" class="comindex_money_pd_a cblue">充值</a>
+ 				</div>
+			</div>
+			{yun:}/if{/yun}
+
+			<span class="job_recom_s">所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun}</span>
+			<div class="job_recom_list_jobtime">
+				<div class="job_recom_list_jobtime_money">
+					{yun:}if $config.com_integral_online==3{/yun}
+						<span id="sxpneed" class="job_recom_list_jobtime_s">{yun:}$config.integral_proportion * $config.integral_partjobefresh{/yun} </span>{yun:}$config.integral_pricename{/yun}
+					{yun:}else{/yun}
+						<span id="sxpneed" class="job_recom_list_jobtime_s">{yun:}$config.integral_partjobefresh{/yun}</span>元
+					{yun:}/if{/yun}				</div>
+			</div>
+		</div>
+
+		<!-- 可用积分抵扣 -->
+		{yun:}if $config.com_integral_online==1{/yun}
+			<div class="job_recom_list">
+				<span class="job_recom_s">抵扣{yun:}$config.integral_pricename{/yun}：</span>
+				<input type="text" value="" id="sxpdkjf" name="sxpdkjf" onkeyup="checkSxpNum('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" class="com_jf_text">账户{yun:}$config.integral_pricename{/yun}{yun:}$statis.integral{/yun}（1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）
+			</div>
+		{yun:}/if{/yun}
+		<div class="job_recom_list sxpjfdkh_m" style="display:none">
+			<span class="job_recom_s">抵扣后金额：</span>
+			<div class="job_recom_list_jobtime">
+				<div class="job_recom_list_jobtime_money">
+					<span id="sxpdkjfh" class="job_recom_list_jobtime_s"></span>元
+				</div>
+			</div>
+		</div>
+		<div id="sxpzf_div" {yun:}if $config.integral_partjobefresh==0 || $config.com_integral_online==3{/yun} style="display:none" {yun:}/if{/yun}>
+			<form name="alipayment"  id="payform_refresh" action="../api/alipay/alipayto.php" method="post" target="_blank" onsubmit="return pay_forms();">
+				<div class="job_redpack_list">
+					{yun:}if $config.alipay=='1'{/yun}
+					<div class="job_redpack_list_name">支付方式：</div>
+					
+					{yun:}if $config.alipay=='1'{/yun}
+					<div class="job_redpack_pay">
+						<a href="javascript:;" onclick="refreshPartOrder('alipay');"><div class="job_redpack_pay_bor job_redpack_pay_bor_pd"><img src="{yun:}$com_style{/yun}/images/ap_pay.png"></div>支付宝支付</a>
+					</div>
+					{yun:}/if{/yun}
+					{yun:}else{/yun}
+					<div class="con_banner_no" style="width:300px;"><span></span><em>网站已关闭支付接口，请联系管理员</em></div>
+					{yun:}/if{/yun}
+					<input type="hidden" value="" id="pay_type" name="pay_type"/>
+					<input type="hidden" name="dingdan" id="order_refreshpart_id" value=""/>
+					<input type="hidden" value="刷新兼职金额"  name="subject"/>
+					<input type="hidden" name="pay_bank" value="directPay">
+				</div>
+			</form>
+		</div>
+		<div id="sxpzf_btn" {yun:}if $config.integral_partjobefresh!=0 && $config.com_integral_online!=3{/yun} style="display:none" {yun:}/if{/yun} class="job_tck_bth_pd">
+			<input type='button' value='确认支付' onClick="sxpzf();" class='job_redpack_list_c_bth'>
+		</div>
+	</div>
+</div>
+
+<input type="hidden" name="orderid" id="orderid" value=""/>
+  
+
+<!--  支付弹出框 -->
+<div id="payshow" style="width:450px; position:absolute;left:0px;top:0px; background:#fff; display:none;">
+	<div class="payment_tip">
+		请在新打开的支付页面上完成付款，付款完成前请不要关闭此窗口。<br>
+		如您在支付过程中遇到问题，请联系客服：<span class="payment_tip_s">{yun:}$config.sy_freewebtel{/yun}</span>
+	</div>
+	
+	<div class="payment_bottom">
+		<a href="index.php?c=paylog" class="payment_bottombutt">已完成付款</a>
+		<a href="javascript:;" onclick="rePay();" class="payment_bottom_bth2">重新支付</a>
+	</div>
+</div>
+
+

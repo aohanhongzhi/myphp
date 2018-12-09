@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>  
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">可以为企业提供个性化模板,管理员自己设计企业模板后上传到企业模板目录即可！可以设置模板价格，提供企业用户自由选择！</div>
+</div>
+</div>
+<div class="clear"></div>
+<div class="admin_new_search_box" style="padding-bottom:10px;">
+<div class="admin_new_select">
+<a href="index.php?m=admin_tpl&c=comtpladd" class="admin_new_cz_tj" style="margin-left:0px;">+ 添加模板</a>
+</div></div>
+<div class="clear"></div>
+
+
+<div class="table-list">
+{yun:}foreach item=v from=$list{/yun}
+<div class="" style="float: left; width: 260px;border:1px solid #ddd; text-align: center; padding: 15px; line-height: 180%; margin-top:10px; margin-right:5px; background:#fff">
+	  <img width="255" height="125" border="1" alt="{yun:}$v.name{/yun}" src="../{yun:}$v.pic{/yun}">
+	  <br>
+	 <strong>{yun:}$v.name{/yun}</strong>
+	 <br>
+	风格目录名称：{yun:}$v.url{/yun}
+      <br>
+      状态：{yun:}if $v.status==1{/yun}正在使用{yun:}else{/yun}已停止{yun:}/if{/yun}
+      <br>
+      <input name="" value="修改" type="submit" class="admin_button" onClick="location.href='index.php?m=admin_tpl&c=comtpladd&id={yun:}$v.id{/yun}'">
+      <input name="" value="删除" type="submit" class="admin_button" onclick="layer_del('确定要删除？', 'index.php?m=admin_tpl&c=comtpldel&id={yun:}$v.id{/yun}');" ">
+	 </div>
+     {yun:}/foreach{/yun}
+</div>
+</div>
+   <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+</body>
+</html>

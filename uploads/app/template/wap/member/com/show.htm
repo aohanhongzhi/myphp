@@ -1,0 +1,56 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+
+<div class="com_picshow_Box">
+    <div id="">
+        <div class="clear"></div>
+        {yun:}foreach item=show from=$rows{/yun}
+        <div class="com_picshow">
+            <div class="com_picshow_c">
+                <div class="com_picshow_pic">
+                    <img src="{yun:}$config.sy_weburl{/yun}{yun:}$show.picurl{/yun}" height="150" />
+                </div>
+                <div class="com_picshow_name">{yun:}$show.title{/yun}</div>
+                <div class="com_picshow_cz">
+                    <a href="index.php?c=addshow&id={yun:}$show.id{/yun}" class="com_picshow_cz_xg">修改</a>
+                    <a href="javascript:void(0)" onclick="delshowpic('{yun:}$show.id{/yun}'); " class="">删除</a>
+                </div>
+            </div>
+        </div>
+        {yun:}foreachelse{/yun}
+
+        <div class="wap_member_no">
+            <p>亲爱的用户，目前您还没有上传企业环境信息，</p>
+            <p>立即上传环境信息,为招聘效果加分！</p>
+        </div>
+        {yun:}/foreach{/yun}
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="com_picshow_bth">
+    <button type="button" class="" onclick="location.href='index.php?c=addshow'">上传企业环境</button>
+</div>
+
+<script>
+    function delshowpic(id) {
+        var id = id;
+        var url = wapurl + "member/index.php?c=del";
+        $.post(url, {
+            id: id
+        }, function(data) {
+            if(data == 3) {
+                layermsg("请选择图片!", 2, 8);
+                return false;
+            } else if(data == 2) {
+                layermsg("删除失败!", 2, 8);
+                return false;
+            } else if(data == 1) {
+                layermsg("删除成功！", 2, function() {
+                    window.location.reload();
+                });
+                return false;
+            }
+        });
+    }
+</script>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun}

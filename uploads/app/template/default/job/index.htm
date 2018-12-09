@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>{yun:}$title{/yun}</title>
+        <meta name="keywords" content="{yun:}$keywords{/yun}" />
+        <meta name="description" content="{yun:}$description{/yun}" />
+        <link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link rel="stylesheet" href="{yun:}$style{/yun}/style/yun_seach.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        {yun:}include file="$tplstyle/header.htm"{/yun}
+        <div class="yun_body">
+            <div class="yun_content">
+                <div class="current_Location icon" style="display:none;"> 您当前的位置：
+                    <a href="{yun:}$config.sy_weburl{/yun}">首页</a> >
+                    <a href="{yun:}url m=job{/yun}">找工作</a>
+                </div>
+                <div class="clear"></div>
+
+                <!-- 职位类别-->
+
+                <div class="yunsearch_leftsidebar fl">
+                    <div class="yunsearch_nav"><span class="yunsearch_navtab" onmousemove="searchtype('job');" id="typejob">按职类</span><span class="" onmousemove="searchtype('city');" id="typecity">按地区</span></div>
+
+                    <div id="sidebar">
+
+                        <!--按职类-->
+                        <div class="yunsearch_mainNavs" id="type_job">
+
+                            <!--放上去current-->
+                            {yun:}foreach item=v key=key from=$job_index{/yun} {yun:}if $key
+                            <9{/yun} <div class="yunsearch_menu_box">
+                                <div class="yunsearch_menu_main">
+                                    <h2><a href="{yun:}listurl type=job1 v=$v{/yun}">{yun:}$job_name[$v]{/yun}<span></span></a></h2>
+                                    <div class="menu_main_b_h">
+                                        {yun:}foreach item=val key=key from=$job_type[$v]{/yun} {yun:}if $key
+                                        <8{/yun} <a target="_blank" href="{yun:}listurl t=index type=job1_son job1=$v job1_son=$val{/yun}">{yun:}$job_name[$val]{/yun}</a>
+                                            {yun:}/if{/yun} {yun:}/foreach{/yun}
+                                    </div>
+                                </div>
+                        </div>
+                        {yun:}/if{/yun} {yun:}/foreach{/yun}
+                    </div>
+
+                    <!--按行业-->
+                    <div class="yunsearch_mainNavs" style="display: none;" id="type_hy">
+
+                        <!--放上去current-->
+                        {yun:}foreach item=v from=$industry_index{/yun}
+                        <div class="yunsearch_menu_box">
+                            <div class="yunsearch_menu_main">
+                                <div class="menu_main_b_h">
+                                    <a href="{yun:}listurl type=hy v=$v{/yun}">{yun:}$industry_name[$v]{/yun}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {yun:}/foreach{/yun}
+                    </div>
+
+                    <!--按地区-->
+                    <div class="yunsearch_mainNavs" style="display: none;" id="type_city">
+
+                        <!--放上去current-->
+                        {yun:}foreach from=$city_index item=pid key=key{/yun} {yun:}if $key
+                        <9{/yun} <div class="yunsearch_menu_box">
+                            <div class="yunsearch_menu_main">
+                                <h2><a href="{yun:}listurl type=city v=$pid{/yun}">{yun:}$city_name[$pid]{/yun}<span></span></a></h2>
+                                <div class="menu_main_b_h">
+                                    {yun:}foreach from=$city_type[$pid] item=cid key=key{/yun} {yun:}if $key
+                                    <9{/yun} <a target="_blank" href="{yun:}listurl type=cityid provinceid=$pid v=$cid{/yun}">{yun:}$city_name[$cid]{/yun}</a>
+                                        {yun:}/if{/yun} {yun:}/foreach{/yun}
+                                </div>
+                            </div>
+                    </div>
+                    {yun:}/if{/yun} {yun:}/foreach{/yun}
+                </div>
+            </div>
+
+            <div class="yunsearch_menu_more">
+                <a target="_blank" href="{yun:}listurl type=tp v=0{/yun}">更多职位</a>
+            </div>
+        </div>
+        <!-- 职位类别 end-->
+
+        <!--  右侧广告-->
+        <div class="yun_search_right">
+            <div class="yun_search_search">
+                <form method="get" action='{yun:}if !$config.sy_jobdir{/yun}index.php{yun:}else{/yun}{yun:}url m=job{/yun}{yun:}/if{/yun}' onsubmit="return search_keyword(this,'请输入职位名称的关键字：例如会计');">
+                    {yun:}if !$config.sy_jobdir{/yun}
+                    <input type="hidden" name="m" value="job" /> {yun:}/if{/yun}
+                    <input type="hidden" name="c" value="search" />
+                    <div class="yun_search_box">
+                        <input type="text" id="jobkeyword" name="keyword" value="请输入职位名称的关键字：例如会计" onclick="if(this.value=='请输入职位名称的关键字：例如会计'){this.value=''}" onblur="if(this.value==''){this.value='请输入职位名称的关键字：例如会计'}" class="yun_search_box_text">
+
+                        <input type="submit" value="搜索" class="yun_search_box_bth"></div>
+                </form>
+            </div>
+            <div class="yun_search_tag"> 热门搜索： {yun:}key limit=8 recom=1 type=3 item=top_key{/yun}
+                <a href="{yun:}$top_key.url{/yun}" target="_blank">{yun:}$top_key.key_name{/yun}</a> {yun:}/key{/yun} </div>
+
+            <!--<div class="yun_search_rightbanner"></div>-->
+            <div class="clear"></div>
+ <div class="yun_search_jp_tit">名企招聘
+                    <a href="{yun:}listurl m=company type=rec v=1{/yun}" class="yun_search_jp_more">更多>></a>
+                </div>
+            <div class="yun_search_rightbanner_tow">
+                
+                <div class="yun_search_rightbanner_tow_cont">
+                	{yun:}hotjob item=hotjoblist limit=8{/yun}
+                   <div class="yun_search_mq"> 
+                   <i class="yun_search_mq_icon"></i>
+                    <div class="yun_search_mq_logo"><a href="{yun:}$hotjoblist.url{/yun}" class="">
+                        <img width="120" height="120" border="1" class="on lazy" src="{yun:}formatpicurl path=$hotjoblist.hot_pic type=comlogo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);" alt="{yun:}$hotjoblist.username{/yun}" />
+                    </a>
+                    </div>
+                    <div class="yun_search_mq_comname"><a href="{yun:}$hotjoblist.url{/yun}">{yun:}$hotjoblist.username{/yun}</a></div>
+  <div class="yun_search_mq_job">{yun:}$hotjoblist.num{/yun}个职位 <span class="yun_search_mq_line">|</span>{yun:}$hotjoblist.hy{/yun}</div>
+                   </div>                    
+                    {yun:}/hotjob{/yun}
+                   <!--   <div class="yun_search_mq"> <a href="{yun:}listurl m=company type=rec v=1{/yun}" class="">更多</a>   </div>-->
+                </div>
+                
+            </div>
+<div class="clear"></div>
+            <div class="yun_search_jp">
+
+                <div class="yun_search_jp_tit">急招岗位
+                    <a href="{yun:}listurl type=tp v=1{/yun}" class="yun_search_jp_more">更多>></a>
+                </div>
+                <div class="yun_search_jp_cont">
+
+                    {yun:}joblist namelen=12 comlen=32 urgent='1' limit=6 item=ujoblist name=urgent_list{/yun}
+                    <div class="yun_search_jp_list">
+                        <div class="yun_search_jp_comlogo">
+                            <img src="{yun:}$ujoblist.logo{/yun}" style="width: 80px; height: 80px;" />
+                        </div>
+
+                        <div class="yun_search_jp_name">
+                            <a href="{yun:}url m=job c=comapply id='`$ujoblist.id`'{/yun}" class="">{yun:}$ujoblist.name{/yun}</a>
+                        </div>
+                        <div class="yun_search_jp_info">
+                            <span class="yun_search_jp_info_xz">{yun:}$ujoblist.job_salary{/yun}</span>
+                            <span class="yun_search_jp_info_p">{yun:}$ujoblist.job_exp{/yun}经验</span>
+                            <span class="yun_search_jp_line">|</span>
+                            <span class="yun_search_jp_info_p">{yun:}$ujoblist.job_edu{/yun}学历</span></div>
+                        <div class="yun_search_jp_comname">
+                            <a href="{yun:}url m=company c=show id='`$ujoblist.uid`'{/yun}" class="">{yun:}$ujoblist.com_name{/yun}</a>
+                        </div>
+                    </div>
+                    {yun:}/joblist{/yun}
+
+                </div>
+
+            </div>
+        </div>
+        <!-- 推荐职位-->
+        <div class="yun_searc_tj">
+            <div class="yun_searc_tj_tit">推荐职位
+                <a href="{yun:}listurl type=tp v=2{/yun}" class="yun_search_jp_more">更多>></a>
+            </div>
+            <div class="yun_searc_tj_box">
+                <!--  职位循环处-->
+                {yun:}joblist namelen=12 comlen=32 rec='1' limit=32 item=joblist name=rec_list1{/yun}
+                <div class="jobcategory_joblist">
+                    <div class="jobcategory_jobname">
+                        <div class="jobcategory_jobname_c">
+                            <a class="" target="_blank" href="{yun:}url m=job c=comapply id='`$joblist.id`'{/yun}">{yun:}$joblist.name{/yun}</a>
+                        </div> <span class="jobcategory_jobxz">{yun:}$joblist.job_salary{/yun}</span></div>
+
+                    <div class="yun_search_jp_info"> {yun:}$joblist.job_city_one{/yun}{yun:}$joblist.job_city_two{/yun}<span class="yun_search_jp_line">|</span><span class="yun_search_jp_info_p">{yun:}$joblist.job_exp{/yun}经验</span><span class="yun_search_jp_line">|</span><span class="yun_search_jp_info_p">{yun:}$joblist.job_edu{/yun}学历</span></div>
+                    <div class="jobcategory_comname">
+                        <a href="{yun:}url m=company c=show id='`$joblist.uid`'{/yun}">{yun:}$joblist.com_name{/yun}</a>
+
+                    </div>
+
+                </div>
+                {yun:}/joblist{/yun}
+                <!--  职位循环处 end-->
+            </div>
+
+        </div>
+
+        </div>
+
+        <!--[if IE 6]>
+			<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script>
+			DD_belatedPNG.fix('.png,');
+			</script>
+			<![endif]-->
+
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$style{/yun}/js/index.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+        <script>
+            function searchtype(id) {
+                $(".yunsearch_navtab").removeClass("yunsearch_navtab");
+                $("#type" + id).addClass("yunsearch_navtab");
+                $(".yunsearch_mainNavs").hide();
+                $("#type_" + id).show();
+            }
+
+            function showtype(id) {
+                $("#job" + id).addClass('current');
+                $("#job_" + id).html('[收起]');
+                $("#job_" + id).attr('href', 'javascript:hidetype(\'' + id + '\');');
+            }
+
+            function hidetype(id) {
+                $("#job" + id).removeClass('current');
+                $("#job_" + id).html('[展开]');
+                $("#job_" + id).attr('href', 'javascript:showtype(\'' + id + '\');');
+            }
+        </script>
+        {yun:}include file="$tplstyle/footer.htm"{/yun}

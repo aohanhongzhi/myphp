@@ -1,0 +1,180 @@
+{yun:}include file="$askstyle/header.htm"{/yun}  
+<div class="ask_index_banner">
+<div class="content">
+<div class="ask_index_slogan">
+<div class="ask_index_slogan_tit">职场问答</div>
+给你职场领域最专业的帮助
+</div>
+<div class="search">
+		<div class="search_con">
+			<div class="seek">
+				<form action="index.php" name="myform" method="get" target="_blank" autocomplete="off" onsubmit="return asksearch();">
+				<div class="seek_con">
+					<div class="seek_det">  
+						{yun:}if  !$config.sy_askdir{/yun}<input name='m' type='hidden' value='ask'/>{yun:}/if{/yun}
+						<input name='c' type='hidden' value='search'/>
+						<input type="text" name='keyword' id="askkeyword" placeholder="可以在此输入问题关键词搜索，看看有没有和你提过相同的问题" class="txt" autocomplete="off"  onblur="if(this.value==''){this.value='可以在此输入问题关键词搜索，看看有没有和你提过相同的问题'}" onclick="if(this.value=='可以在此输入问题关键词搜索，看看有没有和你提过相同的问题'){this.value=''}" value="可以在此输入问题关键词搜索，看看有没有和你提过相同的问题"/>
+						<span class="icon"></span>
+					</div>
+					<div class="seek_sear"><input type="submit" class="btn"  value="搜一下"/></div>
+				</div>
+				</form>
+				<div class="seek_menu">
+					<ul> 
+						<span class="searchli"></span>
+						<li class="option">搜索：<a href="#" target="_blank"></a></li>
+						<li class="me_quiz"><span>
+						{yun:}if $uid{/yun}
+							<a href="{yun:}url m=ask c=addquestion{/yun}" target="_blank">+ 我要提问</a>
+						{yun:}else{/yun}
+							<a href="javascript:void(0);" onclick="showlogin('');">+ 我要提问</a>
+						{yun:}/if{/yun}</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+            <div class="header_ask_ask">
+        {yun:}if $uid{/yun}
+				<a href="{yun:}url m=ask c=addquestion{/yun}" target="_blank">+ 我要提问</a>
+			{yun:}else{/yun}
+				<a href="javascript:void(0);" onclick="showlogin('');">+ 我要提问</a>
+			{yun:}/if{/yun}
+	</div></div></div>
+</div>
+
+</div>
+<div class="content">
+<div class="ask_index_left">
+<div class="ask_index_left_tit"><span class="ask_index_left_tit_s">热门精选</span><span class="ask_index_left_titr">已有<i class="ask_index_left_titr_n">{yun:}$answer{/yun}</i> 条问答推荐</span></div>
+<div class="ask_index_leftbox">
+<ul class="ask_hotbox">
+{yun:}qlist is_recom=1   name=list ispage=1 t_len=30  limit=5 item=rlist{/yun}
+<li>
+<div class="ask_hot_hd"><div class="ask_index_n">{yun:}$rlist.answer_num{/yun}</div> 回答</div>
+<div class="ask_hotaskname"><a href="{yun:}$rlist.url{/yun}">{yun:}$rlist.title{/yun}</a></div>
+<div class="ask_hotuser"><a href="{yun:}$rlist.userurl{/yun}">{yun:}$rlist.nickname|mb_substr:0:8:'utf-8'{/yun}</a> <span class="ask_index_pop_time">{yun:}$rlist.add_time|date_format:"%Y-%m-%d %H:%M"{/yun}</span></div>
+<div class="ask_hoteye">{yun:}$rlist.visit{/yun}</div>
+</li>
+ {yun:}qlistelse{/yun}
+ <div class="">暂无热门精选！</div>
+ {yun:}/qlist{/yun}
+</ul>
+
+</div>
+<div class="" name="answer" id="answer">
+<div class="ask_index_left_tit">
+<span class="ask_index_left_tit_s ask_index_left_tit_newask" id="last-question">最新问题</span>
+<span class="ask_index_left_titr"><a href="{yun:}url m=ask yesnum=1{/yun}">有回答的问题</a> <i class="ask_tit_c">|</i> <a href="{yun:}url m=ask nonum=1{/yun}">零回答的问题</a></span></div>
+
+<div class="ask_index_leftbox">
+<ul class="ask_hotbox">
+{yun:}qlist item=list nonum='auto.nonum' yesnum='auto.yesnum' name=list ispage=1 t_len=30  limit=10{/yun}
+                  
+         
+<li>
+<div class="ask_new_hd"><div class="ask_index_n">{yun:}$list.answer_num{/yun}</div> 回答</div>
+<div class="ask_hotaskname"><a  href="{yun:}$list.url{/yun}" target="_blank" title="{yun:}$list.title{/yun}">{yun:}$list.title{/yun}</a></div>
+<div class="ask_hotuser"><a href="{yun:}$list.userurl{/yun}" target="_blank" class="ask_index_answer_user_a">{yun:}$list.nickname|mb_substr:0:8:'utf-8'{/yun}</a> <span class="ask_index_pop_time">{yun:}$list.add_time|date_format:"%Y-%m-%d %H:%M"{/yun}</span></div>
+<div class="ask_hoteye">{yun:}$list.visit{/yun}</div>
+</li>
+
+ {yun:}/qlist{/yun}  
+					
+			
+				{yun:}if $total==0{/yun}
+				<div class="indexnoresult png">您还没有任何问题，抓紧提问吧！</div>
+				{yun:}else{/yun} 
+				<div class="pages">{yun:}$pagenav{/yun}</div> 
+				{yun:}/if{/yun}  
+</ul>
+
+</div>
+</div>
+
+           
+			
+
+</div>
+<div class="ask_index_right">
+<div class="ask_index_right_box" style="margin-top:65px; padding-bottom:0px;">
+<div class="ask_index_ask_rtit"><span class="ask_index_ask_rtit_s">热门分类</span></div>
+<div class="ask_index_fllist_box">
+{yun:}qcache limit=6 son=1 item=qindex{/yun}
+<dl class="ask_index_fllist">
+<dt><img class="" src="{yun:}$config.sy_weburl{/yun}/{yun:}$qindex.pic{/yun}" width="50" height="50" /> </dt>
+<dd>
+<h3><a href="{yun:}url m=ask c=topic pid='`$qindex.id`'{/yun}"  target="_blank">{yun:}$qindex.name{/yun}</a></h3>
+{yun:}if $qindex.son{/yun}                   
+<div class="ask_index_fllist_a">
+	{yun:}foreach from=$qindex.son item=slist{/yun}
+	<a href="{yun:}url m=ask c=search cid='`$slist.id`'{/yun}" target="_blank">{yun:}$slist.name{/yun}</a>
+	{yun:}/foreach{/yun} 
+</div>
+
+{yun:}/if{/yun}
+</dd>
+</dl>
+{yun:}/qcache{/yun} 
+</div></div>
+<div class="ask_index_right_box" >
+<div class="ask_index_ask_rtit"><span class="ask_index_ask_rtit_s">热门标签</span></div>
+
+	<div class="hot_tag_con">
+					{yun:}foreach from=$hotclass key=key item=hclist{/yun}
+					<a href="{yun:}url m=ask c=search cid='`$key`'{/yun}" target="_blank">{yun:}$hclist{/yun}</a>
+					{yun:}/foreach{/yun} 
+				</div>
+</div>
+
+
+<div class="ask_index_right_box">
+<div class="ask_index_ask_rtit"><span class="ask_index_ask_rtit_s">助人光荣榜</span></div>
+<div style="padding-top:10px;">
+{yun:}foreach from=$hotuser item=hulist{/yun}
+				<div class="hot_userdet">
+					<div class="user_det1">
+						<div class="user_mes">
+							<div class="user_pho">
+								<img src="{yun:}$hulist.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_friend_icon{/yun}',2);"/>
+							</div>
+							<div class="user_name">
+								<p><a href="{yun:}url m=ask c=friend a=myquestion uid='`$hulist.uid`'{/yun}" target="_blank">{yun:}$hulist.nickname{/yun}</a></p>
+								<span>回答总数：<font>{yun:}$hulist.num{/yun}</font> 被赞同总数：<font>{yun:}$hulist.support{/yun}</font></span>
+                     
+							</div>
+						</div>
+						
+					</div> 
+				</div> 
+				{yun:}foreachelse{/yun} 
+					<div class="ask_r_no fl">暂无数据！</div>
+				{yun:}/foreach{/yun} 
+       	</div>          
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+<div class="content">
+	<div class="ask_index_box_banner">
+				{yun:}ad cid=48 id=169{/yun}
+			</div>
+			
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$ask_style{/yun}/js/question.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.attention .watch_gz');
+</script>
+<![endif]-->
+{yun:}include file="$askstyle/footer.htm"{/yun}

@@ -1,0 +1,261 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+    <div class="admin_mainbody">
+        <style>
+            .my_table_msg th {
+                text-align: right
+            }
+        </style>
+        {yun:}include file="$comstyle/left.htm"{/yun}
+        <div class=right_box>
+            <div class=admincont_box>
+                <div class="yun_com_tit"><span class="yun_com_tit_s">{yun:}$config.integral_pricename{/yun}管理</span></div>
+                <div class="job_list_tit">
+                    <ul class="">
+                        <li {yun:}if $smarty.get.c=="integral" {/yun}class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=integral">{yun:}$config.integral_pricename{/yun}任务</a>
+                        </li>
+                        <li {yun:}if $smarty.get.c=="integral_reduce" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=integral_reduce">消费规则</a>
+                        </li>
+                        <li {yun:}if $smarty.get.c=="reward_list" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=reward_list">{yun:}$config.integral_pricename{/yun}兑换</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="com_body">
+                    <div class="admin_new_tip mt20">
+                        <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+                        <div class="admin_new_tip_list_cont">
+                            <div class="admin_new_tip_list">做任务，赚{yun:}$config.integral_pricename{/yun} </div>
+                        </div>
+                    </div>
+                    <div class="integral_cont">
+                    
+                    <table class="integral_table" cellpadding="1" cellspacing="1">
+                    <tr><th>任务</th><th width="200">奖励</th><th width="200">操作</th></tr>
+                    <tr><td><span class="integral_table_name integral_table_name_ws">完善基本资料</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_userinfo{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td>
+                    <td  align="center"><span class="integral_list_bth_s">{yun:}if $statusList.baseInfo{/yun}
+                  已完善
+                  {yun:}else{/yun} <a href="index.php?c=info" 
+						target="_blank" class="integral_list_bth_a">立即完善</a> {yun:}/if{/yun}</span></td></tr>
+                  
+                  <tr><td><span class="integral_table_name integral_table_name_logo">上传企业logo</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_avatar{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td>
+                    <td  align="center"><span class="integral_list_bth_s">{yun:}if $statusList.logo{/yun}
+                  已上传
+                  {yun:}else{/yun} <a href="index.php?c=uppic" 
+							target="_blank"  class="integral_list_bth_a">上传logo</a> {yun:}/if{/yun} </span></td></tr>
+             
+                 <tr><td><span class="integral_table_name integral_table_name_yq">邀请朋友注册</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_invite_reg{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun} </td> <td  align="center"><span class="integral_list_bth_s"><a href="{yun:}url m=invitereg{/yun}"
+					target="_blank" class="integral_list_bth_a">现在就邀请</a></span></td>
+                            </tr>
+                            <tr>
+                             <td><span class="integral_table_name integral_table_name_dl">每天第一次登录</td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_login{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s">今日已登录 </span></td>
+                            </tr>
+                            <tr>
+                               <td><span class="integral_table_name integral_table_name_qd">每日签到</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_signin{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s"> {yun:}if $statusList.signin{/yun}
+                  今日已签到
+                  {yun:}else{/yun} <a href="index.php" target="_blank"  class="integral_list_bth_a">去签到</a> {yun:}/if{/yun}</span></td>
+                            </tr>
+                            <tr>
+                              <td><span class="integral_table_name integral_table_name_yx">认证电子邮箱</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_emailcert{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun} </td> <td  align="center"><span class="integral_list_bth_s">{yun:}if $statusList.emailChecked{/yun}
+                  已验证
+                  {yun:}else{/yun} <a href="index.php?c=binding" 
+							target="_blank"  class="integral_list_bth_a">邮箱认证</a> {yun:}/if{/yun}</span></td>
+                            </tr>
+                            <tr>
+                               <td><span class="integral_table_name integral_table_name_sj">认证手机号码</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_mobliecert{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s">{yun:}if $statusList.phoneChecked{/yun}
+                  已验证
+                  {yun:}else{/yun} <a href="index.php?c=binding" 
+							target="_blank"  class="integral_list_bth_a">手机验证</a> {yun:}/if{/yun} </span></td>
+                            </tr>
+                            <tr>
+                               <td><span class="integral_table_name integral_table_name_map">设置企业地图</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_map{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s"> {yun:}if $statusList.map{/yun}
+                  已设置
+                  {yun:}else{/yun} <a href="index.php?c=map" 
+							target="_blank"  class="integral_list_bth_a">设置地图</a> {yun:}/if{/yun} </span></td>
+                            </tr>
+                            {yun:}if $config.integral_banner_type=='1'{/yun}
+                            <tr>
+                               <td><span class="integral_table_name integral_table_name_hf">上传企业横幅</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_banner{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s"> {yun:}if $statusList.banner{/yun}
+                  已上传
+                  {yun:}else{/yun} <a href="index.php?c=banner" 
+							target="_blank" class="integral_list_bth_a">上传横幅</a>{yun:}/if{/yun}</span></td>
+                            </tr>
+                            {yun:}/if{/yun}
+                            <tr>
+                               <td><span class="integral_table_name integral_table_name_zz">认证营业执照</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_comcert{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s">{yun:}if $statusList.yyzz{/yun}
+                  已验证
+                  {yun:}else{/yun} <a href="index.php?c=binding" 
+							target="_blank" class="integral_list_bth_a">认证营业执照</a> {yun:}/if{/yun}</span></td>
+                            </tr>
+                            {yun:}if $config.integral_question_type==1{/yun} {yun:}if $statusList.question{/yun}
+                            <tr>
+                               <td><span class="integral_table_name integral_table_name_fb">发布问题</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_question{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s"><a href="{yun:}url m=ask c=addquestion {/yun}" 
+					target="_blank"  class="integral_list_bth_a">发布问题</a></span></td>
+                            </tr>
+                            {yun:}else{/yun}
+                            <tr>
+                               <td><span class="integral_table_name integral_table_name_fb">发布问题</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_question{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s">已发布</span></td>
+                            </tr>
+                            {yun:}/if{/yun} {yun:}/if{/yun} {yun:}if $config.integral_answer_type==1{/yun} {yun:}if $statusList.answer{/yun}
+                            <tr>
+                               <td><span class="integral_table_name integral_table_name_hd">回答问题</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_answer{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s"><a href="{yun:}url m=ask {/yun}#last-question" 
+              target="_blank"  class="integral_list_bth_a">回答问题</a></span></td>
+                            </tr>
+                            {yun:}else{/yun}
+                            <tr>
+                               <td><span class="integral_table_name integral_table_name_hd">{yun:}$config.integral_answer{/yun}</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_answer{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s">已回答</span></td>
+                            </tr>
+                            {yun:}/if{/yun} {yun:}/if{/yun} {yun:}if $config.integral_answerpl_type==1{/yun} {yun:}if $statusList.answerpl{/yun}
+                            <tr>
+                              <td><span class="integral_table_name integral_table_name_pl">评论回答</span></td><td align="left"><em class="integral_table_n">+{yun:}$config.integral_answerpl{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s"><a href="{yun:}url m=ask {/yun}#last-question"  target="_blank"  class="integral_list_bth_a">评论回答</a></span></td>
+                            </tr>
+                            {yun:}else{/yun}
+                            <tr>
+                               <td><span class="integral_table_name integral_table_name_pl">评论回答</span></td><td align="center"><em class="integral_table_n">+{yun:}$config.integral_answerpl{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</td> <td  align="center"><span class="integral_list_bth_s">已评论</span></td>
+                            </tr>
+                            {yun:}/if{/yun} {yun:}/if{/yun}
+                            
+                            
+                                   
+                    </table>
+                      <!--  <ul class="integral_list">
+                            <li>
+                                <div class="integral_list_n integral_list_n_c1">{yun:}$config.integral_userinfo{/yun}</div>
+                                <div class="integral_listname">完善基本资料</div>
+                                <div class="integral_list_p"> +{yun:}$config.integral_userinfo{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun} </div>
+                                <div class="integral_list_bth"> <span class="integral_list_bth_s">{yun:}if $statusList.baseInfo{/yun}
+                  已完善
+                  {yun:}else{/yun} <a href="index.php?c=info" 
+						target="_blank" class="integral_list_bth_a">立即完善</a> {yun:}/if{/yun}</span> </div>
+                            </li>
+                            <li>
+                                <div class="integral_list_n integral_list_n_c2">{yun:}$config.integral_avatar{/yun} </div>
+                                <div class="integral_listname">上传企业logo</div>
+                                <div class="integral_list_p"> +{yun:}$config.integral_avatar{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s">{yun:}if $statusList.logo{/yun}
+                  已上传
+                  {yun:}else{/yun} <a href="index.php?c=uppic" 
+							target="_blank"  class="integral_list_bth_a">上传logo</a> {yun:}/if{/yun} </span></div>
+                            </li>
+                            <li>
+                                <div class="integral_list_n integral_list_n_c3">{yun:}$config.integral_invite_reg{/yun}</div>
+                                <div class="integral_listname">邀请朋友注册</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_invite_reg{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun} </div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s"><a href="{yun:}url m=invitereg{/yun}"
+					target="_blank" class="integral_list_bth_a">现在就邀请</a></span></div>
+                            </li>
+                            <li>
+                                <div class="integral_list_n integral_list_n_c4">{yun:}$config.integral_login{/yun}</div>
+                                <div class="integral_listname">每天第一次登录</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_login{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s">今日已登录 </span></div>
+                            </li>
+                            <li>
+                                <div class="integral_list_n integral_list_n_c5">{yun:}$config.integral_login{/yun}</div>
+                                <div class="integral_listname">每日签到</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_signin{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s"> {yun:}if $statusList.signin{/yun}
+                  今日已签到
+                  {yun:}else{/yun} <a href="index.php" target="_blank"  class="integral_list_bth_a">去签到</a> {yun:}/if{/yun}</span></div>
+                            </li>
+                            <li>
+                                <div class="integral_list_n integral_list_n_c6">{yun:}$config.integral_emailcert{/yun}</div>
+                                <div class="integral_listname">认证电子邮箱</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_emailcert{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun} </div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s">{yun:}if $statusList.emailChecked{/yun}
+                  已验证
+                  {yun:}else{/yun} <a href="index.php?c=binding" 
+							target="_blank"  class="integral_list_bth_a">邮箱认证</a> {yun:}/if{/yun}</span></div>
+                            </li>
+                            <li>
+                                <div class="integral_list_n integral_list_n_c7">{yun:}$config.integral_mobliecert{/yun}</div>
+                                <div class="integral_listname">认证手机号码</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_mobliecert{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s">{yun:}if $statusList.phoneChecked{/yun}
+                  已验证
+                  {yun:}else{/yun} <a href="index.php?c=binding" 
+							target="_blank"  class="integral_list_bth_a">手机验证</a> {yun:}/if{/yun} </span></div>
+                            </li>
+                            <li>
+                                <div class="integral_list_n integral_list_n_c8">{yun:}$config.integral_map{/yun}</div>
+                                <div class="integral_listname">设置企业地图</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_map{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s"> {yun:}if $statusList.map{/yun}
+                  已设置
+                  {yun:}else{/yun} <a href="index.php?c=map" 
+							target="_blank"  class="integral_list_bth_a">设置地图</a> {yun:}/if{/yun} </span></div>
+                            </li>
+                            {yun:}if $config.integral_banner_type=='1'{/yun}
+                            <li>
+                                <div class="integral_list_n integral_list_n_c9">{yun:}$config.integral_banner{/yun}</div>
+                                <div class="integral_listname">上传企业横幅</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_banner{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s"> {yun:}if $statusList.banner{/yun}
+                  已上传
+                  {yun:}else{/yun} <a href="index.php?c=banner" 
+							target="_blank" class="integral_list_bth_a">上传横幅</a>{yun:}/if{/yun}</span></div>
+                            </li>
+                            {yun:}/if{/yun}
+                            <li>
+                                <div class="integral_list_n integral_list_n_c10">{yun:}$config.integral_comcert{/yun}</div>
+                                <div class="integral_listname">认证营业执照</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_comcert{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s">{yun:}if $statusList.yyzz{/yun}
+                  已验证
+                  {yun:}else{/yun} <a href="index.php?c=binding" 
+							target="_blank" class="integral_list_bth_a">认证营业执照</a> {yun:}/if{/yun}</span></div>
+                            </li>
+                            {yun:}if $config.integral_question_type==1{/yun} {yun:}if $statusList.question{/yun}
+                            <li>
+                                <div class="integral_list_n integral_list_n_c11">{yun:}$config.integral_question{/yun}</div>
+                                <div class="integral_listname">发布问题</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_question{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s"><a href="{yun:}url m=ask c=addquestion {/yun}" 
+					target="_blank"  class="integral_list_bth_a">发布问题</a></span></div>
+                            </li>
+                            {yun:}else{/yun}
+                            <li>
+                                <div class="integral_list_n integral_list_n_c2">{yun:}$config.integral_question{/yun}</div>
+                                <div class="integral_listname">发布问题</div>
+                                <div class="integral_list_p"> +{yun:}$config.integral_question{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s">已发布</span></div>
+                            </li>
+                            {yun:}/if{/yun} {yun:}/if{/yun} {yun:}if $config.integral_answer_type==1{/yun} {yun:}if $statusList.answer{/yun}
+                            <li>
+                                <div class="integral_list_n integral_list_n_c3">{yun:}$config.integral_answer{/yun}</div>
+                                <div class="integral_listname">回答问题</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_answer{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s"><a href="{yun:}url m=ask {/yun}#last-question" 
+              target="_blank"  class="integral_list_bth_a">回答问题</a></span></div>
+                            </li>
+                            {yun:}else{/yun}
+                            <li>
+                                <div class="integral_list_n integral_list_n_c13">{yun:}$config.integral_answer{/yun}</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_answer{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s">已回答</span></div>
+                            </li>
+                            {yun:}/if{/yun} {yun:}/if{/yun} {yun:}if $config.integral_answerpl_type==1{/yun} {yun:}if $statusList.answerpl{/yun}
+                            <li>
+                                <div class="integral_list_n integral_list_n_c14">{yun:}$config.integral_answerpl{/yun}</div>
+                                <div class="integral_listname">评论回答</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_answerpl{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s"><a href="{yun:}url m=ask {/yun}#last-question"  target="_blank"  class="integral_list_bth_a">评论回答</a></span></div>
+                            </li>
+                            {yun:}else{/yun}
+                            <li>
+                                <div class="integral_list_n integral_list_n_c14">{yun:}$config.integral_answerpl{/yun}</div>
+                                <div class="integral_listname">评论回答</div>
+                                <div class="integral_list_p">+{yun:}$config.integral_answerpl{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+                                <div class="integral_list_bth"><span class="integral_list_bth_s">已评论</span></div>
+                            </li>
+                            {yun:}/if{/yun} {yun:}/if{/yun}
+                        </ul>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

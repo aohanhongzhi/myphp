@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+ 
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">分站管理员列表主要显示该网站所有分站管理员用户，包括分站管理员可以设置不同的管理员权限！</div>
+</div>
+</div>
+<div class="clear"></div>
+<div class="admin_new_search_box">
+<a href="index.php?m=admin_siteadmin&c=add" class="admin_new_cz_tj">+ 添加管理员</a>
+</div>
+<div class="clear"></div>
+
+<div class="table-list">
+  <div class="admin_table_border">
+    <table width="100%">
+      <thead>
+        <tr class="admin_table_top">
+          <th width="7%">编号</th>
+          <th width="12%" align="left">登录名</th>
+          <th width="12%" align="left">权限</th>
+          <th width="12%" align="left">真实姓名</th>
+          <th width="12%" class="admin_table_th_bg" align="left">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+       
+      {yun:}foreach item=v from=$rows{/yun}
+      <tr>
+        <td height="17" align="center" style="cursor:pointer;">{yun:}$v.uid{/yun}</td>
+        <td align="left" style="cursor:pointer;">{yun:}$v.username{/yun}</td>
+        <td align="left" style="cursor:pointer;">{yun:}$v.group_name{/yun}</td>
+        <td align="left" style="cursor:pointer;">{yun:}$v.name{/yun}</td>
+        <td  align="left">
+		
+        {yun:}if $v.did{/yun}<a href="index.php?m=admin_siteadmin&c=add&uid={yun:}$v.uid{/yun}"  class="admin_new_c_bth">修改</a>{yun:}else{/yun}<a href="index.php?m=admin_user&c=add&c=add&uid={yun:}$v.uid{/yun}"  class="admin_new_c_bth">修改</a>{yun:}/if{/yun}
+		<a href="javascript:;" onClick="layer_del('确定要删除？','index.php?m=admin_user&c=deluser&uid={yun:}$v.uid{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a>
+        </td>
+      </tr>
+      {yun:}/foreach{/yun}
+	  <tr>
+	  <td colspan="5" class="digg">{yun:}$pagenav{/yun}</td>
+          </tr>
+        </tbody>
+      
+    </table>
+  </div>
+</div>
+</div>
+	<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+</body>
+</html>

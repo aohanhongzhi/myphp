@@ -1,0 +1,92 @@
+{yun:}include file="$askstyle/header.htm"{/yun}
+<div class="content">
+    <div class="ask_navcur">当前位置：首页 > 话题</div>
+
+    <div class="left_cen">
+        <div class="ask_tit mt15" style="padding-bottom:0px;"><span class="ask_tit_icon_s"><i class="ask_tit_icon"></i>话题广场</span></div>
+        <div class="hot_tagfl_con" style="padding-bottom:0px;">
+            <a href="{yun:}url m=ask c=topic{/yun}" {yun:}if ($smarty.get.pid<1){/yun}class="cur" {yun:}/if{/yun}>全部话题</a>
+            {yun:}qcache key=key item=qclasslist name=qcache{/yun}
+            <a href="{yun:}url m=ask c=topic pid='`$qclasslist.id`'{/yun}" {yun:}if ($smarty.get.pid==$qclasslist.id){/yun}class="cur" {yun:}/if{/yun}>{yun:}$qclasslist.name{/yun}</a>
+            {yun:}/qcache{/yun}
+        </div>
+        {yun:}qclass classid='auto.pid' order=atn item=qlist name=qlist_one{/yun}
+        <dl class="toppic_leftlist">
+            <dt><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$qlist.pic{/yun}" /></dt>
+            <dd>
+                <div class="toppic_name">
+                    <a href="{yun:}url m=ask c=search cid='`$qlist.id`'{/yun}" class="toppic_name_a">{yun:}$qlist.name{/yun}</a>
+                    <!-- <span class="att q{yun:}$qlist.id{/yun}">
+							{yun:}if $qlist.isatn=='1'{/yun}				
+								<a href="javascript:void(0)" onclick="attention('{yun:}$qlist.id{/yun}','2','{yun:}url m=ask c=friend a=attention{/yun}');" class="watch_qxgz" title="取消关注">取消关注</a>
+							{yun:}else{/yun}
+                         	   {yun:}if $uid{/yun}
+								<a href="javascript:void(0)" class="watch_gz" onclick="attention('{yun:}$qlist.id{/yun}','2','{yun:}url m=ask c=friend a=attention{/yun}');">+  关注</a>
+                                {yun:}else{/yun}
+                                <a href="javascript:void(0)"  onclick="showlogin('');" class='watch_gz'>+  关注</a>
+                                {yun:}/if{/yun}
+							{yun:}/if{/yun}  </span>--></div>
+                <div class="toppic_p">{yun:}$qlist.intro|mb_substr:0:80:'utf-8'{/yun}</div>
+            </dd>
+        </dl>
+
+        {yun:}/qclass{/yun}
+
+    </div>
+    <div class="ask_index_right">
+
+        <div class="ask_tw" style="margin-top:0px;">
+            <div class="ask_tw_t">职场问答</div>
+            <div class="ask_tw_p">给你职场领域最专业的帮助</div>
+
+            {yun:}if $uid{/yun}
+            <a href="{yun:}url m=ask c=addquestion{/yun}" target="_blank" class="ask_tw_btn">+ 我要提问</a>
+            {yun:}else{/yun}
+            <a href="javascript:void(0);" onclick="showlogin('');" class="ask_tw_btn">+ 我要提问</a>
+            {yun:}/if{/yun}
+
+        </div>
+
+        <div class="ask_index_right_box">
+            <div class="ask_index_ask_rtit"><span class="ask_index_ask_rtit_s">话题达人</span></div>
+            <div style="padding-top:10px;">
+                {yun:}foreach from=$recom item=rlist{/yun}
+                <div class="hot_userdet">
+                    <div class="user_det1">
+                        <div class="user_mes">
+                            <div class="user_pho">
+                                <img src="{yun:}$rlist.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_friend_icon{/yun}',2);" />
+                            </div>
+                            <div class="user_name">
+                                <p>
+                                    <a href="{yun:}url m=ask c=friend a=myquestion uid='`$rlist.uid`'{/yun}" target="_blank">{yun:}$rlist.nickname{/yun}</a>
+                                </p>
+                                <span>回答总数：<font>{yun:}$rlist.num{/yun}</font> 被赞同总数：<font>{yun:}$rlist.support{/yun}</font></span>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {yun:}foreachelse{/yun}
+                <div class="ask_r_no fl">暂无数据！</div>
+                {yun:}/foreach{/yun}
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$ask_style{/yun}/js/question.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.attention .watch_gz');
+</script>
+<![endif]-->
+{yun:}include file="$askstyle/footer.htm"{/yun}

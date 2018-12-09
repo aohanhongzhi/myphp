@@ -1,0 +1,79 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun} 
+<!--账号设置-->
+<div class="yunset_box">
+	<a href="index.php?c=info" class="yunset_box_photo">
+		{yun:}if $resume.sex==1{/yun}
+			<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$resume.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);">
+		{yun:}else{/yun}
+			<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$resume.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_iconv{/yun}',2);">
+		{yun:}/if{/yun}
+		<div class="">{yun:}$username{/yun}</div>
+		<div class="yunset_box_info">完善基本资料</div>
+	</a>
+</div>
+
+<ul class="yunset mt15">
+	<li>
+		<a href="index.php?c=idcard">
+			实名认证 			
+			{yun:}if $resume.idcard_status==1{/yun}
+				<span class="yunset_tip">身份已认证</span>
+			{yun:}else{/yun}
+				{yun:}if $resume.idcard_pic{/yun}
+    				{yun:}if $resume.idcard_status==2{/yun}
+    					<span class="yunset_tip">审核未通过</span>
+    				{yun:}else{/yun}
+			    		<span class="yunset_tip">等待管理员审核</span>
+			        {yun:}/if{/yun}
+			    {yun:}else{/yun} 
+			    	<span class="yunset_tip">未认证</span>
+			    {yun:}/if{/yun}
+			{yun:}/if{/yun}
+		</a>
+	</li>
+    
+</ul>
+
+<ul class="yunset mt15">
+	<li class="yunset_yx">
+		<a href="index.php?c=bindingbox&type=moblie">
+			<span class="yunset_list_maxheight">手机</span>
+		<span class="yunset_tip ">
+				（{yun:}if $resume.moblie_status==1{/yun}已绑定{yun:}else{/yun}未验证{yun:}/if{/yun}）
+				 {yun:}if $resume.telphone{/yun} {yun:}$resume.telphone{/yun} {yun:}else{/yun} 
+				  {yun:}/if{/yun}     <div class=""> 手机用于登录和找回密码请谨慎填写</div>
+			</span>
+		</a>
+	</li>
+	
+	<li class="yunset_yx">
+		<a href="index.php?c=bindingbox&type=email">
+			<span class="yunset_list_maxheight">邮箱</span>
+			<span class="yunset_tip ">
+				（{yun:}if $resume.email_status==1{/yun}已绑定{yun:}else{/yun}未绑定{yun:}/if{/yun}）
+				 {yun:}if $resume.email{/yun}  {yun:}$resume.email{/yun}  {yun:}else{/yun} {yun:}/if{/yun}  
+                 <div class=""> 邮箱用于登录和找回密码请谨慎填写</div>
+ 			</span>
+		</a>
+	</li>
+	<li><a href="index.php?c=binding">社交账号绑定</a></li>
+</ul>
+
+<ul class="yunset mt15">
+	<li><a href="index.php?c=privacy">隐私设置</a></li>
+</ul>
+
+<ul class="yunset mt15">
+	<li><a href="index.php?c=password">密码设置</a></li>
+    
+    {yun:}if $setname{/yun}
+    	<li><a href="index.php?c=setname">用户名修改	<div class="yunset_tip ">您有一次修改账户名的机会</div></a></li>
+    {yun:}/if{/yun}
+    
+	<li><a href="{yun:}url m=wap c='advice'{/yun}">求助反馈</a></li>
+</ul>
+
+<div class="yunset_logout mt15">
+	<a	href="javascript:;" onclick="islogout('{yun:}url m=wap c=loginout{/yun}','确认退出吗？');">退出登录</a>
+</div>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

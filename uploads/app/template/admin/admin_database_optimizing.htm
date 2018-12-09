@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<title>后台管理</title> 
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="tabs_info">
+    <ul>
+      <li> <a href="index.php?m=database">备份数据</a></li>
+      <li><a href="index.php?m=database&c=backin">恢复数据</a></li>
+	  <li class="curr"> <a href="index.php?m=database&c=optimizing">优化数据</a></li>
+	  <li><a href="index.php?m=database&c=clear">数据清理</a></li>
+    </ul>
+  </div>
+  <div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+    <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+    <div class="admin_new_tip_list_cont">
+      <div class="admin_new_tip_list">手动清理数据表碎片。</div>
+	  <div class="admin_new_tip_list">定期清理数据表碎片可以提升数据库的查询速度。</div>
+    </div>
+  </div>
+  <div class="clear"></div>
+<div>
+</div>
+<div class="table-list mt10">
+<div class="admin_table_border">
+<table width="100%">
+<thead>
+<tr class="admin_table_top">
+<th align="left">数据表</th>
+<th align="left">数据表类型</th>
+<th align="left">数量</th>
+<th align="left">数据</th>
+<th align="left">碎片</th>
+<th align="left">字符集</th>
+<th align="left">操作</th>
+</tr>
+<tbody>
+  {yun:}foreach item=v key=key from=$list{/yun}
+<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun}>
+<td width="300" align="left">{yun:}$v.name{/yun}</td>
+<td width="100" align="left">{yun:}$v.type{/yun}</td>
+<td width="100" align="left">{yun:}$v.num{/yun}条</td>
+<td width="100" align="left">{yun:}$v.size{/yun}</td>
+<td width="100" align="left">{yun:}$v.chip{/yun}</td>
+<td width="100" align="left">{yun:}$v.charset{/yun}</td>
+<td width="150" align="left">
+<a href="javascript:;" class="admin_new_c_bth" onclick="layer_del('','index.php?m=database&c=sql&name={yun:}$v.name{/yun}&type=2');">修复</a>
+<a href="javascript:;" class="admin_new_c_bth" onclick="layer_del('','index.php?m=database&c=sql&name={yun:}$v.name{/yun}&type=3');">优化</a>
+</td>
+
+  </tr>
+ {yun:}/foreach{/yun} 
+ </tbody>
+ </thead>
+</table>
+</div>
+</div>
+</div>
+</body>
+</html>

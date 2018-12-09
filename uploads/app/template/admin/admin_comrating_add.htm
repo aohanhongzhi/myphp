@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="./images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="./images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="./images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title></title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+
+<div class="tabs_info">
+		<ul>
+   		<li><a href="index.php?m=admin_comrating" >套餐设置</a></li> 
+	   	<li class="curr"><a href="index.php?m=admin_comrating&c=server">增值服务</a> </li> 
+     </ul>
+	</div>
+    
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">增值服务关乎您的收入问题，请添加后编辑服务套餐，谨慎修改并注意整体的合理性。</div>
+</div>
+</div>
+
+<div class="clear"></div>
+  <div class="admin_comclass_add_box">
+
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+<form name="myform" target="supportiframe" action="index.php?m=admin_comrating&c=save" method="post" id="myform" onSubmit="return checkform();"  class="layui-form">
+<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+<div class="admin_comclass_add_list">
+    <div class="admin_comclass_add_name">增值类型名称</div>
+    <div class="admin_comclass_add_right">
+        
+         <div class="layui-form-item">
+          <div class="layui-input-block">
+            <div class="layui-input-inline">
+              <input name="name" id="name"  autocomplete="off" class="layui-input" type="text" value="{yun:}$row.name{/yun}" size="63"/>
+            </div>
+             <span class="admin_web_tip">
+                      如：简历下载服务
+              </span>
+          </div>
+        </div>
+        </div>
+        </div>
+        <div class="admin_comclass_add_list">
+    <div class="admin_comclass_add_name">状态</div>
+    <div class="admin_comclass_add_right">
+        <div class="layui-form-item">
+              <div class="layui-input-block">
+              <div class="layui-input-inline">
+                  <input name="display" value="1" title="启用" {yun:}if $row.display==1{/yun}checked{yun:}/if{/yun} type="radio"/>
+                  <input name="display" value="0" title="不启用" {yun:}if $row.display==0{/yun}checked{yun:}/if{/yun} type="radio"/>
+                  </div>
+                  <span class="admin_web_tip">( 前台是否可见 )</span>
+              </div>
+            </div>
+        </div>
+        </div>
+<div class="admin_comclass_add_list">
+    <div class="admin_comclass_add_name">排序</div>
+    <div class="admin_comclass_add_right">
+           <div class="layui-form-item">
+          <div class="layui-input-block">
+            <div class="layui-input-inline">
+              <input name="sort" id="sort"  autocomplete="off" class="layui-input" type="text" value="{yun:}$row.sort{/yun}" size="63"/>
+            </div>
+             <span class="admin_web_tip">
+                      大小前后
+              </span>
+          </div>
+        </div>
+        </div>
+        </div>
+   <div class="admin_comclass_add_list">
+    <div class="admin_comclass_add_right">
+    <input name="id" type="hidden" value="{yun:}$row.id{/yun}">
+	{yun:}if !$row.id{/yun}
+		<input class="layui-btn layui-btn-normal" name="useradd" type="submit" value="保存" id="dosubmit"> 
+	{yun:}else{/yun}
+		<input class="layui-btn layui-btn-normal" name="userup" type="submit" value="更新" id="dosubmit">
+	{yun:}/if{/yun} 
+        </div>
+        </div>
+
+ </form>
+</div>
+</div>
+
+<script>
+layui.use(['layer', 'form'], function(){});	
+function checkform(){
+	if($("#name").val()==""){
+		parent.layer.msg("增值包名称不能为空",2,8);
+		return false;
+	}
+}
+$(".tips_class").hover(function(){ 
+	var msg_id=$(this).attr('id'); 
+	var msg=$('#'+msg_id+' + font').html();
+	if($.trim(msg)!=''){
+		layer.tips(msg, this, {
+		guide: 1, 
+		style: ['background-color:#5EA7DC; color:#fff;top:-7px', '#5EA7DC']
+		}); 
+		$(".xubox_layer").addClass("xubox_tips_border");
+	} 
+},function(){
+	var msg_id=$(this).attr('id');
+	var msg=$('#'+msg_id+' + font').html();
+	if($.trim(msg)!=''){
+		layer.closeAll('tips');
+	} 
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="./images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="./images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<link href="./images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title></title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">添加管理员功能根据运营需求，超级管理员可以自由添加网站的多个超级管理员、分站管理员和CRM业务人员等常规化设置。</div>
+</div>
+</div>
+<div class="clear"></div>
+
+
+<div class="common-form">
+<div class="tag_box mt10">
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+<form name="myform" action="index.php?m=admin_user&c=save"   target="supportiframe" method="post" id="myform" onsubmit="return saveUseradd();" class="layui-form">
+<input type="hidden" value="{yun:}$adminuser.uid{/yun}" name="uid" />
+<table width="100%" class="table_form " >
+           <tbody>
+  <tr class="admin_table_trbg">
+    <th width="160" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+    <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>   
+  </tr>
+ </tbody>
+    <tr>
+        <th width="160">用户名：</th>
+        <td>
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <input type="text" name="username" id="username"  lay-verify="required" placeholder="请输入用户名" value="{yun:}$adminuser.username{/yun}" size="30"  autocomplete="off" class="layui-input input-text">
+            </div>
+          </div>
+        </td>
+    </tr>
+      	<tr class="admin_table_trbg" >
+        <th>密码：</th>
+        <td>
+         <div class="layui-form-item">
+            <div class="layui-input-inline">
+              <input type="password" name="password" id="password"  lay-verify="required" placeholder="请输入密码" size="30"  autocomplete="off" class="layui-input input-text">
+            </div>
+            {yun:}if is_array($adminuser){/yun}<span class="admin_web_tip">如果密码留空则不修改密码！</span>{yun:}/if{/yun}
+          </div>
+        </td>
+    </tr>
+<tr>
+    <th>真实姓名：</th>
+<td>
+<div class="layui-form-item">
+            <div class="layui-input-block">
+              <input type="text" name="name" id="name"  lay-verify="required" placeholder="请输入真实姓名" value="{yun:}$adminuser.name{/yun}" size="30"  autocomplete="off" class="layui-input input-text">
+            </div>
+          </div>
+</td>
+</tr>
+<tr class="admin_table_trbg" >
+    <th>用户组：</th>
+<td>
+
+	<div class="layui-input-inline">
+      <select name="m_id" id="m_id_val">
+        <option value="">请选择</option>
+        {yun:}foreach item=v from=$user_group{/yun}
+        <option value="{yun:}$v.id{/yun}"{yun:}if $v.id eq $adminuser.m_id{/yun}selected{yun:}/if{/yun}>{yun:}$v.group_name{/yun}</option>
+        {yun:}/foreach{/yun}
+      </select>
+    </div>
+
+</td>
+</tr>
+<tr >
+    <th>是否可以登录分站：</th>
+<td>
+
+<div class="layui-form-item">
+        <div class="layui-input-block">
+            <input name="isdid" value="1" title="可以登录"
+              {yun:}if $adminuser.isdid=="1"{/yun}
+               checked 
+              {yun:}/if{/yun}
+               type="radio"/>
+            <input name="isdid" value="2" title="不可以登录"
+              {yun:}if $adminuser.isdid=="2"{/yun}
+               checked 
+              {yun:}/if{/yun}
+             type="radio"/>
+        </div>
+      </div>
+</td>
+</tr>
+<tr>
+ <th style="border-bottom:none;">&nbsp;</th>
+          <td align="left" style="border-bottom:none;"> 
+	<input class="layui-btn layui-btn-normal" name="useradd" type="submit"  value="提交" id="dosubmit">
+</td>
+ </table>
+ <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+ </form>
+</div>
+</div></div>
+<script language="javascript">
+  layui.use(['layer', 'form','element'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+	,element = layui.element
+    ,$ = layui.$;
+
+  });//end layui.use()
+
+	function saveUseradd(){
+		var username = $.trim($("#username").val());
+		var password = $.trim($("#password").val());
+		var name = $.trim($("#name").val());
+		var m_id_val = $.trim($("#m_id_val").val());
+		var isdid = $('input[name="isdid"]:checked').val();
+		if(username==""){parent.layer.msg('请填写用户名！', 2, 8);return false;}
+    {yun:}if !is_array($adminuser){/yun}
+		if(password==""){parent.layer.msg('请填写密码！', 2, 8);return false;}
+    {yun:}/if{/yun}
+		if(name==""){parent.layer.msg('请填写真实姓名！', 2, 8);return false;}
+		if(m_id_val==""){parent.layer.msg('请选择用户组类型！', 2, 8);return false;}
+		if(!isdid){parent.layer.msg('请选择是否登录分站！', 2, 8);return false;}
+	}
+</script>
+</body>
+</html>

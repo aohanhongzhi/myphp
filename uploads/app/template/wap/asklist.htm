@@ -1,0 +1,42 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun} 
+
+{yun:}if $getinfo.cid{/yun}
+{yun:}qcache classid='auto.cid' limit=1 item=cache name=cache_one{/yun}
+<div class="asktoppic_tt">
+     <div class="asktopic_tt_img"><img style="width:50px;height:50px;" src="{yun:}$config.sy_weburl{/yun}/{yun:}$cache.pic{/yun}"></div>
+     <div class="asktopic_tt_wr"># {yun:}$cache.name{/yun} #</div>
+     <div class="asktopic_tt_ct">{yun:}$cache.intro{/yun}</div>
+</div>
+{yun:}/qcache{/yun}
+{yun:}/if{/yun}
+
+
+<!--top-->
+
+    
+{yun:}qlist item=list name=list keyword='auto.keyword' ispage=1 t_len=42 order='auto.order' cid='auto.cid' limit=20{/yun}
+<div class="ask_ct_list mt10">
+ <div class="ask_hotweek_name"><a href="{yun:}url m=wap c=ask a=content id='`$list.id`'{/yun}">{yun:}$list.title|mb_substr:0:42:"utf-8"{/yun}</a></div>
+       <div class="ask_hotweek_p"> {yun:}$list.content|strip_tags|mb_substr:0:36:'utf-8'{/yun}</div>
+    
+         <div class="ask_jx_info"><span class="ask_jx_data ask_jx_data_hd">{yun:}$list.answer_num{/yun} 回答</span><span class="ask_jx_data ask_jx_data_yl">{yun:}$list.visit{/yun} 阅读</span><span class="ask_jx_data ask_jx_data_gz">{yun:}$list.atnnum{/yun} 关注</span></div>
+         
+       <div class="ask_jx_info_img" style="margin-top:5px;"><img src="{yun:}$list.pic{/yun}" width="20" height="20"> <a href="{yun:}url m=wap c=ask a=myquestion uid='`$list.uid`'{/yun}" class="ask_jx_username">{yun:}$list.nickname|mb_substr:0:15:'utf-8'{/yun}</a> <span class="ask_jx_time">{yun:}$list.add_time|date_format:"%Y-%m-%d"{/yun}</span></div>
+       
+
+</div>
+{yun:}/qlist{/yun} 
+{yun:}if $total==0{/yun}
+<div style="padding:0px 10px 10px 10px;">
+<div class="wap_member_no">
+ 暂时没有相关问题
+ <div class=""><a href="{yun:}if $uid{/yun}{yun:}url m=wap c=ask a=addquestion {/yun}{yun:}else{/yun}{yun:}url m=wap c=login{/yun}{yun:}/if{/yun}" class="wap_member_bth">我来提问</a></div>               	
+</div></div>
+{yun:}else{/yun} 
+<div class="pages" style="margin-top:10px;">{yun:}$pagenav{/yun}</div> 
+{yun:}/if{/yun}  
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+        <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+        <title>后台管理</title>
+    </head>
+
+    <body class="body_ifm">
+        <div class="infoboxp">
+            <div class="admin_new_tip">
+                <a href="javascript:;" class="admin_new_tip_close"></a>
+                <a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+                <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+                <div class="admin_new_tip_list_cont">
+
+                    <div class="admin_new_tip_list">该页面展示了店铺设置，操作。</div>
+
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            <div style="height:10px;"></div>
+
+            <div class="main_tag">
+                <div class="clear"></div>
+                <div class="tag_box">
+                    <div>
+                        <form method="post" class="layui-form">
+                            <table width="100%" class="table_form">
+                                <tr>
+                                    <th width="220" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+                                    <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+                                </tr>
+
+                                <tr class="admin_table_trbg">
+                                    <th width="220">前台店铺招聘发布次数：</th>
+                                    <td><input class="input-text tips_class input_text_rp" type="text" name="sy_once" id="sy_once" value="{yun:}$config.sy_once{/yun}" size="10" maxlength="255" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" /> 次/天&nbsp;&nbsp;&nbsp; <span class="admin_web_tip">提示：0为不限</span></td>
+                                </tr>
+
+                                <tr class="admin_table_trbg">
+                                    <th width="220">查看店铺招聘联系方式：</th>
+                                    <td>
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <input type="radio" name="user_wzp_link" value="0" title="公开" {yun:}if $config.user_wzp_link!=1{/yun}checked{yun:}/if{/yun}>
+                                                <input type="radio" name="user_wzp_link" value="1" title="登录查看" {yun:}if $config.user_wzp_link==1{/yun}checked{yun:}/if{/yun}>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th width="220">店铺招聘审核：</th>
+                                    <td>
+                                        <input type="checkbox" name="com_fast_status" id="com_fast_status" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.com_fast_status=="0" {/yun} checked {yun:}/if{/yun} />
+                                    </td>
+                                </tr>
+                                <tr class="admin_table_trbg">
+                                    <th width="220">店铺招聘刷新次数：</th>
+                                    <td><input class="input-text tips_class input_text_rp" type="text" name="com_xin" id="com_xin" value="{yun:}$config.com_xin{/yun}" size="20" maxlength="55" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />次</td>
+                                </tr>
+                               	<tr class="admin_table_trbg once_price" >
+                                    <th width="220">店铺招聘收费金额：</th>
+                                    <td><input class="input-text tips_class input_text_rp" type="text" name="once_pay_price" id="once_pay_price" maxlength="6" value="{yun:}$config.once_pay_price{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />元<span class="admin_web_tip">提示：0为免费</span></td>
+                                </tr>
+                                 <tr>
+                                 <th style="border-bottom:none;">&nbsp;</th>
+          <td align="left" style="border-bottom:none;"> 
+                                        <input class="layui-btn layui-btn-normal " id="config" type="button" name="config" value="提交" />&nbsp;&nbsp;
+                                        <input class="layui-btn layui-btn-normal " type="reset" value="重置" /></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+        <script>
+            $(function() {
+                $(".tips_class").hover(function() {
+                    var msg_id = $(this).attr('id');
+                    var msg = $('#' + msg_id + ' + font').html();
+                    if($.trim(msg) != '') {
+                        layer.tips(msg, this, {
+                            guide: 1,
+                            style: ['background-color:#5EA7DC; color:#fff;top:-7px', '#5EA7DC']
+                        });
+                        $(".xubox_layer").addClass("xubox_tips_border");
+                    }
+                }, function() {
+                    var msg_id = $(this).attr('id');
+                    var msg = $('#' + msg_id + ' + font').html();
+                    if($.trim(msg) != '') {
+                        layer.closeAll('tips');
+                    }
+                });
+                $("#config").click(function() {
+                    $.post("index.php?m=admin_tiny&c=tinyset", {
+                        sy_once: $("#sy_once").val(),
+                        com_fast_status: $("input[name=com_fast_status]").is(":checked") ? 0 : 1,
+                        user_wzp_link: $("input[name=user_wzp_link]:checked").val(),
+                        com_xin: $("#com_xin").val(),
+						once_pay_price: $("#once_pay_price").val(),
+                        pytoken: $("#pytoken").val()
+                    }, function(data, textStatus) {
+                        config_msg(data);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    });
+                });
+            })
+        </script>
+        <script type="text/javascript">
+            layui.use(['layer', 'form'], function() {
+                var layer = layui.layer,
+                    form = layui.form,
+                    $ = layui.$;
+            });
+        </script>
+    </body>
+
+</html>

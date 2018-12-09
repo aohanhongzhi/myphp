@@ -1,0 +1,1282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/job.cache.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/class.public.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/class.public.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<!--<script src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>-->
+<script src="{yun:}$config.sy_weburl{/yun}/app/template/member/user/js/search.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript">
+function saveexpect(){
+	var pytoken = $.trim($("#pytoken").val());
+	var name = $.trim($("#expect_name").val());
+	var hy = $.trim($("#hy_val").val());
+	var job_classid = $.trim($("#job_class").val());
+	var city_classid = $.trim($("#city_class").val());
+//	var provinceid = $.trim($("#provinceid").val());
+//	var cityid = $.trim($("#cityid").val());
+//	var three_cityid = $.trim($("#three_cityid").val());
+	var minsalary = $.trim($("#minsalary").val());
+	var maxsalary = $.trim($("#maxsalary").val());
+	var uid = $.trim($("#uid").val());
+	var report = $.trim($("#user_report_val").val());
+	var typeid = $.trim($("#user_type_val").val());
+	var jobstatus = $.trim($("#user_jobstatus_val").val());
+	var eid = $.trim($("#eid").val());
+	if(name==""){parent.layer.msg('请填写期望岗位！', 2, 8);return false; }
+	if(hy==""){parent.layer.msg('请选择从事行业！', 2, 8);return false;}
+	if(job_classid==""){parent.layer.msg('请选择从事职位！', 2, 8);return false;}
+	if(minsalary==""||minsalary=="0"){parent.layer.msg('请填写期望月薪！', 2, 8);return false;}
+	if(maxsalary&&parseInt(maxsalary)<=parseInt(minsalary)){parent.layer.msg('最高薪资必须大于最低薪资！', 2, 8);return false;}
+	if(city_classid==''){parent.layer.msg('请选择工作地点！', 2, 8);return false;}
+	if(report==""){parent.layer.msg('请选择到岗时间！', 2, 8);return false;}
+	if(jobstatus==""){parent.layer.msg('请选择求职状态！', 2, 8);return false;}
+	parent.layer.load('执行中，请稍候...',0);
+	$.post("index.php?m=admin_resume&c=saveexpect",{name:name,hy:hy,job_classid:job_classid,city_classid:city_classid,minsalary:minsalary,maxsalary:maxsalary,report:report,eid:eid,submit:"1",uid:uid,pytoken:pytoken,type:typeid,jobstatus:jobstatus},function(data){
+		parent.layer.closeAll('loading');
+		if(data==0){
+			parent.layer.msg('操作失败！', 2, 8);return false;
+		}else if(data==1){
+			parent.layer.msg('简历数已经超过系统设置的简历数了！', 2, 8);return false;
+		}else{
+			data=eval('('+data+')');
+			if(eid==""){
+				window.location.href="index.php?m=admin_resume&c=saveresume&uid="+uid+"&e="+data.id;
+			}else{
+				$("#addresume").hide();
+				/*if(three_cityid<1){
+				    $("#cityshowth").addClass('dn');
+				}*/
+				$("#resume").show();
+				$("#expect_name_html").html('<div class="admin_td_h">'+data.name+'</div>');
+				$("#hy_html").html('<div class="admin_td_h">'+data.hy+'</div>');
+				$("#job_class_html").html('<div class="admin_td_h">'+data.job_classname+'</div>');
+				$("#salary_html").html('<div class="admin_td_h">￥'+data.minsalary+'-'+data.maxsalary+'</div>');
+				$("#cityid_html").html('<div class="admin_td_h">'+data.city+'</div>');
+				$("#report_html").html('<div class="admin_td_h">'+data.report+'</div>');
+				$("#type_html").html('<div class="admin_td_h">'+data.type+'</div>');
+				$("#jobstatus_html").html('<div class="admin_td_h">'+data.jobstatus+'</div>');
+				$("#eid").val(data.id);
+			}
+		}
+	});
+}
+function checkmore(type){
+	$("#add"+type).show();
+	$("#"+type).hide();
+}
+function layerClose(type){
+	$("#add"+type).hide();
+	$("#"+type).show();
+	$("#"+type+"_add_button").show();
+}
+function savework(){
+	var eid = $.trim($("#eid").val());
+	var id = $.trim($("#workid").val());
+ 	
+	var sdate = $.trim($("#work_sdate").val());
+	var edate = $.trim($("#work_edate").val());
+
+	var name = $.trim($("#work_name").val());
+	var department = $.trim($("#work_department").val());
+	var title = $.trim($("#work_title").val());
+	var salary = $.trim($("#work_salary").val());
+	var content = $.trim($("#work_content").val());
+	var pytoken = $.trim($("#pytoken").val());
+	var uid = $.trim($("#uid").val());
+	if(eid==""){
+		parent.layer.msg('请先完善求职意向！', 2,8);
+		return false;
+	}
+	if(name==""){
+		parent.layer.msg('请填写单位名称！', 2,8);
+		return false;
+	}
+	if(sdate==""){
+		parent.layer.msg('工作时间不能为空！', 2,8);
+		return false
+	}
+	if(edate!=''){
+		sdate = sdate.replace(/-/g,"-");
+		edate = edate.replace(/-/g,"-");
+
+		var sd = new Date(Date.parse(sdate));
+		var ed = new Date(Date.parse(edate));
+
+		if(sd>=ed){
+			parent.layer.msg('结束日期必须大于开始日期！', 2,8);
+		}
+	
+	}
+	parent.layer.load('执行中，请稍候...',0);
+	$.post("index.php?m=admin_resume&c=work",{sdate:sdate,edate:edate,name:name,department:department,eid:eid,salary:salary,title:title,content:content,id:id,table:"resume_work",submit:"1",uid:uid,pytoken:pytoken},function(data){
+		parent.layer.closeAll('loading');
+		if(data!=0){
+			data=eval('('+data+')');
+			$("#work").show();
+			$("#addwork").hide();
+			if(id>0){
+				var html='<div class="admin_saversume_pd"><i class="admin_saversume_pd_icon"></i><div class="admin_saversume_tit"><span class="admin_saversume_tit_b">'+data.name+'</span> 担任职位： <span class="admin_saversume_tit_b">'+data.title+'</span> </div><div>'+data.sdate+' - '+data.edate+'</div><div>'+data.content+'</div><div class="admin_saversume_cz"> <a href="javascript:void(0)" onclick="getresume(\'work\',\''+data.id+'\')" class="admin_new_c_bth">修改</a><a href="javascript:void(0)" onclick="resume_del(\'work\',\''+data.id+'\')"class="admin_new_c_bth admin_new_c_bth_sc">删除</a></div></div>';
+				$("#work_"+id).html(html);
+			}else{
+				var html='<div class="admin_saversume_list" id="work_'+data.id+'"><div class="admin_saversume_pd"><i class="admin_saversume_pd_icon"></i><div class="admin_saversume_tit"><span class="admin_saversume_tit_b">'+data.name+'</span> 担任职位： <span class="admin_saversume_tit_b">'+data.title+'</span> </div><div>'+data.sdate+' - '+data.edate+'</div><div>'+data.content+'</div><div class="admin_saversume_cz"> <a href="javascript:void(0)" onclick="getresume(\'work\',\''+data.id+'\')" class="admin_new_c_bth">修改</a><a href="javascript:void(0)" onclick="resume_del(\'work\',\''+data.id+'\')" class="admin_new_c_bth admin_new_c_bth_sc">删除</a></div></div></diov>';
+				$("#work_list").append(html);
+			}
+			$("#work_add_button").show();
+		}else{
+			parent.layer.msg('操作失败！', 2,8);
+		}
+	});
+}
+
+function untiltoday(id){
+	if($("#"+id+"_totoday").attr("checked")=='checked'){
+		$("#"+id+"_edate").attr('disabled','disabled');
+		$("#"+id+"_edate").val('');
+		$("#"+id+"_totoday").removeAttr('disabled');
+ 	}else{
+		$("#"+id+"_edate").removeAttr('disabled');
+		$("#"+id+"_edate").val();
+  	}
+ }
+
+function saveedu(){
+	var eid = $.trim($("#eid").val());
+	var id = $.trim($("#eduid").val());
+
+	var sdate=$.trim($("#edu_sdate").val());
+	var edate=$.trim($("#edu_edate").val());
+ 	
+	var name = $.trim($("#edu_name").val());
+	var title = $.trim($("#edu_title").val());
+	var education = $.trim($("#user_education_val").val());
+	var specialty = $.trim($("#edu_specialty").val());
+	var uid = $.trim($("#uid").val());
+	var pytoken = $.trim($("#pytoken").val());
+	if(eid==""){
+				
+		return false;
+	}
+	if(name==""){
+		layer.msg('请填写学校名称！', 2,8);
+		return false;
+	}
+	if(sdate==""){
+		parent.layer.msg('在校时间不能为空！', 2,8);
+		return false
+	}
+	if(edate!=''){
+		sdate = sdate.replace(/-/g,"-");
+		edate = edate.replace(/-/g,"-");
+
+		var sd = new Date(Date.parse(sdate));
+		var ed = new Date(Date.parse(edate));
+
+		if(sd>=ed){
+			parent.layer.msg('离校日期必须大于入学日期！', 2,8);
+		}
+	
+	}
+	parent.layer.load('执行中，请稍候...',0);
+	$.post("index.php?m=admin_resume&c=edu",{sdate:sdate,edate:edate,name:name,education:education,specialty:specialty,eid:eid,title:title,id:id,table:"resume_edu",submit:"1",uid:uid,pytoken:pytoken},function(data){
+		parent.layer.closeAll('loading');
+		if(data!=0){
+			data=eval('('+data+')');
+			$("#edu").show();
+			$("#addedu").hide();
+			if(id>0){
+				var html='<div class="admin_saversume_pd"><i class="admin_saversume_pd_icon"></i><div class=\"admin_saversume_tit\"><span class=\"admin_saversume_tit_b\">'+data.name+'</span> 班级职务： <span class=\"admin_saversume_tit_b\">'+data.title+'</span></div><div>'+data.sdate+' - '+data.edate+'</div><div> 最高学历：'+data.educationval+' 所学专业：'+data.specialty+'</div><div class=\"admin_saversume_cz\"><a href="javascript:void(0)" onclick="getresume(\'edu\',\''+data.id+'\')" class=\"admin_new_c_bth\">修改</a><a href=\"javascript:void(0)\" onclick=\"resume_del(\'edu\',\''+data.id+'\')\"class=\"admin_new_c_bth admin_new_c_bth_sc\">删除</a></div></div>';
+				$("#edu_"+id).html(html);
+			}else{
+				var html='<div class=\"admin_saversume_list\" id="edu_'+data.id+'"><div class="admin_saversume_pd"><i class="admin_saversume_pd_icon"></i><div class=\"admin_saversume_tit\"><span class=\"admin_saversume_tit_b\">'+data.name+'</span> 班级职务： <span class=\"admin_saversume_tit_b\">'+data.title+'</span></div><div>'+data.sdate+' - '+data.edate+'</div><div> 最高学历：'+data.educationval+' 所学专业：'+data.specialty+'</div><div class=\"admin_saversume_cz\"><a href="javascript:void(0)" onclick="getresume(\'edu\',\''+data.id+'\')"class=\"admin_new_c_bth\">修改</a><a href=\"javascript:void(0)\" onclick=\"resume_del(\'edu\',\''+data.id+'\')\"class=\"admin_new_c_bth admin_new_c_bth_sc\">删除</a></div></div></div>';
+				$("#edu").append(html);
+			}
+			$("#edu_add_button").show();
+		}else{
+			parent.layer.msg('操作失败！', 2,8);
+		}
+	});
+}
+function savetraining(){
+	var eid = $.trim($("#eid").val());
+	var id = $.trim($("#trainingid").val());
+	var date=$.trim($("#training_date").val()).split('~');
+	var sdate = date[0];
+	var edate = date[1];
+	var name = $.trim($("#training_name").val());
+	var title = $.trim($("#training_title").val());
+	var content = $.trim($("#training_content").val());
+	var uid = $.trim($("#uid").val());
+	var pytoken = $.trim($("#pytoken").val());
+	if(eid==""){
+		parent.layer.msg('请先完善求职意向！', 2,8);
+		return false;
+	}
+	if(name==""){
+		parent.layer.msg('请填写培训中心！', 2,8);
+		return false;
+	}
+	if(date==""){
+		parent.layer.msg('培训时间不能为空！', 2,8);
+		return false
+	}
+	parent.layer.load('执行中，请稍候...',0);
+	$.post("index.php?m=admin_resume&c=training",{sdate:sdate,edate:edate,name:name,eid:eid,title:title,content:content,id:id,table:"resume_training",submit:"1",uid:uid,pytoken:pytoken},function(data){
+		parent.layer.closeAll('loading');
+		if(data!=0){
+			data=eval('('+data+')');
+			$("#training").show();
+			$("#addtraining").hide();
+			if(id>0){
+				var html='<div class="admin_saversume_pd"><i class="admin_saversume_pd_icon"></i><div class="admin_saversume_tit"><span class="admin_saversume_tit_b">'+data.name+'</span> 培训方向： <span class="admin_saversume_tit_b">'+data.title+'</span> </div><div>'+data.sdate+' - '+data.edate+'</div><div>'+data.content+'</div><div class="admin_saversume_cz"><a href="javascript:void(0)" onclick="getresume(\'training\',\''+data.id+'\')"class=\"admin_new_c_bth\">修改</a><a href=\"javascript:void(0)\" onclick=\"resume_del(\'training\',\''+data.id+'\')\"class=\"admin_new_c_bth admin_new_c_bth_sc\">删除</a></div></div>';
+				$("#training_"+id).html(html);
+			}else{
+				var html='<div class="admin_saversume_list" id="training_'+data.id+'"><div class="admin_saversume_pd"><i class="admin_saversume_pd_icon"></i><div class="admin_saversume_tit"><span class="admin_saversume_tit_b">'+data.name+'</span> 培训方向： <span class="admin_saversume_tit_b">'+data.title+'</span> </div><div>'+data.sdate+' - '+data.edate+'</div><div>'+data.content+'</div><div class="admin_saversume_cz"><a href="javascript:void(0)" onclick="getresume(\'training\',\''+data.id+'\')"class=\"admin_new_c_bth\">修改</a><a href=\"javascript:void(0)\" onclick=\"resume_del(\'training\',\''+data.id+'\')\"class=\"admin_new_c_bth admin_new_c_bth_sc\">删除</a></div></div></div>';
+				$("#training_list").append(html);
+			}
+			$("#training_add_button").show();
+		}else{
+			parent.layer.msg('操作失败！', 2,8);
+		}
+	});
+}
+function saveproject(){
+	var eid = $.trim($("#eid").val());
+	var id = $.trim($("#projectid").val());
+	var date=$.trim($("#project_date").val()).split('~');
+	var sdate = date[0];
+	var edate = date[1];
+	var name = $.trim($("#project_name").val());
+	var sys = $.trim($("#project_sys").val());
+	var title = $.trim($("#project_title").val());
+	var content = $.trim($("#project_content").val());
+	var uid = $.trim($("#uid").val());
+	var pytoken = $.trim($("#pytoken").val());
+	if(eid==""){
+		parent.layer.msg('请先完善求职意向！', 2,8);
+		return false;
+	}
+	if(name==""){
+		parent.layer.msg('请填写项目名称！', 2,8);
+		return false;
+	}
+	if(date==""){
+		parent.layer.msg('项目时间不能为空！', 2,8);
+		return false
+	}
+	parent.layer.load('执行中，请稍候...',0);
+	$.post("index.php?m=admin_resume&c=project",{sdate:sdate,edate:edate,name:name,sys:sys,eid:eid,title:title,content:content,id:id,table:"resume_project",submit:"1",uid:uid,pytoken:pytoken},function(data){
+		parent.layer.closeAll('loading');
+		if(data!=0){
+			data=eval('('+data+')');
+			$("#project").show();
+			$("#addproject").hide();
+			if(id>0){
+				var html='<div class="admin_saversume_pd"><i class="admin_saversume_pd_icon"></i><div class="admin_saversume_tit"><span class=\"admin_saversume_tit_b\">'+data.name+'</span> 担任职位 <span class=\"admin_saversume_tit_b\">'+data.title+'</span></div><div>'+data.sdate+'-'+data.edate+'</div><div>'+data.content+'</div><div class="\admin_saversume_cz\"><a href="javascript:void(0)" onclick="getresume(\'project\','+data.id+')"class=\"admin_new_c_bth\">修改</a></th><td><a href=\"javascript:void(0)\" onclick=\"resume_del(\'project\','+data.id+')\"class=\"admin_new_c_bth admin_new_c_bth_sc\">删除</a></div>';
+				$("#project_"+id).html(html);
+			}else{
+				var html='<div class=\"admin_saversume_list\"id="project_'+data.id+'"><div class="admin_saversume_pd"><i class="admin_saversume_pd_icon"></i><div class="admin_saversume_tit"><span class=\"admin_saversume_tit_b\">'+data.name+'</span> 担任职位 <span class=\"admin_saversume_tit_b\">'+data.title+'</span></div><div>'+data.sdate+'-'+data.edate+'</div><div>'+data.content+'</div><div class="\admin_saversume_cz\"><a href="javascript:void(0)" onclick="getresume(\'project\','+data.id+')"class=\"admin_new_c_bth\">修改</a></th><td><a href=\"javascript:void(0)\" onclick=\"resume_del(\'project\','+data.id+')\"class=\"admin_new_c_bth admin_new_c_bth_sc\">删除</a></div></div></div>';
+				$("#project_list").append(html);
+			}
+
+			$("#project_add_button").show();
+
+		}else{
+			parent.layer.msg('操作失败！', 2,8);
+		}
+	});
+}
+function saveother(){
+	var eid = $.trim($("#eid").val());
+	var id = $.trim($("#otherid").val());
+	var name = $.trim($("#other_name").val());
+	var content = $.trim($("#other_content").val());
+	var uid = $.trim($("#uid").val());
+	var pytoken = $.trim($("#pytoken").val());
+	if(eid==""){
+		parent.layer.msg('请先完善求职意向！', 2,8);
+		return false;
+	}
+	if(name==""){
+		parent.layer.msg('请填写其他标题！', 2,8);
+		return false;
+	}
+	parent.layer.load('执行中，请稍候...',0);
+	$.post("index.php?m=admin_resume&c=other",{eid:eid,name:name,content:content,id:id,table:"resume_other",submit:"1",uid:uid,pytoken:pytoken},function(data){
+		parent.layer.closeAll('loading');
+		if(data!=0){
+			data=eval('('+data+')');
+			$("#other").show();
+			$("#addother").hide();
+			if(id>0){
+				var html='<div class="admin_saversume_pd"><i class="admin_saversume_pd_icon"></i><div  class="admin_saversume_tit"><span class="admin_saversume_tit_b">'+data.name+'</span></div><div ></th><td style="width:320px"><em>'+data.content+'</em></div> <div class="admin_saversume_cz"><a href="javascript:void(0)" onclick="getresume(\'other\','+data.id+')"class=\"admin_new_c_bth\">修改</a><a href=\"javascript:void(0)\" onclick=\"resume_del(\'other\','+data.id+')\"class=\"admin_new_c_bth admin_new_c_bth_sc\">删除</a></div></div>';
+				$("#other_"+id).html(html);
+			}else{
+				var html='<div class="admin_saversume_list"  id="other_'+data.id+'"><div class="admin_saversume_pd"><i class="admin_saversume_pd_icon"></i><div  class="admin_saversume_tit"><span class="admin_saversume_tit_b">'+data.name+'</span></div><div ></th><td style="width:320px"><em>'+data.content+'</em></div> <div class="admin_saversume_cz"><a href="javascript:void(0)" onclick="getresume(\'other\','+data.id+')"class=\"admin_new_c_bth\">修改</a><a href=\"javascript:void(0)\" onclick=\"resume_del(\'other\','+data.id+')\"class=\"admin_new_c_bth admin_new_c_bth_sc\">删除</a></div></div></div>';
+				$("#other_list").append(html);
+			}
+			$("#other_add_button").show();
+		}else{
+			parent.layer.msg('操作失败！', 2, 8);
+		}
+	});
+}
+function checkClose(type){
+	$("#add"+type).hide();
+	$("#"+type).show();
+}
+
+function getresume(type,id){ 
+	$("#add"+type+" .admin_save_sub").val("修 改");
+	var pytoken = $.trim($("#pytoken").val());
+	$("#add"+type).show();
+	parent.layer.load('执行中，请稍候...',0);
+	$.post("index.php?m=admin_resume&c=resume_ajax",{type:type,id:id,pytoken:pytoken},function(data){
+		parent.layer.closeAll('loading');
+ 		var data=eval('('+data+')');
+ 		if(type=="skill"){
+			$("#skill_name").val(data.name);
+			$("#skill_longtime").val(data.longtime);
+			$("#skillid").val(data.id);
+			if(data.pic!=''){
+				$("#skill_pic").val(data.pic);
+				$("#imgskill").attr('src','.'+data.pic);
+				$("#imgskill").removeClass('none');
+			}else{
+				$("#imgskill").addClass('none');
+			}
+		}
+		if(type=="work"){
+			$("#work_name").val(data.name);
+			$("#work_sdate").val(data.sdate);
+			if(data.edate=='至今'){
+ 				$("#work_edate").val('');
+				$("#work_edate").attr('disabled','disabled');
+				$("#work_totoday").attr("checked","true");
+			}else{
+				$("#work_edate").val(data.edate);
+  			}
+ 			$("#work_title").val(data.title);
+			$("#work_salary").val(data.salary);
+			$("#work_content").val(data.content);
+			$("#workid").val(data.id);
+		}
+		if(type=="project"){
+			$("#project_name").val(data.name);
+			$("#project_date").val(data.sdate+' ~ '+data.edate);
+			$("#project_sys").val(data.sys);
+			$("#project_title").val(data.title);
+			$("#project_content").val(data.content);
+			$("#projectid").val(data.id);
+		}
+		if(type=="edu"){
+			$("#edu_name").val(data.name);
+			$("#edu_sdate").val(data.sdate);
+			if(data.edate=='至今'){
+				$("#edu_edate").val('');
+				$("#edu_edate").attr('disabled','disabled');
+				$("#edu_totoday").attr("checked","true");
+			}else{
+				$("#edu_edate").val(data.edate);
+  			}
+			$("#user_education_val").val(data.education);	
+			$("#user_education_name").val(data.educationval);	
+			$("#edu_title").val(data.title);	
+			$("#edu_specialty").val(data.specialty);						
+			$("#eduid").val(data.id);
+			layui.use(['form'], function(){
+				var form = layui.form;
+				form.render();
+			});
+		}
+		if(type=="training"){
+			$("#training_name").val(data.name);
+			$("#training_sdate").val(data.sdate+' ~ '+data.edate);
+			$("#training_title").val(data.title);
+			$("#training_content").val(data.content);
+			$("#trainingid").val(data.id);
+		}
+		if(type=="other"){
+			$("#other_name").val(data.name);
+			$("#other_content").val(data.content);
+			$("#otherid").val(data.id);
+		}
+		$("#"+type+"_add_button").hide();
+	});
+}
+function checkmore2(type){
+	var eid=$.trim($("#eid").val());
+	$("#add"+type+" .admin_save_sub").val("添 加");
+	if(eid==""){
+		parent.layer.msg('请先完善求职意向！', 2, 8);return false;
+	} 
+	$("#"+type+"_add_button").hide();
+	$("#"+type+"_botton").attr("class","jianli_list_noadd");
+	$("#"+type+"_botton").html('<em>暂不填写</em>');
+	$("#"+type+"_botton").attr("onclick","checkClose2('"+type+"');");
+	$("#add"+type).show();
+	if(type=="skill"){
+		$("#skill_name").val('');
+		$("#skill_longtime").val('');
+		$("#skillid").val('');
+		$("#skill_pic").val('');
+	}
+	if(type=="work"){
+		$("#work_name").val('');
+		$("#work_sdate").val('');
+		$("#work_edate").val('');
+		$("#work_department").val('');
+		$("#work_title").val('');
+		$("#work_content").val('');
+		$("#workid").val('');
+	}
+	if(type=="project"){
+		$("#project_name").val('');
+		$("#project_date").val('');
+		$("#project_sys").val('');
+		$("#project_title").val('');
+		$("#project_content").val('');
+		$("#projectid").val('');
+	}
+	if(type=="edu"){
+		$("#edu_name").val('');
+		$("#edu_sdate").val('');
+		$("#edu_edate").val('');
+		$("#educationcid").val('');
+		$("#educationc").val('请选择最高学历');
+		$("#edu_title").val('');
+		$("#edu_specialty").val('');
+		$("#eduid").val('');
+	}
+	if(type=="training"){
+		$("#training_name").val('');
+		$("#training_date").val('');
+		$("#training_title").val('');
+		$("#training_content").val('');
+		$("#trainingid").val('');
+	}
+	if(type=="other"){
+		$("#other_name").val('');
+		$("#other_content").val('');
+		$("#otherid").val('');
+	}
+}
+function checkClose2(type){
+	$("#"+type).hide();
+	$("#"+type+"_botton").attr("class","jianli_list_add");
+	$("#"+type+"_botton").html('<em>添加</em>');
+	$("#"+type+"_botton").attr("onclick","checkmore2('"+type+"');");
+	$("#Add"+type).show();
+}
+function toDate(str){
+    var sd=str.split("-");
+    return new Date(sd[0],sd[1],sd[2]);
+}
+function resume_del(table,id){
+	var eid = $.trim($("#eid").val());
+	var uid = $.trim($("#uid").val());
+	var pytoken = $.trim($("#pytoken").val());
+	parent.layer.confirm('确定要删除该项内容？', function(){
+		parent.layer.load('执行中，请稍候...',0);
+		$.post("index.php?m=admin_resume&c=resume_del",{table:table,id:id,eid:eid,uid:uid,pytoken:pytoken},function(data){
+			parent.layer.closeAll('loading');
+			if(data!="0"){
+				$("#"+table+'_'+id).remove();
+				parent.layer.msg('删除成功！', 2,9);
+			}else{
+				parent.layer.msg('网络繁忙，请稍后！', 2,8);
+			}
+		});
+	});
+}
+var weburl="{yun:}$config.sy_weburl{/yun}";
+function showjob(id){
+	$("#td"+id).attr("class","focusItemTop mOutItem");
+	$("#span"+id).hide();
+	$("#div"+id).show();
+}
+function guanbiselect(id){
+   $("#td"+id).bind("mouseleave", function(){
+	$("#td"+id).attr("class","blurItem");
+	$("#span"+id).show();
+	$("#div"+id).hide();
+   });
+}
+function check_this(id){
+	if($("#job_class_"+id).attr("disabled") != 'disabled'){
+		if($("#job_class_"+id).attr("checked")!="checked"){
+		 	var pid = $("#job_class_"+id).attr('data-pid');
+			 $("#job_class_"+id).removeAttr("checked");
+			 unsel(id,pid);
+		}else{
+			 var pid = $("#job_class_"+id).attr('data-pid');
+			 $("#job_class_"+id).attr("checked","true");
+			 addsel(id,pid);
+		}
+	}
+}
+function check_all(id){
+	if($("#all"+id).attr("checked")!="checked"){
+		$(".label"+id).removeAttr("disabled");
+		$(".label"+id).removeAttr("checked");
+		unsel(id);
+	}else{
+		$("#all"+id).attr("checked","true");
+		$(".label"+id).attr("disabled","disabled");
+		$(".label"+id).attr("checked","true");
+		addsel(id);
+	}
+}
+function addsel(id,pid){
+
+	//判断数量
+	var i=0;
+	$(".selall").each(function(){
+		i++;
+	});
+	if(parseInt(pid)>0){
+		if(i>5){
+			unsel(id,pid);
+			parent.layer.msg('您最多只能选择五项！', 2,8);
+			return false;
+		}else{
+			var name = $('#job_class_'+id).attr('data-name');
+			html = '<li class="job_class_'+id+' parent_'+pid+'"><a class="clean g3 selall" href="javascript:void(0);" data-val="'+id+'+'+name+'"><span class="text">'+name+'</span><span class="delete" data-id="'+id+'" data-pid ="'+pid+'">移除</span></a></li>';
+			$('.job_class_'+id).remove();
+			$('.selected').append(html);
+		}
+	}else{
+		if(i>4){
+			unsel(id);
+			parent.layer.msg('您最多只能选择五项！', 2,8);
+			return false;
+		}else{
+			var name = $('#all'+id).attr('data-name');
+			html = '<li class="all'+id+'"><a class="clean g3 selall" href="javascript:void(0);"  data-val="'+id+'+'+name+'"><span class="text">'+name+'</span><span class="delete" data-id="'+id+'">移除</span></a></li>';
+			$('.parent_'+id).remove();
+			$('.all'+id).remove();
+			$('.selected').append(html);
+		}
+	}
+}
+function unsel(id,pid){
+	if(parseInt(pid)>0){
+		$('.job_class_'+id).remove();
+		$('#job_class_'+id).removeAttr("checked","");
+	}else{
+		$('.all'+id).remove();
+		$('#all'+id).removeAttr("checked","");
+		$('.label'+id).removeAttr("disabled");
+		$('.label'+id).removeAttr("checked");
+	}
+}
+function determine(id){
+	var check_val,name_val;
+	$(".selall").each(function(){
+		var info =$(this).attr("data-val").split("+");
+		check_val+=","+info[0];
+		name_val+="+"+info[1];
+	});
+	if(check_val){
+		 check_val = check_val.replace("undefined,","");
+	  $("#job_class").val(check_val);
+	}
+ 	if(name_val){
+		name_val = name_val.replace("undefined+","");
+  		$("#workadds_job").val(name_val);
+	}
+	layer.closeAll();
+} 
+function checkskill(){
+	var name = $.trim($("#skill_name").val());
+	var longtime = $.trim($("#skill_longtime").val());
+	if(name==""){
+		parent.layer.msg('请填写技能名称！', 2, 8);
+		return false;
+	}
+	if(longtime==""||longtime=="0"){
+		parent.layer.msg('请填写掌握时间！', 2, 8);
+		return false;
+	}
+	$("#skillbd").submit();
+}
+</script>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+body, div {
+	margin: 0;
+	padding: 0;
+}
+.no_border {
+	border-bottom: medium none;
+}
+.table_form a {
+	color: #3d84b8;
+}
+</style>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+{yun:}include file="$tplstyle/public_search/index_search.htm"{/yun}
+<div class="clear"></div>
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了简历信息。</div>
+</div>
+</div>
+
+<div class="addresume_box mt10">
+	<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    
+	<input type="hidden" name="uid" id='uid' value="{yun:}$uid{/yun}">
+    <input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+    <input type="hidden" name="eid" id='eid' {yun:}if $row.id{/yun}value="{yun:}$row.id{/yun}"{yun:}/if{/yun}>
+    <div class="admin_add_tit"><span class="admin_add_tit_s"><i class="yun_resume_h1_icon yun_resume_h1_iconyx"></i>意向岗位</span></div>
+    <div id="addresume" {yun:}if $row.id{/yun} style='display:none'{yun:}/if{/yun}>
+   
+		<form class="layui-form">
+			<div class="admin_resume_box">
+				<div class="admin_add_list">
+					<div class="admin_add_list_name">期望岗位</div>
+					<div class="admin_add_list_right">
+						<input type="text" name="name" id="expect_name" class="input-text" value="{yun:}$row.name{/yun}">
+					</div>
+				</div>
+
+				<div class="admin_add_list">
+					<div class="admin_add_list_name">期望从事行业</div>
+					<div class="admin_add_list_right">
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<div class="layui-input-inline">
+									<select name="hy" id="hy_val" >
+										<option>请选择</option>
+										
+										{yun:}foreach from=$industry_index item=v{/yun}
+											<option  value="{yun:}$v{/yun}" {yun:}if $row.hy==$v{/yun} selected {yun:}/if{/yun}>{yun:}$industry_name[$v]{/yun} </option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="admin_add_list">
+					<div class="admin_add_list_name">期望从事职位</div>
+					<div class="admin_add_list_right">
+						<div class="admin_td_h">
+							<input id="job_class" type="hidden" name='job_post' value="{yun:}$row.job_classid{/yun}" name="job_class">
+							<input id="workadds_job" class="expect_text"  type="button" onclick="index_job(5, '#workadds_job', '#job_class','','{yun:}$row.job_classid{/yun}');" style=" float:left;" value="{yun:}if $job_classname{/yun}{yun:}$job_classname{/yun}{yun:}else{/yun}请选择职位{yun:}/if{/yun}">
+						</div>
+					</div>
+				</div>
+
+				<div class="admin_add_list">
+					<div class="admin_add_list_name">期望月薪</div>
+					<div class="admin_add_list_right">
+						<div>
+							<input type="text" id="minsalary" name="minsalary" size="6" value="{yun:}if $row.minsalary{/yun}{yun:}$row.minsalary{/yun}{yun:}/if{/yun}" class="admin_text_w70">
+							-
+							<input type="text" id="maxsalary" name="maxsalary" size="6" value="{yun:}if $row.maxsalary{/yun}{yun:}$row.maxsalary{/yun}{yun:}/if{/yun}"class="admin_text_w70">
+						</div>
+					</div>
+				</div>
+
+				<div class="admin_add_list">
+					<div class="admin_add_list_name">工作地点</div>
+					<div class="admin_add_list_right">
+						<div class="layui-form-item">
+							<div class="layui-input-inline">
+							<input type="button" class="expect_text" id="workadds_city" value="{yun:}if $city_classname{/yun}{yun:}$city_classname{/yun}{yun:}else{/yun}请选择工作地点{yun:}/if{/yun}" onclick="index_city(5,'#workadds_city','#city_class','','{yun:}$row.city_classid{/yun}');"/>
+							<input type="hidden" name="city_class" id="city_class" value="{yun:}$row.city_classid{/yun}"/>
+							</div>
+							<!-- <div class="layui-input-inline">
+								<select name="provinceid" id="provinceid" lay-filter="citys">
+									<option value="">请选择</option>
+									{yun:}foreach from=$city_index key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $row.provinceid == $v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+									{yun:}/foreach{/yun}
+								</select>
+							</div>
+
+							<div class="layui-input-inline">
+								<select name="cityid" lay-filter="citys" id="cityid">
+									<option value="">请选择</option>
+									{yun:}foreach from=$city_type[$row.provinceid] key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $row.cityid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+									{yun:}/foreach{/yun}
+							
+								</select>
+							</div>
+
+							<div class="layui-input-inline">
+								<select name="three_cityid" lay-filter="three_cityid" id="three_cityid">
+									<option value="">请选择</option>
+									{yun:}foreach from=$city_type[$row.cityid] key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $row.three_cityid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun} </option>
+									{yun:}/foreach{/yun}
+								</select>
+							</div> -->
+						</div>
+					</div>
+				</div>
+
+				<div class="admin_add_list">
+					<div class="admin_add_list_name">到岗时间</div>
+					<div class="admin_add_list_right">
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<div class="layui-input-inline">
+									<select name="report" id="user_report_val" >
+										<option>请选择</option>
+										{yun:}foreach from=$userdata.user_report item=v{/yun}
+											<option value="{yun:}$v{/yun}" {yun:}if $row.report==$v{/yun} selected {yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun} </option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="admin_add_list">
+					<div class="admin_add_list_name">工作性质</div>
+					<div class="admin_add_list_right">
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<div class="layui-input-inline">
+									<select name="type" id="user_type_val" >
+										<option>请选择</option>
+										{yun:}foreach from=$userdata.user_type item=v{/yun}
+											<option  value="{yun:}$v{/yun}" {yun:}if $row.type==$v{/yun} selected {yun:}/if{/yun}> {yun:}$userclass_name[$v]{/yun} </option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="admin_add_list">
+					<div class="admin_add_list_name">求职状态</div>
+					<div class="admin_add_list_right">
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<div class="layui-input-inline">
+									<select name="jobstatus" id="user_jobstatus_val" >
+										<option>请选择</option>
+										{yun:}foreach from=$userdata.user_jobstatus item=v{/yun}
+											<option value="{yun:}$v{/yun}" {yun:}if $row.jobstatus==$v{/yun} selected {yun:}/if{/yun}> {yun:}$userclass_name[$v]{/yun} </option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="admin_add_list">
+					<input class="layui-btn layui-btn-normal" type="button" value="修 改" name="submit" onclick="saveexpect()"  >
+					<input class="admin_save_sub_qx" type="button" value="取 消" name="submit"  onclick="checkClose('resume');"  >
+				</div>
+
+			</div>
+		</form>
+
+	</div>
+
+	<div id='resume' {yun:}if $row.id==''{/yun} style='display:none'{yun:}/if{/yun}>
+		<div class="admin_saveresume_list">
+			<div class="admin_saveresume_list_name">期望岗位：</div>
+			<div class="" id="expect_name_html">
+				<div class="admin_td_h">{yun:}$row.name{/yun}</div>
+			</div>
+		</div>
+
+		<div class="admin_saveresume_list">
+			<div class="admin_saveresume_list_name">期望从事行业：</div>
+			<div id="hy_html">
+			  <div class="admin_td_h">{yun:}$industry_name[$row.hy]{/yun}</div>
+			</div>
+		</div>
+
+		<div class="admin_saveresume_list">
+			<div class="admin_saveresume_list_name">期望从事职位：</div>
+			<div id="job_class_html">
+			  <div class="" style="width:450px; line-height:36px;">{yun:}$job_classname{/yun}</div>
+			</div>
+		</div>
+
+		<div class="admin_saveresume_list">
+			<div class="admin_saveresume_list_name">期望月薪：</div>
+			<div id="salary_html">
+				<div class="admin_td_h">
+					{yun:}if $row.maxsalary{/yun}
+						￥{yun:}$row.minsalary{/yun}-{yun:}$row.maxsalary{/yun}
+					{yun:}else{/yun}
+						￥{yun:}$row.minsalary{/yun}以上
+					{yun:}/if{/yun}
+				</div>
+			</div>
+		</div>
+
+		<div class="admin_saveresume_list">
+			<div class="admin_saveresume_list_name">工作地点：</div>
+			<div id="cityid_html">
+				<div class="admin_td_h">{yun:}$city_classname{/yun}</div>
+			</div>
+		</div>
+
+		<div class="admin_saveresume_list">
+			<div class="admin_saveresume_list_name">到岗时间：</div>
+			<div id="report_html">
+				<div class="admin_td_h">{yun:}$userclass_name[$row.report]{/yun}</div>
+			</div>
+		</div>
+
+		<div class="admin_saveresume_list">
+			<div class="admin_saveresume_list_name">工作性质：</div>
+			<div  id="type_html">
+				<div class="admin_td_h">{yun:}$userclass_name[$row.type]{/yun}</div>
+			</div>
+		</div>
+
+		<div class="admin_saveresume_list">
+			<div class="admin_saveresume_list_name">求职状态：</div>
+			<div id="jobstatus_html">
+				<div class="admin_td_h">{yun:}$userclass_name[$row.jobstatus]{/yun}</div>
+			</div>
+		</div>
+
+		<div class="admin_add_pd">
+			<input class="admin_save_sub" type="button" value="修 改" name="submit" onclick="checkmore('resume')" >
+		</div>
+	</div>
+
+	<div id='work' >
+		<div class="admin_add_tit"><span class="admin_add_tit_s"><i class="yun_resume_h1_icon yun_resume_h1_iconjl"></i>工作经历</span></div>
+		<div id='work_list'> 
+			{yun:}if $work{/yun}
+				{yun:}foreach from=$work item=work_l{/yun}
+					<div class="admin_saversume_list" id="work_{yun:}$work_l.id{/yun}">
+						<div class="admin_saversume_pd"> <i class="admin_saversume_pd_icon"></i>
+							<div class="admin_saversume_tit">
+								<span class="admin_saversume_tit_b">{yun:}$work_l.name{/yun}</span>
+								{yun:}if $work_l.title{/yun}担任职位：<span class="admin_saversume_tit_b">{yun:}$work_l.title{/yun}</span>{yun:}/if{/yun} 
+							</div>
+							<div>{yun:}$work_l.sdate|date_format:"%Y-%m"{/yun} - {yun:}if $work_l.edate{/yun}{yun:}$work_l.edate|date_format:"%Y-%m"{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}</div>
+							<div>{yun:}$work_l.content{/yun}</div>
+							<div class="admin_saversume_cz"> 
+								<a href="javascript:void(0)" onclick="getresume('work','{yun:}$work_l.id{/yun}')"class="admin_new_c_bth">修改</a> 
+								<a href="javascript:void(0)" onclick="resume_del('work','{yun:}$work_l.id{/yun}')" class="admin_new_c_bth admin_new_c_bth_sc">删除</a> 
+							</div>
+						</div>
+					</div>
+				{yun:}/foreach{/yun}
+			{yun:}/if{/yun} 
+		</div>
+		<div id='work_add_button' class="admin_add_pd">
+			<input class="admin_save_sub" type="button" value="+ 添加工作经历" onclick="checkmore2('work');"name="com_update" >
+		</div>
+	</div>
+
+	<div id='addwork' style="display:none">
+		<div class="admin_resume_box">
+			<!-- <form class="layui-form"> -->
+			<div class="admin_add_list">
+				<div class="admin_add_list_name">单位名称</div>
+				<div class="admin_add_list_right">
+					<input type="text" name="work_name" id="work_name" class="input-text" size='40'>
+				</div>
+			</div>
+
+			<div class="admin_add_list">
+				<div class="admin_add_list_name">工作时间</div>
+				<div class="admin_add_list_right">
+					<input class="input-text  text_resume_date " type="text" name="work_sdate" value="{yun:}if $v.sdate!=''{/yun}{yun:}$v.sdate{/yun}{yun:}/if{/yun}" size="15"  id="work_sdate"/>
+					-
+					<input class="input-text  text_resume_date " type="text" name="work_edate" value="{yun:}if $v.edate!=''{/yun}{yun:}$v.edate{/yun}{yun:}/if{/yun}" size="15"  id="work_edate"/>
+				
+					<input type='checkbox' value='1' id='work_totoday' onClick="untiltoday('work');"{yun:}if $v.edate=='0'{/yun}checked{yun:}/if{/yun}>
+					<label for='totoday'><span class="yun_resume_popup_checkbox_s">至今</span></label>
+					<script type="text/javascript">
+					 	layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#work_sdate');monthclick(laydate,'#work_edate');});
+					</script>
+				</div>
+			</div>
+
+			<div class="admin_add_list">
+				<div class="admin_add_list_name">担任职位</div>
+				<div class="admin_add_list_right">
+					<input type="text" name="title" id="work_title" class="input-text"  >
+				</div>
+			</div>
+
+			<div class="admin_add_list">
+				<div class="admin_add_list_name">工作内容</div>
+				<div class="admin_add_list_right">
+					<textarea id="work_content" class="expect_text_textarea " ></textarea>
+				</div>
+			</div>
+
+			<div class="admin_add_list">
+				<div class="admin_add_list_right">
+					<input type="hidden" id="workid" />
+					<input class="layui-btn layui-btn-normal" type="button" value=" 添 加 " name="submit" onclick="savework();" >
+					<input class="admin_save_sub_qx" type="button" value=" 取 消 " onclick="layerClose('work')" >
+				</div>
+			</div>
+			<!-- </form> -->
+		</div>
+	</div>
+
+	<div id='edu' >
+		<div class="admin_add_tit"><span class="admin_add_tit_s"><i class="yun_resume_h1_icon yun_resume_h1_iconjy"></i>教育经历</span></div>
+		{yun:}if $edu{/yun}
+		{yun:}foreach from=$edu item=edu_l{/yun}
+			<div class="admin_saversume_list" id="edu_{yun:}$edu_l.id{/yun}">
+				<div class="admin_saversume_pd"> 
+					<i class="admin_saversume_pd_icon"></i>
+					<div class="admin_saversume_tit">
+						<span class="admin_saversume_tit_b">{yun:}$edu_l.name{/yun}</span> 
+						{yun:}if $edu_l.title{/yun}班级职务： <span class="admin_saversume_tit_b">{yun:}$edu_l.title{/yun}</span>{yun:}/if{/yun} 
+					</div>
+					<div>{yun:}$edu_l.sdate|date_format:"%Y-%m"{/yun} - {yun:}if $edu_l.edate{/yun}{yun:}$edu_l.edate|date_format:"%Y-%m"{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}</div>
+					<div> 
+						{yun:}if $userclass_name[$edu_l.education]{/yun} 
+							最高学历：{yun:}$userclass_name[$edu_l.education]{/yun}
+						{yun:}/if{/yun}
+						{yun:}if $edu_l.specialty{/yun}
+							所学专业：{yun:}$edu_l.specialty{/yun}
+						{yun:}/if{/yun} 
+					</div>
+				</div>
+				<div class="admin_saversume_cz"> 
+					<a href="javascript:void(0)" onclick="getresume('edu','{yun:}$edu_l.id{/yun}')"class="admin_new_c_bth">修改</a> 
+					<a href="javascript:void(0)" onclick="resume_del('edu','{yun:}$edu_l.id{/yun}')" class="admin_new_c_bth admin_new_c_bth_sc">删除</a> 
+				</div>
+			</div>
+		{yun:}/foreach{/yun}
+		{yun:}/if{/yun} 
+	</div>
+
+	<div id='edu_add_button'  class="admin_add_pd">
+		<input class="admin_save_sub" type="button" value="+ 添加教育经历" onclick="checkmore2('edu');"name="com_update" >
+	</div>
+
+	<div id='addedu' style="display:none">
+		<div class="admin_resume_box">
+				    
+			<div class="admin_add_list">
+				<div class="admin_add_list_name">学校名称</div>
+				<div class="admin_add_list_right">
+					<input type="text" name="name" id="edu_name" class="input-text"   size='40'>
+				</div>
+			</div>
+
+			<div class="admin_add_list">
+				<div class="admin_add_list_name">在校时间</div>
+				<div class="admin_add_list_right">
+					<input class="input-text text_resume_date " type="text" name="edu_sdate" value="{yun:}if $v.sdate!=''{/yun}{yun:}$v.sdate{/yun}{yun:}/if{/yun}" size="15"  id="edu_sdate"/>
+					-
+					<input class="input-text text_resume_date " type="text" name="edu_edate" value="{yun:}if $v.edate!=''{/yun}{yun:}$v.edate{/yun}{yun:}/if{/yun}" size="15"  id="edu_edate"/>
+
+					<input type='checkbox' value='1' id='edu_totoday' onClick="untiltoday('edu');"{yun:}if $v.edate=='0'{/yun}checked{yun:}/if{/yun}>
+				
+					<label for='totoday'><span class="yun_resume_popup_checkbox_s">至今</span></label>
+
+					<script type="text/javascript">
+						layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#edu_sdate');monthclick(laydate,'#edu_edate');});
+					</script>
+				</div>
+			</div>
+
+			<form class="layui-form">
+				<div class="admin_add_list">
+					<div class="admin_add_list_name">最高学历</div>
+					<div class="admin_add_list_right">
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<div class="layui-input-inline">
+									<select name="user_education_name" id="user_education_val" >
+										<option>请选择</option>
+										{yun:}foreach from=$userdata.user_edu item=v{/yun}
+											<option  value="{yun:}$v{/yun}">{yun:}$userclass_name[$v]{/yun}</option>
+										{yun:}/foreach{/yun}		
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<div class="admin_add_list">
+				<div class="admin_add_list_name">班级职务</div>
+				<div class="admin_add_list_right">
+					<input type="text" name="title" id="edu_title" class="input-text">
+				</div>
+			</div>
+
+			<div class="admin_add_list">
+				<div class="admin_add_list_name">所学专业</div>
+				<div class="admin_add_list_right">
+					<input type="text" name="specialty" id="edu_specialty" class="input-text"  >
+				</div>
+			</div>
+
+			<div class="admin_add_list">
+				<input type="hidden" id="eduid" />
+				<input class="layui-btn layui-btn-normal" type="button" value=" 添 加 " name="submit" onclick="saveedu();" >
+				<input class="admin_save_sub_qx" type="button" value=" 取 消 " onclick="layerClose('edu')" >
+			</div>
+  
+			
+		</div>
+	</div>
+
+<div id='training' >
+  <div class="admin_add_tit"><span class="admin_add_tit_s"><i class="yun_resume_h1_icon yun_resume_h1_iconpx"></i>培训经历</span></div>
+  <div id="training_list"> {yun:}if $training{/yun}
+    {yun:}foreach from=$training item=training_l{/yun}
+    <div class="admin_saversume_list" id="training_{yun:}$training_l.id{/yun}">
+      <div class="admin_saversume_pd"> <i class="admin_saversume_pd_icon"></i>
+        <div class="admin_saversume_tit"><span class="admin_saversume_tit_b">{yun:}$training_l.name{/yun}</span> {yun:}if $training_l.title{/yun}培训方向： <span class="admin_saversume_tit_b">{yun:}$training_l.title{/yun}</span>{yun:}/if{/yun} </div>
+        <div>{yun:}$training_l.sdate|date_format:"%Y-%m"{/yun} - {yun:}$training_l.edate|date_format:"%Y-%m"{/yun}</div>
+        <div>{yun:}$training_l.content{/yun}</div>
+        <div class="admin_saversume_cz"> <a href="javascript:void(0)" onclick="getresume('training','{yun:}$training_l.id{/yun}')"class="admin_new_c_bth">修改</a> <a href="javascript:void(0)" onclick="resume_del('training','{yun:}$training_l.id{/yun}')"class="admin_new_c_bth admin_new_c_bth_sc">删除</a> </div>
+      </div>
+    </div>
+    {yun:}/foreach{/yun}
+    {yun:}/if{/yun} </div>
+  <div id='training_add_button' class="admin_add_pd">
+    <input class="admin_save_sub" type="button" value="+ 添加培训经历" onclick="checkmore2('training');"name="com_update" >
+  </div>
+</div>
+<div id='addtraining' style="display:none">
+  <div class="admin_resume_box">
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">培训中心</div>
+      <div class="admin_add_list_right">
+        <input type="text" name="name" id="training_name" class="input-text"   size='40'>
+      </div>
+    </div>
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">培训时间</div>
+      <div class="admin_add_list_right">
+        <input class="input-text text_resume_date " type="text" name="date" value="" size="15"  id="training_date"/>
+        时间格式：2014-07 
+        <script type="text/javascript">
+		layui.use(['laydate'], function(){var laydate = layui.laydate,$ = layui.$;laydate.render({elem: '#training_date',type: 'month',range:'~'});});
+        </script></div>
+    </div>
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">培训方向</div>
+      <div class="admin_add_list_right">
+        <input type="text" name="title" id="training_title" class="input-text"  >
+      </div>
+    </div>
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">培训描述</div>
+      <div class="admin_add_list_right">
+        <textarea id="training_content" class="expect_text_textarea "></textarea>
+      </div>
+    </div>
+    <div class="admin_add_list">
+      <input type="hidden" id="trainingid" />
+      <input class="layui-btn layui-btn-normal" type="button" value=" 添 加 " name="submit" onclick="savetraining();" >
+      <input class="admin_save_sub_qx" type="button" value=" 取 消 " onclick="layerClose('training')" >
+    </div>
+  </div>
+</div>
+<div id='skill' >
+  <div class="admin_add_tit"><span class="admin_add_tit_s"><i class="yun_resume_h1_icon yun_resume_h1_iconjn"></i>职业技能</span></div>
+  <div id="skill_list"> {yun:}if $skill{/yun}
+    {yun:}foreach from=$skill item=skill_l{/yun}
+    <div class="admin_saversume_list" id="skill_{yun:}$skill_l.id{/yun}">
+      <div class="admin_saversume_pd"> <i class="admin_saversume_pd_icon"></i>
+        <div class="admin_saversume_tit"><span class="admin_saversume_tit_b">{yun:}$skill_l.name{/yun}</span> 掌握时间 <span class="admin_saversume_tit_b">{yun:}$skill_l.longtime{/yun}年</span> </div>
+        <div> {yun:}if $skill_l.pic{/yun}
+          技能证书： <img src="{yun:}$config.sy_weburl{/yun}/{yun:}$skill_l.pic{/yun}" width="95" height="70"> {yun:}/if{/yun}</div>
+        <div class="admin_saversume_cz"> <a href="javascript:void(0)" onclick="getresume('skill','{yun:}$skill_l.id{/yun}')" class="admin_new_c_bth">修改</a> <a href="javascript:void(0)" onclick="resume_del('skill','{yun:}$skill_l.id{/yun}')"class="admin_new_c_bth admin_new_c_bth_sc">删除</a> </div>
+      </div>
+    </div>
+    {yun:}/foreach{/yun}
+    {yun:}/if{/yun} </div>
+  <div id='skill_add_button' class="admin_add_pd">
+    <input class="admin_save_sub" type="button" value="+ 添加技能" onclick="checkmore2('skill');" name="com_update" >
+  </div>
+</div>
+<div id='addskill' style="display:none">
+  <div class="admin_resume_box">
+  <form id="skillbd" method="post" action="index.php?m=admin_resume&c=skill" target="supportiframe" enctype="multipart/form-data">
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">技能名称</div>
+      <div class="admin_add_list_right">
+        <input type="text" name="name" id="skill_name" class="input-text" value="">
+        例：英语、C语言、速记</div>
+    </div>
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">掌握时间</div>
+      <div class="admin_add_list_right">
+        <input type="text" name="longtime" id="skill_longtime" class="input-text" value="" size='5' onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+        年</div>
+    </div>
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">技能证书</div>
+      <div class="admin_add_list_right">
+		<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'pic',imgid: 'imgskill'}">上传图片</button>
+		<input type="hidden" id="layupload_type" value="2"/>
+		<input type="hidden" id="upload_path" value="user"/>
+		<input type="hidden" id="skill_pic" name="pic" value="{yun:}$config.sy_unit_icon{/yun}"/>
+        <img id="imgskill" src="" width="60" height="60" class="none">
+      </div>
+    </div>
+    <div class="admin_add_list">
+      <input type="hidden" id="skillid" name="id"/>
+      <input type="hidden" name="uid" value="{yun:}$uid{/yun}">
+      <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+      <input type="hidden" name="eid" {yun:}if $row.id{/yun}value="{yun:}$row.id{/yun}"{yun:}/if{/yun}>
+      <input type="hidden" name="skilladd" value="1"/>
+      <input class="layui-btn layui-btn-normal" type="button" onclick="checkskill()" value="添 加 ">
+      <input type="button" class="admin_save_sub_qx" value=" 取 消 " onclick="layerClose('skill')" >
+    </div>
+    </form>
+   </div>
+</div>
+<div id='project' >
+  <div class="admin_add_tit"><span class="admin_add_tit_s"><i class="yun_resume_h1_icon yun_resume_h1_iconxm"></i>项目经历</span></div>
+  <div id="project_list"> {yun:}if $project{/yun}
+    {yun:}foreach from=$project item=project_l{/yun}
+    <div class="admin_saversume_list" id="project_{yun:}$project_l.id{/yun}">
+      <div class="admin_saversume_pd"> <i class="admin_saversume_pd_icon"></i>
+        <div class="admin_saversume_tit"><span class="admin_saversume_tit_b">{yun:}$project_l.name{/yun}</span> {yun:}if $project_l.title{/yun}担任职位 <span class="admin_saversume_tit_b">{yun:}$project_l.title{/yun}</span>{yun:}/if{/yun} </div>
+        <div>{yun:}$project_l.sdate|date_format:"%Y-%m"{/yun} - {yun:}$project_l.edate|date_format:"%Y-%m"{/yun}</div>
+        <div>{yun:}$project_l.content{/yun}</div>
+        <div class="admin_saversume_cz"> <a href="javascript:void(0)" onclick="getresume('project','{yun:}$project_l.id{/yun}')" class="admin_new_c_bth">修改</a> <a href="javascript:void(0)" onclick="resume_del('project','{yun:}$project_l.id{/yun}')"class="admin_new_c_bth admin_new_c_bth_sc">删除</a> </div>
+      </div>
+    </div>
+    {yun:}/foreach{/yun}
+    {yun:}/if{/yun} </div>
+  <div id='project_add_button'class="admin_add_pd">
+    <input class="admin_save_sub" type="button" value="+ 添加项目经历" onclick="checkmore2('project');"name="com_update">
+  </div>
+</div>
+<div id='addproject' style="display:none">
+  <div class="admin_resume_box">
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">项目名称</div>
+      <div class="admin_add_list_right">
+        <input type="text" name="project_name" id="project_name" class="input-text"   size='40'>
+      </div>
+    </div>
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">项目时间</div>
+      <div class="admin_add_list_right">
+        <input class="input-text text_resume_date " type="text" name="date" value="" size="15"  id="project_date"/>
+        时间格式：2014-07 
+        <script type="text/javascript">
+		layui.use(['laydate'], function(){var laydate = layui.laydate,$ = layui.$;laydate.render({elem: '#project_date',type: 'month',range:'~'});});
+        </script></div>
+    </div>
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">担任职位</div>
+      <div class="admin_add_list_right">
+        <input type="text" name="title" id="project_title" class="input-text"  >
+      </div>
+    </div>
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">项目内容</div>
+      <div class="admin_add_list_right">
+        <textarea id="project_content" class="expect_text_textarea " ></textarea>
+      </div>
+    </div>
+    <div class="admin_add_list">
+      <input type="hidden" id="projectid" />
+      <input class="layui-btn layui-btn-normal" type="button" value=" 添 加 " name="submit" onclick="saveproject();" >
+      <input class="admin_save_sub_qx" type="button" value=" 取 消 " onclick="layerClose('project')" >
+    </div>
+  </div>
+</div>
+<div id='other' >
+  <div class="admin_add_tit"><span class="admin_add_tit_s"><i class="yun_resume_h1_icon yun_resume_h1_iconqt"></i>其他描述</span></div>
+  <div id="other_list"> {yun:}if $other{/yun}
+    {yun:}foreach from=$other item=other_l{/yun}
+    <div class="admin_saversume_list"  id="other_{yun:}$other_l.id{/yun}">
+      <div class="admin_saversume_pd"> <i class="admin_saversume_pd_icon"></i>
+        <div class="admin_saversume_tit"><span class="admin_saversume_tit_b">{yun:}$other_l.name{/yun}</span></div>
+        <div>{yun:}$other_l.content{/yun}</div>
+        <div class="admin_saversume_cz"> <a href="javascript:void(0)" onclick="getresume('other','{yun:}$other_l.id{/yun}')" class="admin_new_c_bth">修改</a> <a href="javascript:void(0)" onclick="resume_del('other','{yun:}$other_l.id{/yun}')"class="admin_new_c_bth admin_new_c_bth_sc">删除</a> </div>
+      </div>
+    </div>
+    {yun:}/foreach{/yun}
+    {yun:}/if{/yun} </div>
+  <div id='other_add_button'class="admin_add_pd">
+    <input class="admin_save_sub" type="button" value="+ 添加其他" onclick="checkmore2('other');"name="com_update" >
+  </div>
+</div>
+<div id='addother' style="display:none">
+  <div class="admin_resume_box">
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">其他标题</div>
+      <div class="admin_add_list_right">
+        <input type="text" name="name" id="other_name" class="input-text"   size='40'>
+      </div>
+    </div>
+    <div class="admin_add_list">
+      <div class="admin_add_list_name">其他描述</div>
+      <div class="admin_add_list_right">
+        <textarea id="other_content" class="expect_text_textarea "></textarea>
+      </div>
+    </div>
+    <div class="admin_add_list">
+      <input type="hidden" id="otherid" />
+      <input class="layui-btn layui-btn-normal" type="button" value=" 添 加 " name="submit" onclick="saveother();" >
+      <input class=" admin_save_sub_qx" type="button" value=" 取 消 " onclick="layerClose('other')" >
+    </div>
+  </div>
+</div>
+</div>
+<div style="margin-top:30px"></div>
+<style>
+.admin_saveresume_list{border-bottom:1px solid #eee;}
+</style>
+<script type="text/javascript">
+var form;
+
+  layui.use(['layer', 'form'], function(){
+   form = layui.form;
+   var $ = layui.$;
+
+   form.on('select(fz_type)', function(data){
+      if(data.value == 1){
+        $("#fz_type_1").show();
+        $("#fz_type_2").hide();
+      }else{
+        $("#fz_type_2").show();
+        $("#fz_type_1").hide();
+      }
+    });
+  });//end layui.use()
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+</body>
+</html>

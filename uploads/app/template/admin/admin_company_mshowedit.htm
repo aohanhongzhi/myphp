@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />  
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title>后台管理</title>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站企业环境</div>
+</div>
+</div>
+
+<div class="infoboxp_top mt10">
+	<span class="complay_top_span fl">修改信息</span>
+	<div class="admin_search_div_tianj" > <a href="index.php?m=admin_company&c=mshow&comid={yun:}$smarty.get.comid{/yun}" class="admin_infoboxp_tj">环境列表</a> </div>
+	<div class="admin_search_div_tianj" > <a href="index.php?m=admin_company&c=mshowadd&comid={yun:}$smarty.get.comid{/yun}" class="admin_infoboxp_tj">我要上传</a> </div>
+	
+
+</div>
+
+<div class="admin_table_border">
+
+<div class="file_hj_box_xg mt10">
+<div class="file_button" style="border:none">
+
+  <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+   <form name="myform" method="post" target="supportiframe"  action="index.php?m=admin_company&c=mshowup" enctype="multipart/form-data" onsubmit="return checkshow();">
+	  <input type="hidden" name="id" id="showid" value="{yun:}$smarty.get.id{/yun}"/>
+	  <input type="hidden" name="uid" value="{yun:}$smarty.get.comid{/yun}"/>
+	  <input type="hidden" name="picurl" value="{yun:}$picurl.picurl{/yun}"/>
+      <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+	   <div class="file_hj_box_img"><img id="layimg_show" src=".{yun:}$picurl.picurl{/yun}" width="220" height="180"> </div>
+	
+	    <ul class="file_hj_box">
+	  <li>
+	<div class="file_hj_name">环境图片：</div>
+		<div class=textbox>
+			<button type="button" class="yun_bth_pic" id="layimg">上传图片</button>
+			<input type="hidden" id="layupload_type" value="2"/>
+			<input type="hidden" id="upload_path" value="show"/>
+		  <em>最佳尺寸：155*110</em> </div>
+	  </li>
+	  <li>
+	<div class="file_hj_name">标&nbsp;&nbsp;题：</div>
+		<div class=textbox>
+		  <input class="file_button_edit_input" type="text" name="title" size="15" value="{yun:}$picurl.title{/yun}"/>
+		</div>
+	  </li>
+	  <li>
+	<div class="file_hj_name">排&nbsp;&nbsp;序：</div>
+		<div class=textbox>
+		  <input class="file_button_edit_input" type="text" name="showsort" size="15" value="{yun:}$picurl.sort{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+		  <em style=" margin-left:10px;">数值越大越靠前</em> </div>
+	  </li>
+	  <li><div class="sub_btn">
+		<input class="file_btn_01"  type="submit" name="submitbtn" value="更新信息">
+	  </div></li>
+	  </ul>
+	</form>
+  
+</div>
+</div></div>
+</div>
+<script language="javascript">
+var weburl = '{yun:}$config.sy_weburl{/yun}';
+function checkshow(){
+	var title=$.trim($("input[name=title]").val());
+	if(title==''){
+	   layer.msg('标题不能为空！', 2, 8); return false;
+	}		
+}
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+</body>
+</html>

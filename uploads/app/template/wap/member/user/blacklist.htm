@@ -1,0 +1,29 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun} 
+<div class="blacklist_tip">不希望以下企业搜索到我的简历</div>
+<div class="blacklist_box" style="position:relative">
+{yun:}if $rows{/yun}
+
+	<div class="sw_list">
+	{yun:}foreach from=$rows item=log{/yun}
+		<div class="blacklist_p"><a href="{yun:}url m=wap c=company a=show id=$log.p_uid{/yun}">{yun:}$log.com_name{/yun}</a>
+					<a class="blacklist_p_sc" href="javascript:void(0)" onclick="layer_del('您确定要删除？', 'index.php?c=del&id={yun:}$log.id{/yun}');">删除</a>
+				
+			</div>
+			
+	{yun:}/foreach{/yun}
+	</div>
+
+    <div class="blacklist_tip_bth"><a href="index.php?c=blacklistadd" class="blacklist_tip_bth_a">添加<span class="blacklist_tip_bth_a_tj">+</span></a></div>
+
+	<div class="pages"> {yun:}$pagenav{/yun}</div>
+    <div class="blacklist_tip_qkbox" style="display:block"><a href="javascript:void(0)" onclick="layer_del('您确定要清空所有屏蔽企业？', 'index.php?c=delall');" class="blacklist_tip_bk">清空所有屏蔽企业</a></div>
+{yun:}else{/yun}
+
+  <div class="blacklist_tip_bth"><a href="index.php?c=blacklistadd" class="blacklist_tip_bth_a">添加<span class="blacklist_tip_bth_a_tj">+</span></a></div>
+{yun:}/if{/yun}
+</div>
+ 
+<script>
+mui.init();
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

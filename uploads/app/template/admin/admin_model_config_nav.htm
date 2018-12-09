@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/jscolor/jscolor.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title>后台管理</title>
+<style>
+.table_form th{
+  width: 150px !important;
+}
+.table_form td{
+  width: 750px !important;
+}
+</style>
+</head>
+<body class="body_ifm">
+  <div class="admin_table_border">
+    <form class="layui-form">
+      <table width="100%" class="table_form" style="background:#fff;">
+        <tr >
+          <th width="120">导航类别：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-inline">
+                <select name="nid" lay-filter="nid">
+                  <option value="">请选择</option>
+                  {yun:}foreach item=v from=$type{/yun}
+                    <option value="{yun:}$v.id{/yun}"
+                    {yun:}if $types.nid && $v.id eq $types.nid{/yun}
+                     selected
+                    {yun:}/if{/yun}
+                     >{yun:}$v.typename{/yun}</option>
+                  {yun:}/foreach{/yun}
+                </select>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="admin_table_trbg" >
+          <th>导航名称：</th>
+          <td><input class="input-text" type="text" name="name" id="name" size="40" value="{yun:}$types.name{/yun}"/>
+         </td>
+        </tr>
+        <tr >
+          <th>排　　序：</th>
+          <td><input class="input-text" type="text" name="sort" size="5" id="sort" value="{yun:}$types.sort{/yun}"/></td>
+        </tr>
+        <tr class="admin_table_trbg" >
+          <th>弹出窗口：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <input name="eject" value="1" title="新窗口"
+                  {yun:}if $types.eject=="1"{/yun}
+                   checked 
+                  {yun:}/if{/yun}
+                   type="radio"/>
+                <input name="eject" value="0" title="原窗口"
+                  {yun:}if $types.eject=="0"{/yun}
+                   checked 
+                  {yun:}/if{/yun}
+                 type="radio"/>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr >
+          <th>状　　态：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <input name="model" value="hot" title="热"
+                  {yun:}if $types.model=="hot"{/yun}
+                   checked 
+                  {yun:}/if{/yun}
+                   type="radio"/>
+                <input name="model" value="new" title="新"
+                  {yun:}if $types.model=="new"{/yun}
+                   checked 
+                  {yun:}/if{/yun}
+                 type="radio"/>
+                <input name="model" value="" title="无"
+                  {yun:}if $types.model==""{/yun}
+                   checked 
+                  {yun:}/if{/yun}
+                 type="radio"/>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr >
+          <th>加　　粗：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <input name="bold" value="1" title="是"
+                  {yun:}if $types.bold=="1"{/yun}
+                   checked 
+                  {yun:}/if{/yun}
+                   type="radio"/>
+                <input name="bold" value="0" title="否"
+                  {yun:}if $types.bold=="0"{/yun}
+                   checked 
+                  {yun:}/if{/yun}
+                 type="radio"/>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr >
+          <th>显　　示：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <input name="display" value="1" title="是"
+                  {yun:}if $types.display=="1"{/yun}
+                   checked 
+                  {yun:}/if{/yun}
+                   type="radio"/>
+                <input name="display" value="0" title="否"
+                  {yun:}if $types.display=="0"{/yun}
+                   checked 
+                  {yun:}/if{/yun}
+                 type="radio"/>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="admin_table_trbg" >
+            <th>&nbsp;</th>
+          <td align="left"> 
+            <input class="admin_button" type="button" onclick="setsave('{yun:}$types.id{/yun}','{yun:}$pytoken{/yun}','{yun:}$types.config{/yun}');" name="update" value="&nbsp;保存&nbsp;"  />
+            </td>
+        </tr>
+      </table>
+    </form>
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+layui.use(['layer', 'form'], function(){});
+
+function setsave(id,pytoken,config){
+  var nid = $('select[name=nid]').val();
+  var name = $('#name').val();
+  var sort = $('#sort').val();
+  var eject = $("input[name='eject']:checked").val();
+  var model = $("input[name='model']:checked").val();
+  var bold = $("input[name='bold']:checked").val();
+  var display = $("input[name='display']:checked").val();
+   if (name=="") {
+     layer.msg('请填写导航名称！', 2,8); 
+     return false;
+   }
+
+   $.post('index.php?m=model_config&c=setnav',{nid:nid,name:name,sort:sort,eject:eject,model:model,bold:bold,display:display,id:id,config:config,pytoken:pytoken},function(data){
+    
+    var data=eval('('+data+')');
+    
+    parent.layer.msg(data.msg, Number(data.tm), Number(data.st),function(){parent.layer.closeAll();});
+    
+    // parent.layer.msg(data.msg,{
+    //   time : 1500,
+    //   icon : 1, //1 打勾，2打叉，5伤心，6笑脸，7感叹号
+    // }, function (){
+    //   parent.layer.closeAll();
+    // });
+    return false;  
+   });
+}
+</script>
+</body>
+</html>

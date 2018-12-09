@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun}">
+<meta name="description" content="{yun:}$description{/yun}">
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png');
+</script>
+<![endif]--> 
+<link href="{yun:}$style{/yun}/style/news.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+</head>
+<body class="body_bg">
+{yun:}include file="$tplstyle/header.htm"{/yun}
+<!--content开始-->
+<div class="yun_content">
+<div class="current_Location  png"> 您当前的位置：<a href="{yun:}$config.sy_weburl{/yun}">首页</a> > 网站公告</div>
+
+<div class="announcement_box">
+<div class="announcement_tit">网站公告</div>
+<ul class="announcement_list">
+    {yun:}announcement item=gonggao ispage=1 limit=10{/yun}
+    <li class=""><span class="announcement_listtime">{yun:}$gonggao.datetime|date_format:"%Y-%m-%d"{/yun}</span><a href="{yun:}url m=announcement id=$gonggao.id{/yun}">{yun:}$gonggao.title{/yun}</a></li>
+    {yun:}/announcement{/yun}
+</ul>
+ <div class="pages"> {yun:}$pagenav{/yun}</div>
+ 
+</div>
+
+      
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<!--content结束--> 
+{yun:}include file="$tplstyle/footer.htm"{/yun}

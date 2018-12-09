@@ -1,0 +1,330 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun}" />
+<meta name="description" content="{yun:}$description{/yun}" />
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$com_style{/yun}/images/comapply.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+</head>
+<body>
+{yun:}include file="$tplstyle/header.htm"{/yun}
+<div class="yun_content">
+
+	<div class="current_Location png"> 您当前的位置：<a href="{yun:}$config.sy_weburl{/yun}">首页</a> > <a href="{yun:}url m=company{/yun}">企业列表</a> > <span>企业详情 </span></div>
+   <div class="com_show_topbox">
+<div class="com_show_topleft">
+<div class="com_show_toplogo">
+<img src="{yun:}$com.logo{/yun}"  width="100" height="100" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);" alt="{yun:}$com.name{/yun}"/>
+</div>
+</div>
+<div class="com_show_topcont">
+<div class="com_show_comname"><h1 class="com_show_comname_n">{yun:}$com.name|mb_substr:0:20:'utf-8'{/yun}   </h1>
+ {yun:}if $usertype=='1'{/yun}
+				{yun:}if $isatn.id{/yun} 
+				<a href="javascript:void(0)" onclick="atn('{yun:}$com.uid{/yun}','{yun:}url m=ajax c=atncompany{/yun}')" id='atn_{yun:}$com.uid{/yun}' class="com_show_comgzqx">- 取消关注</a> 
+				{yun:}else{/yun}
+				<a href="javascript:void(0)" onclick="atn('{yun:}$com.uid{/yun}','{yun:}url m=ajax c=atncompany{/yun}')" id='atn_{yun:}$com.uid{/yun}' class="com_show_comgz">关注</a> 
+				{yun:}/if{/yun}
+            {yun:}else{/yun} 
+                {yun:}if $uid{/yun}
+                <a href="javascript:void(0)" onclick="layer.msg('只有个人用户才能关注', 2, 8)" class="com_show_comgz">+ 关注</a> 
+                {yun:}else{/yun}
+                <a href="javascript:void(0)" onclick="showlogin('1');" class="com_show_comgz">+ 关注</a> 
+                {yun:}/if{/yun} 
+            {yun:}/if{/yun} 
+                    {yun:}if $ComMember.source==6 && $ComMember.claim==0 && $ComMember.email!=""{/yun}
+           <a href="javascript:claim('{yun:}url m=ajax c=claim uid=$com.uid{/yun}');" class="com_show_comgz">认领</a>
+        {yun:}/if{/yun} </div>
+<div class="com_show_cominfo">
+{yun:}if $com.hy_info{/yun}<span class="com_show_cominfo_s"><i class="com_show_cominfo_icon  com_show_cominfo_icon_hy"></i>{yun:}$com.hy_info{/yun}</span>{yun:}/if{/yun}
+{yun:}if $com.provinceid{/yun}<span class="com_show_cominfo_s"><i class="com_show_cominfo_icon  com_show_cominfo_icon_city"></i>{yun:}$com.provinceid{/yun} </span>   {yun:}/if{/yun}     
+{yun:}if $com.pr_info{/yun}<span class="com_show_cominfo_s"><i class="com_show_cominfo_icon  com_show_cominfo_icon_xz"></i>{yun:}$com.pr_info{/yun} </span>{yun:}/if{/yun}          
+{yun:}if $com.mun_info{/yun}<span class="com_show_cominfo_s "><i class="com_show_cominfo_icon  com_show_cominfo_icon_rs"></i>{yun:}$com.mun_info{/yun} </span> {yun:}/if{/yun}         
+{yun:}if $com.money{/yun}<span class="com_show_cominfo_s"><i class="com_show_cominfo_icon  com_show_cominfo_icon_zj"></i>注资{yun:}$com.money{/yun}{yun:}if $com.moneytype==1{/yun}万元{yun:}else{/yun}万美元{yun:}/if{/yun} </span>{yun:}/if{/yun}
+{yun:}if $com.sdate{/yun}<span class="com_show_cominfo_s"><i class="com_show_cominfo_icon  com_show_cominfo_icon_time"></i>{yun:}$com.sdate{/yun}创办</span>{yun:}/if{/yun}
+</div>
+<div class="com_show_info_sj_box">
+<div class="com_show_info_sj">
+<div class="com_show_info_sj_list com_show_info_sj_list_frist"><span class="com_show_info_sj_list_n">{yun:}$num{/yun}</span>招聘职位 </div>         
+<div class="com_show_info_sj_list"><span class="com_show_info_sj_list_n">{yun:}$pre{/yun}%</span>简历及时处理率</div>          
+<div class="com_show_info_sj_list"><span class="com_show_info_sj_list_n">{yun:}$invite_resume{/yun}</span>邀请面试</div>
+<div class="com_show_info_sj_list com_show_info_sj_list_end"><span class="com_show_info_sj_list_n">{yun:}if $member.login_date{/yun}{yun:}$member.login_date|date_format:"%Y-%m-%d"{/yun}{yun:}else{/yun}未登录 {yun:}/if{/yun}</span>企业最近登录</div>         
+</div>
+</div>
+</div>
+<div class="com_show_topright">
+<img src="{yun:}url m=ajax c=pubqrcode toc=company toa=show toid=$com.uid{/yun}" width="120" height="120">
+<div class="com_show_topright_fx">分享到朋友圈</div>
+</div>
+</div>
+    
+       
+<div class="con_show_right">
+<div class="con_show_right_box">
+<div class="com_aut">
+  {yun:}if $com.email_status=="1"{/yun} 
+ <dl class="com_aut_list"><dt> <img src="{yun:}$com_style{/yun}images/rz_yx2.png" alt="邮箱未认证" title="邮箱已认证" class="png" />  </dt><dd>邮箱已认证</dd></dl>
+      {yun:}else{/yun} 
+<dl class="com_aut_list"><dt><img src="{yun:}$com_style{/yun}images/rz_yx.png" alt="邮箱未认证" title="邮箱未认证" class="png" />  </dt><dd>邮箱未认证</dd></dl>  {yun:}/if{/yun}
+        {yun:}if $com.moblie_status=="1"{/yun} 
+<dl class="com_aut_list"><dt><img src="{yun:}$com_style{/yun}images/rz_sj2.png" alt="手机未认证" title="手机已认证" class="png" />  </dt><dd>手机已认证</dd></dl>
+        {yun:}else{/yun} 
+<dl class="com_aut_list"><dt><img src="{yun:}$com_style{/yun}images/rz_sj.png" alt="手机未认证" title="手机未认证" class="png" />  </dt><dd>手机未认证</dd></dl>{yun:}/if{/yun}
+        {yun:}if $com.yyzz_status=="1"{/yun} 
+<dl class="com_aut_list"><dt> <img src="{yun:}$com_style{/yun}images/rz_zz2.png" alt="执照未认证" title="执照已认证" class="png" /> </dt><dd>执照已认证</dd></dl> {yun:}else{/yun} 
+<dl class="com_aut_list"><dt><img src="{yun:}$com_style{/yun}images/rz_zz.png" alt="执照未认证" title="执照未认证" class="png" />  </dt><dd>执照未认证</dd></dl>
+        {yun:}/if{/yun}
+        </div>
+</div>
+<div class="con_show_right_box">
+<div class="Company_post_msg"><i class="Company_h1_line yun_bg_color"></i><i class="Company_h1_line_bor"></i><span class="Company_co">联系方式</span></div>
+<div class="com_show_touch">
+ {yun:}if $looktype=="1"{/yun}
+  <div class="com_show_touch_list"> 
+          {yun:}if $com.linkman{/yun}<div class="com_show_touch_p"><i class="com_show_touch_p_icon com_show_touch_user"></i>{yun:}$com.linkman{/yun}</div>{yun:}/if{/yun}
+          {yun:}if $com.linkjob{/yun}<div class="com_show_touch_p"><i class="com_show_touch_p_icon com_show_touch_zw"></i>{yun:}$com.linkjob{/yun}</div>{yun:}/if{/yun}
+          {yun:}if $com.linkphone{/yun}<div class="com_show_touch_p"><i class="com_show_touch_p_icon com_show_touch_dh"></i>{yun:}$com.linkphone{/yun}</div>{yun:}/if{/yun}
+          {yun:}if $com.linktel{/yun}<div class="com_show_touch_p"><i class="com_show_touch_p_icon com_show_touch_sj"></i>{yun:}image number=$com.linktel uid=$com.uid action=linktel{/yun}</div>{yun:}/if{/yun}
+          {yun:}if $com.linkmail{/yun}<div class="com_show_touch_p"><i class="com_show_touch_p_icon com_show_touch_yx"></i>{yun:}$com.linkmail{/yun}</div> {yun:}/if{/yun}
+          {yun:}if $com.linkqq{/yun}<div class="com_show_touch_p"><i class="com_show_touch_p_icon com_show_touch_qq"></i>{yun:}$com.linkqq{/yun}</div>{yun:}/if{/yun}
+          {yun:}if $com.zip{/yun}<div class="com_show_touch_p"><i class="com_show_touch_p_icon com_show_touch_yb"></i>{yun:}$com.zip{/yun}</div>{yun:}/if{/yun}
+          {yun:}if $com.website{/yun}<div class="com_show_touch_p"><i class="com_show_touch_p_icon com_show_touch_web"></i>{yun:}$com.website{/yun}</div>{yun:}/if{/yun} 
+          {yun:}if $com.busstops{/yun}<div class="com_show_touch_p"><i class="com_show_touch_p_icon com_show_touch_bus"></i>{yun:}$com.busstops{/yun}</div>{yun:}/if{/yun}
+          {yun:}if $com.address{/yun} <div class="com_show_touch_p"><i class="com_show_touch_p_icon com_show_touch_add"></i>{yun:}$com.address{/yun}</div> {yun:}/if{/yun}
+          {yun:}if $com.comqcode{/yun} <div class="com_show_touch_p"><img src="{yun:}$com.comqcode{/yun}" width="120" height="120"></div> {yun:}/if{/yun}
+           </div>
+ {yun:}else{/yun}
+ 	{yun:}if $looktype=="3" || $looktype=="2"|| $looktype=="5"{/yun} 
+      <div class="com_show_touch_login_box">
+        <div class="com_show_touch_login"> 
+        <div class="com_show_touch_login_p">{yun:}$look_msg{/yun}</div>
+        </div>
+      </div>
+       {yun:}elseif $looktype=="6"{/yun} 
+       <div class="com_show_touch_login_box">
+        <div class="com_show_touch_login"> 
+        <div class="com_show_touch_login_p">{yun:}$look_msg{/yun}</div>
+        <div class="com_show_touch_login_bth">
+         <a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=expect" class="com_show_touch_dl">创建简历</a> </div> </div>
+      </div>
+       {yun:}elseif $looktype=="4"{/yun} 
+        <div class="com_show_touch_login_box">
+        <div class="com_show_touch_login"> 
+        <div class="com_show_touch_login_p">{yun:}$look_msg{/yun}</div>
+        <div class="com_show_touch_login_bth">
+       <a class="com_show_touch_dl" href="javascript:void(0);" onclick="showlogin('1');">立即登录</a> 
+       <a class="com_show_touch_reg" href="{yun:}url m=register usertype=1 type=1{/yun}">立即注册</a> </div> </div>
+      </div>
+	  {yun:}/if{/yun} 
+   {yun:}/if{/yun}
+   
+         </div>
+         </div>
+   <div class="con_show_right_box">
+   <div class="Company_post_msg"><i class="Company_h1_line yun_bg_color"></i><i class="Company_h1_line_bor"></i><span class="Company_co">企业地图</span></div>
+      <div class="com_show_lmap">
+        {yun:}if $com.y!='' && $com.x!=''{/yun}
+        <div class="frc_map" id="company_baidu_map">
+          <div id="maps_container" style="width:218px;height:155px;"></div>
+        </div>
+        <div class="frc_map_look"> <a href="javascript:showmap('map_show');">查看完整地图</a></div>
+        {yun:}else{/yun}
+        <div class="firm_tips_no"> 该企业还未设置地图!</div>
+        {yun:}/if{/yun}
+</div>
+</div>
+
+<div class="con_show_right_box">
+<div class="Company_post_msg"><i class="Company_h1_line yun_bg_color"></i><i class="Company_h1_line_bor"></i><span class="Company_co">企业新闻</span></div>
+ {yun:}if !empty($NewsList){/yun}
+          <ul class="com_show_news">
+            {yun:}foreach from=$NewsList item=row{/yun}
+            <li>
+              <p><a href="{yun:}url m=company c=newsshow id=$com.uid nid=$row.id{/yun}" target="_blank">{yun:}$row.title{/yun}</a></p>
+            </li>
+            {yun:}/foreach{/yun}
+          </ul>
+          {yun:}else{/yun}
+            <div class="clear"></div>
+         <div class="firm_tips_no">  该企业还没有发布新闻信息!</div>
+         
+          {yun:}/if{/yun} 
+
+</div>
+
+
+
+</div>
+
+</div>
+<div class="clear"></div>
+<div class="commpay_Comment">
+  <div id="map_show" class="none">
+  <div class="map_query_box">
+    <div id="map_container" style="width:1100px;height:450px;"></div>
+   
+ <div class="map_query"  id="map_search">
+     <div class="map_query_tit">线路查询 <span class="map_query_tit_s">注：地图可以左击拖拽任意位置</span></div>
+   <div class="map_query_list"><span class="map_query_list_s">起点</span><i class="map_query_list_line"></i> <input type="text"  class="map_startlist map_query_text" placeholder="输入起点" id="map_start" name="map_start"/></div>
+   <div class="map_query_list">
+        <span class="map_query_list_s">终点</span><i class="map_query_list_line"></i>
+        {yun:}if $com.x{/yun}
+     <input type="text"   id="map_end" class="map_startend map_query_text" name="map_end"/>
+    {yun:}else{/yun}
+   <input type="text"  placeholder="输入终点"class="map_startend map_query_text" value="" id="map_end" name="map_end"/>
+    {yun:}/if{/yun}
+    
+     </div>
+    <div class="map_query_bth_box">
+    <input type="submit" class="mapsubmit map_query_bth "value="公交查询"  name="submit" onclick="bus_query();"/></span>
+    <span><input type="submit" class="mapsubmit map_query_bth map_query_bth_car"  value="驾车查询"  name="submit" onclick="map_drving();"/></span>
+    </div>    </div>
+      <div class="map_query_result"><div id="r-result"></div>  </div>
+  </div>
+</div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery.json.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<!--[if IE 6]>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script>
+    DD_belatedPNG.fix('.png');
+    </script>
+    <![endif]-->
+<script type="text/javascript" src="{yun:}$config.mapurl{/yun}" charset="utf-8"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/map.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/popImage/jquery.popImage.mini.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+$(function () {
+	$("a.image_gall").popImage();
+	
+	{yun:}if $com.y!='' && $com.x!=''{/yun}
+	getmapnoshowcont_diffDomains('maps_container', "{yun:}$com.x{/yun}", "{yun:}$com.y{/yun}", "map_x", "map_y",'company_baidu_map');
+	{yun:}/if{/yun}
+})
+$(function () {
+	var f1 = $('#company').offset().top;
+	var fs = $('.broadside_con').children().size();
+	var fss = new Array();
+	$(".firm_post").hover(function () {
+		$(this).css("background","#f4f4f4");
+		$(this).find(".firm_post_right").show();
+	}, function () {;
+		$(this).css("background","");
+		$(this).find(".firm_post_right").hide();
+	});
+	
+	$(".broadside_con>a").click(function () {
+		$(".broadside_con>a").removeClass('bro_con_cur');
+		$(this).addClass('bro_con_cur');
+	});   
+	
+	for (i = 0; i < fs; i++) {
+		j = i + 1;
+		fss[i] = $('div[data-slide="' + j + '"]').offset().top;
+	} 
+	
+	$(window).scroll(function(){
+		var currentTOP = $(window).scrollTop();
+		currentTOP=parseInt(currentTOP)+parseInt(20); 
+		if(currentTOP <= f1) {
+			$('.broadside_con a').removeClass('bro_con_cur');
+			$('.broadside_con a:eq(0)').addClass('bro_con_cur');
+			return;
+		}else{
+			changefl(getFloor(currentTOP));
+		}
+	}); 
+}); 
+function getFloor(fh){
+	if(fs==0||fh<=f1){
+		return 1;
+	}
+	if(fh>=fss[fs-1]){
+		return fs;
+	}
+	for (k=0; k<fs;k++) {
+		if(fh>fss[k]&&fh<fss[k+1]){
+			return k+1;
+		}
+	}
+} 
+function changefl(fno){ 
+	fno=parseInt(fno)-parseInt(1);
+	$('.broadside_con a').removeClass('bro_con_cur');
+	$('.broadside_con a:eq('+fno+')').addClass('bro_con_cur');
+}
+function showmap(id) {
+	$.layer({
+		type: 1,
+		title: '地图展示',
+		closeBtn: [0, true],
+		offset: ['100px', ''],
+		border: [10, 0.3, '#000', true],
+		area: ['580px', 'auto'],
+		page: { dom: "#" + id }
+	});
+	getmapshowcont('map_container', "{yun:}$com.x{/yun}", "{yun:}$com.y{/yun}", "{yun:}$com.name{/yun}", "{yun:}$com.address{/yun}");
+}
+
+function page(id,page,limit,updown){
+   	if(page<1){
+   		page==1;
+   	}
+	$.ajax({
+		type: "POST",
+        global: false,
+        url :"{yun:}url m=company c=prestr{/yun}",
+		data:{id:id,page:page,limit:limit,updown:updown},
+		success :function(data){
+			var data=eval("("+data+")");			
+			window.location.href=data.url;
+		}
+	});
+}
+//公交查询
+function bus_query(){
+    var map_start=$.trim($("#map_start").val());
+    if(map_start==""){
+        layer.msg("请输入线路查询起点");
+    }
+    var map_end=$.trim($("#map_end").val());
+    var map = new BMap.Map("map_container");
+    map.centerAndZoom(new BMap.Point('{yun:}$com.x{/yun}','{yun:}$com.y{/yun}'), 12);
+   // map.enableScrollWheelZoom();
+    var start = map_start;
+    var end =map_end;
+    //map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+	var transit = new BMap.TransitRoute(map, {
+		renderOptions: {map: map, panel: "r-result"}
+	});
+	transit.search(start,end);
+
+    /*var transit = new BMap.TransitRoute(map, {
+		renderOptions: {map: map, panel: "r-result"}, 
+		onResultsHtmlSet : function(){$("#r-result").show()}  	
+    });
+    transit.search(start,end);*/
+}
+//驾车查询
+function map_drving(){
+    var map_start=$.trim($("#map_start").val());
+    if(map_start==""){
+         layer.msg("请输入线路查询起点");return false;
+    }
+    var map_end=$.trim($("#map_end").val());
+    var map = new BMap.Map("map_container");
+	map.centerAndZoom(new BMap.Point('{yun:}$com.x{/yun}','{yun:}$com.y{/yun}'), 12);
+	var driving = new BMap.DrivingRoute(map, {renderOptions: {map: map, panel: "r-result", autoViewport: true}});
+	driving.search(map_start, map_end);
+}
+</script> 
+
+<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" class="none"></iframe>
+{yun:}include file="$tplstyle/public_search/login.htm"{/yun} 
+{yun:}include file="$tplstyle/footer.htm"{/yun}

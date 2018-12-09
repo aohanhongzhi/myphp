@@ -1,0 +1,53 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+     <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">职位搜索器</span> <i class="member_right_h1_icon user_bg"></i></div>
+    
+     <div  class="resume_Prompt_box">
+
+      {yun:}if $syfinder>0{/yun} 
+				<div  class="resume_Prompt"><i class="resume_Prompt_icon"></i>温馨提示：
+               共可创建<span class="job_search_box_msg_n">{yun:}$config.user_finder{/yun}</span>个，还可创建<span class="job_search_box_msg_n">{yun:}$syfinder{/yun}</span>个搜索器 <a href="index.php?c=finder&act=edit" class="finder_btn">新增搜索器</a> 
+				</div></div>
+				{yun:}/if{/yun}
+        <div class="resume_box_list">
+         {yun:}foreach from=$finder item=flist{/yun}
+
+           <div class="job_search_box">
+           <div class="job_search_box_left">
+          <div class="job_search_box_jobmane"> <a href="{yun:}$flist.url{/yun}" class="index_Job_Finder_cont_name_a">{yun:}if $flist.name{/yun}{yun:}$flist.name{/yun}{yun:}else{/yun}未命名{yun:}/if{/yun}</a>
+		  </div>
+          <div class="job_search_box_tj">搜索条件：{yun:}$flist.findername{/yun} </div>
+		  <div class="job_search_box_tj">创建时间：{yun:}$flist.addtime|date_format:'%Y-%m-%d %H:%M'{/yun} </div>
+		
+		  </div>
+         <div class="job_search_box_right">
+		    <div class="job_search_box_bth"><a class="job_search_box_bth_a" title="搜索" target="_blank" href="{yun:}$flist.url{/yun}"><i class="job_search_box_bth_a_icon"></i>搜索</a> </div>
+			
+			<a href="index.php?c=finder&act=edit&id={yun:}$flist.id{/yun}" title="修改" class="cblue">修改</a> 
+			<i class="job_search_box_line">|</i> 
+                            <a  onclick="layer_del('确定要删除？', 'index.php?c=finder&act=del&id={yun:}$flist.id{/yun}');" href="javascript:void(0)" class="cblue">删除</a> </div>
+
+		  </div>
+
+			
+                {yun:}foreachelse{/yun}
+        <div class="msg_no">
+        <p>您还没有创建搜索器</p>
+        <a href="index.php?c=finder&act=edit" class="msg_no_bth">新增搜索器</a> 
+        </div>
+        
+                {yun:}/foreach{/yun}
+                <div class="job_search_box_cj fltL">
+              
+                </div>
+            </div>
+        </div>
+
+
+        </div>
+
+
+
+{yun:}include file="$userstyle/footer.htm"{/yun}

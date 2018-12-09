@@ -1,0 +1,373 @@
+{yun:}include file="$userstyle/header.htm"{/yun} 
+<script src="{yun:}$config.sy_weburl{/yun}/js/lssave.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+     
+<script type="text/javascript" src="{yun:}$style{/yun}/js/index.js?v={yun:}$config.cachecode{/yun}"></script>
+<form id="infoform" name="MyForm" method="post" action="index.php?c=info&act=save" target="supportiframe" enctype="multipart/form-data" class="layui-form">
+
+ <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">账号设置</span> <i class="member_right_h1_icon user_bg"></i></div>
+    <div class="clear"></div>
+
+	 <div class="job_list_tit"> <ul class="">
+	<li class="job_list_tit_cur"><a href="index.php?c=info">基本信息</a><i class="left_sidebar_leftmune_icon"></i></li>
+      <li><a href="index.php?c=passwd">账号安全</a></li>
+      <li><a href="index.php?c=binding">绑定授权</a></li>
+      <li><a href="index.php?c=uppic">上传照片 </a></li>
+
+	</ul></div>
+
+<div  class="resume_Prompt_box"><div  class="resume_Prompt"><i class="resume_Prompt_icon"></i>安全提醒：招聘企业无权收取任何费用，求职中请加强自我保护，避免上当受骗！</div></div>
+
+    {yun:}if $save{/yun}
+    <div id="forms"class="text_tips">您有上次未提交成功的数据 <a href="javascript:;" onclick="saveuser();" class="text_tips_a">恢复数据</a> <i id="close"class="text_tips_close"></i></div>
+    {yun:}/if{/yun}
+	<div class="resume_box_list" style="margin-top:0px;">
+		
+      <div class="yun_m_info">
+        <ul>
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"><b>*</b> 姓 名</div>
+            <div class="yun_m_info_text">
+			<div class="yun_m_info_text_name_box">
+              <input name="name" id="name"  type="text" maxlength="50" value="{yun:}$row.name{/yun}" class="yun_m_info_text_name_box_t" />
+              
+			  
+            </div><div class="yun_m_info_text_gk ">
+			 
+              	<div class="layui-form-item">
+                  <div class="layui-input-inline" style="width:100px;">
+                    <select name="nametype" lay-filter="" id="nametypecid">
+                      {yun:}foreach from=$nametype key=key item=v{/yun}
+                      <option value="{yun:}$key{/yun}" {yun:}if $row.nametype==$key{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$v{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                  </div>
+                </div>
+			   </div>
+          </li>
+          
+          
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"><b>*</b> 性 别</div>
+            <div class="yun_m_info_text"> 
+            	
+                  <div class="layui-input-inline">
+                    {yun:}foreach from=$arr_data.sex key=j item=v{/yun}
+                    <input type="radio" id="sex" name="sex" value="{yun:}$j{/yun}" {yun:}if $j eq $row.sex{/yun}checked="checked"{yun:}/if{/yun} title="{yun:}$v{/yun}" />
+                    {yun:}/foreach{/yun}
+                  </div>
+              
+              </div>
+            <span id="by_sex" class="errordisplay">请选择性别</span> </li>
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> <b>*</b> 出生年月</div>
+            <div class="yun_m_info_text"> 
+				
+                  <div class="layui-input-inline">
+                    <input name="birthday" id="birthday" type="text" maxlength="50" value="{yun:}$row.birthday{/yun}" class="yun_m_info_birthday" />
+                  </div>
+              
+            </div>
+            <span id="by_birthday" class="errordisplay">请正确填写出生年月</span>
+			</li>
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"><b>*</b> 最高学历</div>
+            <div class="yun_m_info_text">
+               
+                  <div class="layui-input-inline yun_m_info_w250">
+                    <select name="edu" lay-filter="" id="educid">
+                      <option value="">请选择最高学历</option>
+                      {yun:}foreach from=$userdata.user_edu key=j item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $row.edu==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 
+                </div>
+                <span id="by_educid" class="errordisplay">请选择最高学历</span>
+			  </div>
+          </li>
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> <b>*</b> 工作经验</div>
+            <div class="yun_m_info_text">
+           
+                  <div class="layui-input-inline yun_m_info_w250">
+                    <select name="exp" lay-filter="" id="expid">
+                      <option value="">请选择工作经验</option>
+                      {yun:}foreach from=$userdata.user_word key=j item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $row.exp==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+               
+                </div>
+                <span id="by_expid" class="errordisplay">请选择工作经验</span>
+			  </div>
+          </li>
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"><b>*</b> 手机</div>
+            <div class="yun_m_info_text">
+			<div class="yun_m_info_text_box yun_m_info_text_box_re">
+              {yun:}if $row.moblie_status==1{/yun}
+              <span class="info_phe_ok">
+              {yun:}$row.telphone{/yun}
+              </span>
+               <a href="index.php?c=passwd" class="yun_m_info_text_box_re_a">重新认证</a>
+              <input type="hidden" id="telphone" name="telphone" value="{yun:}$row.telphone{/yun}">
+              {yun:}else{/yun}
+              <input id="telphone" name="telphone" type="text" value="{yun:}$row.telphone{/yun}" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" class="yun_m_info_text_input" />
+			  <i class="yun_m_info_telphone"></i>
+              <span id="by_telphone" class="errordisplay">请正确填写手机号</span> {yun:}/if{/yun} </div>
+
+			  </div>
+          </li>
+		   <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> <b>*</b> 现居住地</div>
+            <div class="yun_m_info_text">
+				<div class="yun_m_info_text_box">
+              <input class="yun_m_info_fill" type="text" value="{yun:}$row.living{/yun}" size="30" id="living" name="living">
+              <span id="by_living" class="errordisplay">请填写现居住地</span> </div>
+			  </div>
+          </li>
+		  <li class="yun_m_info_list">
+          <div class="yun_m_info_list_xt"><span class="yun_m_info_list_xt_s">以下是补充信息可选填让企业更了解你</span></div></li>
+          <li class="yun_m_info_list" style="margin-top:40px;">
+            <div class="yun_m_info_name">电子邮件</div>
+            <div class="yun_m_info_text "> 
+			<div class="yun_m_info_text_box yun_m_info_text_box_re">
+            {yun:}if $row.email_status==1{/yun} 
+             <span class="info_phe_ok">{yun:}$row.email{/yun}</span>
+              <a href="index.php?c=passwd" class="yun_m_info_text_box_re_a">重新认证</a>
+              <input type="hidden" id="email" value="{yun:}$row.email{/yun}">
+              {yun:}else{/yun}
+              <input name="email" id="email"  type="text" size="30" value="{yun:}$row.email{/yun}" class="yun_m_info_fill" />
+              <span id="by_email" class="errordisplay">邮件格式错误</span> {yun:}/if{/yun} </div>
+			  </div>
+          </li>
+           <li class="yun_m_info_list">
+            <div class="yun_m_info_name">头像</div>
+            <div class="yun_m_info_text" style="width:480px;">
+			<div class="yun_uer_info_photo">
+			<div class="yun_uer_info_photo_pt">
+				{yun:}if $row.sex==1{/yun}
+					<img src=".{yun:}$user_photo{/yun}" id="logo" border="0" height="38" width="38" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);" />
+                {yun:}else{/yun}
+					<img src=".{yun:}$user_photo{/yun}" id="logo" border="0" height="38" width="38" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_iconv{/yun}',2);" />
+                {yun:}/if{/yun}  
+                      </div>     
+               
+				<button type="button" class="yun_bth_pic adminupload" lay-data="{imgid: 'logo',path: 'user'}">上传头像</button>
+				<input type="hidden" id="layupload_type" value="2"/>
+        <div class="yun_uer_info_gk">
+  				<span id="userphototype" onclick="phototype()" {yun:}if !$row.photo{/yun}class="none"{yun:}/if{/yun}>
+  					<input type="checkbox" id='phototype' value='1' {yun:}if $row.phototype==1{/yun}checked="checked"{yun:}/if{/yun} title="头像不公开"/>
+  				</span>
+
+          <span class="layui-btn layui-btn-small" id="spanQrcode">手机扫码上传</span>
+          <script type="text/javascript">
+            $(document).ready(function() {
+              $("#spanQrcode").hover(function(){  
+                var pic_url = '{yun:}url m=upload c=qrcode type=3{/yun}';
+                layer.tips("<img src="+pic_url+" style='max-width:380px'>", this);
+              },function(){layer.closeAll('tips');});
+            });
+          </script>
+        </div> 
+				</div>
+         
+     		   </div>
+          </li>
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> 详细地址</div>
+            <div class="yun_m_info_text">
+			<div class="yun_m_info_text_box">
+              <input name="address" id="address" type="text" value="{yun:}$row.address{/yun}" size="40" class="yun_m_info_fill">
+            </div>  </div>
+          </li>
+
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> 身高</div>
+
+            <div class="yun_m_info_height_box">
+
+              <input type="text" id="height" name="height" value="{yun:}$row.height{/yun}" size="10" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" class="yun_m_info_height_box_text" />
+              <em class="yun_m_info_height_box_dw">CM</em> 
+			  
+			  </div>
+			  <div class="yun_m_info_height_p"> 体重</div>
+			 <div class="yun_m_info_height_box">
+			   <input type="text" id="weight" name="weight" value="{yun:}$row.weight{/yun}" size="10" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" class="yun_m_info_height_box_text" />
+						  <em class="yun_m_info_height_box_dw"> KG</em> 
+
+			   </div> 
+			</li>
+         
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> 民族</div>
+            <div class="yun_m_info_text">
+				<div class="yun_m_info_text_box">
+              <input type="text" id="nationality" name="nationality" value="{yun:}$row.nationality{/yun}" size="10" class="yun_m_info_fill " />
+            </div>
+			</div>
+          </li>
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> 婚姻</div>
+            <div class="yun_m_info_text">
+				
+                  <div class="layui-input-inline">
+                    {yun:}foreach from=$userdata.user_marriage item=v{/yun}
+                    <input type="radio" id="marriageid" name="marriage" value="{yun:}$v{/yun}" title="{yun:}$userclass_name[$v]{/yun}" {yun:}if $row.marriage==$v{/yun}checked="checked"{yun:}/if{/yun} />
+                    {yun:}/foreach{/yun}
+                  </div>  
+			</div>
+          </li>
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> 户籍所在地</div>
+            <div class="yun_m_info_text">
+				<div class="yun_m_info_text_box">
+              <input class="yun_m_info_fill" type="text" value="{yun:}$row.domicile{/yun}" size="30" id="domicile" name="domicile">
+            </div>
+			</div>
+          </li>
+     
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> QQ</div>
+            <div class="yun_m_info_text">
+			<div class="yun_m_info_text_box">
+              <input id="qq" name="qq" type="text" size="30" value="{yun:}$row.qq{/yun}" onkeyup="this.value=this.value.replace(/[^0-9-.]/g,'')" class="yun_m_info_fill" />
+			  </div>
+            </div>
+          </li>
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> 上传个人二维码</div>
+            <div class="yun_m_info_text">
+            
+            <div class="yun_uer_info_photo">
+				<div class="yun_uer_info_photo_pt">
+				<div id="imgparent" class="ewm_img {yun:}if !$row.wxewm{/yun}none{yun:}/if{/yun}"><img id="ewm" src="{yun:}$row.wxewm{/yun}" width="38" height="38"/></div>
+				</div>     
+				<button type="button" class="yun_bth_pic adminupload" lay-data="{imgid: 'ewm',path: 'user',parentid:'imgparent'}">上传二维码</button>
+				<input type="hidden" id="upload_path" value="user"/>
+				</div>
+				</div>
+         
+          </li>
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name"> 个人主页/博客</div>
+            <div class="yun_m_info_text">
+				<div class="yun_m_info_text_box">
+              <input id="homepage" name="homepage" type="text" maxlength="255" size="40" value="{yun:}$row.homepage{/yun}" class="yun_m_info_fill" />
+            </div></div>
+          </li>
+       
+          <li class="yun_m_info_list">
+            <div class="yun_m_info_name">&nbsp;</div>
+            <div class="yun_m_info_text">
+              <input type="button" onclick="CheckPost()" value="保存信息" class="layui-btn layui-btn-normal yun_m_info_textbth" />
+              <input id="save" name="save" value="{yun:}$row.name{/yun}" type="hidden"/>
+            </div>
+          </li>
+        </ul>
+        <div class="operatebox03 mt10"><span> </span> </div>
+      </div>
+      {yun:}if  !$row.name{/yun}
+      <div class="text_tips_bc" style="right:10px">
+        <div class="text_tips_bc_h1"> 信息保存</div>
+        <div class="text_tips_bc_cont"> 
+		  {yun:}if $save.time{/yun}
+          <div class="text_tips_bc_l">信息已于{yun:}$save.time{/yun}保存</div>
+          {yun:}/if{/yun}
+          <div class="text_tips_bc_time"> <span id="totalSecond"></span>s后将自动保存<br>
+            已填信息</div>
+          <a  id="atime" href="javascript:;" onclick="saveuserform();" class="text_tips_bc_bth">临时保存信息</a>
+		  </div>
+      </div>
+    {yun:}/if{/yun} 
+	</div>
+</form>
+</div>
+
+<script>
+layui.use(['layer', 'form','laydate'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,laydate = layui.laydate
+    ,$ = layui.$;
+	laydate.render({
+		elem: '#birthday'
+		,max: -5113
+	});
+});
+
+var userstyle='{yun:}$user_style{/yun}';
+	function CheckPost(){
+		var name=$.trim($("input[name='name']").val());
+		var living=$.trim($("input[name='living']").val());		
+		var idcard=$.trim($("input[name='idcard']").val());		
+		var sex=$.trim($("input[name='sex']:checked").val());
+		var educid=$.trim($("#educid").val());
+		var expid=$.trim($("#expid").val());
+		var description=$.trim($("#description").val()); 
+		var birthday = $.trim($('#birthday').val());
+		'{yun:}if $row.email_status==1{/yun}'
+			var ifemail = true; 
+		'{yun:}else{/yun}'
+			var email=$.trim($("input[name='email']").val());
+			if (email==""){
+				var ifemail = true;
+			}else{
+				var ifemail = check_email(email);
+			}
+		'{yun:}/if{/yun}'
+		'{yun:}if $row.moblie_status==1{/yun}'
+			var telphone = true;
+		'{yun:}else{/yun}'
+			var telphone=$.trim($("input[name='telphone']").val());
+			telphone = isjsMobile(telphone);
+		'{yun:}/if{/yun}'
+		
+		if(name==""){layer.msg("请填写姓名", 2, 8);return false;}
+		if(sex==""){layer.msg('请选择性别！',2,8);return false;}
+		if(birthday==''){layer.msg('请选择出生日期', 2, 8);return false; }
+		if(educid==""){layer.msg($('#by_educid').html(), 2, 8);return false;}
+		if(expid==""){layer.msg($("#by_expid").html(), 2, 8);return false;}
+		if(telphone==false){layer.msg($("#by_telphone").html(), 2, 8);return false;}
+		if(ifemail==false){layer.msg($("#by_email").html(), 2, 8);return false;}
+		if(living==""){layer.msg($("#by_living").html(), 2, 8);return false;}
+		var telhome=$.trim($("#telhome").val());
+		if(telhome&&isjsTell(telhome)==false){
+			layer.msg('请填写正确的座机号', 2, 8);return false;
+		}
+		$("#infoform").submit();
+		layer.load('执行中，请稍候...',0);
+	}
+	$(document).ready(function() {
+		$(".com_admin_ask").hover(function(){
+			layer.tips("是否在简历中显示非必填信息？", this, {
+				guide: 1,
+				style: ['background-color:#5EA7DC; color:#fff;top:-7px', '#5EA7DC']
+			});
+			$(".xubox_layer").addClass("xubox_tips_border");
+		},function(){layer.closeTips();});
+	});
+'{yun:}if !$row.name{/yun}'	
+var start = 30;
+var step = -1;
+var save=$("#save").val();
+if(!save){
+	function count(){
+		$("#atime").click(function(){ start=30});
+		document.getElementById("totalSecond").innerHTML = start;
+		start += step;
+		if(start < 0 ){
+			saveuserform();
+			start = 30;
+		}
+		setTimeout("count()",1000);
+	}
+	window.onload = count;	
+}
+'{yun:}/if{/yun}' 
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+{yun:}include file="$userstyle/footer.htm"{/yun}

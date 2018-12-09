@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="tabs_info">
+	<ul>
+		<li><a href="index.php?m=admin_company_pic">企业LOGO</a></li> 
+		<li class="curr"><a href="index.php?m=admin_company_pic&c=show">企业环境</a></li> 
+		<li><a href="index.php?m=admin_company_pic&c=banner">企业横幅</a></li>  
+	</ul>
+</div>
+    
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站全部企业环境图片管理</div>
+<div class="admin_new_tip_list">您可以对企业上传的环境图片进行修改删除操作</div>
+</div>
+</div>
+<div class="clear"></div>
+<div class="main_tag mt10">
+<div class="admin_new_search_box">
+<div class="admin_new_search_name">搜索类型：</div>
+ <form action="index.php" name="myform" method="get" >
+ <input type="hidden" name="m" value="admin_company_pic"/>
+ <input type="hidden" name="c" value="show"/>
+  <div class="admin_Filter_text formselect" did="dcom_type"> 
+  <input type="button" {yun:}if $smarty.get.type=='1'||$smarty.get.type==''{/yun} value="企业全称" {yun:}elseif $smarty.get.type=='2'{/yun} value="用户ID" {yun:}elseif $smarty.get.type=='3'{/yun} value="环境名称" {yun:}/if{/yun} class="admin_new_select_text" id="bcom_type">
+  		   <input type="hidden" name="type" id="com_type" value="{yun:}if $smarty.get.type{/yun}{yun:}$smarty.get.type{/yun}{yun:}else{/yun}1{yun:}/if{/yun}"/><div class="admin_Filter_text_box" style="display:none" id="dcom_type">
+			  <ul>
+				  <li><a href="javascript:void(0)" onClick="formselect('1','com_type','企业名称')">企业名称</a></li>
+				  <li><a href="javascript:void(0)" onClick="formselect('2','com_type','用户ID')">用户ID</a></li>
+				  <li><a href="javascript:void(0)" onClick="formselect('3','com_type','环境名称')">环境名称</a></li>
+			  </ul>  
+		  </div>
+    </div>
+<input type="text" placeholder="输入你要搜索的关键字" name="keyword" class="admin_new_text">
+	<input type="submit" name='news_search' value="搜索" class="admin_new_bth"/>
+</form>
+ 
+ </div>
+<div class="tag_box" style="border:none; background:none;">
+		<div class="clear"></div>
+	<form action="index.php" target="supportiframe" name="myform" id='myform' method="get">
+	<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+	<input name="m" value="admin_company_pic" type="hidden"/>
+	<input name="c" value="del" type="hidden"/>
+	<input name="type" value="show" type="hidden"/>
+	{yun:}foreach from=$rows item=list{/yun}
+		<div class="admin_zph_img">
+			<div class="admin_zph_img_box">
+				<div class="admin_zph_img_box_img">
+				{yun:}if $list.picurl{/yun}<img  onclick="show_pic('{yun:}$list.picurl{/yun}','{yun:}$list.id{/yun}','{yun:}$list.name{/yun}')" src="{yun:}$list.picurl{/yun}" id="pix{yun:}$list.id{/yun}">	{yun:}/if{/yun}
+				
+				<input type="checkbox" value="{yun:}$list.id{/yun}"   name='del[]' onclick='unselectall()' rel="del_chk" class="admin_com_img_checkbox check_all">
+				
+				</div><div class="admin_comimg_box_img_p_b"><div class="admin_comimg_box_img_p">{yun:}$list.title{/yun}</div></div>
+				<div class="admin_zph_img_box_p">
+
+					<a href="javascript:addImg('{yun:}$list.id{/yun}','{yun:}$list.name{/yun}','{yun:}$list.title{/yun}','{yun:}$list.sort{/yun}')" class="admin_new_c_bth">修改</a>
+					
+					<a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=admin_company_pic&c=del&type=show&delid={yun:}$list.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a>
+				</div>
+			</div>
+		</div>
+	{yun:}/foreach{/yun}
+	<div class="clear"></div>
+	<div  class="admin_com_img_box_digg">
+	<span class="admin_com_img_box_qx">
+	{yun:}if $rows{/yun}
+	<input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)'><label for="chkAll2">全选</label>
+	<input type="button" name="delsub" value="删除所选" onClick="return really('del[]')"  value="批量删除" class="admin_button">
+	{yun:}/if{/yun}
+	 </span>
+	 <div  class="digg">{yun:}$pagenav{/yun}</div>
+	</div>
+	</form>
+</div>
+<div class="clear"></div>
+	  
+	
+	<div class="subnav" id="addImage" style="display:none">
+		<div class="">
+			<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+			<form name="myform" target="supportiframe" action="index.php?m=admin_company_pic&c=uploadsave" method="post" encType="multipart/form-data" onsubmit="return ckform()">
+				
+				<input class="input-text" name="type" type="hidden" value="show" />
+				<input type="hidden" name="pytoken" id="pytoken"  value="{yun:}$pytoken{/yun}">
+				
+ 				<div class="zph_tjlist"><em class="zph_tjlist_s">企业全称：</em>
+				<input class="input-text" id="comname" type="text" value="" disabled /> 
+                    </div>
+ 				<div class="zph_tjlist"><em class="zph_tjlist_s">环境标题：</em>
+				<input class="input-text" name="title" id="title" type="text" value="" /> 
+                    </div>
+				<div class="zph_tjlist"><em class="zph_tjlist_s">上传图片：</em>
+					<button type="button" class="yun_bth_pic" id="noupload">选择图片</button>
+					<input type="hidden" id="laynoupload" value="1"/>
+				</div>
+
+				<div class="zph_tjlist"><em class="zph_tjlist_s">排序：</em>
+				<input class="input-text" name="sort" type="text" value="" /> 
+ 				</div>
+ 				<div class="zph_tjlist">
+				<input class="admin_button" type="hidden" name="id" value=""/>
+				
+				<input class="admin_button" type="submit" name="update" value="修改">
+				</div>	
+			</form>
+		</div>
+	</div>
+	<div id="preview"  style="display:none; width:400px; "> 
+ 				<div class="zph_tjlist"><em class="zph_tjlist_s">企业全称：</em>
+				<input class="input-text" id="name" type="text" value="" disabled/> 
+                    </div>
+		<div style="height:300px; overflow:auto; width:auto; " > 
+			<div class="job_box_div" style="text-align:center;margin-top:10px;"></div>
+		</div>	
+	</div>  
+
+</div>
+
+<script>
+var weburl = '{yun:}$config.sy_weburl{/yun}';
+function show_pic(url,id,name){
+	if($("#pic_"+id).width()&&$("#pic_"+id).width()>380){
+		var width=$("#pic_"+id).width();
+		$(".job_box_div").html("<img id='pic_show' src='"+url+"' style='width:380px;height:auto; ' />");
+	}else{
+		$(".job_box_div").html("<img id='pic_show' src='"+url+"' style='max-width:380px;height:auto; ' />");
+	}
+	 $("#name").val(name);
+	var i = $.layer({
+		type : 1,
+		offset: ['100px', ''],
+		title : '查看图片',
+		closeBtn : [0 , true], 
+		fix : false, 
+		area : ['400px','auto'],
+		page : {dom : '#preview'}
+	});
+}
+
+function ckform(){
+	var title=$("input[name='title']").val();
+	if(title==''){
+		layer.msg('请填写环境标题！',2,8);return false;
+	}
+	if($("input[name=id]").val() != ''){
+		var pic = $("input[name=file]").val();
+		if(!pic){
+			layer.msg('请上传图片！',2,8);return false;
+		}
+	}
+}
+
+function addImg(id,comname,comtitle,comsort){
+	$("#comname").val(comname);
+	$("input[name=id]").val(id);
+	$("input[name=title]").val(comtitle);
+	$("input[name=sort]").val(comsort);
+	$.layer({
+		type : 1,
+		title :'修改企业环境图片',
+		closeBtn : [0 , true],
+		border : [10 , 0.3 , '#000', true],
+		area : ['400px','310px'],
+		page : {dom :"#addImage"}
+	});
+}
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+</div>
+</body>
+</html>

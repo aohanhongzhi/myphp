@@ -1,0 +1,36 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<ul class="yunset mt15">
+    <li>
+        <a href="index.php?c=hr">应聘简历<span class="yunset_list_newmsg">{yun:}if $userid_jobnum{/yun}{yun:}$userid_jobnum{/yun}{yun:}/if{/yun}</span><span class="yun_mnav_tip">有{yun:}$sqnum{/yun}条</span></a>
+    </li>
+    <li>
+        <a href="index.php?c=invite">面试邀请<span class="yunset_list_newmsg"></span><span class="yun_mnav_tip">有{yun:}$invitenum{/yun}条</span></a>
+    </li>
+    <li>
+        <a href="index.php?c=look_resume">浏览简历<span class="yunset_list_newmsg"></span><span class="yun_mnav_tip">有{yun:}$looknum{/yun}条</span></a>
+    </li>
+
+    <li>
+        <a href="index.php?c=talent_pool">收藏简历<span class="yunset_list_newmsg"></span><span class="yun_mnav_tip">有{yun:}$talentnum{/yun}条</span></a>
+    </li>
+    <li>
+        <a href="index.php?c=down">下载简历<span class="yunset_list_newmsg"></span><span class="yun_mnav_tip">有{yun:}$downnum{/yun}条</span></a>
+    </li>
+
+</ul>
+<ul class="yunset mt15">
+    <li>
+        <a href="index.php?c=attention_me">关注我的人才<span class="yunset_list_newmsg"></span><span class="yun_mnav_tip">有{yun:}$atnnum{/yun}条</span></a>
+    </li>
+   
+    <li>
+        <a href="index.php?c=look_job">被浏览的职位 <span class="yunset_list_newmsg"></span><span class="yun_mnav_tip">有{yun:}$lookjobnum{/yun}条</span></a>
+    </li>
+</ul>
+ <ul class="yunset mt15">
+
+    <li>
+        <a href="{yun:}url m=wap c=resume{/yun}">搜人才</a>
+    </li>
+</ul> 
+{yun:}include file="$wapstyle/footer.htm"{/yun}

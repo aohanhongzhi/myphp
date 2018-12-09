@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>  
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript"> 
+var weburl = '{yun:}$config.sy_weburl{/yun}';
+function addresume(){
+	var username=$.trim($("#username").val());
+	var telphone=$.trim($("#telphone").val());
+	var qq=$.trim($("#qq").val());
+	var weixin=$.trim($("#weixin").val());
+	var reg= /^[1][3456789]\d{9}$/;
+	if(username==''){parent.layer.msg("顾问姓名不能为空！",2,8);return false;}
+	if(telphone==''){parent.layer.msg("顾问手机号码不能为空！",2,8);return false;}else if(!reg.test(telphone)){
+		parent.layer.msg("手机号码格式错误！",2,8);return false;
+	}
+	if(qq==''){parent.layer.msg("顾问QQ号不能为空！",2,8);return false;}
+	if(weixin==''){parent.layer.msg("顾问微信号不能为空！",2,8);return false;}
+	$("#gwform").submit();
+} 
+</script>
+<style>
+* {margin: 0 ;padding: 0;}
+body,div{ margin: 0 ;padding: 0;}
+</style>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+    <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+    <div class="admin_new_tip_list_cont">
+      <div class="admin_new_tip_list">招聘顾问主要为了规范网站客服服务体系，运营者把公司所有的销售人员加在招聘顾问中！招聘顾问可实现按周几形式排班机制！运营者也可以根据运营情况为企业分配招聘顾问！ </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+
+
+  <div class="tag_box mt10"> 
+   <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form id="gwform" class="layui-form"  action="index.php?m=admin_company_consultant&c=save"  method="post" target="supportiframe" encType="multipart/form-data" >
+		<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+		<table width="100%" class="table_form" style="background:#fff;">
+        <tr class="admin_table_trbg">
+          <th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">添加招聘顾问</span></th>
+    </tr>
+    
+      		<tr class="admin_table_trbg">
+        		<th>顾问姓名：</th>
+        		<td colspan='3'><input type="text" name="username" id="username" class="input-text" value="{yun:}$show.username{/yun}"></td>
+      		</tr>
+	 		<tr class="admin_table_trbg">
+				<th>顾问手机：</th>
+				<td colspan='3'><input type="text" name="mobile" id='telphone' onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="input-text" value="{yun:}$show.mobile{/yun}"></td>
+	 		</tr>
+	  		<tr >
+				<th>顾问QQ：</th>
+				<td colspan='3'><input type="text" name="qq" id="qq" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="input-text" value="{yun:}$show.qq{/yun}"></td>
+			</tr>
+			<tr>
+				<th>顾问微信：</th>
+				<td colspan='3'><input type="text" name="weixin" id="weixin" class="input-text" value="{yun:}$show.weixin{/yun}"></td>
+			</tr>
+	        <tr>
+				<th align="right">上传头像：</th>
+				<td align="left"colspan="4">
+				<div id="imgparent" {yun:}if !$show.logo{/yun}class="none"{yun:}/if{/yun}><img id="imgicon" src="{yun:}$config.sy_weburl{/yun}/{yun:}$show.logo{/yun}" width="80" height="80"></div>
+				<div>
+				<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'logo',imgid: 'imgicon',parentid: 'imgparent'}">上传图片</button>
+				<input type="hidden" id="layupload_type" value="2"/>
+				<input type="hidden" id="upload_path" value="company"/>
+				<input type="hidden" name="logo" value="{yun:}$show.logo{/yun}"/>
+				</div><span class="admin_web_tip">支持{yun:}$config.pic_type{/yun}文件格式，最大不要超过{yun:}$config.file_maxsize{/yun}M；最佳尺寸 64×64</span>
+				</td>
+            </tr>
+			<tr>
+				<th align="right">值班安排：</th>
+				<td align="left" colspan="4">      
+               
+				<div class="layui-form-item">
+		        <div class="layui-input-block">
+		          <input name="status[]" title="礼拜一" value="1" lay-skin="primary" {yun:}if in_array(1,$status){/yun}checked="checked"{yun:}/if{/yun} type="checkbox"><div class="layui-unselect layui-form-checkbox " ><span>礼拜一</span><i class="layui-icon"></i></div>
+				   <input name="status[]" title="礼拜二" value="2" lay-skin="primary" {yun:}if in_array(2,$status){/yun}checked="checked"{yun:}/if{/yun} type="checkbox"><div class="layui-unselect layui-form-checkbox " ><span>礼拜二</span><i class="layui-icon"></i></div>
+				    <input name="status[]" title="礼拜三" value="3" lay-skin="primary" {yun:}if in_array(3,$status){/yun}checked="checked"{yun:}/if{/yun} type="checkbox"><div class="layui-unselect layui-form-checkbox " ><span>礼拜三</span><i class="layui-icon"></i></div>
+					 <input name="status[]" title="礼拜四" value="4" lay-skin="primary" {yun:}if in_array(4,$status){/yun}checked="checked"{yun:}/if{/yun} type="checkbox"><div class="layui-unselect layui-form-checkbox " ><span>礼拜四</span><i class="layui-icon"></i></div>
+					  <input name="status[]" title="礼拜五" value="5" lay-skin="primary" {yun:}if in_array(5,$status){/yun}checked="checked"{yun:}/if{/yun} type="checkbox"><div class="layui-unselect layui-form-checkbox " ><span>礼拜五</span><i class="layui-icon"></i></div>
+					   <input name="status[]" title="礼拜六" value="6" lay-skin="primary" {yun:}if in_array(6,$status){/yun}checked="checked"{yun:}/if{/yun} type="checkbox"><div class="layui-unselect layui-form-checkbox " ><span>礼拜六</span><i class="layui-icon"></i></div>
+					   <input name="status[]" title="礼拜日" value="7" lay-skin="primary" {yun:}if in_array(7,$status){/yun}checked="checked"{yun:}/if{/yun} type="checkbox"><div class="layui-unselect layui-form-checkbox" ><span>礼拜日</span><i class="layui-icon"></i></div>
+
+		        </div>
+		      </div>
+				</td>
+		</tr>
+		<tr >
+        	<th width="120"></th>
+        		<td>
+		        	<input type="hidden" name="adtime" id="adtime" class="input-text" value="{yun:}time(){/yun}">
+		        	<input type='hidden' name='id' value='{yun:}$show.id{/yun}'>
+		        	<input class="layui-btn layui-btn-normal" type="button" onclick="addresume()" value="&nbsp;保存&nbsp;" />
+       			</td>
+        </tr>
+	   </table>
+    </form>
+ 
+</div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+<script>
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+  });
+</script>
+</body>
+</html>

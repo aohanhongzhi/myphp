@@ -1,0 +1,16 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun} 
+
+<ul class="yunset mt15">
+	<li><a href="index.php?c=invite">面试通知<span class="yunset_list_newmsg">{yun:}if $wkyqnum{/yun}{yun:}$wkyqnum{/yun}{yun:}/if{/yun}</span><span class="yun_mnav_tip">有{yun:}$invitenum{/yun}条</span></a></li>
+	<li><a href="index.php?c=sq">申请的职位<span class="yun_mnav_tip">有{yun:}$sqnum{/yun}条</span></a></li>
+	<li><a href="index.php?c=collect">收藏的职位<span class="yun_mnav_tip">有{yun:}$collectnum{/yun}条</span></a></li>
+    <li><a href="index.php?c=atncom">关注的企业<span class="yun_mnav_tip">有{yun:}$atnnum{/yun}条</span></a></li>
+    </ul>
+    <ul class="yunset mt15">
+	<li><a href="index.php?c=look_job">职位浏览记录<span class="yun_mnav_tip">有{yun:}$lookjobnum{/yun}条</span></a></li>
+	<li><a href="index.php?c=look">谁看过我的简历<span class="yun_mnav_tip">有{yun:}$looknum{/yun}条</span></a></li>
+</ul>
+
+
+
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

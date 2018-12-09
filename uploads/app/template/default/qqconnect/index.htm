@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun}"/>
+<meta name="description" content="{yun:}$description{/yun}"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/yun_job_fairs.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+</head>
+<body style="background:#f8f8f8">
+{yun:}include file="$tplstyle/header.htm"{/yun}
+<!--content  start-->
+<div class="clear"></div>
+<div class="yun_content">
+<div class="qqconnect_box">
+<div class="qqconnect_box_pic"><img width="100px;" height="100px;" src="{yun:}$smarty.session.qq.pic{/yun}"></div>
+<div class="qqconnect_box_p">{yun:}$smarty.session.qq.nickname{/yun}</div>
+<div class="qqconnect_box_p">尊敬的QQ用户</div>
+<div class="qqconnect_box_p_tip">为了给您更好的服务，请关联一个{yun:}$config.sy_webname{/yun}账号，便于您下次快速登录</div>
+<div class="qqconnect_box_list_box">
+<div class="qqconnect_box_list"><span class="qqconnect_box_list_s">用户名</span><input type="text" value="" id='username' class="qqconnect_box_text"> </div>
+<div class="qqconnect_box_list"><span class="qqconnect_box_list_s">密&nbsp;&nbsp;&nbsp;码</span><input type="password" value="" id='password' class="qqconnect_box_text"></div>
+<div class="qqconnect_box_list"><input type="button" value="绑定我的账户" onclick="binduser('{yun:}url m=qqconnect c=qqbind{/yun}');" class="qqconnect_box_sumit"></div>
+ <div class="qqconnect_box_list"> <input type="button" value=" 注册新账户" class="qqconnect_box_sumit2" onclick="window.location.href='{yun:}url m=register{/yun}'"/></div>
+       
+</div>
+
+
+</div>
+
+</div>
+<div style="height:10px; clear:both"></div>
+<!--content  end--> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$style{/yun}/js/reg_ajax.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.index_logoin,.index_logoin_current,.nav_list,.fairs_Status,.fairs_Status,.logoin_qybj,.logoin_grbj,.logoin_Shadow_right,.logoin_Shadow_left,.whitebg,.micro_resume_fast,.nav_list_hover a,#bg,.left_comapply_cont li,.icon2,.nav_list .nav_list_hover em,.Fast_right_icon_l,.Fast_right_icon_r,.index_logoin_after,.logoin_after em,.logoin_after_su2,.logoin_after_su1,.hbg,.pagination li a,.firm_post_list,.Auction_tit,.yun_title,.Recommended_tit,.Com_Search_Results_r ul .All_post_h1_act,.sButtonBlock a.closeButton,.Comment_list_top,.icon,.yun_wap_m_bg,.micro_box');
+</script>
+<![endif]-->
+{yun:}include file="$tplstyle/footer.htm"{/yun}

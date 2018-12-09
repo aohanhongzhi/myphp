@@ -1,0 +1,479 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name=keywords content="{yun:}$keywords{/yun}" />
+<meta name=description content="{yun:}$description{/yun}" />
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{yun:}$com_style{/yun}/images/style.css?v={yun:}$config.cachecode{/yun}" />
+
+</head>
+<body>
+<!--header头部-->
+<div class="header_top"><div class="header_cont">{yun:}$com.name{/yun}欢迎您！<a href="{yun:}$config.sy_weburl{/yun}" class="header_cont_home">人才网首页</a></div></div>
+<div class="">
+   <div class="header_bg" >
+  <div class="header_banner" ><img  src="{yun:}$banner.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_banner{/yun}',2);"> </div></div>
+  
+<div class="header_combox">
+<div class="header_combox_cont">
+<div class="header_comlogo">{yun:}if $com.logo{/yun}<img src="{yun:}$com.logo{/yun}" width="90" height="90" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);" />{yun:}else{/yun}<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}" width="185" height="75" />{yun:}/if{/yun}</div>
+<div class="header_cominfo"> <div class="header_cominfo_top">  <h1 class="header_cominfo_name" style="display:inline-block">{yun:}$com.name{/yun}</h1>
+<div class="header_combox_rz">
+{yun:}if $com.email_status=="1"{/yun} <img src="{yun:}$com_style{/yun}images/rz_yx2.png" alt="邮箱未认证" title="邮箱已认证" class="png" /> {yun:}else{/yun} <img src="{yun:}$com_style{/yun}images/rz_yx.png" alt="邮箱未认证" title="邮箱未认证" class="png" /> {yun:}/if{/yun}
+        {yun:}if $com.moblie_status=="1"{/yun} <img src="{yun:}$com_style{/yun}images/rz_sj2.png" alt="手机未认证" title="手机已认证" class="png" /> {yun:}else{/yun} <img src="{yun:}$com_style{/yun}images/rz_sj.png" alt="手机未认证" title="手机未认证" class="png" /> {yun:}/if{/yun}
+        {yun:}if $com.yyzz_status=="1"{/yun} <img src="{yun:}$com_style{/yun}images/rz_zz2.png" alt="执照未认证" title="执照已认证" class="png" /> {yun:}else{/yun} <img src="{yun:}$com_style{/yun}images/rz_zz.png" alt="执照未认证" title="执照未认证" class="png" /> {yun:}/if{/yun}
+        </div>
+ {yun:}if $ComMember.source==6 && $ComMember.claim==0 && $ComMember.email!=""{/yun}
+        <a href="javascript:claim('{yun:}url m=ajax c=claim uid=$com.uid{/yun}');">认领</a>
+        {yun:}/if{/yun}
+        <div class="wrap_l_name_p"> {yun:}if $usertype=='1'{/yun}
+          {yun:}if $isatn.id{/yun} <a href="javascript:void(0)" onclick="atn('{yun:}$com.uid{/yun}','{yun:}url m=ajax c=atncompany{/yun}')" id='atn_{yun:}$com.uid{/yun}' class="wrap_l_name_gz">取消关注</a> {yun:}else{/yun} <a href="javascript:void(0)" onclick="atn('{yun:}$com.uid{/yun}','{yun:}url m=ajax c=atncompany{/yun}')" id='atn_{yun:}$com.uid{/yun}' class="wrap_l_name_gz">关注</a> {yun:}/if{/yun}
+          {yun:}else{/yun}
+            {yun:}if $uid{/yun}
+            <a href="javascript:void(0)" onclick="layer.msg('只有个人用户才能关注', 2, 8)" class="wrap_l_name_gz">关注</a> 
+            {yun:}else{/yun}
+            <a href="javascript:void(0)" onclick="showlogin('1');" class="wrap_l_name_gz">关注</a> 
+            {yun:}/if{/yun} 
+          {yun:}/if{/yun}
+        </div>
+           
+        </div>
+{yun:}if $com.welfare_n{/yun}<div class="com_welfare">
+			{yun:}foreach from=$com.welfare_n item=wlist{/yun} 
+			<span class="com_welfare_s">{yun:}$wlist{/yun}</span>
+			{yun:}/foreach{/yun}
+			</div>{yun:}/if{/yun}</div>
+            
+            
+ <div class="header_comtj"> 
+ <ul class="header_comtj_list">
+			<li title="该公司在招职位数量">
+				<span class="header_comtj_n">{yun:}$num{/yun}<a>个</a></span><a>
+				<span class="header_comtj_p">招聘职位</span>
+                <i class="header_comtj_list_icon"></i>
+			</li>
+			<li  title="该公司所有职位收到的简历中，在投递后7天内处理完成的简历所占比例">
+				<span class="header_comtj_n">{yun:}$pre{/yun}%</span>
+				<span class="header_comtj_p">简历及时处理率</span>
+                 <i class="header_comtj_list_icon"></i>
+                
+			</li>
+			<li  title="该公司所有职位完成简历处理的平均用时">
+				<span class="header_comtj_n">{yun:}$operatime{/yun}</span>
+				<span class="header_comtj_p">简历处理用时</span>
+                 <i class="header_comtj_list_icon"></i>
+			</li>
+            <li  title="该公司关注人数">
+				<span class="header_comtj_n">{yun:}$com.ant_num{/yun}人</span>
+				<span class="header_comtj_p">关注人数</span>
+                 <i class="header_comtj_list_icon"></i>
+			</li>
+			<li  title="该公司最近一次登录时间">
+				<span class="header_comtj_n"><span class="com_show_info_sj_list_n">{yun:}if $member.login_date{/yun}{yun:}$member.login_date|date_format:"%Y-%m-%d"{/yun}{yun:}else{/yun}未登录 {yun:}/if{/yun}</span></span>
+				<span class="header_comtj_p">企业最后登录</span>
+                
+			</li>
+		</ul>
+          </div>      
+</div>
+
+
+</div>
+
+
+</div>
+<div class="com_cont">
+<div class="com_left">
+
+<div class="com_nav"> <ul>
+    <li class="c_currer"><a href="{yun:}url m=company c=show id=$com.uid{/yun}">首页</a><i class="c_currer_line"></i></li>
+    <li ><a href="{yun:}url m=company c=show id=$com.uid{/yun}#about">公司介绍</a><i class="c_currer_line"></i></li>
+	<li><a href="{yun:}url m=company c=show id=$com.uid{/yun}#contact">联系方式</a><i class="c_currer_line"></i></li>
+    <li ><a href="{yun:}url m=company c=show id=$com.uid{/yun}#job">招聘职位</a><i class="c_currer_line"></i></li>
+    <li ><a href="{yun:}url m=company c=show id=$com.uid{/yun}#show">企业环境</a><i class="c_currer_line"></i></li>
+    <li ><a href="{yun:}url m=company c=show id=$com.uid{/yun}#news">企业新闻</a><i class="c_currer_line"></i></li>
+    <li ><a href="{yun:}url m=company c=show id=$com.uid{/yun}#product">企业产品</a><i class="c_currer_line"></i></li>
+  </ul></div><div class="com_left_pd">
+  <div class="com_list">
+<div class="com_tit none"  id="companybusiness"><span class="com_tit_s"><i class="com_tit_icon"></i>工商信息</span></div>
+   <!----天眼查------->
+
+<div class="business none" id="businessInfo">
+	<div class="businessInfo">
+		<ul class="basicMsgList clearfix">
+		<li><div class="clearfix"><span>统一社会信用代码：</span><em id="creditCode"></em></div></li>
+		<li><div class="clearfix"><span>成立日期：</span><em id="estiblishTime"></em></div></li>
+		<li><div class="clearfix"><span>组织机构代码：</span><em id="orgNumber"></em></div></li>
+		<li><div class="clearfix"><span>经营期限：</span><em id="Time"></em></div></li>
+		<li><div class="clearfix"><span>企业类型：</span><em id="companyOrgType"></em></div></li>
+		<li><div class="clearfix"><span>登记机关：</span><em id="regInstitute"></em></div></li>
+		<li><div class="clearfix"><span>经营状态：</span><em id="regStatus"></em></div></li>
+        <li><div class="clearfix"><span>注册资本：</span><em id="regCapital"></em></div></li>
+		
+		
+		</ul>
+        <dl class="basicMsgList"><dt>注册地址：</dt><dd id="regLocation"></dd></dl>
+		<dl class="basicMsgList mt20"><dt>经营范围：</dt><dd id="businessScope"></dd></dl>
+		<div class="qxb clearfix">
+		<div class="qxb_tg"><span>以上内容由</span><div class="hxb"><a href="" class="tianyancha" id="tianyancha"  target='_blank'></a></div><span>提供</span></div>
+		</div>
+	</div>
+</div>
+
+
+<!---------END------>
+  <div class="com_list">
+  
+<div class="com_tit"id="about"><span class="com_tit_s"><i class="com_tit_icon com_tit_iconabout"></i>公司介绍</span></div>
+  <div class="com_about">
+{yun:}if $com.content{/yun}
+<div style="width:100%;height:auto; overflow:hidden" id="com_content" class="company_img_auto">
+{yun:}$com.content{/yun}
+</div>
+<div class="company_show_more none"><a href="javascript:;" onclick="showcc()">查看更多</a></div>
+
+{yun:}else{/yun}<div class="com_msg_no">该企业还没有填写公司简介! </div>{yun:}/if{/yun} 
+</div>
+</div>
+
+ <div class="c_content_recru">
+      	<div class="com_tit" id="job"><span class="com_tit_s"><i class="com_tit_icon com_tit_iconjob"></i>招聘职位</span></div>
+     <!--   职位列表-->
+    <div class="comshow_job" id="company_job_list">
+
+                        {yun:}if $num=='0'{/yun}
+                        <div class="firm_tips_no"> 该企业还没有发布职位信息!</div>
+                        {yun:}else{/yun} {yun:}joblist ispage=1 limit=2 item=jlist uid='auto.id'{/yun}
+                        <div class="firm_post">
+                            <div class="fpc_name">
+                                <a href="{yun:}url m=job c=comapply id=$jlist.id{/yun}" target="_blank">{yun:}$jlist.name{/yun}</a>
+                            </div>
+                            <div class="firm_post_joblist">
+                                {yun:}if $jlist.job_salary{/yun}
+                                <span class="comshow_job_xz"><i>{yun:}$jlist.job_salary{/yun}</i></span> {yun:}/if{/yun} {yun:}if $jlist.job_city_two{/yun}<span class="comshow_job_city">{yun:}$jlist.job_city_two{/yun}</span>{yun:}/if{/yun} {yun:}if $jlist.job_exp{/yun}<span class="comshow_job_jy">{yun:}$jlist.job_exp{/yun}经验</span>{yun:}/if{/yun} {yun:}if $jlist.job_edu{/yun}<span class="comshow_job_xl">{yun:}$jlist.job_edu{/yun}学历</span> {yun:}/if{/yun}
+                            </div>
+                            {yun:}if $jlist.lastupdate{/yun}
+                            <div class="firm_post_jobtime">发布时间：{yun:}$jlist.lastupdate|date_format:"%Y-%m-%d"{/yun}</div>
+                            {yun:}/if{/yun}
+                            <a href="{yun:}url m=job c=comapply id=$jlist.id{/yun}" class="firm_post_jobbth">立即查看</a>
+                        </div>
+                        {yun:}/joblist{/yun} {yun:}if $pagenav{/yun}
+                        <div class="pages">
+                            <a href="javascript:void(0);" onclick="page('{yun:}$smarty.get.id{/yun}','{yun:}if $smarty.get.page{/yun}{yun:}$smarty.get.page{/yun}{yun:}else{/yun}1{yun:}/if{/yun}','5','1');">上一页</a>
+                            <a href="javascript:void(0);" onclick="page('{yun:}$smarty.get.id{/yun}','{yun:}if $smarty.get.page{/yun}{yun:}$smarty.get.page{/yun}{yun:}else{/yun}1{yun:}/if{/yun}','5','2');">下一页</a>
+                        </div>
+                        {yun:}/if{/yun} {yun:}/if{/yun}
+
+                    </div>
+       </div>
+<!--   职位列表 end-->
+
+    <div class="clear"></div>
+    <div class="c_content_envir" id="show">
+      	<div class="com_tit"><span class="com_tit_s"><i class="com_tit_icon com_tit_iconhj"></i>企业环境</span></div>
+    
+       {yun:}if !empty($shows){/yun}
+      <div class="c_envir_pic">
+        <ul id="layer-pic">
+          {yun:}foreach from=$shows key=key item=row{/yun}
+          <li style="padding-right:8px; padding-left:8px;"><a class="" href="javascript:;" target="_blank"><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$row.picurl{/yun}" lay-src='{yun:}$config.sy_weburl{/yun}/{yun:}$row.picurl{/yun}' width="180" height="127"  alt="{yun:}$row.title{/yun}"/></a></li>
+          {yun:}/foreach{/yun}
+        </ul>
+      </div>  
+      {yun:}else{/yun}
+      <div class="com_msg_no">暂无企业环境</div>
+      {yun:}/if{/yun}
+      <div class="clear"></div>
+    </div>	
+    <div class="com_tit" id="news"><span class="com_tit_s"><i class="com_tit_icon com_tit_iconnews"></i>企业新闻</span></div>
+    
+     {yun:}if !empty($NewsList){/yun}
+    <div class="com_news"> 
+      <ul class="">
+        {yun:}foreach from=$NewsList item=row{/yun}
+        <li>
+          <p><a href="{yun:}url m=company c=newsshow id=$com.uid nid=$row.id style=$smarty.get.style{/yun}" target="_blank">{yun:}$row.title{/yun}</a></p>
+        </li>
+        {yun:}/foreach{/yun}
+      </ul>
+       </div>
+       {yun:}else{/yun}
+       <div class="com_msg_no">暂无企业新闻</div>
+      {yun:}/if{/yun} 
+      
+     
+     <div class="com_tit" id="product"><span class="com_tit_s"><i class="com_tit_icon com_tit_iconcp"></i>企业产品</span></div>
+            {yun:}if !empty($ProductList){/yun}
+ 
+      
+  
+    <div class="com_cp_list">
+      {yun:}foreach from=$ProductList item=row{/yun}
+      <dl>
+        <dt><a href="{yun:}url m=company c=productshow id=$com.uid pid=$row.id style=$smarty.get.style{/yun}"><img src="{yun:}formatpicurl path=$row.pic{/yun}" width="210" height="140" /></a></dt>
+        <dd><a href="{yun:}url m=company c=productshow id=$com.uid pid=$row.id style=$smarty.get.style{/yun}">{yun:}$row.title{/yun}</a></dd>
+      </dl>
+      {yun:}/foreach{/yun}
+     </div> 
+     {yun:}else{/yun}
+     <div class="com_msg_no">暂无企业产品</div>
+     {yun:}/if{/yun} 
+     
+  </div>
+      <div class="clear"></div>
+ 
+		 <div class="maincenters companysearch_menuBoxs">
+      <div id="sortBoxs">
+        <div class="search_menuBoxs">
+          <ul>
+            <li class="search_curs" id="typezb" onmousemove="searchtype('zb');">周边招聘</li>
+            <li id="typezp" onmousemove="searchtype('zp');">招聘频道</li>
+            <li id="typerm" onmousemove="searchtype('rm');">热门搜索</li>
+          </ul>
+        </div>
+        <div class="contentBoxs">
+          <!-- 周边招聘 start-->
+        <div class="contentBox_conts " id="type_zb">
+        <div class="Industry_lists">
+			{yun:}if $city.three_cityid{/yun}
+				{yun:}foreach item=v from=$city_type[$city.cityid]{/yun}
+				<a href="{yun:}listurl provinceid=$city.provinceid cityid=$city.cityid type=three_cityid v=$v page=1{/yun}">{yun:}$city_name[$v]{/yun}招聘</a>
+				{yun:}/foreach{/yun}
+			{yun:}elseif $city.cityid{/yun}
+				{yun:}foreach item=v from=$city_type[$city.provinceid]{/yun}
+				<a href="{yun:}listurl provinceid=$city.provinceid type=cityid v=$v page=1{/yun}">{yun:}$city_name[$v]{/yun}招聘</a>
+				{yun:}/foreach{/yun}
+			{yun:}else{/yun}
+				{yun:}foreach item=v from=$city_index{/yun}
+				<a href="{yun:}listurl type=provinceid v=$v page=1{/yun}">{yun:}$city_name[$v]{/yun}招聘</a>
+				{yun:}/foreach{/yun}
+			{yun:}/if{/yun}
+        </div>
+        </div>
+          <!-- 周边招聘 end-->
+          <!-- 招聘频道 start-->
+          <div class="contentBox_conts none" id="type_zp" >
+           <div class="Industry_lists">
+        {yun:}foreach item=v from=$industry_index{/yun}
+		<a href="{yun:}listurl type=hy v=$v{/yun}">{yun:}$industry_name[$v]{/yun}招聘</a>
+		{yun:}/foreach{/yun}
+              
+          </div> </div>
+          <!--  招聘频道 end-->
+          <!-- 热门搜索 start-->
+          <div class="contentBox_conts none" id="type_rm">
+            <div class="Industry_lists">
+                {yun:}key limit=20 recom=1 type=3 item=keylist{/yun}
+                <a href="{yun:}$keylist.url{/yun}">{yun:}$keylist.key_name{/yun}</a> 
+                {yun:}/key{/yun}
+          </div> </div>
+          <!--   热门搜索 end-->
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+</div>
+</div>
+<div class="com_right">
+<div class="com_right_box">
+<div class="com_tit">基本信息</div>
+ <div class="c_nr_hybox">
+ <div class="c_nr_hy"><em>行业</em><span>{yun:}$com.hy_info{/yun}</span></div>
+              <div class="c_nr_hy"><em>性质</em><span>{yun:}$com.pr_info{/yun}</span></div>
+              <div class="c_nr_hy"><em>规模</em><span>{yun:}$com.mun_info{/yun}</span></div>
+              <div class="c_nr_hy"><em>地区</em><span>{yun:}$com.provinceid{/yun}</span></div>
+          {yun:}if $com.money{/yun}<div class="c_nr_hy"><em>注资</em>{yun:}$com.money{/yun}{yun:}if $com.moneytype==1{/yun}万元{yun:}else{/yun}万美元{yun:}/if{/yun}</div>{yun:}/if{/yun}
+          {yun:}if $com.sdate{/yun}<div class="c_nr_hy"><em>创办</em>{yun:}$com.sdate{/yun}</div>{yun:}/if{/yun}
+</div>
+
+<div class="com_tit" id="contact" data-slide='2'>联系方式</div>
+
+
+
+     {yun:}if $looktype=="1"{/yun}
+      <div class="firm_det_link"> 
+      {yun:}if $com.linkman{/yun}<span class="firm_mes1">联 &nbsp;系&nbsp;人：<i> <em class="JoB_material_right JoB_material_line">{yun:}$com.linkman{/yun}</em> </i></span>{yun:}/if{/yun}
+      {yun:}if $com.linkjob{/yun}<span class="firm_mes1">联系人职位：<i> <em class="JoB_material_right JoB_material_line">{yun:}$com.linkjob{/yun}</em> </i></span>{yun:}/if{/yun}
+    {yun:}if $com.linkphone{/yun} <span class="firm_mes1">固定电话：<i>{yun:}$com.linkphone{/yun}</i></span> {yun:}/if{/yun}
+          {yun:}if $com.linktel{/yun} <span class="firm_mes1">联系电话：<i> <em class="JoB_material_right JoB_material_line">{yun:}image uid=$com.uid action=linktel{/yun}</em> </i></span> {yun:}/if{/yun}
+          {yun:}if $com.linkmail{/yun} <span class="firm_mes1">联系邮件：<i>{yun:}$com.linkmail{/yun}</i></span> {yun:}/if{/yun}
+          {yun:}if $com.linkqq{/yun} <span class="firm_mes1">联 系 QQ：<i>{yun:}$com.linkqq{/yun}</i></span> {yun:}/if{/yun}
+          {yun:}if $com.zip{/yun} <span class="firm_mes1">邮政编码：<i>{yun:}$com.zip{/yun}</i></span> {yun:}/if{/yun}        
+          {yun:}if $com.website{/yun} <span class="firm_mes1">企业网址：<i>{yun:}$com.website{/yun}</i></span> {yun:}/if{/yun}
+           {yun:}if $com.busstops{/yun} <span class="firm_mes1" style="width:100%;">公交站点：<i>{yun:}$com.busstops{/yun}</i></span> {yun:}/if{/yun}
+          {yun:}if $com.address{/yun} <span class="firm_mes1" style="width:100%;">公司地址：<i>{yun:}$com.address{/yun}</i></span> {yun:}/if{/yun} 
+           {yun:}if $com.comqcode{/yun} 
+           <div class="com_wx" >
+           
+           <img src="{yun:}$com.comqcode{/yun}" width="120" height="120">
+         <div class="">企业微信</div>
+          </div> {yun:}/if{/yun} 
+           </div>
+           {yun:}else{/yun}
+           {yun:}if $looktype=="3" || $looktype=="2"|| $looktype=="5"{/yun} 
+            <div class="firm_login">
+        <div class="firm_login_con"> <span>{yun:}$look_msg{/yun}</span> </div>
+      </div>
+            {yun:}elseif $looktype=="6"{/yun} 
+             <div class="firm_login">
+        <div class="firm_login_con"> <span>{yun:}$look_msg{/yun}</span>
+		<a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=expect" class="firm_login_zc">创建简历</a> </div>
+      	</div>
+         {yun:}elseif $looktype=="4"{/yun} 
+      <div class="firm_login">
+        <div class="firm_login_con"> <div><span>{yun:}$look_msg{/yun}</span></div> 请您先 <a class="firm_login_dl" href="javascript:void(0);" onclick="showlogin('1');">登录</a> or <a class="firm_login_zc" href="{yun:}url m=register usertype=1 type=1{/yun}">注册</a>
+		</div>
+      </div>
+    {yun:}/if{/yun}
+          {yun:}/if{/yun}
+      </div>
+      
+      
+
+
+<div class="clear"></div>
+<div class="com_right_box">
+<div class="com_tit">分享到朋友圈</div>
+<div class="clear"></div>
+       <div class="wx_share_fx">
+        <div class="wx_share_fx_img"><img src="{yun:}url m=ajax c=pubqrcode toc=company toa=show toid=$com.uid{/yun}" width="120" height="120"></div>
+        <div class="wx_share_fx_p">分享到朋友圈</div>
+        </div>
+</div>
+</div>
+</div>
+
+
+<!--内容结束-->
+<div class="clear"></div>
+<script>
+var weburl="{yun:}$config.sy_weburl{/yun}",integral_pricename='{yun:}$config.integral_pricename{/yun}',pricename='{yun:}$config.integral_pricename{/yun}',code_web='{yun:}$config.code_web{/yun}',code_kind='{yun:}$config.code_kind{/yun}';</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/popImage/jquery.popImage.mini.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$style{/yun}/js/ScrollPic.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+$(function(){
+	$("a.image_gall").popImage();
+})
+<!--//--><![CDATA[//><!--
+var li_num=$("#layer-pic li").length;
+if(li_num>3){//如果图片数量不足，就不执行切换
+	var scrollPic_02 = new ScrollPic();
+	scrollPic_02.scrollContId   = "layer-pic"; //内容容器ID
+	scrollPic_02.arrLeftId      = "LeftArr";//左箭头ID
+	scrollPic_02.arrRightId     = "RightArr"; //右箭头ID
+	scrollPic_02.frameWidth     = 710;//显示框宽度
+	scrollPic_02.pageWidth      = 196; //翻页宽度
+	scrollPic_02.speed          = 10; //移动速度(单位毫秒，越小越快)
+	scrollPic_02.space          = 10; //每次移动像素(单位px，越大越快)
+	scrollPic_02.autoPlay       = true; //自动播放
+	scrollPic_02.autoPlayTime   = 2; //自动播放间隔时间(秒)
+	scrollPic_02.initialize(); //初始化
+}
+//--><!]]> 
+</script>
+<script>$(function(){tianyancha('{yun:}url m=ajax c=getbusiness{/yun}','{yun:}$com.name{/yun}');});</script>
+
+<script>
+$(function () {
+	$('.c_top_daoh li').click(function () {
+		$(this).addClass('c_currer').siblings().removeClass('c_currer');
+	});
+	$(".c_recru_list").find("li").hover(function () {
+		var aid = $(this).attr("aid");
+		$("#y" + aid).addClass("c_list_curre");
+	}, function () {
+		var aid = $(this).attr("aid");
+		$("#y" + aid).removeClass("c_list_curre");
+	});
+	
+	layer.photos({
+	  photos: '#layer-pic'
+	  ,anim: 5
+	}); 
+	$.post('{yun:}url m=ajax c=getbusiness{/yun}',{name:'{yun:}$com.name{/yun}'},function(data){
+	
+		if(data){
+			var business = eval('('+data+')');
+			$('#creditCode').html(business.creditCode);
+			$('#estiblishTime').html(business.estiblishTime);
+			$('#orgNumber').html(business.orgNumber);
+			$('#Time').html(business.fromTime+'至'+business.toTime);
+			$('#companyOrgType').html(business.companyOrgType);
+			$('#regInstitute').html(business.regInstitute);
+			$('#regStatus').html(business.regStatus);
+			$('#regLocation').html(business.regLocation);
+			$('#regCapital').html(business.regCapital);
+			$('#businessScope').html(business.businessScope);
+			$('#tianyancha').attr('href','https://www.tianyancha.com/company/'+business.companyId);
+			$('#businessInfo').show();
+		}
+	})
+	var cheight=$("#com_content").height();
+	if(parseInt(cheight)>270){
+	    $("#com_content").attr('style','width:100%;height:270px; overflow:hidden');
+		$(".company_show_more").show();
+	}
+});
+function showcc(){
+    $("#com_content").attr('style','width:100%;height:auto; overflow:hidden');
+	$(".company_show_more").find('a').html('收起');
+	$(".company_show_more").find('a').attr('onclick','hidecc()');
+}
+function hidecc(){
+    $("#com_content").attr('style','width:100%;height:270px; overflow:hidden');
+	$(".company_show_more").find('a').html('查看更多');
+	$(".company_show_more").find('a').attr('onclick','showcc()');
+}
+function page(id, page, limit, updown) {
+	if(page < 1) {
+		page == 1;
+	}
+	$.ajax({
+		type: "POST",
+		global: false,
+		url: "{yun:}url m=company c=prestr{/yun}",
+		data: {
+			id: id,
+			page: page,
+			limit: limit,
+			updown: updown
+		},
+		success: function(data) {
+			var data = eval("(" + data + ")");
+			if(data.num < 0) {
+				var $html = '<div class="firm_tips_no"> 该企业还没有发布职位信息!</div>'
+			} else {
+				var $html = data.joblist;
+			}
+			$("#company_job_list").html($html);
+		}
+	});
+}
+function searchtype(id){
+	$(".search_curs").removeClass("search_curs");
+	$("#type"+id).addClass("search_curs");
+	$(".contentBox_conts").hide();
+	$("#type_"+id).show();
+}
+</script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.inter_con .inter_con_new,.vip_pic_xg a,.vip_mes h2 a');
+</script>
+<![endif]-->
+
+{yun:}include file="$tplstyle/public_search/login.htm"{/yun}
+<!--底部footer--> 
+{yun:}include file="$tplstyle/footer.htm"{/yun} 

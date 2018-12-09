@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script language="javascript"> 
+function checkform(){
+  if ($("#name").val()==""){
+    parent.layer.msg('请填写类别名称！', 2, 8);return (false);
+  } 
+  if($("#pic").val()==''){
+    parent.layer.msg("请上传图片！",2,8);return (false);
+  }
+  $("#qform").submit();
+}
+</script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">问答类别，主要解决问题分类需求。如企业、面试、招聘等分类需求量大问题分类，运营者可以进行汇总后，自主添加到网站问答中！</div>
+</div>
+</div>
+<div class="admin_new_search_box">
+
+  <a href=" javascript:history.back(-1);" class="admin_new_cz_tj" style="margin-left:0px;">< 类别列表</a> 
+ 
+</div>
+   <div class="tag_box ">
+    <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form id="qform" name="myform" action="index.php?m=question_class&c=save&pid={yun:}$pid{/yun}" method="post" encType="multipart/form-data" target="supportiframe" class="layui-form">
+    
+      <table width="100%" class="table_form" style="background:#fff;">
+       <tr>
+              <td colspan="4" bgcolor="#f0f6fb"><div class="admin_bold">添加类别</div></td>
+            </tr>
+        <tr >
+          <th>类别名称：</th>
+          <td><input class="input-text" type="text" id="name" name="name" size="40" value="{yun:}$q_class.name{/yun}"/></td>
+        </tr>
+        <tr class="admin_table_trbg" >
+          <th>排序：</th>
+          <td><input class="input-text" type="text" name="sort" size="40" value="{yun:}$q_class.sort{/yun}"/>
+            越小越在前</td>
+        </tr>
+        <tr >
+          <th>父类别：</th>
+          <td>    
+            <div class="layui-form-item">
+              <div class="layui-input-inline">
+                <select name="pid">
+                  <option value="">请选择</option>
+                  {yun:}foreach item=v from=$class_list{/yun}
+                  <option value="{yun:}$v.id{/yun}"
+                   {yun:}if $q_class.pid && $q_class.pid==$v.id{/yun}
+                   selected
+                   {yun:}/if{/yun}
+                   >{yun:}$v.space{/yun}{yun:}$v.name{/yun}
+                  </option>
+                  {yun:}/foreach{/yun}
+                </select>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="admin_table_trbg" >
+          <th>简介内容： </th>
+          <td>
+ 			<script id="intro" name="intro" type="text/plain" cols="100" rows="8"  style="width:700px; height:300px;"> {yun:}$q_class.intro{/yun} </script>	
+		</td>
+        </tr>
+        <tr >
+          <th>图片： </th>
+          <td>
+			<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'pic',imgid: 'imgicon'}">上传图片</button>
+			<input type="hidden" id="layupload_type" value="2"/>
+			<input type="hidden" id="upload_path" value="question_class"/>
+			<input type="hidden" id="pic" name="pic" value="{yun:}$q_class.pic{/yun}"/>
+			<img id="imgicon" src="{yun:}$config.sy_weburl{/yun}/{yun:}$q_class.pic{/yun}" width="60" height="60" {yun:}if !$q_class.pic{/yun}class="none"{yun:}/if{/yun}>
+			</td>
+        </tr>
+		<tr>
+       <th>&nbsp;</th>
+			<td align="left" >
+          	{yun:}if $q_class.id{/yun}
+            <input type="hidden" name="id" size="40" value="{yun:}$q_class.id{/yun}"/>
+            <input class="admin_button" type="button" onclick="checkform()" value="&nbsp;更 新&nbsp;"  />
+            {yun:}else{/yun}
+            <input class="admin_button" type="button" onclick="checkform()" value="&nbsp;添 加&nbsp;"  />
+            {yun:}/if{/yun}
+            <input class="admin_button" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+        </tr>
+      </table>
+    <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+    </form>
+  </div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript">
+	var weburl = '{yun:}$config.sy_weburl{/yun}';
+	layui.use(['form'], function(){
+		var form = layui.form;
+	});
+	var editor = UE.getEditor('intro',{
+		toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|','link', 'unlink', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],wordCount:false,elementPathEnabled:false,initialFrameHeight:300
+	});
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+</body>
+</html>

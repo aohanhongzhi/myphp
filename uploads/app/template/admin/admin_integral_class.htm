@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<script src="js/show_pub.js?v={yun:}$config.cachecode{/yun}"></script> 
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title>后台管理</title>
+</head>
+<body class="body_ifm"> 
+
+<span id="temp"></span>
+<div class="infoboxp">
+ <div class="tabs_info">
+    <ul>
+      <li class=""><a href="index.php?m=integral">{yun:}$config.integral_pricename{/yun}设置</a></li>
+      <li class=""><a href="index.php?m=integral&c=user">个人{yun:}$config.integral_pricename{/yun}</a></li>
+      <li class=""> <a href="index.php?m=integral&c=com">企业{yun:}$config.integral_pricename{/yun}</a></li>
+	  <li class="curr"> <a href="index.php?m=integral&c=class">{yun:}$config.integral_pricename{/yun}优惠</a></li>
+    </ul>
+  </div>
+<div class="admin_new_tip">
+    <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+    <div class="admin_new_tip_list_cont">
+      <div class="admin_new_tip_list">该页面展示了网站充值信息，可对充值类型编辑修改操作。</div>
+    </div>
+  </div>
+  <div class="admin_new_search_box">
+  <a  href="javascript:void(0);" onClick="add_class('添加类别','450','250','#houtai_div','')"  class="admin_new_cz_tj" style="margin-left:0px;">+ 添加类别</a>
+  </div>
+  <div class="clear"></div>
+ 
+<div class="table-list">
+  <div class="admin_table_border">
+  <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+<form action="index.php?m=integral&c=del" method="post" target="supportiframe" id='myform'>  
+<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+<table width="100%" id="table_industry">
+	<thead>
+	<tr class="admin_table_top">
+   		<th width="50"><label for="chkall"> <input type="checkbox" id='chkAll' onclick='CheckAll(this.form)' /></label></th>
+		<th width="60">编号</th>
+		<th align="left">{yun:}$config.integral_pricename{/yun}<span class="clickup">(点击修改)</span></th>
+		<th align="left">折扣</th>
+		<th>是否开启</th>
+		<th width="180" class="admin_table_th_bg">操作</th>
+	</tr>
+	</thead>
+	<tbody>	 
+	{yun:}foreach item=v key=key from=$list{/yun}
+	 
+	<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+  	    <td width="50"><input type="checkbox" value="{yun:}$v.id{/yun}" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+		<td class="ud">{yun:}$v.id{/yun}</td>
+		<td class="ud imghide" align="left">
+		<span onClick="checkintegral('{yun:}$v.id{/yun}');" id="integral{yun:}$v.id{/yun}" style="cursor:pointer;">{yun:}$v.integral{/yun}</span>
+        <input class="input-text hidden" type="text"  maxlength='6' onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" id="inputintegral{yun:}$v.id{/yun}" value="{yun:}$v.integral{/yun}" onBlur="subintegral('{yun:}$v.id{/yun}','index.php?m=integral&c=ajax');" ><span onClick="checkintegral('{yun:}$v.id{/yun}');">{yun:}$config.integral_pricename{/yun}</span>
+         <img class="" style="padding-left:5px;cursor:pointer;" title="" src="images/xg.png" onClick="checkintegral('{yun:}$v.id{/yun}');"/>
+
+		</td>
+		<td class="ud imghide" align="left">
+		<span onClick="checkdiscount('{yun:}$v.id{/yun}');" id="discount{yun:}$v.id{/yun}" style="cursor:pointer;">{yun:}$v.discount{/yun}</span>
+        <input class="input-text hidden" type="text"  maxlength="2"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" id="inputdiscount{yun:}$v.id{/yun}" value="{yun:}$v.discount{/yun}" onBlur="subdiscount('{yun:}$v.id{/yun}','index.php?m=integral&c=ajax');" >折
+         <img class="" style="padding-left:5px;cursor:pointer;" title="" src="images/xg.png" onClick="checkdiscount('{yun:}$v.id{/yun}');"/>
+
+		</td>
+		<td class="od" align="center" id="state{yun:}$v.id{/yun}">{yun:}if $v.state=='1'{/yun}<a href="javascript:void(0);" onClick="rec_up('index.php?m=integral&c=ajax','{yun:}$v.id{/yun}','0','state');"><img src="../config/ajax_img/doneico.gif"></a>{yun:}else{/yun}<a href="javascript:void(0);" onClick="rec_up('index.php?m=integral&c=ajax','{yun:}$v.id{/yun}','1','state');"><img src="../config/ajax_img/errorico.gif"></a>{yun:}/if{/yun}</td>
+		<td class="ud">
+        <a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=integral&c=del&delid={yun:}$v.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a></td>
+	</tr> 
+	
+{yun:}/foreach{/yun} 
+  <tr style="background:#f1f1f1;">
+    <td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+    <td colspan="5" >
+    <label for="chkAll2">全选</label>&nbsp;
+    <input class="admin_button"  type="button" name="delsub" value="删除所选"  onclick="return really('del[]')"/></td>
+    </tr>
+	</tbody>
+</table>
+</form>
+</div>
+</div>
+
+</div>
+<form class="layui-form">
+<div id="houtai_div" style=" width:450px; display:none;" >
+	     <table cellspacing='1' cellpadding='1' class="admin_examine_table">
+			<tbody>
+				<tr class="ui_td_11" >
+					<th width="100">{yun:}$config.integral_pricename{/yun}数量：</th>
+					<td><input type="text" id='integral' name="integral"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"  maxlength='6' class="input-text">{yun:}$config.integral_pricename{/yun}
+					</td>
+				</tr>
+				<tr class="ui_td_11">
+					<th>折扣：</th>
+					<td><input type="text" id='discount' name="discount"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"  maxlength='2' class="input-text">折
+					</td>
+					
+				</tr>
+				<tr id='is_state'>
+					<th>是否开启：</th>
+					<td>
+                    
+			           <div class="layui-form-item">
+				          <div class="layui-input-block">
+				          	<input type="hidden" name="state" id="state_val" value="2" />
+				            <input type="checkbox" lay-skin="switch" lay-text="是|否"  lay-filter="swiId"/>
+				          </div>
+				        </div> 
+                    
+                    </td>
+				</tr>
+				<tr class="ui_td_11">
+					<td  class="ui_content_wrap" colspan='2' style="border-bottom:none"><input class="admin_examine_bth" type="button" name="sub" value=" 添加 "  onclick="saveIclass('index.php?m=integral&c=add')"/></td>
+				</tr> 
+			</tbody>
+		</table>
+		<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+</div></form>
+<script>
+layui.use(['layer', 'form','element'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+	,element = layui.element
+    ,$ = layui.$;
+	form.on('switch(swiId)', function(data){
+    	if(this.checked){
+    		$('#state_val').val(1);
+    	}else{
+    		$('#state_val').val(2);
+    	}
+    });
+  });
+function subintegral(id,url){
+	var integral=$("#inputintegral"+id).val();
+	if($.trim(integral)==""){
+		parent.layer.msg("{yun:}$config.integral_pricename{/yun}不能为空！",2,8,function(){location.reload();});return false;
+	}
+	var pytoken=$("#pytoken").val();
+	$.post(url,{id:id,integral:integral,pytoken:pytoken},function(data){
+		if(data==2){
+			layer.msg("已有此数量，请重新输入！",2,8);
+		}else{
+			$("#integral"+id).html(integral);
+			$("#integral"+id).show();
+			$("#inputintegral"+id).hide(); 
+		}
+		
+	})
+}
+function checkintegral(id){
+	$("#integral"+id).hide();
+	$("#inputintegral"+id).show();
+	$("#inputintegral"+id).focus();
+}
+function subdiscount(id,url){
+	var discount=$("#inputdiscount"+id).val();
+	if($.trim(discount)==""){
+		parent.layer.msg("折扣不能为空！",2,8,function(){location.reload();});return false;
+	}
+	var pytoken=$("#pytoken").val();
+	$.post(url,{id:id,discount:discount,pytoken:pytoken},function(data){
+		$("#discount"+id).html(discount);
+		$("#discount"+id).show();
+		$("#inputdiscount"+id).hide(); 
+	})
+}
+function checkdiscount(id){
+	$("#discount"+id).hide();
+	$("#inputdiscount"+id).show();
+	$("#inputdiscount"+id).focus();
+}
+function saveIclass(url){
+	var pytoken=$("#pytoken").val(); 
+	var integral = $("#integral").val();
+	var discount=$("#discount").val();
+	var state=$("#state_val").val();
+	if(integral==''){
+		parent.layer.msg('数量不能为空！', 2, 8);return false;
+	}
+	$.post(url,{integral:integral,discount:discount,state:state,pytoken:pytoken},function(msg){
+		if(msg==1){
+			parent.layer.msg('已有此数量，请重新输入！', 2, 8);return false;
+		}else if(msg==2){
+			parent.layer.msg('添加成功！', 2,9,function(){location=location ;});return false;
+		}else if(msg==3){
+			parent.layer.msg('添加失败！', 2,8,function(){location=location ;});return false;
+		}
+	}); 
+}
+</script>  
+  </body>
+</html>

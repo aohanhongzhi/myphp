@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div id="status_div"  style="display:none; width: 390px; "> 
+
+      <form class="layui-form" action="index.php?m=comnews&c=status" target="supportiframe" method="post" id="formstatus"> 
+      <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+      
+       <table cellspacing='1' cellpadding='1' class="admin_examine_table">
+     <tr>
+    <th width="80">审核操作：</th>
+     <td align="left">
+		 <!-- <div class="admin_examine_right">
+        <label for="status0"> <span class="admin_examine_table_s"><input type="radio" name="status" value="0" id="status0" >未审核</span></label>
+        <label for="status1"> <span class="admin_examine_table_s"><input type="radio" name="status" value="1" id="status1" >正常</span></label>
+        <label for="status2"> <span class="admin_examine_table_s"><input type="radio" name="status" value="2" id="status2">未通过</span></label>
+        </div>-->
+			 		<div class="layui-form-item">
+            <div class="layui-input-block">
+                      <input name="status" id="status0" value="0" title="未审核" type="radio"/>
+					<input name="status" id="status1" value="1" title="正常" type="radio"/>
+					<input name="status" id="status2" value="2" title="未通过" type="radio"/>
+                 </div>
+           </div>
+        </td>
+          </tr>
+          <tr>
+            <th>审核说明：</th>
+           <td align="left"> <textarea id="alertcontent" name="statusbody" class="admin_explain_textarea"></textarea> </td>
+        
+           </tr>
+        <tr>
+           <td colspan='2' align="center"><input type="submit" onclick="loadlayer();" value='确认' class="admin_examine_bth">
+          &nbsp;&nbsp;<input type="button"   onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消'>
+		</td>
+        </tr>
+        <input name="pid" value="0" type="hidden">
+          </table> 
+      </form>
+  
+  
+  
+  
+</div> 
+ <div class="infoboxp">
+
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站所有的公司新闻管理信息，可对公司新闻进行审核删除操作。</div>
+<div class="admin_new_tip_list">可输入名称关键字进行搜索，也可进行详细的高级搜索。</div>
+</div>
+</div>
+
+<div class="clear"></div>
+
+<div class="admin_new_search_box"> 
+ <form action="index.php"  name="myform" method="get">
+ <input name="m" value="comnews" type="hidden"/>
+ <input type="hidden" name="status" value="{yun:}$smarty.get.status{/yun}"/>
+	<div class="admin_new_search_name">搜索类型：</div>
+    <div class="admin_Filter_text formselect" did="dtype">  
+	   <input type="button" {yun:}if $smarty.get.type=='1'||$smarty.get.type==''{/yun} value="公司名称" {yun:}else{/yun} value="新闻标题"{yun:}/if{/yun} class="admin_new_select_text" id="btype"> 
+	   <input type="hidden" id="type" name="type" value="{yun:}if $smarty.get.type{/yun}{yun:}$smarty.get.type{/yun}{yun:}else{/yun}1{yun:}/if{/yun}"/>
+		   <div class="admin_Filter_text_box" style="display:none" id="dtype">
+			  <ul>
+				  <li><a href="javascript:void(0)" onClick="formselect('1','type','公司名称')">公司名称</a></li>
+				  <li><a href="javascript:void(0)" onClick="formselect('2','type','新闻标题')">新闻标题</a></li>
+			  </ul>  
+		  </div>
+	  </div> 
+      
+	
+	<input type="text" value="" placeholder="请输入你要搜索的关键字" name='keyword'class="admin_new_text">
+	<input type="submit" value="搜索" name='search'  class="admin_new_bth">
+	<a  href="javascript:void(0)" onclick="$('.admin_screenlist_box').toggle();"   class="admin_new_search_gj">高级搜索</a></form>
+    {yun:}include file="admin/admin_search.htm"{/yun}
+  </div>
+<div class="clear"></div> 
+
+
+  <div class="table-list">
+    <div class="admin_table_border">
+      <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+      <form action="index.php" target="supportiframe" name="myform" id='myform' method="get">
+      <input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+        <input name="m" value="comnews" type="hidden"/>
+        <input name="c" value="del" type="hidden"/>
+        <table width="100%">
+          <thead>
+            <tr class="admin_table_top">
+               <th style="width:20px;"><label for="chkall"><input type="checkbox" id='chkAll'  onclick='CheckAll(this.form)'/></label></th>
+                <th>
+				{yun:}if $smarty.get.order=="asc"{/yun}
+					<a href="{yun:}searchurl order=desc t=id m=comnews untype='order,t'{/yun}">编号<img src="images/sanj.jpg"/></a>
+                {yun:}else{/yun}
+                	<a href="{yun:}searchurl order=asc t=id m=comnews untype='order,t'{/yun}">编号<img src="images/sanj2.jpg"/></a>
+                {yun:}/if{/yun}
+				</th>
+              <th align="left">公司名称</th>
+              <th align="left">新闻标题</th>
+			    <th> {yun:}if $smarty.get.t=="ctime" && $smarty.get.order=="asc"{/yun} <a href="{yun:}searchurl order=desc t=ctime m=comnews untype='order,t'{/yun}">时间 <img src="images/sanj.jpg"/></a> {yun:}else{/yun} <a href="{yun:}searchurl order=asc t=ctime m=comnews untype='order,t'{/yun}">时间 <img src="images/sanj2.jpg"/></a> {yun:}/if{/yun} </th>
+              <th>状态</th>
+              <th width="180">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          {yun:}foreach item=v key=key from=$rows{/yun}
+          <tr align="center"  {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+            <td style="width:20px;"><input type="checkbox" value="{yun:}$v.id{/yun}" class="check_all"  name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+            <td align="left" class="td1" style="text-align:center;"><span>{yun:}$v.id{/yun}</span></td>
+            <td class="ud" align="left"><a href="?m=user_member&c=Imitate&uid={yun:}$v.uid{/yun}" target="_blank">{yun:}$v.name{/yun}</a></td>
+            <td class="ud" align="left"><div style="width:300px;">{yun:}$v.title{/yun}</div></td>
+			<td class="ud" width="left">{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun}</td>
+            <td>{yun:}if $v.status==1{/yun}<span class="admin_com_Audited">已审核</span>{yun:}elseif $v.status==0{/yun}<span class="admin_com_noAudited">未审核</span>{yun:}elseif $v.status==2{/yun}<span class="admin_com_tg">未通过</span>{yun:}/if{/yun}</td>
+            <td>
+             <a href="javascript:;"  class="admin_new_c_bth admin_new_c_bthsh status" pid="{yun:}$v.id{/yun}" status="{yun:}$v.status{/yun}">审核</a> 
+             <a href="{yun:}url m=company id=$v.uid c=newsshow nid=$v.id{/yun}" target="_blank" class="admin_new_c_bth admin_new_c_bth_yl">预览</a>
+             <a href="javascript:void(0)" onClick="layer_del('确定要删除？', '?m=comnews&c=del&id={yun:}$v.id{/yun}-{yun:}$v.uid{/yun}');"  class="admin_new_c_bth admin_new_c_bth_sc">删除</a></td>
+          </tr>
+          {yun:}/foreach{/yun}
+        <tr style="background:#f1f1f1;">
+            <td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+            <td colspan="2" >
+            <label for="chkAll2">全选</label>
+            <input class="admin_button" type="button" name="delsub" value="删除所选" onClick="return really('del[]')" />
+              &nbsp;&nbsp;
+              <input class="admin_button" type="button" name="delsub" value="批量审核" onClick="audall('1');" /></td>
+            <td colspan="4" class="digg">{yun:}$pagenav{/yun}</td>
+          </tr>
+            </tbody>
+          
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+  });
+
+</script>
+ <script>
+ 
+function audall(status){
+		var codewebarr="";
+		$(".check_all:checked").each(function(){ //由于复选框一般选中的是多个,所以可以循环输出 
+			if(codewebarr==""){codewebarr=$(this).val();}else{codewebarr=codewebarr+","+$(this).val();}
+		});
+		if(codewebarr==""){
+			parent.layer.msg('您还未选择任何信息！', 2, 8);return false; 
+		}else{ 
+			$("input[name=pid]").val(codewebarr);
+			$("#alertcontent").val('');
+			$("input[name=status]").attr("checked",false);
+			status_div('新闻审核','390','240');
+		}
+}
+$(function(){
+	$(".status").click(function(){
+  		$("input[name=pid]").val($(this).attr("pid"));
+		var id=$(this).attr("pid"); 
+		var status=$(this).attr("status");
+		$("#status"+status).attr("checked",true);
+	layui.use(['form'],function(){
+		var form = layui.form;
+		form.render();
+		});
+		$("input[name=pid]").val(id);  	
+		$.get("index.php?m=comnews&c=statusbody&id="+id,function(msg){
+			$("#alertcontent").val(msg);
+			status_div('新闻审核','390','240');
+		});	
+	});
+});  
+</script>
+</body>
+</html>

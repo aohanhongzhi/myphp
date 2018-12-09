@@ -1,0 +1,56 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<div class="addquestion_list"><input class="addquestion_list_text" type="text" name="title" id="title" placeholder="请输入问题标题" style="border:none;"></div>
+<div class="addquestion_list mt10">
+<textarea class="addquestion_textarea" placeholder="您可以详细描述你的问题" name="content" id='content'></textarea>
+
+</div>
+
+<div class="addquestion_list mt10">
+<div class="ask_selectOption" >
+<button id='showAskPicker' class="mui-btn mui-btn-block" type='button'>请选择问题种类</button>
+<input type="hidden" id="cid" name="cid">
+</div>
+</div>
+	  {yun:}if strpos($config.code_web,"职场提问")!==false{/yun}
+		
+		{yun:}if $config.code_kind==3{/yun}	
+			<!---geetest----->
+			<div id="mask"></div>
+			<div id="popup-captcha-mobile" data-id='subask' data-type='click'></div>
+			<input type='hidden' id="popup-submit">
+
+		{yun:}else{/yun}
+		<div class="addquestion_list mt10">
+<div class="addquestion_list_textbox">
+			<input class="tw_bx_tit" id="ask_CheckCode" type="text" placeholder="请输入验证码" name="authcode" maxlength="6" style="border:none"/>
+			<div class="addquestion_list_textboximg"> <img id="vcode_img" class="authcode" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php" onclick="checkCode('vcode_img');"/>
+		  </div>
+		  </div>
+</div>
+		
+		
+		{yun:}/if{/yun}
+	    {yun:}/if{/yun}
+        <div class="mt15">  
+		<button type="button" class="mui-btn mui-btn-warning mui-btn-block" id="subask" onclick="checkform('vcode_img');">提交问题</button>
+		<!--换成mui按钮<input type="submit" value="提交问题" class="addquestion_list_bth"type="submit" name="submit" id="subask"onclick="checkform('vcode_img');"/>-->
+		
+		</div>
+
+    
+    </div>
+
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/geetest/gt.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/geetest/mobile.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/ask.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

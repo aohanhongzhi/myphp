@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<title>{yun:}$title{/yun} -  手机人才网</title>
+<meta http-equiv="keywords" content="{yun:}$keywords{/yun},wap" />
+<meta http-equiv="description" content="{yun:}$description{/yun}" />
+<meta content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="format-detection" content="telephone=no,email=no"/>
+<meta name="MobileOptimized" content="240" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=yes" name="format-detection" />
+<meta content="email=no" name="format-detection" />
+<meta http-equiv="X-UA-compatible"content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="format-detection" content="telephone=no,email=no"/>
+<meta name="viewport" content="width=device-width" initial-scale="1">
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/icon/iconfont.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.min.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.indexedlist.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+
+</head> 
+<body>
+
+<header class="nav_bar">
+<div class="header_bg">
+<a class="hd-lbtn" href="javascript:history.back();"><i class="header_top_l iconfont"></i></a>
+<div class="header_h1">{yun:}$headertitle{/yun}</div>
+</div>
+{yun:}if $config.sy_web_site=='1'{/yun}
+<a href="{yun:}url m=wap c=site{/yun}"><span class="search_con_l fl" ><i class="city_icon iconfont"  ></i>{yun:}$config.sy_indexcity{/yun}</span></a>
+{yun:}/if{/yun}
+</header>
+<div class="mui-content">
+	<div id='list' class="mui-indexed-list">
+		<div class="mui-indexed-list-search mui-input-row mui-search">
+			<input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜索分站">
+		</div>
+		{yun:}fz_list fz_list=city_list{/yun}
+		<div class="mui-indexed-list-bar">
+			{yun:}foreach key=key item=list from=$city_list{/yun}
+			<a>{yun:}$key{/yun}</a>
+			{yun:}/foreach{/yun}  	
+		</div>
+		<div class="mui-indexed-list-alert"></div>
+		<div class="mui-indexed-list-inner">
+			<div class="mui-indexed-list-empty-alert">没有数据</div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-indexed-list-item"><a href="javascript:void(0)" onclick="setsite('-1','')">{yun:}$config.sy_indexcity{/yun}</a></li>
+				
+				{yun:}foreach key=key item=list from=$city_list{/yun}
+					<li data-group="{yun:}$key{/yun}" class="mui-table-view-divider mui-indexed-list-group">{yun:}$key{/yun}</li>
+					{yun:}foreach  item=city from=$list{/yun}
+					<li data-value="{yun:}$key{/yun}" class="mui-table-view-cell mui-indexed-list-item"><a href="{yun:}url m=wap c=site a=domain id=$city.id{/yun}">{yun:}$city.name{/yun}</a></li>
+					{yun:}/foreach{/yun} 
+				{yun:}/foreach{/yun}  					
+			</ul>
+		</div>
+	</div>
+</div>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}",wapurl="{yun:}url m=wap{/yun}";</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.indexedlist.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script type="text/javascript" charset="utf-8">
+mui.init();
+mui.ready(function() {
+	var header = document.querySelector('header.nav_bar');
+	var list = document.getElementById('list');
+	list.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
+	window.indexedList = new mui.IndexedList(list);
+});
+</script>
+</body>
+</html>
+

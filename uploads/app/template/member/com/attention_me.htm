@@ -1,0 +1,129 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+<div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+  <link href="{yun:}$comstyle{/yun}/images/index_style.css?v={yun:}$config.cachecode{/yun}" type=text/css rel=stylesheet>
+  <div class=right_box>
+    <div class=admincont_box>
+      <div class="com_tit"> <span class="com_tit_span">关注我的人才</span>
+  </div>
+  
+      <div class="com_body">
+       <div class="admin_new_tip">
+            <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+            <div class="admin_new_tip_list_cont">
+              <div class="admin_new_tip_list">关注贵公司的人才，邀请面试成功率更高！</div>
+            </div>
+          </div>
+          <div class="clear"></div>
+       
+           
+      <div class="joblist_search" style="margin-top:0px; padding-bottom:0px;">
+		<form action="index.php" method="get">
+			<div class="joblist_search_box">
+		
+             <input name="c" type="hidden" value="attention_me">
+          <input name="keyword" type="text" class="joblist_search_box_text" placeholder="请输入简历关键字" value="{yun:}$smarty.get.keyword{/yun}">
+          <input name="" type="submit" class="joblist_search_bth" value=" ">
+          
+            
+            </div>
+		</form>
+	</div>
+          <div class="clear"></div>
+        <div class=admin_textbox_04>
+          <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+          <form action="{yun:}$now_url{/yun}&act=del" target="supportiframe" method="post" id='myform'>
+ <table class="com_table mt20" id="job_checkbokid">
+             
+              {yun:}if !empty($rows){/yun}
+               <tr>
+              
+              <th >姓名</th>
+              <th>意向职位</th>
+              <th>工作经验 </th>
+              <th>学历</th>
+              <th>关注时间</th>
+                <th>邀请面试</th>
+              <th width="160">操作</th>
+            </tr>
+                {yun:}foreach  from=$rows  item=v{/yun}
+                <tr>
+              
+                
+               <td align="center">  <a href="{yun:}url m=resume c=show id='`$v.id`'{/yun}"  class="com_Release_name" target=_blank>{yun:}$v.username{/yun}&nbsp;</a></td>
+               <td align="center"> <span class="invite_user_job">{yun:}$v.jobname{/yun}&nbsp;</span></td>
+               <td align="center"> 大专</td>
+               <td align="center"> 本科</td>
+               <td align="center">{yun:}$v.time|date_format:'%Y-%m-%d'{/yun}</td>
+                 <td align="center"> {yun:}if $v.userid_msg==1{/yun} 
+				<font color="red">已邀请</font> 
+			{yun:}else{/yun} 
+				<a href="javascript:;" uid="{yun:}$v.uid{/yun}" username="{yun:}$v.username{/yun}" class=" com_bth cblue sq_resume" >邀请面试</a> 
+			{yun:}/if{/yun}  </td>
+               <td align="center">
+              
+              
+			
+			<a href="{yun:}url m=resume c=show id='`$v.id`'{/yun}" target="_blank"class=" com_bth cblue">查看简历</a>
+               </td>
+              </tr>
+                {yun:}/foreach{/yun}
+               <tr>
+                  <td colspan="8" class="table_end">
+                 
+                  <div class="diggg">{yun:}$pagenav{/yun}</div>
+                 </td>
+          
+                </tr>
+                {yun:}elseif $smarty.get.keyword!="" {/yun}
+                 <tr>
+                  <td colspan="8" class="table_end"> <div class="msg_no">没有搜索关注我企业的人才。 </div>
+                    </td>
+          
+                </tr>
+                {yun:}else{/yun}
+                  <tr>
+                  <td colspan="8" class="table_end"> <div class="msg_no">亲爱的用户，目前还没有人才关注您。
+                   <p>您可以主动邀请人才面试</p>
+                   <a href="{yun:}url m=resume{/yun}" class="com_msg_no_bth com_submit">我要主动找人才</a></div>
+                     </td>
+          
+                </tr>
+                {yun:}/if{/yun}</table>
+          </form>
+          <div class="clear"></div>
+          <div class="infoboxp22" id="infobox" style="display:none; ">
+            <div>
+              <form action="index.php?c=talent_pool&act=remark" method="post" id="formstatus" target="supportiframe">
+                <input name="id" value="0" type="hidden">
+                <div class="jb_infobox" style="width: 100%;">
+                  <textarea id="remark" style="width:310px;margin:5px" name="remark" class="hr_textarea"></textarea>
+                </div>
+                <div class="jb_infobox" style="width: 100%;">
+                  <button type="submit" name='submit' value='1' class="submit_btn" style="margin-left:80px;">确认</button>
+                  &nbsp;&nbsp;
+                  <button type="button"   class="cancel_btn">取消</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div></div></div>
+    </div>
+  </div>
+<script> 
+function remark(id,remark){
+	$("input[name=id]").val(id);
+	$("#remark").val(remark);
+	$.layer({
+		type : 1,
+		title :'备注', 
+		closeBtn : [0 , true],
+		border : [10 , 0.3 , '#000', true],
+		area : ['320px','160px'],
+		page : {dom :"#infobox"}
+	});
+} 
+</script>
+{yun:}include file="$comstyle/yqms.htm"{/yun}
+{yun:}include file="$comstyle/footer.htm"{/yun}

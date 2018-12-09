@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta http-equiv="Cache-Control" content="no-cache" />
+        <title>{yun:}$config.sy_webname{/yun} - 手机人才网</title>
+        <meta http-equiv="keywords" content="人才招聘,网络招聘,wap" />
+        <meta http-equiv="description" content="人才招聘网wap网站" />
+        <meta content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+        <meta name="MobileOptimized" content="240" />
+        <meta http-equiv="Expires" content="0" />
+        <meta http-equiv="Cache-Control" content="no-cache" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/yun_wap_member.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    </head>
+
+    <body>
+        <!-- Content area -->
+        <div class="body_wap">
+            <header>
+                <div class="header_bg {yun:}if $tplmoblie.color{/yun}bg{yun:}$tplmoblie.color{/yun}{yun:}/if{/yun}">
+                    <div class="header_h1">上传头像</div>
+                </div>
+            </header>
+            <div class="main_member_body">
+                <link rel="stylesheet" type="text/css" href="{yun:}$wap_style{/yun}/js/webapppic/cropper.css?v={yun:}$config.cachecode{/yun}" />
+                <script src="{yun:}$wap_style{/yun}/js/webapppic/cropper.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+                <script>
+                    $(function() {
+                        function toFixed2(num) {
+                            return parseFloat(+num.toFixed(2));
+                        }
+
+                        $('#cancleBtn').on('click', function() {
+                            $("#showEdit").fadeOut();
+                            $('#showResult').fadeIn();
+                        });
+
+                        $('#confirmBtn').on('click', function() {
+                            $("#showEdit").fadeOut();
+
+                            var $image = $('#report > img');
+                            var dataURL = $image.cropper("getCroppedCanvas");
+                            var imgurl = dataURL.toDataURL("image/jpeg", 0.5);
+                            $("#changeAvatar > img").attr("src", imgurl);
+                            $("#uimage").val(imgurl);
+                            $('#showResult').fadeIn();
+
+                        });
+
+                        function cutImg() {
+                            $('#showResult').fadeOut();
+                            $("#showEdit").fadeIn();
+                        }
+
+                        $('#image').on('change', function() {
+                            cutImg();
+                        });
+
+                        var $image = $('#report > img'),
+                            options = {
+                                modal: true,
+                                autoCropArea: 0.5,
+                                dragCrop: false,
+                                movable: true,
+                                resizable: false,
+                                minContainerWidth: 400,
+                                minContainerHeight: 400,
+                                aspectRatio: 1 / 1,
+                                crop: function(data) {
+
+                                }
+                            };
+
+                        $image.on().cropper(options);
+
+                        var $inputImage = $('#image'),
+                            URL = window.URL || window.webkitURL,
+                            blobURL;
+                        if(URL) {
+                            $inputImage.change(function() {
+                                var files = this.files,
+                                    file;
+
+                                if(files && files.length) {
+                                    file = files[0];
+
+                                    if(/^image\/\w+$/.test(file.type)) {
+                                        blobURL = URL.createObjectURL(file);
+
+                                        $image.one('built.cropper', function() {
+                                            URL.revokeObjectURL(blobURL); // Revoke when load complete
+                                        }).cropper('reset', true).cropper('replace', blobURL);
+
+                                        $inputImage.val('');
+                                    } else {
+                                        showMessage('请上传图片');
+                                    }
+                                }
+                            });
+                        } else {
+                            $inputImage.parent().remove();
+                        }
+
+                    });
+
+                    function photo() {
+                        var uimage = $("#uimage").val();
+                        if(uimage == '') {
+                            layermsg('头像未改变，无需修改');
+                            return false;
+                        }
+                        var regS = new RegExp("\\+", "gi");
+                        uimage = uimage.replace(regS, "#");
+                        $.ajax({
+                            type: 'POST',
+                            url: "index.php?c=upload&a=uploadimg_save&token={yun:}$token{/yun}",
+                            cache: false,
+                            dataType: 'json',
+                            data: {
+                                uimage: uimage,
+                                submit: 1
+                            },
+                            success: function(msg) {
+                                if(msg.status == '1') {
+                                    var date = '操作成功！';
+                                    $('#submit').val('上传成功');
+                                } else {
+                                    var date = '操作失败！';
+                                }
+                                layermsg(date);
+                                return false;
+                            }
+                        });
+                    }
+                </script>
+                <section class="resume_mangage">
+                    <div class="clear"></div>
+                    <div class="verify">
+                        <div class="photo_i_box_v">
+                            <div id="showResult">
+                                <div id="changeAvatar" class="photo_i_box">
+                                    <img src="{yun:}$photo{/yun}" width="120" height="120">
+                                </div>
+                                <div class="clear"></div>
+                                <div class="photo_xz" style="width:100px">
+                                    <input id="image" type="file" accept="image/*" />选择上传头像
+                                </div>
+                                <div class="yunset_identity_msg"><i class="yunset_identity_msg_icon"></i>选择上传头像点击提交按钮即可上传</div>
+                            </div>
+                            <div id="showEdit" style="display: none;width:100%;height: 100%;position: absolute;top:0;left: 0;z-index: 9;">
+                                <div class="photo_cz_bth">
+			                        <button class="mui-btn" data-mui-style="fab" id='cancleBtn'>取消</button>
+									<button class="mui-btn" data-mui-style="fab" onclick="javascript:$('#readyimg').cropper('rotate',90)">旋转</button>
+			                        <div class="photo_cz_bth_qd">
+			                        	<button class="mui-btn" data-mui-style="fab" data-mui-color="primary" id='confirmBtn'>确定</button> 
+			                       	</div>
+			                    </div>
+                                <div id="report">
+                                	<img src="" alt="Picture" id="readyimg">
+                                </div>
+                            </div>
+                            <div class="photo_tj">
+                                <input type='hidden' name="txt" id="uimage" value="">
+                                <input name="submit" id="submit" type="button" onclick="photo()" value="保存/修改" class="yunset_bth" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="clear"></div>
+            </div>
+        </div>
+        {yun:}include file="$wapstyle/footer.htm"{/yun}

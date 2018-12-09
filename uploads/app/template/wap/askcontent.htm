@@ -1,0 +1,228 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="askct_iss">
+                    <div class="askct_iss_ct">
+
+                        <div class="askct_iss_p">
+                            <div class="askct_iss_p_ftp">{yun:}$show.title{/yun} </div>
+                            <div class="askct_iss_dt">{yun:}$show.content{/yun}</div>
+                        </div>
+
+                        <div class="askct_iss_tm">
+                            <div class="askct_iss_tm_ft">
+                                <span class="askct_iss_tm_ft_time">{yun:}$show.add_time|date_format:"%Y-%m-%d"{/yun}</span><span class="ask_jx_data ask_jx_data_hd">{yun:}$show.answer_num{/yun} 回答</span><span class="ask_jx_data ask_jx_data_yl">{yun:}$show.visit{/yun} 阅读</span><span class="ask_jx_data ask_jx_data_gz">{yun:}$show.atnnum{/yun} 关注</span></div>
+
+                            <div class="ask_user_tw">来自
+                                <a href="{yun:}url m=wap c=ask a=myquestion uid='`$show.uid`'{/yun}" class="ask_jx_username">{yun:}$show.nickname|mb_substr:0:18:'utf-8'{/yun}</a> 的提问      <div class="askct_iss_tm_rt">
+
+                               {yun:}if $uid{/yun}
+									{yun:}if $show.uid==$uid{/yun}
+									<a class="askct_iss_tm_rt_b"  onclick="layermsg('不能举报自己提出的问题！');"  href="javascript:void(0)">举报</a>
+									{yun:}else{/yun}
+									<a class="askct_iss_tm_rt_b" id='reportPicker' class="mui-btn mui-btn-block"  href="javascript:void(0)">举报</a>
+									{yun:}/if{/yun}
+								{yun:}else{/yun}
+								<a class="askct_iss_tm_rt_b" onclick="pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}')"  href="javascript:void(0)">举报</a>
+                                {yun:}/if{/yun}
+								
+                            </div></div>
+
+                            {yun:}if $show.qatn!='2'{/yun}
+                            <div class="ask_content_cz">
+                                {yun:}if $show.qatn=='1'{/yun}
+                                <a href="javascript:void(0)" onclick="attention('{yun:}$show.id{/yun}','1','{yun:}url m=wap c=ask a=attention{/yun}');" class="ask_content_cz_a">取消关注</a> {yun:}else{/yun} {yun:}if $uid{/yun}
+                                <a href="javascript:void(0)" onclick="attention('{yun:}$show.id{/yun}','1','{yun:}url m=wap c=ask a=attention{/yun}');" class='ask_content_cz_a'>关注问题</a> {yun:}else{/yun}
+                                <a href="javascript:void(0)" onclick="pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}')" class="ask_content_cz_a">关注问题</a> {yun:}/if{/yun} {yun:}/if{/yun}
+
+                                <a id="addanswershow" class="ask_content_cz_a ask_content_cz_a_cur">我来回答</a>
+                            </div>
+                            {yun:}/if{/yun}
+
+                      
+                        </div>
+                        <div id="addanswer" style="display:none;margin-top:20px;">
+                            {yun:}if $show.useratn!='2'{/yun}
+                            <div class="com_pop_up_area">
+                                <textarea name="content" id="content" class="com_area" placeholder="请输入你的回答，好内容帮助更多人..." style="height:80px;"></textarea>
+                                <div class="ask_c_b">
+                                    <div class="ask_yzm">
+                                        <!--    图片验证-->
+                                        <div class="ask_yzm_tp">
+                                            <input class="tw_bx_tit" id="authcode" type="text" placeholder="请输入验证码" name="authcode" maxlength="6" />
+                                            <div class="tw_img"> <img id="vcode_img" class="authcode" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php" onclick="checkCode('vcode_img');" /> </div>
+                                        </div>
+                                        <!--    急速验证-->
+                                    </div>
+                                    <div class="ask_c_fb">
+                                        <input name='id' type='hidden' value='{yun:}$show.id{/yun}' />
+                                        <input name="add" class="ask_c_fb_bth" type="submit" value="提交" onclick="checkanswer('{yun:}$uid{/yun}','vcode_img');">
+                                    </div>
+                                </div>
+                            </div>
+                            {yun:}/if{/yun}
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--评论内容-->
+                <div class="ask_c_pl mt10">
+                    <div class="ask_c_pl_titbox">
+                        <span class="ask_c_pl_titbox_all">全部回答</span>
+                        <a href="{yun:}url m=wap c=ask a=content id='`$show.id`'{/yun}" {yun:}if $smarty.get.orderby!='support' {/yun} class="ask_c_pl_cur" {yun:}/if{/yun}>按回答时间</a>
+                        <a href="{yun:}url m=wap c=ask a=content id='`$show.id`' orderby=support{/yun}" {yun:}if $smarty.get.orderby=='support' {/yun}class="ask_c_pl_cur" {yun:}/if{/yun}>按赞同数</a>
+                    </div>
+                </div>
+                <div class="askct_com">
+
+                    <div style="clear:both"></div>
+                    {yun:}foreach from=$answer item=list{/yun}
+                    <div style="width:100%;">
+                        <div class="askct_com_rs">
+                            <div class="askct_com_rs_img">
+                                <a href="{yun:}url m=wap c=ask a=myquestion uid='`$list.uid`'{/yun}"><img src="{yun:}$list.pic{/yun}" width='40' height="40" /></a>
+                            </div>
+                            <div class="askct_com_rs_y">
+                                <div class="askct_com_rs_y_x">
+                                    <div class="askct_com_rs_tit_ft">
+                                        <a href="{yun:}url m=wap c=ask a=myquestion uid='`$list.uid`'{/yun}" style="color:#3366cc;">{yun:}$list.nickname{/yun}&nbsp;</a>
+                                        <span class="askct_com_rs_tit_ft_time">{yun:}$list.add_time|date_format:"%Y-%m-%d %H:%M"{/yun} </span>
+                                    </div>
+
+                                    <div class="askct_com_rs_y_p">{yun:}$list.content{/yun}</div>
+                                </div>
+                                <div class="ask_c_pl_bot">
+                                    <a href="javascript:void(0)" onclick="support('{yun:}$list.id{/yun}','{yun:}url m=wap c=ask a=forsupport{/yun}')" class="ask_c_pl_cz ask_c_pl_cz_z"><span id="support_num_{yun:}$list.id{/yun}">{yun:}$list.support{/yun}</span> 赞</a>
+                                    <a class="ask_c_pl_cz" href="javascript:void(0)" onclick="get_comment('{yun:}$list.id{/yun}','0','{yun:}url m=wap c=ask a=getcomment{/yun}');"><span id="com_num_{yun:}$list.id{/yun}">{yun:}$list.comment{/yun}</span> 评论</a>
+
+                                </div>
+
+                                <div class="askct_com_rs_y_tm"></div>
+
+                            </div>
+                            <!--评论弹出框-->
+                            <div class="pl_menu none review{yun:}$list.id{/yun} pl_menu" style=" display: none;">
+                                <div class="menu_con">
+                                    <div class="menu_con_p1">
+                                        <div class="ask_pl_box">
+                                            <div class="menu_p1_nr_t_bor">
+                                                <input id="comment_{yun:}$list.id{/yun}" type="text" class="menu_p1_nr_t_bor_tetx" placeholder="说两句..." / style=" margin:0; padding:0;border:none;height:40px; line-height:40px; font-size:14px;">
+                                            </div>
+                                            <div class="ask_pl_fb_box"> <input onclick="closePL();" type="button" value="取消" class="ask_pl_quxiao" /> <input onclick="for_comment('{yun:}$list.id{/yun}','{yun:}$show.id{/yun}','{yun:}url m=wap c=ask a=forcomment{/yun}','{yun:}url m=wap c=ask a=getcomment{/yun}');" type="button" value="发布" class="ask_pl_bth" style="border:none;color:#fff" />
+                                            </div>
+
+                                        </div>
+                                        <ul class="ask_pl_p"></ul>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {yun:}foreachelse{/yun}
+                    <div class="wap_member_no"> 还没有人回答，快点帮助他吧！
+                    </div>
+                    {yun:}/foreach{/yun}
+                    <div class="pages">{yun:}$pagenav{/yun}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+    var reportData = [];
+    '{yun:}foreach from=$reason key=j item=v{/yun}'
+    reportData.push({
+        value: '{yun:}$v.id{/yun}',
+        id: '{yun:}$show.id{/yun}',
+        text: '{yun:}$v.name{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+
+    mui.init();
+    var viewApi = mui('#app').view({
+        defaultPage: '#main'
+    });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll({
+        scrollY: true, //是否竖向滚动
+        scrollX: false, //是否横向滚动
+        startX: 0, //初始化时滚动至x
+        startY: 0, //初始化时滚动至y
+        indicators: true, //是否显示滚动条
+        deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+        // bounce: true //是否启用回弹
+    });
+    var view = viewApi.view;
+    (function($, doc) {
+        $.init();
+        $.ready(function() {
+			 var reportPickerButton = doc.getElementById('reportPicker');
+			 if(reportPickerButton){
+				 var reportPicker = new $.PopPicker();
+				reportPicker.setData(reportData);
+				reportPickerButton.addEventListener('tap', function(event) {
+					reportPicker.show(function(items) {
+						reason = items[0].value;
+						eid = items[0].id;
+						$.post(wapurl + "/index.php?c=ask&a=qrepost", {
+							reason: reason,
+							eid: eid
+						}, function(data) {
+							layer.closeAll();
+							if(data == '0') {
+								layermsg('举报失败！');
+								return false;
+							} else if(data == '1') {
+								layermsg('举报成功！');
+								return false;
+							} else if(data == '2') {
+								layermsg('您已举报过该问题！');
+								return false;
+							} else if(data == '3') {
+								layermsg('该问题已被他人举报！');
+								return false;
+							} else if(data == 'no_login') {
+								pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}');
+								return false;
+							}
+						});
+					});
+				}, false);
+			 }
+           
+        });
+    })(mui, document);
+    document.getElementById('addanswershow').addEventListener('tap', function(e) {
+        if(document.getElementById('addanswer').style.display == 'none') {
+            document.getElementById('addanswer').style.display = '';
+        } else {
+            document.getElementById('addanswer').style.display = 'none'
+        }
+    }, false);
+
+    function closePL() {
+        $(".pl_menu").hide();
+    }
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

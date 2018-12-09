@@ -1,0 +1,278 @@
+{yun:}include file="$wapstyle/nativeshare.htm"{/yun}
+
+<!--登录浮动底部-->
+{yun:}if !$username && $smarty.get.c==''&&$config.sy_footer_fix=='1'{/yun}
+<div class="footer_fixlogin_h"></div>
+<div class="footer_fixlogin">
+    <span class="footer_fixlogin_P">快速注册，获取高薪职位</span>
+    <a href="{yun:}url m=wap c=login{/yun}" class="footer_fixlogin_bth">登录</a>
+    <a href="{yun:}url m=wap c=register{/yun}" class=" footer_fixlogin_bth footer_fixlogin_bth_reg">注册</a>
+</div>
+{yun:}/if{/yun}
+
+<!--footer   start-->
+<div class="yun_footer">
+    <div class="yun_footer_fix">
+        <ul class="yun_footer_nav">
+
+            <li {yun:}if $indexnav==1{/yun}class="yun_footer_nav_cur" {yun:}/if{/yun}>
+                <a href="{yun:}url m=wap{/yun}" id="indexclick"><i class="yun_footer_nav_icon {yun:}if $indexnav==1{/yun}yun_footer_nav_home_cur{yun:}else{/yun}yun_footer_nav_home{yun:}/if{/yun}"></i>首页</a>
+            </li>
+
+            {yun:}if $usertype==1 || !$usertype{/yun}
+            <li {yun:}if $smarty.get.c=='job' {/yun}class="yun_footer_nav_cur" {yun:}/if{/yun}>
+                <a href="{yun:}url m=wap c=job{/yun}"><i class="yun_footer_nav_icon {yun:}if $smarty.get.c=='job'{/yun}yun_footer_nav_msg_cur{yun:}else{/yun}yun_footer_nav_msg{yun:}/if{/yun}"></i>职位</a>
+            </li>
+            {yun:}else{/yun}
+            <li {yun:}if $smarty.get.c=='resume' {/yun}class="yun_footer_nav_cur" {yun:}/if{/yun}>
+                <a href="{yun:}url m=wap c=resume{/yun}"><i class="yun_footer_nav_icon {yun:}if $smarty.get.c=='resume'{/yun}yun_footer_nav_jl_cur{yun:}else{/yun}yun_footer_nav_jl{yun:}/if{/yun}"></i>简历</a>
+            </li>
+            {yun:}/if{/yun}
+
+            <li>
+                <a href="javascript:void(0);" id="jobclick" data-more="1"><i class="yun_footer_nav_icon yun_footer_nav_fx"></i>更多</a>
+            </li>
+
+            {yun:}if !$username{/yun}
+            <li {yun:}if $smarty.get.c=='login' {/yun}class="yun_footer_nav_cur" {yun:}/if{/yun}>
+                <a href="{yun:}url m=wap c=login{/yun}"><i class="yun_footer_nav_icon {yun:}if $smarty.get.c=='login'{/yun}yun_footer_nav_user_cur{yun:}else{/yun}yun_footer_nav_user{yun:}/if{/yun}"></i>我的</a>
+            </li>
+            {yun:}else{/yun}
+            <li {yun:}if $membernav==1{/yun}class="yun_footer_nav_cur" {yun:}/if{/yun}>
+                <a href="{yun:}url m=wap{/yun}member" id="memberclick"><i class="yun_footer_nav_icon {yun:}if $membernav==1{/yun}yun_footer_nav_user_cur{yun:}else{/yun}yun_footer_nav_user{yun:}/if{/yun}"></i>我的
+                    <a href="{yun:}url m=wap{/yun}member/index.php?c=sysnews" style="padding-top:40px;"><i class="yun_footer_msg_n"><span id="tzmsgNum"></span></i></a>
+                </a>
+            </li>
+            {yun:}/if{/yun}
+
+        </ul>
+    </div>
+</div>
+<!--footer   end-->
+
+<footer>
+
+    <div style="width:100%; background:#fff; position:fixed;left:0px;right:0px;bottom:50px;top:0px ; z-index:100000000000;display:none" id="footerjob">
+        <div class="foot_nav_close"></div>
+        <div class="header_bg">
+            <div class="foot_nav_chiose_t">选择栏目类别</div>
+        </div>
+        <div class="foot_nav_box">
+
+            <ul class="foot_nav_box_list">
+                <li>
+                    <a href="{yun:}url m=wap{/yun}"><span class="foot_nav_box_list_icon cor_1"><i class="nav_icon iconfont_fothome "></i></span>
+                        <div class="foot_nav_box_name">首页</div>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="{yun:}url m=wap c=resume{/yun}"><span class="foot_nav_box_list_icon cor_2"><i class="nav_icon iconfont_resume "></i></span>
+                        <div class="foot_nav_box_name">简历</div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{yun:}url m=wap c=job{/yun}"><span class="foot_nav_box_list_icon cor_3"><i class="nav_icon iconfont_job "></i></span>
+                        <div class="foot_nav_box_name">全职</div>
+                    </a>
+                </li>
+                {yun:}if $config.sy_part_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c=part{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_4"><i class="nav_icon iconfont_part "></i></span>
+                        <div class="foot_nav_box_name">兼职</div>
+                    </a>
+                </li>{yun:}/if{/yun} {yun:}if $config.sy_tiny_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c=tiny{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_7"><i class="nav_icon iconfont_tiny "></i></span>
+                        <div class="foot_nav_box_name">普工</div>
+                    </a>
+                </li>{yun:}/if{/yun} {yun:}if $config.sy_once_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c=once{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_4"><i class="nav_icon iconfont_once "></i></span>
+                        <div class="foot_nav_box_name">店铺</div>
+                    </a>
+                </li>{yun:}/if{/yun} {yun:}if $config.sy_map_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c=map{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_5"><i class="nav_icon iconfont_map "></i></span>
+                        <div class="foot_nav_box_name">附近</div>
+                    </a>
+                </li>{yun:}/if{/yun} {yun:}if $config.sy_company_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c=company{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_2"><i class="nav_icon iconfont_comp "></i></span>
+                        <div class="foot_nav_box_name">企业</div>
+                    </a>
+                </li>{yun:}/if{/yun} {yun:}if $config.sy_zph_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c=zph{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_6"><i class="nav_icon iconfont_zph "></i></span>
+                        <div class="foot_nav_box_name">招聘会</div>
+                    </a>
+                </li>{yun:}/if{/yun} {yun:}if $config.sy_article_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c='article' type=tj{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_8"><i class="nav_icon iconfont_news "></i></span>
+                        <div class="foot_nav_box_name">资讯</div>
+                    </a>
+                </li>{yun:}/if{/yun} {yun:}if $config.sy_redeem_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c='redeem'{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_jf"><i class="nav_icon iconfont_jf "></i></span>
+                        <div class="foot_nav_box_name">商城</div>
+                    </a>
+                </li>{yun:}/if{/yun} {yun:}if $config.sy_ask_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c='ask'{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_wd"><i class="nav_icon iconfont_ask "></i></span>
+                        <div class="foot_nav_box_name">问答</div>
+                    </a>
+                </li>{yun:}/if{/yun} {yun:}if $config.sy_evaluate_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c='evaluate'{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_1"><i class="nav_icon iconfont_cp "></i></span>
+                        <div class="foot_nav_box_name">测评</div>
+                    </a>
+                </li>
+                {yun:}/if{/yun}
+                <!--  <li>
+                    <a href="{yun:}url m=wap c='advice'{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_yj"><i class="nav_icon iconfont_yj "></i></span>
+                        <div class="foot_nav_box_name">反馈</div>
+                    </a>
+                </li>-->
+                {yun:}if $config.sy_special_web==1{/yun}
+                <li>
+                    <a href="{yun:}url m=wap c='special'{/yun}" class="foot_nav_box_a"><span class="foot_nav_box_list_icon cor_1"><i class="nav_icon iconfont_zt "></i></span>
+                        <div class="foot_nav_box_name">专题</div>
+                    </a>
+                </li>{yun:}/if{/yun}
+            </ul>
+        </div>
+    </div>
+</footer>
+<div class="yunwap_reg" id="reg_mune" style="display:none">
+    <div class="yunwap_close"></div>
+    <ul>
+        <li>
+            <a href="{yun:}url m=wap c=register usertype=2{/yun}"><i class="yunwap_reg_icon yunwap_reg_icon_bg1"><em class="yunwap_reg_icon_bg1p"></em></i>企业注册</a>
+        </li>
+        <li>
+            <a href="{yun:}url m=wap c=register{/yun}"><i class="yunwap_reg_icon yunwap_reg_icon_bg2"><em class="yunwap_reg_icon_bg2p"></em></i>个人注册</a>
+        </li>
+       
+
+    </ul>
+    <div class="yunwap_login">
+        <a href="{yun:}url m=wap c=login{/yun}" class="">会员登录</a>
+    </div>
+</div>
+
+{yun:}if $layer{/yun}
+<input id="layermsg" value="{yun:}$layer.msg{/yun}" type="hidden">
+<input id="layerurl" value="{yun:}$layer.url{/yun}" type="hidden">
+<script>
+    $(document).ready(function() {
+        islayer();
+    });
+</script>
+{yun:}/if{/yun}
+
+<script>
+    var wapurl = "{yun:}url m=wap{/yun}",
+        weburl = "{yun:}$config.sy_weburl{/yun}",
+        pricename = "{yun:}$config.integral_pricename{/yun}",
+        integral_pricename = "{yun:}$config.integral_pricename{/yun}",
+        code_web = '{yun:}$config.code_web{/yun}',
+        code_kind = '{yun:}$config.code_kind{/yun}';
+    $(document).ready(function() {
+        $.get(wapurl + "/index.php?c=ajax&a=msgNum", function(data) {
+            var datas = eval("(" + data + ")");
+            if(datas.usertype == 1) {
+                if(datas.msgNum) {
+					$('#sysmsgnum').html(datas.msgNum);
+                    $('#tzmsgNum').html(datas.msgNum);
+                    $('#tzmsgNum').show();
+                }
+				if(datas.wkyqnum>0){
+					$('#wkyqnum').html(datas.wkyqnum);
+					$('#wkyqnum').show();
+				}
+				$('#yqnum').html(datas.yqnum);
+				$('#sq_jobnum').html(datas.sq_jobnum);
+				$('#fav_jobnum').html(datas.fav_jobnum);
+            }
+            if(datas.usertype == 2) {
+                if(datas.msgNum) {
+					$('#sysmsgnum').html(datas.msgNum);
+                    $('#tzmsgNum').html(datas.msgNum);
+                    $('#tzmsgNum').show();
+                }
+				$('#sqnum').html(datas.sqnum);
+				$('#companyjobnum').html(datas.companyjobnum);
+				$('#talent_pool_num').html(datas.talent_pool_num);
+            }
+            if(datas.usertype == 3) {
+                if(datas.msgNum) {
+					$('#sysmsgnum').html(datas.msgNum);
+                    $('#tzmsgNum').html(datas.msgNum);
+                    $('#tzmsgNum').show();
+					
+                }
+				$('#ypnum').html(datas.ypnum);
+				$('#jobnum').html(datas.jobnum);
+				$('#downnum').html(datas.downnum);
+            }
+        });
+        $('#jobclick').click('click', function() {
+            $('#footerjob').toggle();
+            $('#footerresume').hide();
+        });
+        $('#footerjob').click('click', function() {
+            $('#footerjob').hide();
+        });
+        $('#reg_mune_box').click('click', function() {
+            $('#reg_mune').toggle();
+            $('#footerresume').hide();
+        });
+
+        $('#reg_mune_box_news').click('click', function() {
+            $('#reg_mune').toggle();
+            $('#footerresume').hide();
+        });
+
+        $('#reg_mune').click('click', function() {
+            $('#reg_mune').hide();
+        });
+        $('#reg_mune_boxs').click('click', function() {
+            $('#reg_mune').toggle();
+            $('#footerresume').hide();
+        });
+        $('#reg_mune').click('click', function() {
+            $('#reg_mune').hide();
+        });
+    });
+
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+
+    if(isAndroid) {
+        var orginHeight = document.documentElement.clientHeight || document.body.clientHeight;
+
+        window.onresize = function() {
+
+            var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+
+            if(orginHeight * 1 > resizeHeight * 1) {
+                $('.yun_footer_fix').css('display', 'none');
+
+                document.activeElement.scrollIntoView(false);
+
+            } else {
+                $('.yun_footer_fix').css('display', 'block');
+            }
+        }
+    }
+</script>
+{yun:}baidu{/yun} {yun:}if $config.sy_wx_sharelogo{/yun}
+<!--微信分享专用-->
+<div style='margin:0 auto;width:0px;height:0px;overflow:hidden;'><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}"></div>
+{yun:}/if{/yun}
+<div id='uclogin' class='none'></div>
+<div class='none'>{yun:}$config.sy_webtongji{/yun}</div>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+     <div class="yun_m_rightbox fltR mt20 re">
+        <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">简历被浏览</span> <i class="member_right_h1_icon user_bg"></i></div>
+       
+<div  class="resume_Prompt_box">
+<div  class="resume_Prompt"><i class="resume_Prompt_icon"></i>安全提醒：招聘企业无权收取任何费用，求职中请加强自我保护，避免上当受骗</div>
+</div>
+        <div class="remindbox01 mt10">
+            <div id="gms_showclew"></div>
+            <form action="index.php" method="get" target="supportiframe" id='myform'>
+                <input type="hidden" name="c" value="look" />
+                <input type="hidden" name="act" value="del" />
+                <div class="resumelistbox01 mt10">
+                    <div class="resume_box_list">
+                     
+                        {yun:}if !empty($look){/yun}
+                        <div class="look_myresume_tit">
+                            <div class="look_myresume_tit_checkbox">&nbsp;</div>
+                            <div class="look_myresume_span look_myresume_comname">公司名称</div>
+							  <div class="look_myresume_span look_myresume_jobname">在招职位</div>
+                            <div class="look_myresume_span look_myresume_resumename">被浏览简历名称</div>
+                            <div class="look_myresume_span look_myresume_resumetime">浏览时间</div>
+                            <div class="look_myresume_span look_myresume_resumecz">操作</div>
+                        </div>
+                        {yun:}/if{/yun}
+                        {yun:}foreach item=log from=$look{/yun}
+                        <div class="look_myresume_list">
+                            <div class="look_myresume_tit_checkbox">
+                                <input type="checkbox" name="del[]" value="{yun:}$log.id{/yun}" class="List_Title_span_check_b">
+                            </div>
+                            <div class="look_myresume_span look_myresume_comname">
+                            {yun:}if $log.com{/yun}
+								{yun:}if $log.type==2{/yun}
+                                <a href="{yun:}url m=company c=show id='`$log.com_id`'{/yun}" target="_blank" title="{yun:}$log.com{/yun}" class="jobnotice_jobname_a">
+                                {yun:}$log.com{/yun}
+                                </a>
+								<div class="look_myresume_comxz">{yun:}$log.pr{/yun} <span class="look_myresume_comline">|</span> {yun:}$log.mun{/yun} {yun:}if $log.sdate{/yun} <span class="look_myresume_comline">|</span> {yun:}$log.sdate{/yun}年{yun:}/if{/yun}</div>
+                                {yun:}else{/yun}
+                                <a href="{yun:}url m=lietou c=headhunter uid='`$log.com_id`'{/yun}" target="_blank" title="{yun:}$log.com{/yun}" class="jobnotice_jobname_a">
+                                {yun:}$log.com{/yun}
+                                </a>
+								<div class="look_myresume_comxz">{yun:}$log.title{/yun}<span class="look_myresume_comline">|</span>{yun:}$log.exp{/yun}{yun:}if $log.time{/yun}<span class="look_myresume_comline">|</span>{yun:}$log.time{/yun}年{yun:}/if{/yun}</div>
+                                {yun:}/if{/yun}
+                            {yun:}else{/yun}暂无名称！ <div class="look_myresume_comxz">该企业还未没有完善公司信息</div>{yun:}/if{/yun}
+							
+                            </div>
+							<div class="look_myresume_span look_myresume_jobname look_myresume_jobbox mt15">{yun:}if $log.jobname{/yun}{yun:}$log.jobname{/yun}{yun:}else{/yun}暂无职位{yun:}/if{/yun}</div>
+                            <div class="look_myresume_span look_myresume_resumename mt15">{yun:}$log.resume{/yun}&nbsp;</div>
+                            <div class="look_myresume_span look_myresume_resumetime mt15">{yun:}$log.datetime|date_format:'%Y-%m-%d'{/yun}</div>
+                            <div class="look_myresume_span look_myresume_resumecz  mt15">
+                                <a href="javascript:void(0)" onclick="layer_del('确定要删除？', 'index.php?c=look&act=del&id={yun:}$log.id{/yun}');" class="cblue">
+                                删除
+                                </a>
+                            </div>
+                        </div>
+                        {yun:}foreachelse{/yun}
+                       <div class="msg_no">
+      <p>亲爱的用户，暂无谁看过我的简历，想要获得更多的工作机会，</p>
+  <p>立即搜索我感兴趣的职位投递简历吧！</p>
+<a href="{yun:}url m=job{/yun}" target="_blank" class="msg_no_sq uesr_submit">立即搜索我感兴趣的职位>></a>
+</div>
+                        {yun:}/foreach{/yun}
+                        {yun:}if $look{/yun}
+                         <div class="job_operation_bot">
+                                <input id='checkAll' type="checkbox" onclick='m_checkAll(this.form)' class="job_operation_botcheckbox">
+                        
+                            <input type="button" name="subdel" value="批量删除" onclick="return really('del[]');" class="job_operation_bth">
+                        </div>
+                        
+                        
+                        
+                        
+                        <div class="diggg">{yun:}$pagenav{/yun}</div>
+                        {yun:}/if{/yun}
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+{yun:}include file="$userstyle/footer.htm"{/yun} 

@@ -1,0 +1,55 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun} 
+
+<div class="wap_member_comp_h1"><span>邀请面试</span></div> 
+
+
+<ul class="yunset_list mt15" id='job_box'>
+					<li class=""><span class="yunset_list_name">面试职位</span> <div class="yunset_list_commentary"> 
+										<select id='jobname' >
+          	{yun:}foreach from=$rows item=one{/yun}
+            <option value="{yun:}$one.name{/yun}##{yun:}$one.id{/yun}">{yun:}$one.name{/yun}</option>
+            {yun:}/foreach{/yun}
+          	</select>
+										</div>
+					</li>
+					<li class="yunset_list_text"><span class="yunset_list_name">联系人 </span>
+					<div class="yunset_list_commentary"> 
+				<input   id='linkman' value='{yun:}$company.linkman{/yun}' class="invite_text">
+					</div>
+					</li>
+                    		
+                    		<li class="yunset_list_text"><span class="yunset_list_name">联系电话 </span> 
+					<div class="yunset_list_commentary"> 
+				<input id='linktel' value='{yun:}$company.linktel{/yun}' class="invite_text" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')">
+					</div>
+					</li>
+                    		<li class="yunset_list_text"><span class="yunset_list_name">面试时间 </span> 
+					<div class="yunset_list_commentary"> 
+				<input   id='linkman' value='{yun:}$company.linkman{/yun}' class="invite_text">
+					</div>
+					</li>
+                   <li class="yunset_list_text"><span class="yunset_list_name">面试地址 </span>
+			<div class="yunset_list_commentary"> <input id='address' value='{yun:}$company.address{/yun}'class="invite_text">	</div>
+					</li>
+		<li class="yunset_list_text"><span class="yunset_list_name">面试备注 </span>
+		<textarea id="content"  class="textAreaMsg tip"></textarea>	
+					</li>
+        
+				</ul>
+<div class="yunset_bth_box">
+
+<input type="hidden" value="{yun:}$Info.id{/yun}" id="eid">
+		<input type="hidden" value="{yun:}$Info.uid{/yun}" id="uid">
+		<input type="hidden" id="username" value="{yun:}$Info.name{/yun}"> 
+		<input class="reinputText2" {yun:}if count($rows){/yun}id="click_invite"{yun:}/if{/yun} type="button" value="邀请面试"  >
+
+</div>
+
+
+
+
+
+
+
+
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

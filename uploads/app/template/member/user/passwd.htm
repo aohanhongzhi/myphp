@@ -1,0 +1,385 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/binding.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+    var weburl = "{yun:}$config.sy_weburl{/yun}";
+</script>
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+
+        <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">账号设置</span> <i class="member_right_h1_icon user_bg"></i></div>
+
+        <div class="clear"></div>
+
+        <div class="job_list_tit">
+            <ul class="">
+                <li>
+                    <a href="index.php?c=info">基本信息</a><i class="left_sidebar_leftmune_icon"></i></li>
+                <li class="job_list_tit_cur">
+                    <a href="index.php?c=passwd">账号安全</a>
+                </li>
+                <li>
+                    <a href="index.php?c=binding">绑定授权</a>
+                </li>
+                <li>
+                    <a href="index.php?c=uppic">上传照片 </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="account_settings">
+
+            <div class="account_settings_list">
+                <div class="account_settings_list_left">
+                    <i class="account_settings_list_left_icon account_settings_list_left_icon_user"></i>
+                    <div class="account_settings_tit">账户修改</div>
+                    您有一次修改账户名机会（仅限一次）
+                </div>
+                
+                {yun:}if !$restname{/yun}
+                <a href="javascript:void(0);" onclick="showEditUsername();" class="account_settings_bth_hv">修改</a>
+                  {yun:}else{/yun}
+                  <div class="account_settings_bth">已使用</div>
+               {yun:}/if{/yun}
+                
+            </div>
+
+            <div class="account_settings_list">
+                <div class="account_settings_list_left">
+                    <i class="account_settings_list_left_icon account_settings_list_left_icon_m"></i>
+                    <div class="account_settings_tit">账号密码</div>
+                    用于保护账号信息和登录安全
+                </div>
+                <a href="javascript:void(0);" onclick="showEditPass();" class="account_settings_bth_hv">修改</a>
+            </div>
+
+            {yun:}if $resume.email_status==1{/yun}
+            <div class="account_settings_list">
+                <div class="account_settings_list_left">
+                    <i class="account_settings_list_left_icon account_settings_list_left_icon_yx"></i>
+                    <div class="account_settings_tit">安全邮箱{yun:}$resume.email{/yun}</div>
+                    安全邮箱将可用于登录账号和重置密码，建议立即设置
+                </div>
+                <a href="javascript:void(0)" onclick="layer_del('确定要取消绑定？','index.php?c=binding&act=del&type=email');" class="account_settings_bth">取消绑定</a>
+            </div>
+            {yun:}else{/yun}
+            <div class="account_settings_list">
+                <div class="account_settings_list_left">
+                    <i class="account_settings_list_left_icon account_settings_list_left_icon_yx"></i>
+                    <div class="account_settings_tit">安全邮箱{yun:}$resume.email{/yun}<span class="account_settings_tit_zt"><i class="account_settings_tit_icon"></i>未绑定</span></div>
+                    <div class="account_settings_tip"> 安全邮箱将可用于登录账号和重置密码，建议立即设置</div>
+                </div>
+                <a href="javascript:getshow('email','绑定邮箱');" class="account_settings_bth_hv">绑定</a>
+            </div>
+            {yun:}/if{/yun} {yun:}if $resume.moblie_status==1{/yun}
+            <div class="account_settings_list">
+                <div class="account_settings_list_left">
+                    <i class="account_settings_list_left_icon account_settings_list_left_icon_sj"></i>
+                    <div class="account_settings_tit">安全手机{yun:}$resume.telphone{/yun}</div>
+                    安全手机将可用于登录账号和重置密码或其他安全设置
+                </div>
+                <a href="javascript:void(0)" onclick="layer_del('确定要取消绑定？','index.php?c=binding&act=del&type=moblie');" class="account_settings_bth">取消绑定</a>
+            </div>
+            {yun:}else{/yun}
+            <div class="account_settings_list">
+                <div class="account_settings_list_left">
+                    <i class="account_settings_list_left_icon account_settings_list_left_icon_sj"></i>
+                    <div class="account_settings_tit">安全手机{yun:}$resume.telphone{/yun}<span class="account_settings_tit_zt"><i class="account_settings_tit_icon"></i>未验证</span></div>
+                    <div class="account_settings_tip"> 安全手机将可用于登录账号和重置密码或其他安全设置</div>
+                </div>
+                <a href="javascript:getshow('moblie','绑定手机号码');" class="account_settings_bth_hv">验证</a>
+            </div>
+            {yun:}/if{/yun}
+
+            <div class="account_settings_list">
+                <div class="account_settings_list_left">
+                    <i class="account_settings_list_left_icon account_settings_list_left_icon_sf"></i>
+                    <div class="account_settings_tit">身份认证{yun:}if $resume.idcard_status lt 1&& !$resume.idcard_pic{/yun}<span class="account_settings_tit_zt"><i class="account_settings_tit_icon"></i>未验证</span>{yun:}/if{/yun}</div>
+                    <div class="account_settings_tip"> 身份认证增加企业对你的信任度</div>
+
+                    {yun:}if $resume.idcard_status==2&& $resume.statusbody{/yun}审核说明：{yun:}$resume.statusbody{/yun}{yun:}/if{/yun}
+                </div>
+
+                {yun:}if $resume.idcard_status==1{/yun}
+                <a href="javascript:getshow2('yyzz','身份认证');" class="account_settings_bth">已认证</a>
+                {yun:}else{/yun} {yun:}if $resume.idcard_pic{/yun} {yun:}if $resume.idcard_status==2{/yun}
+                <a href="javascript:getshow2('yyzz','身份认证');" class="account_settings_bth">认证未通过</a>
+                {yun:}else{/yun}
+                <a href="javascript:getshow2('yyzz','身份认证');" class="account_settings_bth">等待管理员审核</a>
+                {yun:}/if{/yun} {yun:}else{/yun}
+
+                <a href="javascript:getshow2('yyzz','身份认证');" class="account_settings_bth">认证</a>
+
+                {yun:}/if{/yun} {yun:}/if{/yun}
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div id="showEditUsername" style="display:none;">
+    <form action='index.php?c=passwd' target="supportiframe" method="post">
+        <div class="Binding_pop_box" style="padding:10px;width:430px;height:200px; background:#fff">
+            <div class="Binding_pop_box_msg">用户名长2至16位，不包含特殊字符</div>
+            <div>
+                <div class="Binding_pop_box_list">
+                    <span class="Binding_pop_box_list_left"><i class="Binding_pop_box_list_left_i">*</i>新用户名：</span>
+                    <input type="text" name="username" id="username" value="" class="Binding_pop_box_list_text Binding_pop_box_list_textw200" />
+                </div>
+
+                <div class="Binding_pop_box_list">
+                    <span class="Binding_pop_box_list_left"><i class="Binding_pop_box_list_left_i">*</i>密码：</span>
+                    <input type="password" name="password" id="password" value="" class="Binding_pop_box_list_text Binding_pop_box_list_textw200" />
+                </div>
+
+                <div class="Binding_pop_sub" style="margin-top:10px; margin-bottom: 25px;">
+                    <span class="Binding_pop_box_list_left">&nbsp;</span>
+                    <input class="layui-btn layui-btn-normal" type="submit" name="submit2" value="确定" />
+                    <input class="layui-btn layui-btn-primary" type="button" value="取消" onclick="layer.close($('#layindex').val());" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="showEditPass" style="display:none;">
+    <form name='MyForm' action='' target="supportiframe" method="post" onsubmit="return Showsub();">
+        <div class="Binding_pop_box" style="padding:10px;width:430px;height:200px; background:#fff">
+            <div class="Binding_pop_box_msg">密码长度8~16位，可包含数字，字母，下划线</div>
+            <div>
+                <div class="Binding_pop_box_list">
+                    <span class="Binding_pop_box_list_left"><i class="Binding_pop_box_list_left_i">*</i>原密码：</span>
+                    <input type="password" name="oldpassword" id="oldpassword" value="" class="Binding_pop_box_list_text Binding_pop_box_list_textw200" />
+                </div>
+
+                <div class="Binding_pop_box_list">
+                    <span class="Binding_pop_box_list_left"><i class="Binding_pop_box_list_left_i">*</i>新密码：</span>
+                    <input type="password" name="newpassword" id="newpassword" value="" class="Binding_pop_box_list_text Binding_pop_box_list_textw200" />
+                </div>
+
+                <div class="Binding_pop_box_list">
+                    <span class="Binding_pop_box_list_left"><i class="Binding_pop_box_list_left_i">*</i>确认密码：</span>
+                    <input type="password" name="repassword" id="repassword" value="" class="Binding_pop_box_list_text Binding_pop_box_list_textw200" />
+                </div>
+
+                <div class="Binding_pop_sub" style="margin-top:10px; margin-bottom: 25px;">
+                    <span class="Binding_pop_box_list_left">&nbsp;</span>
+                    <input class="layui-btn layui-btn-normal" type="submit" name="submit" value="确定" />
+                    <input class="layui-btn layui-btn-primary" type="button" value="取消" onclick="layer.close($('#layindex').val());" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--绑定邮箱弹出框-->
+<div id="email" style="display:none;">
+    <div class="Binding_pop_box" style="padding:10px;width:430px;height:260px; background:#fff">
+        <div class="Binding_pop_box_msg">绑定后的邮箱将作为新的登录账号</div>
+        <div>
+            <div class="Binding_pop_box_list">
+                <span class="Binding_pop_box_list_left"><i class="Binding_pop_box_list_left_i">*</i>新的邮箱：</span>
+                <input type="text" name="email" value="{yun:}$resume.email{/yun}" class="Binding_pop_box_list_text Binding_pop_box_list_textw200">
+            </div>
+            <div class="Binding_pop_box_list">
+                <span class="Binding_pop_box_list_left"><i class="Binding_pop_box_list_left_i">*</i>验证码：</span>
+
+                <input type="text" name="email_code" maxlength="6" class="Binding_pop_box_tpyz_text">
+                <a href="javascript:void(0);" onclick="checkCode('vcode_img');" class="Binding_pop_box_yz_pic"> <img id="vcode_img" src="{yun:}$config.sy_weburl{/yun}/app/include/authcode.inc.php">
+                </a>
+
+            </div>
+            <div class="Binding_pop_sub" style="margin-top:10px;">
+                <span class="Binding_pop_box_list_left">&nbsp;</span>
+                <input class="layui-btn layui-btn-normal" type="button" onclick="sendbemail('vcode_img');" value="发送验证邮箱">
+                <input class="layui-btn layui-btn-primary" type="button" value="取消" onclick="layer.close($('#layindex').val());">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹出框 end-->
+<!--绑定手机弹出框-->
+<div id="moblie" style=" display:none;">
+    <div class="Binding_pop_box" style="padding:10px;width:430px;height:280px; background:#fff;">
+        <div class="Binding_pop_box_msg">绑定完成后，您可以使用该手机号码登录账号、找回密码</div>
+        <div>
+            <div class="Binding_pop_box_list">
+                <span class="Binding_pop_box_list_left"><i class="Binding_pop_box_list_left_i">*</i>手机号码：</span>
+                <input type="text" name="moblie" value="{yun:}$resume.telphone{/yun}" class="Binding_pop_box_list_text Binding_pop_box_list_textw200">
+
+            </div>
+			<div class="Binding_pop_box_list">
+				<span class="Binding_pop_box_list_left"><i class="Binding_pop_box_list_left_i">*</i>验证码：</span>
+
+				<input type="text" name="phoneimg_code" maxlength="6" class="Binding_pop_box_tpyz_text">
+				<a href="javascript:void(0);" onclick="checkCode('pcode_img');" class="Binding_pop_box_yz_pic"> <img id="pcode_img" src="{yun:}$config.sy_weburl{/yun}/app/include/authcode.inc.php">
+				</a>
+
+			</div>
+            <div class="Binding_pop_box_list">
+                <span class="Binding_pop_box_list_left"><i class="Binding_pop_box_list_left_i">*</i>短信验证码：</span>
+                <div class="Binding_pop_box_r"> <input type="text" id="moblie_code" class="Binding_pop_box_yz_text" style="width:90px;">
+                    <a href="javascript:;" onclick="sendmoblie('pcode_img');" id="time" class="Binding_pop_box_yz_send">免费发送验证码</a>
+                </div>
+            </div>
+			
+            <div class="Binding_pop_sub" style="margin-top:20px;">
+                <span class="Binding_pop_box_list_left">&nbsp;</span>
+                <input class="layui-btn layui-btn-normal" onclick="check_moblie();" type="button" value="保存">
+                <input class="layui-btn layui-btn-primary" type="button" value="取消" onclick="layer.close($('#layindex').val());">
+            </div>
+        </div>
+    </div>
+</div>
+<!--弹出框 end-->
+
+<!--营业执照弹出框-->
+<div id="yyzz" style=" display:none;">
+
+    <div style="width:630px;">
+        <div class="license_box">
+            <div class="license_tip">提示：身份证中的照片与账号的真实姓名保持一致，扫描件中的身份证号,姓名需清晰可辨，否则不能通过认证</div>
+
+            <form id="certform" name="MyForm" target="supportiframe" method="post" action="index.php?c=binding&act=savecert" enctype="multipart/form-data">
+                <div class="license_left" style="width: 380px;">
+                    <div class="license_tit">方式一：本地上传</div>
+                    <div class="license_list"><span class="license_list_name"><i class="Binding_pop_box_list_left_i">*</i>证件号码</span>
+                        <input type="text" name="idcard" id="idcard" value='{yun:}$resume.idcard{/yun}' class="Binding_pop_box_list_text license_left_text">
+
+                    </div>
+                    <div class="license_list"><span class="license_list_name"><i class="Binding_pop_box_list_left_i">*</i>证件扫描件</span>
+                        <button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'user_cert',imgid: 'imgicon',parentid: 'imgparent',imga: 'checka'}">上传图片</button>
+                        <input type="hidden" id="layupload_type" value="2" />
+                        <input type="hidden" id="upload_path" value="cert" />
+                        <input type="hidden" id="cert_pic" name="user_cert" value="{yun:}$resume.idcard_pic{/yun}" />
+
+                        <div id="imgparent" class="licensefile_box_img {yun:}if !$resume.idcard_pic{/yun}none{yun:}/if{/yun}">
+                            <img id="imgicon" src="{yun:}$config.sy_weburl{/yun}{yun:}$resume.idcard_pic{/yun}" width="40" height="40" />
+                            <a target="_blank" id="checka" href="{yun:}$config.sy_weburl{/yun}{yun:}$resume.idcard_pic{/yun}" class="Binding_pop_box_msg_cont_pic_p">查看原图</a>
+                        </div>
+
+                        <div class="licensefile_box_tip">最大{yun:}$config.file_maxsize{/yun}M,支持{yun:}$config.pic_type{/yun}格式</div>
+                    </div>
+                    <div class="license_list">
+                        <input class="license_list_bth" type="button" onclick="check_user_cert()" value="提交">
+
+                    </div>
+                </div>
+            </form>
+            <div class="license_right" style="width: 220px; right:10px;">
+                <div class="license_tit">方式二：手机拍照上传</div>
+                <div class="license_ewm">
+                    <img src="{yun:}url m=upload c=qrcode type=2{/yun}" alt="手机扫码拍照上传" width="130" height="130" />
+                </div>
+                <div class="license_right_p"> 扫描二维码 </div>
+                <div class=""> 打开我-账户绑定-点击身份认证 </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+</div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+<script type="text/javascript">
+    function Showsub() {
+        var oldpass = $("#oldpassword").val();
+        var pass = $("#newpassword").val();
+        var repass = $("#repassword").val();
+        oldpass = $.trim(oldpass);
+        pass = $.trim(pass);
+        repass = $.trim(repass);
+
+        if(oldpass == "") {
+            layer.msg('原始密码不能为空!', 2, 8);
+            // $("#oldpassword").focus();
+            return false;
+        } else if(oldpass.length < 6 || oldpass.length > 20) {
+            layer.msg('密码需在 6-20个字符之内!', 2, 8);
+            // $("#oldpassword").focus();
+            return false;
+        }
+
+        if(pass == "") {
+            layer.msg('新密码不能为空!', 2, 8);
+            // $("#newpassword").focus();
+            return false;
+        } else if(pass.length < 6 || pass.length > 20) {
+            layer.msg('新密码需在 6-20个字符之内!', 2, 8);
+            // $("#newpassword").focus();
+            return false;
+        }
+
+        if(repass == "") {
+            layer.msg('请再次确认新密码!', 2, 8);
+            // $("#repassword").focus();
+            return false;
+        } else if(repass.length < 6 || repass.length > 20) {
+            layer.msg('新密码需在 6-20个字符之内!', 2, 8);
+            // $("#repassword").focus();
+            return false;
+        }
+        if(repass != pass) {
+            layer.msg('两次密码输入不一致，请重新输入!', 2, 8);
+            // $("#repassword").focus();
+            return false;
+        }
+
+        if(oldpass != "" && oldpass == pass) {
+            layer.msg("原始密码和新密码一致，不需要修改！", 2, 8);
+            return false;
+        }
+
+        return true;
+    }
+
+    function showEditPass() {
+        var layindex = $.layer({
+            type: 1,
+            title: '修改密码',
+            closeBtn: [0, true],
+            border: [10, 0.3, '#000', true],
+            area: ['450px', 'auto'],
+            page: {
+                dom: "#showEditPass"
+            }
+        });
+        $("#layindex").val(layindex);
+    }
+
+    function showEditUsername() {
+        var layindex = $.layer({
+            type: 1,
+            title: '修改用户名',
+            closeBtn: [0, true],
+            border: [10, 0.3, '#000', true],
+            area: ['450px', 'auto'],
+            page: {
+                dom: "#showEditUsername"
+            }
+        });
+        $("#layindex").val(layindex);
+    }
+
+    function getshow2(id, title) {
+        var layindex = $.layer({
+            type: 1,
+            title: title,
+            closeBtn: [0, true],
+            border: [10, 0.3, '#000', true],
+            area: ['650px', 'auto'],
+            page: {
+                dom: "#" + id
+            }
+        });
+        $("#layindex").val(layindex);
+    }
+</script>
+<!--弹出框 end-->
+<input type="hidden" id="linktel" value="{yun:}$resume.telphone{/yun}" />
+<input type="hidden" id="linkmail" value="{yun:}$resume.email{/yun}" />
+<input type="hidden" id="send" value="0" /> {yun:}include file="$userstyle/footer.htm"{/yun}

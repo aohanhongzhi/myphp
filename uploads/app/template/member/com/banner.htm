@@ -1,0 +1,77 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+    <div class="admin_mainbody">
+        {yun:}include file="$comstyle/left.htm"{/yun}
+        <div class=right_box>
+            <div class=admincont_box>
+
+                <div class="com_tit"><span class="com_tit_span">企业横幅图片</span></div>
+                <div class="clear"></div>
+                <div class="com_body">
+                    <div class="admin_new_tip ">
+                        <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+                        <div class="admin_new_tip_list_cont">
+                            <div class="admin_new_tip_list"> 根据您所选的模板上传合适的横幅图片 </div>
+                            <div class="admin_new_tip_list"> 选择合适的图片，点击上传按钮即可上传图片 </div>
+                        </div>
+                    </div>
+
+                    <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                    <form action="index.php?c=banner&act=save" method="post" id="myform" name="myform" target="supportiframe" enctype="multipart/form-data">
+                        <div class="clear"></div>
+                        {yun:}if is_array($banner){/yun}
+                        <div class="combanner_box">
+                            {yun:}if $banner.pic{/yun} <div class="">
+                                <img src="{yun:}$banner.pic{/yun}" width="300" />
+                            </div>
+                            <div class="combanner_box_tip">如需修改请选择新图片</div>{yun:}/if{/yun}
+                            <button type="button" class="yun_bth_pic layui-btn-normal" id="noupload">选择新图片</button>
+                            <input type="hidden" id="laynoupload" value="1" />
+
+                            <div class="combanner_box_b"> <input name="update" type="hidden" value="修改">
+                                <a href="javascript:void(0)" onclick="checkbanner();" class="combanner_box_bth ">修改</a>
+                            </div>
+                        </div>
+                        {yun:}else{/yun}
+                        <div class="combanner_box">
+                            <div class="combanner_box_tip">选择上传的图片</div>
+                            <button type="button" class="yun_bth_pic layui-btn-normal" id="noupload">选择图片</button>
+                            <input type="hidden" id="laynoupload" value="1" />
+                            <div class="combanner_box_b">
+                                <input name="save" type="hidden" value="上传">
+                                <a href="javascript:void(0)" onclick="checkbanner();" class="combanner_box_bth ">上传</a>
+                            </div>
+                        </div>
+                        {yun:}/if{/yun}
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+<script>
+    var bid = "{yun:}$banner.id{/yun}";
+    var bannertype = "{yun:}$config.integral_banner_type{/yun}";
+    var bannerintegral = "{yun:}$config.integral_banner{/yun}";
+
+    function checkbanner() {
+        if($("input[name=file]").val() == "") {
+            layer.msg('图片不能为空！！', 2, 8);
+            return false;
+        }
+        if(bid == '' && bannertype != '1' && bannerintegral > 0) {
+            layer.confirm("上传横幅将扣除您" + bannerintegral + "{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun},是否继续", function() {
+                setTimeout(function() {
+                    $('#myform').submit();
+                }, 0);
+            });
+        } else {
+            setTimeout(function() {
+                $('#myform').submit();
+            }, 0);
+        }
+    }
+</script>
+{yun:}include file="$comstyle/footer.htm"{/yun}

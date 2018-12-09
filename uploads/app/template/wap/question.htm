@@ -1,0 +1,58 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+{yun:}include file="$wapstyle/nav.htm"{/yun} 
+
+{yun:}if $uid==$myuid{/yun}
+{yun:}qlist item=list uid='auto.uid' state=1 ispage=1 t_len=20  limit=10{/yun}
+<div class="home_question">
+  <div class="home_question_name"><a href="{yun:}url m=wap c=ask a=content id='`$list.id`'{/yun}">{yun:}$list.title|mb_substr:0:88:'utf-8'{/yun}</a>{yun:}if $list.state==0{/yun}<span class="answer_zt">审核中..</span>{yun:}elseif $list.state==1{/yun}{yun:}else{/yun}<span class="answer_zt answer_wtg">审核未通过</span>{yun:}/if{/yun}</div>
+  <div class="home_question_info">
+   {yun:}$list.add_time|date_format:"%Y-%m-%d %H:%M"{/yun}
+   <span class="home_question_info_s ask_jx_data_hd">{yun:}$list.answer_num{/yun}</span>
+   <span class="home_question_info_s ask_jx_data_yl">{yun:}$list.visit{/yun}</span>
+  <span class="home_question_info_s ask_jx_data_gz">{yun:}$list.atnnum{/yun}</span>
+  </div>
+  
+
+   
+    {yun:}if $uid==$list.uid{/yun}
+    <div class="home_question_cz"><a href="javascript:void(0)" onclick="layer_del('确定要删除该提问？','{yun:}url m=wap c=ask a=delask id=$list.id{/yun}')" class="home_question_cz_sc">删除</a></div>
+    {yun:}/if{/yun}
+
+</div>
+{yun:}/qlist{/yun}     
+ {yun:}else{/yun}
+    {yun:}qlist item=liste uid='auto.uid'  ispage=1 t_len=20  limit=10{/yun}
+<div class="home_question">
+  <div class="home_question_name"><a href="{yun:}url m=wap c=ask a=content id='`$liste.id`'{/yun}">{yun:}$liste.title|mb_substr:0:88:'utf-8'{/yun}</a></div>
+  
+  <div class="home_question_info">
+   {yun:}$liste.add_time|date_format:"%Y-%m-%d %H:%M"{/yun}
+   <span class="home_question_info_s ask_jx_data_hd">{yun:}$liste.answer_num{/yun}</span>
+   <span class="home_question_info_s ask_jx_data_yl">{yun:}$liste.visit{/yun}</span>
+  <span class="home_question_info_s ask_jx_data_gz">{yun:}$liste.atnnum{/yun}</span>
+  </div>
+  
+
+    {yun:}if $uid==$liste.uid{/yun}
+    <div class="home_question_cz"><a href="javascript:void(0)" onclick="layer_del('确定要删除该提问？','{yun:}url m=wap c=ask a=delask id=$liste.id{/yun}')" class="home_question_cz_sc">删除</a></div>
+    {yun:}/if{/yun}
+ 
+</div>
+{yun:}/qlist{/yun} 
+ {yun:}/if{/yun}
+{yun:}if $smarty.get.total!=1{/yun}
+<div class="noresult">
+{yun:}if $uid==$myuid{/yun}
+您还没有发起任何话题，抓紧提问吧！
+<a href="{yun:}url m=wap c=ask a=addquestion {/yun}"  class="wap_mb_no_sr" style="color:#fff;">我要提问</a>
+{yun:}else{/yun}
+他还没有发起话题！
+{yun:}/if{/yun}</div>
+{yun:}else{/yun} 
+<div class="pages">{yun:}$pagenav{/yun}</div> 
+{yun:}/if{/yun} 
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

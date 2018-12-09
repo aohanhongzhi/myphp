@@ -1,0 +1,336 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<style>
+    .header_bg {
+        display: none;
+    }
+</style>
+<div class="yun_com_member">
+    <i class="yun_com_member_bg1"></i>
+    <div class="yun_com_member_index_t">
+        <span class="yun_com_member_index_set"><a class="yun_com_member_index_set_icon" href="index.php?c=set"></a></span>
+        <span class="yun_com_member_index_msg"><a class="yun_com_membersysnews" href="index.php?c=sysnews"><i class="yun_com_membersysnews_n" id="sysmsgnum"></i></a></span> {yun:}if $signstate==1 {/yun}
+        <a class="yun_com_member_index_qd"><span class="yun_com_member_index_qd_s">已签到</span></a>
+        {yun:}else{/yun}
+        <a href="javascript:void(0);" onClick="sign();" class="yun_com_member_index_qd"><span class="yun_com_member_index_qd_s">签到赚积分</span></a>
+        {yun:}/if{/yun}
+    </div>
+
+    <div class="yun_com_member_indexinfo">
+        <div class="yun_com_member_indexinfo_logo">
+            <a href="index.php?c=photo&t=1"><img src="{yun:}$company.logo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);"></a>
+        </div>
+        <div class="yun_com_member_comname">{yun:}$company.name{/yun}
+            <a href="{yun:}url m=wap c=company a=show id='`$uid`'{/yun}" class="yun_com_member_comlook">预览</a>
+        </div>
+        <div class="">
+
+            {yun:}if $company.moblie_status=="1"{/yun}
+            <a class="yun_com_member_comrz yun_com_member_comyrz" href="index.php?c=bindingbox&type=moblie"><i class="yun_com_member_comrz_icon yun_com_member_comrz_iconsj"></i>已认证 </a>
+            {yun:}else{/yun}
+            <a class="yun_com_member_comrz" href="index.php?c=bindingbox&type=moblie"><i class="yun_com_member_comrz_icon yun_com_member_comrz_iconsj"></i>未认证 </a> {yun:}/if{/yun} {yun:}if $company.email_status=="1"{/yun}
+            <a class="yun_com_member_comrz yun_com_member_comyrz" href="index.php?c=bindingbox&type=email"><i class="yun_com_member_comrz_icon yun_com_member_comrz_iconyx"></i>已绑定</a> {yun:}else{/yun}
+            <a class="yun_com_member_comrz" href="index.php?c=bindingbox&type=email"><i class="yun_com_member_comrz_icon yun_com_member_comrz_iconyx"></i>未绑定</a> {yun:}/if{/yun} {yun:}if $company.yyzz_status=="1"{/yun}
+            <a class="yun_com_member_comrz yun_com_member_comyrz" href="index.php?c=comcert"><i class="yun_com_member_comrz_icon yun_com_member_comrz_iconzz"></i> 已认证 </a> {yun:}else{/yun}
+            <a class="yun_com_member_comrz" href="index.php?c=comcert"><i class="yun_com_member_comrz_icon yun_com_member_comrz_iconzz"></i> 未认证</a> {yun:}/if{/yun}
+
+        </div>
+    </div>
+    <div class="yun_com_member_indexfw">
+        我的服务：{yun:}$statis.rating_name{/yun}
+        <span>&nbsp;<a href="index.php?c={yun:}if $config.com_vip_type==2||$config.com_vip_type==0{/yun}rating{yun:}else{/yun}time{yun:}/if{/yun}" style="color:#FF0">升级</a></span>
+        <div class="yun_com_member_indexfw_jf">可用{yun:}$config.integral_pricename{/yun}：{yun:}$statis.integral{/yun}{yun:}$config.integral_priceunit{/yun}</div>
+        <a href="index.php?c=pay" class="yun_com_member_indexczbth">充值</a>
+        <a href="index.php?c=integral" class="yun_com_member_indexzjf">赚积分</a>
+    </div>
+</div>
+
+<section>
+    <div class="m_index_msg">
+        <dl class="m_index_msg_list">
+            <a href="index.php?c=hr"><dt id="sqnum"></dt>
+                <dd>应聘简历</dd>
+            </a>
+        </dl>
+        <dl class="m_index_msg_list">
+            <a href="index.php?c=job"><dt id="companyjobnum"></dt>
+                <dd>招聘中的职位</dd>
+            </a>
+        </dl>
+        <dl class="m_index_msg_list">
+            <a href="index.php?c=talent_pool&type=1"><dt id="talent_pool_num"></dt>
+                <dd>简历收藏</dd>
+            </a>
+        </dl>
+    </div>
+</section>
+
+<div class="clear"></div>
+
+{yun:}if $member.status!=1{/yun}
+<div class="admin_new_tip ">
+    <div class="admin_new_tit">温馨提示</div>
+    <div class="admin_new_tip_list_cont">
+        <div class="admin_new_tip_list"> 您的帐号尚未通过审核，发布的职位信息将在审核通过后展示 </div>
+        <div id="forms" class="admin_new_tip_list">您暂时无法查看简历的联系方式，我们会24小时内进行审核请保持电话畅通，您可联系客服快速审核（{yun:}$config.sy_freewebtel{/yun}）</div>
+    </div>
+</div>
+{yun:}/if{/yun}
+
+<div class="clear"></div>
+
+<ul class="yun_usermember_kj">
+    <li>
+        <a href="javascript:void(0)" onclick="jobadd_url('{yun:}$statis.addjobnum{/yun}','{yun:}$config.integral_job{/yun}','job','{yun:}$config.com_integral_online{/yun}','{yun:}$config.integral_proportion{/yun}');" class="yun_usermember_kj_a"><i class="yun_usermember_kj_fb"></i>发布职位</a>
+    </li>
+    <li>
+        <a href="javascript:void(0)" onclick="RefreshAll('{yun:}$jobids{/yun}');" class="yun_usermember_kj_a yun_usermember_kj_a_cur"><i class="yun_usermember_kj_sx"></i>刷新职位 <input type="hidden" id="refreshjobids" value="" /></a>
+    </li>
+</ul>
+
+<div class="clear"></div>
+
+<ul class="yun_usermember_nav">
+    <li>
+
+        <a href="index.php?c=jobcolumn"><i class="yun_usermember_nav_icon yun_usermember_nav_iconjob"></i>职位管理<span class="yun_mnav_tip">发布职位</span></a>
+
+        <li>
+            <a href="index.php?c=resumecolumn"><i class="yun_usermember_nav_icon yun_usermember_nav_iconjl"></i>简历管理<span class="yun_mnav_tip">应聘简历</span></a>
+        </li>
+        
+        <li>
+            <a href="index.php?c=info"><i class="yun_usermember_nav_icon yun_usermember_nav_iconinfo"></i>基本资料<span class="yun_mnav_tip">完善企业基本资料</span></a>
+        </li>
+</ul>
+<ul class="yun_usermember_nav">
+    <li>
+        <a href="index.php?c={yun:}if $config.com_vip_type==2||$config.com_vip_type==0{/yun}rating{yun:}else{/yun}time{yun:}/if{/yun}"><i class="yun_usermember_nav_icon yun_usermember_nav_iconhy"></i>购买会员<span class="yun_mnav_tip">快速招聘</span></a>
+    </li>
+    <li>
+        <a href="index.php?c=finance"><i class="yun_usermember_nav_icon yun_usermember_nav_iconcw"></i>财务管理<span class="yun_mnav_tip">充值/明细</span></a>
+    </li>
+</ul>
+<ul class="yun_usermember_nav">
+	{yun:}if $config.sy_ask_web==1{/yun}
+    <li>
+        <a href="{yun:}url m=wap c=ask{/yun}"><i class="yun_usermember_nav_icon yun_usermember_nav_iconask"></i>职场问答</a>
+    </li>
+    {yun:}/if{/yun}
+  
+</ul>
+<ul class="yun_usermember_nav">
+    <li>
+        <a href="index.php?c=set"><i class="yun_usermember_nav_icon yun_usermember_nav_iconzh"></i>账户设置</a>
+    </li>
+    <li onclick="gwshow()">
+        <a href="javascript:void(0)"><i class="yun_usermember_nav_icon yun_usermember_nav_iconkf"></i>专属客服服务</a>
+    </li>
+</ul>
+
+
+<div class="clear"></div>
+
+<div class="index_section">
+    <section class="wap_member">
+        <div class="wap_member_mrecord">
+        </div>
+    </section>
+</div>
+
+<!--编辑基本信息引导匡-->
+<div id="yingdaoone" style="width:100%;height:100%; background:rgba(51,51,51,0.6); position:fixed;left:0px;top:0px; z-index:100000;{yun:}if $company.name!=" "||$company.hy!=" "{/yun}display:none;{yun:}/if{/yun}">
+    <div style="width:100%; position:absolute;left:0px;top:140px;">
+        <div style="padding:20px;">
+            <div class="index_yd_box">
+                <div class="index_yd_box_h1">亲，你还没有填写基本信息</div>
+                <div class="user_resume_index_tip_p">
+                    <a href="index.php?c=info" class="user_resume_index_tip_sub">编辑</a>
+                </div>
+                <div class="user_resume_index_tip_p2">
+                    <a href="javascript:Close_yd('yingdaoone');" class="user_resume_index_tip_p2_a">下次再说</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{yun:}if $company.name!="" || $company.hy!=""{/yun}
+<div id="updaterating" style="width:100%;height:100%; background:rgba(51,51,51,0.6); position:fixed;left:0px;top:0px; z-index:100000; {yun:}if $statis.vip_etime == '0' || $statis.vip_etime > time() || $smarty.cookies.updatetoast == 1{/yun} display: none;  {yun:}/if{/yun}">
+    <div style="width:100%; position:absolute;left:0px;top:140px;">
+        <div style="padding:20px;">
+            <div class="index_yd_box">
+                <div class="index_yd_box_h1">尊敬的企业用户，您好！</br>您的会员已到期，请先升级会员！</div>
+                <div class="user_resume_index_tip_p">
+                    <a href="index.php?c={yun:}if $config.com_vip_type==2||$config.com_vip_type==0{/yun}rating{yun:}else{/yun}time{yun:}/if{/yun}" class="user_resume_index_tip_sub">升级</a>
+                </div>
+                <div class="user_resume_index_tip_p2">
+                    <a href="javascript:Close_yd('updaterating');" class="user_resume_index_tip_p2_a">下次再说</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{yun:}/if{/yun} 
+
+{yun:}if $statis.vip_etime > time() {/yun}
+<!--上传LOGO引导匡-->
+<div id="yingdaotwo" style="width:100%;height:100%; background:rgba(51,51,51,0.6); position:fixed;left:0px;top:0px; z-index:100000;{yun:}if $company.logo!=" "{/yun}display:none;{yun:}/if{/yun}">
+    <div style="width:100%; position:absolute;left:0px;top:140px;">
+        <div style="padding:20px;">
+            <div class="index_yd_box">
+                <div class="index_yd_box_h1">亲，你还没有上传LOGO</div>
+                <div class="user_resume_index_tip_p">
+                    <a href="index.php?c=photo" class="user_resume_index_tip_sub">上传LOGO</a>
+                </div>
+                <div class="user_resume_index_tip_p2">
+                    <a href="javascript:Close_yd('yingdaotwo');" class="user_resume_index_tip_p2_a">下次再说</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{yun:}/if{/yun} 
+
+{yun:}if $company.logo!=""{/yun}
+<!--验证营业执照引导匡-->
+<div id="yingdaothree" style="width:100%;height:100%; background:rgba(51,51,51,0.6); position:fixed;left:0px;top:0px; z-index:100000;{yun:}if $company.yyzz_status==1||$company.yyzz_status==0{/yun}display:none;{yun:}/if{/yun}">
+    <div style="width:100%; position:absolute;left:0px;top:140px;">
+        <div style="padding:20px;">
+            <div class="index_yd_box">
+                <div class="index_yd_box_h1">亲，你还没有验证营业执照</div>
+                <div class="user_resume_index_tip_p">
+                    <a href="index.php?c=comcert" class="user_resume_index_tip_sub">验证</a>
+                </div>
+                <div class="user_resume_index_tip_p2">
+                    <a href="javascript:Close_yd('yingdaothree');" class="user_resume_index_tip_p2_a">下次再说</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{yun:}/if{/yun}
+
+<script>
+    function Close_yd(id) {
+        $("#" + id).hide();
+    }
+    //加减乘除
+    function accAdd(arg1, arg2) {
+        var r1, r2, m;
+        try {
+            r1 = arg1.toString().split(".")[1].length
+        } catch(e) {
+            r1 = 0
+        }
+        try {
+            r2 = arg2.toString().split(".")[1].length
+        } catch(e) {
+            r2 = 0
+        }
+        m = Math.pow(10, Math.max(r1, r2))
+        return(arg1 * m + arg2 * m) / m
+    }
+
+    function accSub(arg1, arg2) {
+        return accAdd(arg1, -arg2);
+    }
+
+    function accMul(arg1, arg2) {
+        var m = 0,
+            s1 = arg1.toString(),
+            s2 = arg2.toString();
+        try {
+            m += s1.split(".")[1].length
+        } catch(e) {}
+        try {
+            m += s2.split(".")[1].length
+        } catch(e) {}
+        return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
+    }
+
+    function accDiv(arg1, arg2) {
+        var t1 = 0,
+            t2 = 0,
+            r1, r2;
+        try {
+            t1 = arg1.toString().split(".")[1].length
+        } catch(e) {}
+        try {
+            t2 = arg2.toString().split(".")[1].length
+        } catch(e) {}
+        with(Math) {
+            r1 = Number(arg1.toString().replace(".", ""));
+            r2 = Number(arg2.toString().replace(".", ""));
+            return(r1 / r2) * pow(10, t2 - t1);
+        }
+    }
+
+    function RefreshAll(id) {
+        var weburl = '{yun:}url m=wap{/yun}';
+        var ajaxUrl = weburl + "member/index.php?c=ajax_refresh_job";
+        var integral = '{yun:}$config.integral_jobefresh{/yun}';
+
+        if(id == "") {
+            layermsg("您暂无发布中的职位！", 2, function() {
+                window.location.href = weburl + "member/index.php?c=job&type=1&w=1";
+            });
+            return false;
+        } else {
+            var chk_value = [];
+            chk_value = id.split(",");
+            $("#refreshjobids").val(chk_value);
+            var jobid = $("#refreshjobids").val();
+            var breakjob_num = '{yun:}$statis.breakjob_num{/yun}';
+            var sxdj = '{yun:}$config.integral_jobefresh{/yun}';
+            var online = '{yun:}$config.com_integral_online{/yun}';
+            var pro = '{yun:}$config.integral_proportion{/yun}';
+
+            var num = accSub(chk_value.length, breakjob_num);
+            var sxneed = accMul(sxdj, num);
+            var inter = integral * pro;
+            var sxintegral = accMul(inter, num);
+            $.post(ajaxUrl, {
+                jobid: jobid
+            }, function(data) {
+                data = eval('(' + data + ')');
+                if(data.error == 1) {
+                    layermsg(data.msg, 2, 9, function() {
+                        window.location.href = '';
+                    });
+                } else if(data.error == 2) {
+                    if(online == 3) {
+                        layer.open({
+                            content: "您的等级特权已用完，继续操作将消费" + sxintegral + "积分，是否继续？",
+                            btn: ['继续', '取消'],
+                            shadeClose: false,
+                            yes: function() {
+                                window.location.href = "index.php?c=getserver&ids=" + id + "&server=" + 5;;
+                            }
+                        });
+                    } else {
+                        layer.open({
+                            content: "您的等级特权已用完，继续操作将消费" + sxneed + "元，是否继续？",
+                            btn: ['继续', '取消'],
+                            shadeClose: false,
+                            yes: function() {
+                                window.location.href = "index.php?c=getserver&ids=" + id + "&server=" + 5;;
+                            }
+                        });
+                    }
+                } else {
+                    if(data.url) {
+                        layermsg(data.msg, 2, function() {
+                            location.href = "index.php?c={yun:}if $config.com_vip_type==2||$config.com_vip_type==0{/yun}rating{yun:}else{/yun}time{yun:}/if{/yun}"
+                        });
+                    } else {
+                        layermsg(data.msg, 2, 8);
+                    }
+
+                }
+            });
+        }
+    }
+
+	
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

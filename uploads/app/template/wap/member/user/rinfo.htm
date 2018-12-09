@@ -1,0 +1,222 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+
+<style>
+    .resume-cont_wate_list dd {
+        padding-left: 0px;
+    }
+    
+    .resume_xg_a {
+        padding: 5px 30px;
+        display: inline-block;
+        color: #fff;
+    }
+</style>
+{yun:}if $type=='skill'{/yun}
+
+<div class="resume-cont">
+
+    {yun:}foreach item=v from=$rows{/yun}
+    <div class="add_resume_box">
+        <ul class="add_resume_list">
+            <li><span class="add_resume_list_name">技能名称：</span>{yun:}$v.name{/yun}</dd>
+            </li>
+            <li><span class="add_resume_list_name">掌握时间：</span>{yun:}$v.longtime{/yun}年</li>
+            {yun:}if $v.pic{/yun}
+            <li><span class="add_resume_list_name">技能证书：</span>
+            <div class="add_resume_img">
+            <img src="{yun:}$config.sy_weburl{/yun}/{yun:}$v.pic{/yun}"></div></li>
+            {yun:}/if{/yun}
+        </ul>
+
+        <div class="add_resume_cz">
+            <a class="add_resume_cz_bth add_resume_cz_bth_line" href="index.php?c=addresumeson&type=skill&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}">修改</a>
+            <a class="add_resume_cz_bth" href="javascript:void(0);" onclick="isdel('index.php?c=rinfo&type=skill&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}')">删除</a>
+        </div>
+
+    </div>
+    {yun:}/foreach{/yun}
+
+    <div class="add_resume_tjbth">
+        <a class="add_resume_tj" href="index.php?c=addresumeson&type=skill&eid={yun:}$eid{/yun}">+ 添加职业技能</a>
+    </div>
+    <div class="add_resume_cz_fh">
+        <a href="index.php?c=resume&eid={yun:}$eid{/yun}">完成并返回 >></a>
+    </div>
+
+</div>
+
+{yun:}elseif $type=='work'{/yun}
+<div class="resume-cont">
+
+    {yun:}foreach item=v from=$rows{/yun}
+    <div class="add_resume_box">
+        <ul class="add_resume_list">
+            <li><span class="add_resume_list_name">单位名称：</span>{yun:}$v.name{/yun}</li>
+            <li><span class="add_resume_list_name">工作时间：</span>{yun:}$v.sdate|date_format:"%Y-%m"{/yun} 至 {yun:}if $v.edate{/yun}{yun:}$v.edate|date_format:"%Y-%m"{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}</li>
+            {yun:}if $v.title{/yun}
+            <li><span class="add_resume_list_name">担任职位：</span>{yun:}$v.title{/yun}</li>
+            {yun:}/if{/yun} {yun:}if $v.content{/yun}
+            <li><span class="add_resume_list_name">工作内容：</span>{yun:}$v.content{/yun}</li>
+            {yun:}/if{/yun}
+        </ul>
+        <div class="add_resume_cz">
+            <a class="add_resume_cz_bth add_resume_cz_bth_line" href="index.php?c=addresumeson&type=work&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}">修改</a>
+            <a class="add_resume_cz_bth" href="javascript:void(0);" onclick="isdel('index.php?c=rinfo&type=work&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}')">删除</a>
+        </div>
+    </div>
+    {yun:}/foreach{/yun}
+    <div class="add_resume_tjbth">
+        <a class="add_resume_tj" href="index.php?c=addresumeson&type=work&eid={yun:}$eid{/yun}">+ 添加工作经历</a>
+
+        <div class="add_resume_cz_fh">
+            <a href="index.php?c=resume&eid={yun:}$eid{/yun}">完成并返回>></a>
+        </div>
+    </div>
+
+</div>
+
+{yun:}elseif $type=='project'{/yun}
+<div class="resume-cont">
+
+    {yun:}foreach item=v from=$rows{/yun}
+    <div class="add_resume_box">
+        <ul class="add_resume_list">
+            <li><span class="add_resume_list_name">项目名称：</span>{yun:}$v.name{/yun}</li>
+            {yun:}if $v.title{/yun}
+            <li><span class="add_resume_list_name">担任职位：</span>{yun:}$v.title{/yun}</li>
+            {yun:}/if{/yun} {yun:}if $v.content{/yun}
+            <li><span class="add_resume_list_name">项目内容：</span>{yun:}$v.content{/yun}</li>
+            {yun:}/if{/yun}
+            <li><span class="add_resume_list_name">项目时间：</span>{yun:}$v.sdate|date_format:"%Y-%m"{/yun} 至 {yun:}$v.edate|date_format:"%Y-%m"{/yun}</li>
+        </ul>
+        <div class="add_resume_cz">
+            <a class="add_resume_cz_bth add_resume_cz_bth_line" href="index.php?c=addresumeson&type=project&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}">修改</a>
+            <a class="add_resume_cz_bth" href="javascript:void(0);" onclick="isdel('index.php?c=rinfo&type=project&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}')">删除</a>
+        </div>
+    </div>
+    {yun:}/foreach{/yun}
+
+    <div class="add_resume_tjbth">
+        <a class="add_resume_tj" href="index.php?c=addresumeson&type=project&eid={yun:}$eid{/yun}">+ 添加项目经历</a>
+    </div>
+    <div class="add_resume_cz_fh">
+        <a href="index.php?c=resume&eid={yun:}$eid{/yun}">完成并返回>></a>
+    </div>
+
+</div>
+
+{yun:}elseif $type=='training'{/yun}
+<div class="resume-cont">
+
+    {yun:}foreach item=v from=$rows{/yun}
+    <div class="add_resume_box">
+        <ul class="add_resume_list">
+            <li><span class="add_resume_list_name">培训中心：</span>{yun:}$v.name{/yun}</li>
+            <li><span class="add_resume_list_name">培训时间：</span>{yun:}$v.sdate|date_format:"%Y-%m"{/yun} 至 {yun:}$v.edate|date_format:"%Y-%m"{/yun}</li>
+            {yun:}if $v.title{/yun}
+            <li><span class="add_resume_list_name">培训方向：</span>{yun:}$v.title{/yun} </li>
+            {yun:}/if{/yun} {yun:}if $v.content{/yun}
+            <li><span class="add_resume_list_name">培训描述：</span>{yun:}$v.content{/yun}</li>
+            {yun:}/if{/yun}
+        </ul>
+        <div class="add_resume_cz">
+            <a class="add_resume_cz_bth add_resume_cz_bth_line" href="index.php?c=addresumeson&type=training&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}">修改</a>
+            <a class="add_resume_cz_bth" href="javascript:void(0);" onclick="isdel('index.php?c=rinfo&type=training&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}')">删除</a>
+        </div>
+    </div>
+    {yun:}/foreach{/yun}
+
+    <div class="add_resume_tjbth">
+        <a class="add_resume_tj" href="index.php?c=addresumeson&type=training&eid={yun:}$eid{/yun}">+ 添加培训经历</a>
+    </div>
+    <div class="add_resume_cz_fh">
+        <a href="index.php?c=resume&eid={yun:}$eid{/yun}">完成并返回>></a>
+    </div>
+
+</div>
+
+{yun:}elseif $type=='edu'{/yun}
+<div class="resume-cont">
+
+    {yun:}foreach item=v from=$rows{/yun}
+    <div class="add_resume_box">
+        <ul class="add_resume_list">
+            <li><span class="add_resume_list_name">学校名称：</span>{yun:}$v.name{/yun}</li>
+            <li><span class="add_resume_list_name">在校时间：</span>{yun:}$v.sdate|date_format:"%Y-%m"{/yun} 至 {yun:}$v.edate|date_format:"%Y-%m"{/yun}</li>
+            {yun:}if $v.specialty{/yun}
+            <li><span class="add_resume_list_name">所学专业：</span>{yun:}$v.specialty{/yun}</li>
+            {yun:}/if{/yun} {yun:}if $v.title{/yun}
+            <li><span class="add_resume_list_name">班级职务：</span>{yun:}$v.title{/yun}</li>
+            {yun:}/if{/yun} {yun:}if $userclass_name[$v.education]{/yun}
+            <li><span class="add_resume_list_name">最高学历：</span>{yun:}$userclass_name[$v.education]{/yun}</li>
+            {yun:}/if{/yun}
+        </ul>
+        <div class="add_resume_cz">
+            <a class=" add_resume_cz_bth add_resume_cz_bth_line" href="index.php?c=addresumeson&type=edu&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}">修改</a>
+            <a class="add_resume_cz_bth" href="javascript:void(0);" onclick="isdel('index.php?c=rinfo&type=edu&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}')">删除</a>
+        </div>
+    </div>
+    {yun:}/foreach{/yun}
+
+    <div class="add_resume_tjbth">
+        <a class="add_resume_tj" href="index.php?c=addresumeson&type=edu&eid={yun:}$eid{/yun}">+ 添加教育经历</a>
+    </div>
+    <div class="add_resume_cz_fh">
+        <a href="index.php?c=resume&eid={yun:}$eid{/yun}">完成并返回>></a>
+    </div>
+
+</div>
+{yun:}elseif $type=='other'{/yun}
+<div class="resume-cont">
+    {yun:}foreach item=v from=$rows{/yun}
+    <div class="add_resume_box">
+        <ul class="add_resume_list">
+            <li><span class="add_resume_list_name">其他标题：</span>{yun:}$v.name{/yun}</li>
+            {yun:}if $v.content{/yun}<li><span class="add_resume_list_name">其他描述：</span>{yun:}$v.content{/yun}</li>{yun:}/if{/yun}
+        </ul>
+
+        <div class="add_resume_cz">
+            <a class="add_resume_cz_bth add_resume_cz_bth_line" href="index.php?c=addresumeson&type=other&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}">修改</a>
+            <a class="add_resume_cz_bth" href="javascript:void(0);" onclick="isdel('index.php?c=rinfo&type=other&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}')">删除</a>
+        </div>
+    </div>
+    {yun:}/foreach{/yun}
+    <div class="add_resume_tjbth">
+        <a class="add_resume_tj" href="index.php?c=addresumeson&type=other&eid={yun:}$eid{/yun}">+ 添加其他信息</a>
+    </div>
+    <div class="add_resume_cz_fh">
+        <a href="index.php?c=resume&eid={yun:}$eid{/yun}">完成并返回>></a>
+    </div>
+
+</div>
+{yun:}elseif $type=='show'{/yun}
+<div class="resume-cont">
+    {yun:}foreach item=v from=$rows{/yun}
+    <div class="add_resume_box">
+        <ul class="add_resume_list">
+            <li><span class="add_resume_list_name">作品标题：</span>{yun:}$v.title{/yun}</li>
+            <li><span class="add_resume_list_name">作品排序：</span>{yun:}$v.sort{/yun}</li>
+            {yun:}if $v.picurl{/yun}
+            <li><span class="add_resume_list_name">作品图片：</span>
+             <div class="add_resume_img"><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$v.picurl{/yun}"></div></li>
+            {yun:}/if{/yun}
+        </ul>
+
+        <div class="add_resume_cz">
+            <a class="add_resume_cz_bth add_resume_cz_bth_line" href="index.php?c=addresumeson&type=show&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}">修改</a>
+            <a class="add_resume_cz_bth" href="javascript:void(0);" onclick="isdel('index.php?c=rinfo&type=show&eid={yun:}$eid{/yun}&id={yun:}$v.id{/yun}')">删除</a>
+        </div>
+    </div>
+    {yun:}/foreach{/yun}
+    <div class="add_resume_tjbth">
+        <a class="add_resume_tj" href="index.php?c=addresumeson&type=show&eid={yun:}$eid{/yun}">+ 添加作品</a>
+    </div>
+    <div class="add_resume_cz_fh">
+        <a href="index.php?c=resume&eid={yun:}$eid{/yun}">完成并返回>></a>
+    </div>
+
+</div>
+{yun:}/if{/yun}
+</div>
+</div>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

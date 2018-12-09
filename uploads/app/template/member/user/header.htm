@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>个人用户管理平台 - {yun:}$config.sy_webname{/yun}</title>
+<meta http-equiv=Content-Type content="text/html;charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta content="MSHTML 6.00.6000.16939" name="Generator"/>
+<link href="{yun:}$user_style{/yun}/images/m_css.css?v={yun:}$config.cachecode{/yun}" type="text/css" rel="stylesheet"/>
+
+
+<script>var weburl = "{yun:}$config.sy_weburl{/yun}";var pricename = "{yun:}$config.integral_pricename{/yun}";var user_sqintegrity= "{yun:}$config.user_sqintegrity{/yun}";</script>
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.1.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+  DD_belatedPNG.fix('.png');
+</script>
+<![endif]-->
+</head>
+<body>
+ <div class="yun_user_member_top user_bg">
+    <div class="yun_user_member_w1100">
+    <div class="top_left fltL">欢迎来到{yun:}$config.sy_webname{/yun}！</div>
+		<div class="header_seach_State fltR">
+			<a href="{yun:}$config.sy_weburl{/yun}" target="_blank" title='返回网站首页' class="user_m_fanh">返回网站首页</a>
+		</div>
+	</div>
+	</div>
+    
+   
+    <div class="header">
+        <div class="yun_user_member_w1100">
+            <div class="yun_m_logo  fltL">
+                <a href="{yun:}$config.sy_weburl{/yun}" target="_blank" title='返回网站首页'>
+                <img alt="{yun:}$config.sy_webname{/yun}" src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_logo{/yun}" >
+                </a>
+            </div>
+         <ul class="yun_user_member_nav">
+         <li {yun:}if $left==1{/yun}class="yun_user_member_nav_cur"{yun:}/if{/yun}><a href="index.php">个人中心</a></li>
+         <li {yun:}if $left==2{/yun}class="yun_user_member_nav_cur"{yun:}/if{/yun}><a href="index.php?c=resume"> 简历管理</a></li>
+          <li {yun:}if $left==3{/yun}class="yun_user_member_nav_cur"{yun:}/if{/yun}><a href="index.php?c=msg">求职管理</a></li>
+          <li {yun:}if $left==5{/yun}class="yun_user_member_nav_cur"{yun:}/if{/yun}><a href="index.php?c=paylog">财务管理</a></li>
+          <li {yun:}if $left==6{/yun}class="yun_user_member_nav_cur"{yun:}/if{/yun}><a href="index.php?c=binding">账号中心</a></li>
+          </ul>
+          <div class="">
+  <div class="header_m_navright">
+ <!-- 资料未完善提示-->
+  <div class="header_m_navright_tip" style="display:none;">
+  <div class="header_m_navright_tip_box">7 项资料未完善, <a href="###" class="cblue">立即完善</a><a href="###" class="header_m_navright_tip_close"></a></div></div>
+ <!-- 头像-->  
+ <div class="yun_m_headertx"> 
+ <a href="index.php?c=uppic">  {yun:}if $resume.sex==1{/yun}
+    <img src=".{yun:}$user_photo{/yun}" border="0" height="30" width="30" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);"/>
+    {yun:}else{/yun}
+    <img src=".{yun:}$user_photo{/yun}" border="0" height="30" width="30" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_iconv{/yun}',2);"/>
+     {yun:}/if{/yun}  
+     </a> 
+
+     <div class="yun_m_headertx_hi">你好！{yun:}$username{/yun}</div>
+     <i class="yun_m_headertx_hi_icon"></i>
+     <div class="yun_m_header_info" style="display:none;">
+						<a href="index.php?c=info" class="yun_m_header_info_a">编辑资料</a>
+						<a href="index.php?c=resume" target="_blank" class="yun_m_header_info_a"> 简历管理</a>
+						<a href="index.php?c=msg" class="yun_m_header_info_a">职位管理</a>
+						 <a href="javascript:void(0)" onClick="logout('index.php?act=logout')" title="退出登录" class="yun_m_header_info_a" style="border:none;">退出登录</a>
+					</div>
+     </div>
+    </div>
+    
+       <!-- 消息-->
+ <div class="yun_m_headermsg" onMouseOver="tzmsgNumShow('show')" onMouseOut="tzmsgNumShow('hide')">
+ <i class="yun_m_headermsg_icon"></i><span class="yun_m_headermsg_n" id="msgNum" style="display:none">0</span>
+ <div class="yun_m_headermsg_box" style="display:none">
+  <div class="yun_m_headermsg_list"><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=msg">邀请面试   <em class="yun_m_headermsg_list_n" id="userid_msgNum">(0)</em></a></div>
+  <div class="yun_m_headermsg_list"><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=sysnews">系统消息   <em class="yun_m_headermsg_list_n" id="sysmsgNum">(0)</em></a></div>
+  <div class="yun_m_headermsg_list"><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=commsg">企业回复咨询  <em class="yun_m_headermsg_list_n" id="usermsgNum">(0)</em></a> </div>
+  </div>
+ </div>
+  </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+<script>
+$(".yun_m_headertx").hover(function(){$(".yun_m_header_info").show();},function(){$(".yun_m_header_info").hide();});
+</script>
+    <div class="clear"></div>

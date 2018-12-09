@@ -1,0 +1,387 @@
+ {yun:}include file="$wapstyle/header_cont.htm"{/yun}
+
+<div class="header_navlist">
+    <a href="javascript:void(0);" id="jobclick"><i class="naviconfont"></i></a>
+</div>
+<style>
+    .img_auto img {
+        max-width: 100%;
+    }
+</style>
+<section>
+    <div class="company_info">
+
+        <div class="company_info_logo muipreview">
+            <img class="avatar" src="{yun:}$row.logo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);">
+        </div>
+    </div>
+
+    <div class="company_cominfo">
+        <div class="company_infonname">
+            {yun:}$row.name{/yun} {yun:}if $comrat.com_pic!="0" && $comrat.com_pic!=""{/yun}<img src="{yun:}$comrat.com_pic{/yun}" width="14" height="14" style="vertical-align:middle" /> {yun:}/if{/yun} {yun:}if $row.yyzz_status=='1'{/yun}<i class="job_qy_rz_icon"></i>{yun:}/if{/yun}
+        </div>
+
+        <div class="company_cominfo_p">
+            <div class="company_cominfo_p_hy">{yun:}$industry_name[$row.hy]{/yun}</div>
+            <span class="company_info_basic"> {yun:}$city_name[$row.provinceid]{/yun}/{yun:}$city_name[$row.cityid]{/yun}</span> {yun:}if $comclass_name[$row.pr]{/yun}<span class="company_info_basic company_info_basic_xz">{yun:}$comclass_name[$row.pr]{/yun}</span>{yun:}/if{/yun} {yun:}if $row.money!=0{/yun}<span class="company_info_basic company_info_basic_zz">{yun:}$row.money{/yun}{yun:}if $row.moneytype==1{/yun}万元{yun:}else{/yun}万美元{yun:}/if{/yun}</span>{yun:}/if{/yun}<span class="company_info_basic company_info_basic_rs">{yun:}$comclass_name[$row.mun]{/yun}</span>
+
+        </div>
+
+        {yun:}if $row.welfare_n{/yun}
+        <div class="com_show_fl com_show_fl_ct">
+            {yun:}foreach from=$row.welfare_n item=waflist{/yun}
+            <span class="com_show_fl_s">{yun:}$waflist{/yun}</span>{yun:}/foreach{/yun}
+        </div>
+        {yun:}/if{/yun}
+
+    </div>
+</section>
+{yun:}if $row.address{/yun}
+<div class="com_map ">
+    {yun:}if $row.x && $row.y{/yun}
+    <a href="{yun:}url m=wap c=job a=jobmap id=$row.uid{/yun}"><span class="com_map_name">地址</span>{yun:}$row.address{/yun}<em id="distance"></em><i class="com_map_name_icon"></i><i class="com_map_name_jt"></i></a>
+    <input type="hidden" id="map_x" value="0" />
+    <input type="hidden" id="map_y" value="0" /> {yun:}else{/yun}
+    <span class="com_map_name">地址</span>{yun:}$row.address{/yun} {yun:}/if{/yun}
+</div>
+{yun:}/if{/yun}
+
+<section>
+    <div class=" mt15 none" id="businessInfo">
+        <div class="com_new_contnet_box ">
+            <div class="wap_title"><span class="">工商信息</span></div>
+
+            <!----天眼查------->
+
+            <div class="business">
+                <div class="businessInfo">
+                    <ul class="basicMsgList clearfix" style="line-height:30px;height:275px; overflow:hidden" id="com_business">
+                        <li>
+                            <div class="clearfix"><span>统一社会信用代码：</span><em id="creditCode"></em></div>
+                        </li>
+                        <li>
+                            <div class="clearfix"><span>成立日期：</span><em id="estiblishTime"></em></div>
+                        </li>
+                        <li>
+                            <div class="clearfix"><span>组织机构代码：</span><em id="orgNumber"></em></div>
+                        </li>
+                        <li>
+                            <div class="clearfix"><span>经营期限：</span><em id="Time"></em></div>
+                        </li>
+                        <li>
+                            <div class="clearfix"><span>企业类型：</span><em id="companyOrgType"></em></div>
+                        </li>
+                        <li>
+                            <div class="clearfix"><span>登记机关：</span><em id="regInstitute"></em></div>
+                        </li>
+                        <li>
+                            <div class="clearfix"><span>经营状态：</span><em id="regStatus"></em></div>
+                        </li>
+                        <li>
+                            <div class="clearfix"><span>注册资本：</span><em id="regCapital"></em></div>
+                        </li>
+                        <li>
+                            <div class="clearfix"><span>注册地址：</span><em id="regLocation"></div>
+                        </li>
+						<li>
+							<div class="clearfix"><span>经营范围：</span><em id="businessScope"></div>
+						</li>
+                    </ul>
+					<div class="qxb clearfix">
+						<div class="qxb_tg" style="background:#fafafa; padding:5px 10px ; text-align:center"><span>以上内容由</span> <span class="hxb"><a href="" class="tianyancha" id="tianyancha" target='_blank'><img src="{yun:}$wap_style{/yun}/images/tycc.png" height="30" style="vertical-align:middle"></a> </span> <span>提供</span></div>
+					</div>
+				</div>
+				<div class="on-off" style="background:#f8f8f8; padding:5px 10px ;text-align: center"><a href="javascript:;" onclick="showbb()">展开信息</a></div>
+			</div>
+			<!---------END------>
+        </div>
+  </div>
+</section>  
+
+<section id='content'>
+  <div class=" mt15">
+    <div class="com_new_contnet_box ">
+       <div class="wap_title"><span class="">公司简介</span></div>
+
+      <div class="user_contnet_box_p  jobshow_content_lh muipreview">  
+       
+      {yun:}if $row.content{/yun}
+      <div style="width:100%;height:auto; overflow:hidden" id="com_content" class="img_auto">
+      {yun:}$row.content{/yun}
+      </div>
+      <div class="com_show_cont none"><a href="javascript:;" onclick="showcc()">展开信息</a></div>
+      {yun:}else{/yun} 
+      <div class="evaluate_pj_no"><i class="evaluate_pj_no_icon"></i>该企业还没有填写公司简介! </div>      
+      {yun:}/if{/yun} 
+      
+       </div>
+       
+      </div>
+  </div>
+</section>
+{yun:}if $show{/yun}
+<section id='content'>
+  <div class=" mt15">
+    <div class="com_new_contnet_box ">
+       <div class="wap_title"><span class="">公司环境</span></div>
+			<div class="swiper_banner" style=" text-align:center">
+				<div class="swiper-container" id="imgswiper">
+					<div class="swiper-wrapper">
+					{yun:}foreach from=$show item=v{/yun}
+					<div class="swiper-slide">
+						<img src="{yun:}$config.sy_weburl{/yun}{yun:}$v.picurl{/yun}" style="max-width:100%;height:160px;" />
+					</div>
+					{yun:}/foreach{/yun}
+					</div>
+				</div>
+			</div>
+      </div>
+  </div>
+</section>
+{yun:}/if{/yun}
+
+<section id='tel'>
+  <div class=" mt15">
+    <div class="com_new_contnet_box ">
+      <div class="wap_title"><span class="">联系方式</span></div>
+      
+      
+       {yun:}if $looktype=="1"{/yun}
+       <ul class="com_post_msg com_post_msg_touch ">
+        {yun:}if $row.linkman{/yun}<li><i class="com_post_msg_touch_icon iconfont_jobshow_teluser"></i>联&nbsp;系&nbsp;人：</span>{yun:}$row.linkman{/yun}{yun:}if $row.linkjob{/yun}<em class="com_post_msg_zw">( {yun:}$row.linkjob{/yun} )</em>{yun:}/if{/yun}</li>{yun:}/if{/yun} {yun:}if $row.linktel{/yun}
+                        <li class="com_post_msg_tel"><i class="com_post_msg_touch_icon iconfont_jobshow_telip"></i>联系手机：
+                            <a href="tel:{yun:}$row.linktel{/yun}" class="com_post_msg_tel_n">{yun:}$row.linktel{/yun}<span class="com_post_tel_bd"><i class="com_post_sj iconfont"></i>  <div class="com_post_tel_bd_p">拨打</div></span></a>
+                        </li>{yun:}/if{/yun} {yun:}if $row.linkphone{/yun}
+                        <li class="com_post_msg_tel"><i class="com_post_msg_touch_icon iconfont_jobshow_tel"></i>联系电话：
+                            <a href="tel:{yun:}$row.linkphone{/yun}" class="com_post_msg_tel_n">{yun:}$row.linkphone{/yun}<span class="com_post_tel_bd"><i class="com_post_zx iconfont"></i>  <div class="com_post_tel_bd_p">拨打</div></span></a>
+                        </li>{yun:}/if{/yun} {yun:}if $row.busstops{/yun}
+                        <li><i class="com_post_msg_touch_icon iconfont_jobshow_bus"></i>公交站点：</span>{yun:}$row.busstops{/yun}</li>{yun:}/if{/yun}
+                    </ul>
+                    {yun:}else{/yun} {yun:}if $looktype=="3" || $looktype=="2"|| $looktype=="5"|| $looktype=="7"{/yun}
+                    <div class="com_post_login"> <i class="com_post_tel iconfont"></i>{yun:}$look_msg{/yun} </div>
+                    {yun:}elseif $looktype=="4"{/yun} {yun:}if $row.linkman{/yun}
+                    <div class="com_tel_p">联&nbsp;系&nbsp; 人：{yun:}$row.linkman{/yun}</div>{yun:}/if{/yun} {yun:}if $row.linktel{/yun}
+                    <div class="com_tel_p">联系手机：
+                        <font color="#f00">{yun:}$row.linktel{/yun}</font>
+                    </div>{yun:}/if{/yun} {yun:}if $row.linkphone{/yun}
+                    <div class="com_tel_p">联系电话：{yun:}$row.linkphone{/yun}</div>{yun:}/if{/yun}
+                    <div class="com_tel_p">公司地址：{yun:}$row.address{/yun}</div>
+                    <div class=" ">
+                        <div class="com_post_login com_post_login_no">
+                            <div class="com_post_login_no_tip"><span class="">登录后查看联系方式</span>
+                            </div>
+                            <a href="{yun:}url m=wap c=login job=$job.id{/yun}" class="com_s_logoin">登录</a>
+
+                            <a href="{yun:}url m=wap c=register{/yun}" class="com_s_reg">注册</a>
+                        </div>
+                    </div>
+                    {yun:}elseif $looktype=="6"{/yun}
+                    <div class="com_post_login"> <i class="com_post_tel iconfont"></i>{yun:}$look_msg{/yun} </div>
+                    <div class="company_tit_p_touch_l_c">
+                        <a href="{yun:}url m=wap{/yun}member/index.php?c=addresume" class="company_tit_p_touch_log">创建简历</a>
+                    </div>
+                    {yun:}/if{/yun} {yun:}/if{/yun}
+
+                    </div>
+                </div>
+</section>
+
+ 
+<section id="job">
+    <div class=" mt15">
+        <div class="index_warp_content">
+            <div class="wap_title"><span class="">正在招聘的职位</span></div>
+            {yun:}assign var=uid value=$row.uid{/yun} {yun:}joblist namelen=8 comlen=12 ispage=0 uid='@row.uid' order=xuanshang islt=4 item=job_list name=joblist1{/yun}
+            <div class="com_show_joblist">
+                <a href="{yun:}url m=wap c=job a=view id=$job_list.id{/yun}" class="job_list">
+                    <h3>{yun:}$job_list.name_n{/yun}{yun:}if $job.urgent_time>time(){/yun}<i class="urgent">急招</i>{yun:}/if{/yun}</h3>
+                    <aside class="job_qy_name">
+                        <strong style="color:#ff6a6a; font-weight:normal">￥{yun:}$job_list.job_salary{/yun}</strong>
+                    </aside>
+                    <div class="com_show_jiobc">
+                        <span class="com_show_city"><i class="com_show_city_icon"></i>{yun:}$job_list.job_city_one{/yun}-{yun:}$job_list.job_city_two{/yun}</span> {yun:}if $job_list.job_exp{/yun}<span class="com_show_jy"><i class="com_show_jy_icon"></i>{yun:}$job_list.job_exp{/yun}经验 </span>{yun:}/if{/yun} {yun:}if $job_list.job_edu{/yun}<span class="com_show_jy"><i class="com_show_xl_icon"></i>{yun:}$job_list.job_edu{/yun}学历 </span>{yun:}/if{/yun}
+                    </div>
+                    <aside class="job_pay"><span class="job_t_date job_t_date_t">{yun:}if $job_list.time=='今天' || $job_list.time=='昨天'{/yun} <span style="color:red;">{yun:}$job_list.time{/yun}</span> {yun:}else{/yun} {yun:}$job_list.time{/yun} {yun:}/if{/yun}
+                        </span>
+                    </aside>
+                </a>
+            </div>
+            {yun:}joblistelse{/yun}
+            <div class="evaluate_pj_no"><i class="evaluate_pj_no_icon"></i>该企业还没有发布职位信息! </div>
+            {yun:}/joblist{/yun}
+        </div>
+    </div>
+</section>
+
+<!--浮动框-->
+<section>
+    <div class="yun_job_footer">
+        <div class="yun_job_footer_fixed">
+            <div class="com_footer_bg">
+                <div class="com_footer">
+                    <div class="com_footer_pd">
+                        <a href="javascript:void(0);" data-url='{yun:}url m=wap c=company a=share id=$row.uid{/yun}' class="" id="shareClick">分享企业</a>
+                    </div>
+                </div>
+
+                <div class="com_footer">
+                    <div class="com_footer_pd">
+                        {yun:}if $usertype=='1'{/yun} 
+                        	{yun:}if $isatn.id{/yun}
+                        		<span class="  atn_{yun:}$row.uid{/yun}"><a href="javascript:void(0)" onclick="atn('{yun:}$row.uid{/yun}','{yun:}url m=wap c=ajax a=atncompany{/yun}')" id='atn_{yun:}$row.uid{/yun}' class=" com_footer_gz_qx">取消关注</a> </span> 
+                        	{yun:}else{/yun}
+                        		<span class=" atn_{yun:}$row.uid{/yun}"><a href="javascript:void(0)" onclick="atn('{yun:}$row.uid{/yun}','{yun:}url m=wap c=ajax a=atncompany{/yun}')" id='atn_{yun:}$row.uid{/yun}' class="com_footer_gz">关注企业</a> </span> 
+                        	{yun:}/if{/yun} 
+                        {yun:}else{/yun}
+                        	{yun:}if $usertype{/yun} 
+                        		<a href="javascript:void(0)" class="com_footer_gz" onclick="notuser('{yun:}$typename[$usertype]{/yun}','{yun:}$username{/yun}','个人账户','{yun:}url m=wap c=ajax a=notuserout{/yun}','');">关注企业</a>
+                    		{yun:}else{/yun}
+                    			<a href="javascript:void(0)" class="com_footer_gz" onclick="pleaselogin('您还未登录个人账号，是否登录？','{yun:}url m=wap c=login{/yun}')">关注企业</a>
+                    		{yun:}/if{/yun}
+                    	{yun:}/if{/yun} 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<!--功能条 -->
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/swiper/swiper.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$wap_style{/yun}/js/swiper/swiper.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+    var config = {
+        url: '{yun:}url m=wap c=company a=share id=$row.uid{/yun}',
+        title: '{yun:}$row.name{/yun}-{yun:}$config.sy_webname{/yun}',
+        desc: '',
+        img: '{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+        img_title: '{yun:}$row.name{/yun}',
+        from: '{yun:}$config.sy_webname{/yun}'
+    };
+    $(function() {
+        $.post('{yun:}url m=wap c=ajax a=getbusiness{/yun}', {
+            name: '{yun:}$row.name{/yun}'
+        }, function(data) {
+
+            if(data) {
+                var business = eval('(' + data + ')');
+                $('#creditCode').html(business.creditCode);
+                $('#estiblishTime').html(business.estiblishTime);
+                $('#orgNumber').html(business.orgNumber);
+                $('#Time').html(business.fromTime + '至' + business.toTime);
+                $('#companyOrgType').html(business.companyOrgType);
+                $('#regInstitute').html(business.regInstitute);
+                $('#regStatus').html(business.regStatus);
+                $('#regLocation').html(business.regLocation);
+                $('#regCapital').html(business.regCapital);
+                $('#businessScope').html(business.businessScope);
+                $('#tianyancha').attr('href', 'https://www.tianyancha.com/company/' + business.companyId);
+                $('#businessInfo').show();
+                //$('#companybusiness').show();
+            }
+        });
+    })
+    $(function() {
+        var myimgswiper = new Swiper('#imgswiper', {
+            direction: 'horizontal',
+            autoplay: true,
+            loop: true
+        });
+    });
+</script>
+{yun:}if $row.x && $row.y{/yun}
+<script type="text/javascript" src="{yun:}$config.mapurl{/yun}"></script>
+<script>
+    //百度地图测距
+    function getdistance() {
+        var map_x = $("#map_x").val();
+        var map_y = $("#map_y").val();
+        if(map_x == 0 && map_y == 0) {
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r) {
+                if(this.getStatus() == BMAP_STATUS_SUCCESS) {
+                    $.post(wapurl + 'index.php?c=job&a=distance', {
+                        x: r.point.lng,
+                        y: r.point.lat
+                    }, function(data) {})
+                    $("#map_x").val(r.point.lng);
+                    $("#map_y").val(r.point.lat);
+                } else {
+                    if(this.getStatus() == "6") {
+                        layermsg("开启手机定位后才能使用此功能", 2);
+                        return false;
+                    } else if(this.getStatus() == "7") {
+                        layermsg("开启手机定位后才能使用此功能", 2);
+                        return false;
+                    } else {
+                        layermsg("地图定位出错", 2);
+                        return false;
+                    }
+                }
+            }, {
+                enableHighAccuracy: true
+            })
+        }
+        var x = '{yun:}$row.x{/yun}',
+            y = '{yun:}$row.y{/yun}';
+        var map = new BMap.Map();
+        if(map_x > 0 && map_y > 0) {
+            var pointA = new BMap.Point(x, y);
+            var pointB = new BMap.Point(map_x, map_y);
+            var distance = '(' + (map.getDistance(pointA, pointB) / 1000).toFixed(1) + 'km)';
+            $("#distance").html(distance);
+        } else {
+            setTimeout(function() {
+                getdistance();
+            }, 3000);
+        }
+    }
+    $(function() {
+        getdistance();
+    })
+</script>
+{yun:}/if{/yun} 
+<script>
+    $(function() {
+        var cheight = $("#com_content").height();
+        var bheight = $("#com_business").height();
+        if(parseInt(cheight) > 275) {
+            $("#com_content").attr('style', 'width:100%;height:275px; overflow:hidden');
+            $(".com_show_cont").show();
+        }
+        if(parseInt(bheight) > 275) {
+            $("#com_business").attr('style', 'line-height:30px;height:auto; overflow:hidden');
+            $(".on-off").show();
+        }
+    });
+
+    function showcc() {
+        $("#com_content").attr('style', 'width:100%;height:auto; overflow:hidden');
+        $(".com_show_cont").find('a').html('收起');
+        $(".com_show_cont").find('a').attr('onclick', 'hidecc()');
+    }
+
+    function hidecc() {
+        $("#com_content").attr('style', 'width:100%;height:275px; overflow:hidden');
+        $(".com_show_cont").find('a').html('展开信息');
+        $(".com_show_cont").find('a').attr('onclick', 'showcc()');
+    }
+
+    function showbb() {
+        $("#com_business").attr('style', 'line-height:30px;height:auto; overflow:hidden');
+        $(".on-off").find('a').html('收起');
+        $(".on-off").find('a').attr('onclick', 'hidebb()');
+    }
+
+    function hidebb() {
+        $("#com_business").attr('style', 'line-height:30px;height:275px; overflow:hidden');
+        $(".on-off").find('a').html('展开信息');
+        $(".on-off").find('a').attr('onclick', 'showbb()');
+    }
+</script>
+{yun:}include file="$wapstyle/public_previewimage.htm"{/yun} {yun:}include file="$wapstyle/footer.htm"{/yun}

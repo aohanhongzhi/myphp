@@ -1,0 +1,165 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+
+<div class="yun_usermember_financebg">
+    <div class="yun_usermember_integral">
+        目前已有{yun:}$config.integral_pricename{/yun}：<span class="yun_usermember_integral_n">{yun:}$statis.integral{/yun}</span> {yun:}$config.integral_priceunit{/yun}，仍需继续努力！
+    </div>
+</div>
+
+<div class="yun_usermember_integral_b">
+    <div class="yun_usermember_integral_line"></div>
+    <ul class="yun_usermember_integral_nav">
+        <li>
+            <a href="index.php?c=reward_list"><i class="yun_usermember_integral_nav_icon yun_usermember_integral_nav_icondh"></i>兑换记录</a>
+        </li>
+        <li>
+            <a href="index.php?c=consume"><i class="yun_usermember_integral_nav_icon yun_usermember_integral_nav_iconmx"></i>消费明细</a>
+        </li>
+        <li>
+            <a href="index.php?c=integral_reduce"><i class="yun_usermember_integral_nav_icon yun_usermember_integral_nav_icongz"></i>消费规则</a>
+        </li>
+        <li>
+            <a href="{yun:}url m=wap c='redeem'{/yun}"><i class="yun_usermember_integral_nav_icon yun_usermember_integral_nav_iconsc"></i>积分商城</a>
+        </li>
+    </ul>
+</div>
+
+<div class="yun_usermember_integral_box">
+    <div class="yun_usermember_integral_box_h1">我的任务</div>
+
+    <ul class="yun_usermember_integral_list">
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_qd"></i>
+            <div class="yun_integral_name">完成签到</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_signin{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            {yun:}if $signstate==1 {/yun}
+            <span class="yun_integral_bth">已签到</span> {yun:}else{/yun}
+            <a href="javascript:void(0);" onClick="sign();" class="yun_integral_a">签到</a>
+            {yun:}/if{/yun}
+        </li>
+
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_yq"></i>
+            <div class="yun_integral_name">邀请好友注册</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_invite_reg{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            <a href="javascript:void(0);" id="shareClick" class="yun_integral_a">邀请好友</a>
+        </li>
+
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_ws"></i>
+            <div class="yun_integral_name">完善基本资料</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_userinfo{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            {yun:}if $statusList.baseInfo{/yun}
+            <span class="yun_integral_bth">已完善</span> {yun:}else{/yun}
+            <a href="index.php?c=info" class="yun_integral_a">立即完善</a>
+            {yun:}/if{/yun}
+        </li>
+
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_sctx"></i>
+            <div class="yun_integral_name">上传头像</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_avatar{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            {yun:}if $statusList.photo{/yun}
+            <span class="yun_integral_bth">已上传</span> {yun:}else{/yun}
+            <a href="index.php?c=photo" class="yun_integral_a">上传头像</a>
+            {yun:}/if{/yun}
+        </li>
+
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_dl"></i>
+            <div class="yun_integral_name">每天第一次登录</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_login{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            <span class="yun_integral_bth">今日已登录</span>
+        </li>
+
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_rzyx"></i>
+            <div class="yun_integral_name">认证电子邮箱</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_emailcert{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            {yun:}if $statusList.emailChecked{/yun}
+            <span class="yun_integral_bth">已验证</span> {yun:}else{/yun}
+            <a href="index.php?c=bindingbox&type=email" class="yun_integral_a">去认证</a>
+            {yun:}/if{/yun}
+        </li>
+
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_rzsj"></i>
+            <div class="yun_integral_name">认证手机号码</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_mobliecert{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            {yun:}if $statusList.phoneChecked{/yun}
+            <span class="yun_integral_bth">已认证</span> {yun:}else{/yun}
+            <a href="index.php?c=bindingbox&type=moblie" class="yun_integral_a">去认证</a>
+            {yun:}/if{/yun}
+        </li>
+		{yun:}if $config.integral_add_resume_type=="1"{/yun}
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_fbjl"></i>
+            <div class="yun_integral_name">发布简历</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_add_resume{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            {yun:}if $expectnum{/yun}
+            <span class="yun_integral_bth">已发布</span> {yun:}else{/yun}
+            <a href="index.php?c=addresume" class="yun_integral_a">发布简历</a>
+            {yun:}/if{/yun}
+        </li>
+		{yun:}/if{/yun}
+		{yun:}if $config.integral_identity_type=="1"{/yun}
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_yz"></i>
+            <div class="yun_integral_name">上传身份验证</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_identity{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            {yun:}if $statusList.identification{/yun}
+            <span class="yun_integral_bth">已验证</span> {yun:}else{/yun}
+            <a href="index.php?c=idcard" class="yun_integral_a">身份认证</a>
+            {yun:}/if{/yun}
+        </li>
+		{yun:}/if{/yun}
+		{yun:}if $config.integral_question_type==1{/yun}
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_fbwt"></i>
+            <div class="yun_integral_name">发布问题</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_question{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            {yun:}if $statusList.question==false{/yun}
+            <span class="yun_integral_bth">已发布</span> {yun:}else{/yun}
+            <a href="{yun:}url m=wap c=ask a=addquestion {/yun}" class="yun_integral_a">发布问题</a>
+            {yun:}/if{/yun}
+        </li>
+        {yun:}/if{/yun} 
+		
+		{yun:}if $config.integral_answer_type==1{/yun}
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_hdwt"></i>
+            <div class="yun_integral_name">回答问题</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_answer{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            {yun:}if $statusList.answer==false{/yun}
+            <span class="yun_integral_bth">已回答</span> {yun:}else{/yun}
+            <a href="{yun:}url m=ask{/yun}#last-question" class="yun_integral_a">回答问题</a>
+            {yun:}/if{/yun}
+        </li>
+        {yun:}/if{/yun} 
+        
+        {yun:}if $config.integral_answerpl_type==1{/yun}
+        <li>
+            <i class="yun_integral_icon yun_integral_icon_plwt"></i>
+            <div class="yun_integral_name">评论回答</div>
+            <div class="yun_integral_n">+{yun:}$config.integral_answerpl{/yun}{yun:}$config.integral_pricename{/yun}</div>
+            {yun:}if $statusList.answerpl==false{/yun}
+            <span class="yun_integral_bth">已评论</span> {yun:}else{/yun}
+            <a href="{yun:}url m=ask{/yun}#last-question" class="yun_integral_a">评论回答</a>
+            {yun:}/if{/yun}
+        </li>
+		{yun:}/if{/yun}
+    </ul>
+</div>
+<script>
+    var config = {
+        url: '{yun:}$reg_url{/yun}',
+        title: '邀请注册',
+        desc: '#推荐得{yun:}$config.integral_pricename{/yun}，好礼尽情拿#只要成功推荐1位朋友注册，就可以兑换到礼品了！只要推荐{yun:}$config.integral_pricename{/yun}够给力，更有新iPad、iPod、音响、耳机、背包、笔记本等数万件礼品可尽情兑换！给我点力吧！注册成功你也可以获得礼品兑换{yun:}$config.integral_pricename{/yun}哦，赶快来参加吧！',
+        img: '{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+        img_title: '邀请注册',
+        from: '{yun:}$config.sy_webname{/yun}'
+    };
+</script>
+<!--微信分享专用---->
+<div style='margin:0 auto;width:0px;height:0px;overflow:hidden;'><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}"></div>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

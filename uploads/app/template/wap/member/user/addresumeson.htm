@@ -1,0 +1,383 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/umeditor/themes/default/css/umeditor.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.min.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<style>
+    .yun_wap_addresume_box_control_text {
+        border: 1px solid #ddd;
+    }
+    
+    .yun_wap_addresume_texttextAreaMsg {
+        width: 100%;
+        height: 60px;
+        border: none;
+        margin: 0;
+        padding: 0;
+        outline: none;
+        ;
+    }
+</style>
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="resume-cont">
+                    <div class="">
+                        {yun:}if $smarty.get.type=="skill"{/yun}
+
+                        <ul class="yunset_list mt15">
+                            <li class="yunset_list_text"><span class="yunset_list_name">技能名称</span > <span class="yunset_list_commentary"><input type="text" name="name" id="name"  value="{yun:}$row.name{/yun}" placeholder="请输入技能名称"></span></li>
+                            <li class="yunset_list_text"><span class="yunset_list_name">掌握时间</span > <span class="yunset_list_commentary" style="padding-right:20px;"><input type="number" name="longtime" id="longtime"  value="{yun:}$row.longtime{/yun}" placeholder="请输入掌握时间，单位“年”"></span><i style=" position:absolute;right:10px;top:0px; display:inline-block; line-height:44px;">年</i></li>
+                        </ul>
+                        <ul class="yunset_list">
+                            <li class="yunset_list_max">
+                            	<span class="yunset_list_name">技能证书</span>
+                                <span class="yunset_list_tx " id="previewshow">
+									<img id="previewimg"  src="{yun:}$row.pic{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_skill{/yun}',2);"style="border-radius:0;">
+								</span>
+								<div class="yunset_list_file"><input type="file" name="pic" onchange="previewImage(this,'preview')" accept="image/*" class=" ">
+                				<input type='hidden' name='preview' value='' id='preview'></div>
+                            </li>
+                        </ul>
+                        <div class="yunset_bth_box">
+                            <input type="hidden" id="table" value="skill" />
+                            <input type="hidden" id="eid" value="{yun:}$smarty.get.eid{/yun}" />
+                            <input type="hidden" id="id" value="{yun:}$row.id{/yun}" />
+                            <button id="submit" name="submit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                        </div>
+                        
+                        {yun:}elseif $smarty.get.type=="show"{/yun}
+                        <ul class="yunset_list mt15">
+                            <li class="yunset_list_text"><span class="yunset_list_name">作品标题</span > <span class="yunset_list_commentary"><input type="text" name="title" id="title"  value="{yun:}$row.title{/yun}" placeholder="请输入作品标题"></span></li>
+                            <li class="yunset_list_text"><span class="yunset_list_name">作品排序</span >
+                             <span class="yunset_list_commentary"><input type="number" name="sort" id="sort"  value="{yun:}$row.sort{/yun}" placeholder="请输入作品排序"></span></li>
+                        </ul>
+                        <ul class="yunset_list">
+                            <li class="yunset_list_max">
+                                <span class="yunset_list_name">作品</span>
+                           		<span class="yunset_list_tx " id="previewshow">
+									<img id="previewimg" src="{yun:}$row.pic{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_skill{/yun}',2);" style="border-radius:0;">
+								</span>
+								<div class="yunset_list_file"><input type="file" name="pic" onchange="previewImage(this,'preview')" accept="image/*" class=" ">
+                				<input type='hidden' name='preview' value='' id='preview'>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        <div class="yunset_bth_box">
+                            <input type="hidden" id="table" value="show" />
+                            <input type="hidden" id="eid" value="{yun:}$smarty.get.eid{/yun}" />
+                            <input type="hidden" id="id" value="{yun:}$row.id{/yun}" />
+                            <button id="submit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                        </div>
+
+                        {yun:}elseif $smarty.get.type=="work"{/yun}
+                        <ul class="yunset_list mt15">
+                            <li class="yunset_list_text"><span class="yunset_list_name">单位名称</span > <span class="yunset_list_commentary"><input type="text" name="name" id="name"  value="{yun:}$row.name{/yun}" placeholder="请输入单位名称"></span></li>
+                            <li class="yunset_list_text"><span class="yunset_list_name">担任职位</span > <span class="yunset_list_commentary"><input type="text" name="title" id="title"  value="{yun:}$row.title{/yun}" placeholder="请输入担任职位"></span></li>
+                        </ul>
+                        <ul class="yunset_list mt15">
+                            <li><span class="yunset_list_name">入职时间</span > <span class="yunset_list_commentary"><button id='sdatePicker' data-options='{"type":"month","value":"{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}","beginYear":1955,"endYear":{yun:}time()|date_format:"%Y"{/yun}}'  class="btn mui-btn mui-btn-block">{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}else{/yun}请选择入职时间{yun:}/if{/yun}</button>
+							<input type="hidden" id="sdate" name="sdate" value="{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}"></span>
+
+                            </li>
+                            <li><span class="yunset_list_name">离职时间</span > <span class="yunset_list_commentary"><button id='edatePicker' data-options='{"type":"month","value":"{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}else{/yun}{yun:}time()|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}","beginYear":1955,"endYear":{yun:}time()|date_format:"%Y"{/yun}}'  class="btn mui-btn mui-btn-block" {yun:}if $row&&!$row.edate{/yun}disabled{yun:}/if{/yun}>{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}elseif $row&&!$row.edate{/yun}{yun:}time()|date_format:'%Y-%m'{/yun}{yun:}else{/yun}请选择离职时间{yun:}/if{/yun}</button>
+							<input type="hidden" id="edate" name="edate" value="{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}"></span>
+
+                            </li>
+                            <li class="yunset_list_text">
+                                <span class="yunset_list_name" style="width:150px;">至今<em class="yunset_xttip"></em></span>
+                                <div class="yunset_kg_box">
+                                    <div class="yunset_kg">
+                                        <div class="mui-switch mui-switch-mini totoday {yun:}if $row&&!$row.edate{/yun}mui-active{yun:}/if{/yun}">
+                                            <div class="mui-switch-handle"></div>
+                                        </div>
+                                        <input type="hidden" id="totoday" name="totoday" value="{yun:}if $row&&!$row.edate{/yun}1{yun:}else{/yun}0{yun:}/if{/yun}">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="yunset_list mt15">
+                            <li>
+                                <a href="#contenthtml">
+                                    <span class="yunset_list_name">工作描述</span > 
+                                	<span class="yunset_list_commentary" id="contentshow">
+                                		{yun:}if $row.content{/yun}{yun:}$row.content{/yun}{yun:}else{/yun}请填写描述{yun:}/if{/yun}
+                                	</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="yunset_bth_box">
+                            <input type="hidden" id="table" value="work" />
+                            <input type="hidden" id="eid" value="{yun:}$smarty.get.eid{/yun}" />
+                            <input type="hidden" id="id" value="{yun:}$row.id{/yun}" />
+                            <button id="submit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                        </div>
+                        {yun:}elseif $smarty.get.type=="project"{/yun}
+                        <ul class="yunset_list mt15">
+                            <li class="yunset_list_text"><span class="yunset_list_name">项目名称</span > <span class="yunset_list_commentary"><input type="text" name="name" id="name"  value="{yun:}$row.name{/yun}" placeholder="请输入项目名称"></span></li>
+                            <li class="yunset_list_text"><span class="yunset_list_name">担任职位</span > <span class="yunset_list_commentary"><input type="text" name="title" id="title"  value="{yun:}$row.title{/yun}" placeholder="请输入担任职位"></span></li>
+                        </ul>
+                        <ul class="yunset_list mt15">
+                            <li><span class="yunset_list_name">开始时间</span > <span class="yunset_list_commentary"><button id='sdatePicker' data-options='{"type":"month","value":"{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}","beginYear":1955,"endYear":{yun:}time()|date_format:"%Y"{/yun}}'  class="btn mui-btn mui-btn-block">{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}else{/yun}请选择开始时间{yun:}/if{/yun}</button>
+							<input type="hidden" id="sdate" name="sdate" value="{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}"></span>
+
+                            </li>
+                            <li><span class="yunset_list_name">结束时间</span > <span class="yunset_list_commentary"><button id='edatePicker' data-options='{"type":"month","value":"{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}","beginYear":1955,"endYear":{yun:}time()|date_format:"%Y"{/yun}}'  class="btn mui-btn mui-btn-block">{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}else{/yun}请选择结束时间{yun:}/if{/yun}</button>
+							<input type="hidden" id="edate" name="edate" value="{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}"></span>
+
+                            </li>
+                        </ul>
+                        <ul class="yunset_list mt15">
+                            <li>
+                                <a href="#contenthtml"><span class="yunset_list_name">项目内容</span > <span class="yunset_list_commentary" id="contentshow">{yun:}if $row.content{/yun}{yun:}$row.content{/yun}{yun:}else{/yun}请填写项目内容{yun:}/if{/yun}</span></a>
+                            </li>
+                        </ul>
+                        <div class="yunset_bth_box">
+                            <input type="hidden" id="table" value="project" />
+                            <input type="hidden" id="eid" value="{yun:}$smarty.get.eid{/yun}" />
+                            <input type="hidden" id="id" value="{yun:}$row.id{/yun}" />
+                            <button id="submit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                        </div>
+
+                        {yun:}elseif $smarty.get.type=="edu"{/yun}
+
+                        <ul class="yunset_list mt15">
+                            <li class="yunset_list_text"><span class="yunset_list_name">学校名称</span > <span class="yunset_list_commentary"><input type="text" name="name" id="name"  value="{yun:}$row.name{/yun}" placeholder="请输入学校名称"></span></li>
+                        </ul>
+                        <ul class="yunset_list mt15">
+                            <li><span class="yunset_list_name">入校时间</span > <span class="yunset_list_commentary"><button id='sdatePicker' data-options='{"type":"month","value":"{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}","beginYear":1955,"endYear":{yun:}time()|date_format:"%Y"{/yun}}'  class="btn mui-btn mui-btn-block">{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}else{/yun}请选择入校时间{yun:}/if{/yun}</button>
+							<input type="hidden" id="sdate" name="sdate" value="{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}"></span>
+
+                            </li>
+                            <li><span class="yunset_list_name">离校时间</span > <span class="yunset_list_commentary"><button id='edatePicker' data-options='{"type":"month","value":"{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}","beginYear":1955,"endYear":{yun:}time()|date_format:"%Y"{/yun}}'  class="btn mui-btn mui-btn-block">{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}else{/yun}请选择离校时间{yun:}/if{/yun}</button>
+							<input type="hidden" id="edate" name="edate" value="{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}"></span>
+
+                            </li>
+                        </ul>
+                        <ul class="yunset_list mt15">
+                            <li class="yunset_list_text"><span class="yunset_list_name">所学专业</span > <span class="yunset_list_commentary"><input type="text" name="specialty" id="specialty"  value="{yun:}$row.specialty{/yun}" placeholder="请输入所学专业"></span></li>
+                            <li class="yunset_list_text"><span class="yunset_list_name">班级职务</span > <span class="yunset_list_commentary"><input type="text" name="title" id="title"  value="{yun:}$row.title{/yun}" placeholder="请输入班级职务"></span></li>
+                        </ul>
+                        <ul class="yunset_list mt15">
+                            <li><span class="yunset_list_name">最高学历</span > <span class="yunset_list_commentary" ><button id='educationUserPicker' class="mui-btn mui-btn-block" type='button' data-education="{yun:}$row.education{/yun}">{yun:}if $userclass_name[$row.education]{/yun}{yun:}$userclass_name[$row.education]{/yun}{yun:}else{/yun}请选择最高学历{yun:}/if{/yun}</button>
+							<input type="hidden" id="education" name="education" value="{yun:}$row.education{/yun}">
+							</span></li>
+                        </ul>
+                        <div class="yunset_bth_box">
+                            <input type="hidden" id="table" value="edu" />
+                            <input type="hidden" id="eid" value="{yun:}$smarty.get.eid{/yun}" />
+                            <input type="hidden" id="id" value="{yun:}$row.id{/yun}" />
+                            <button id="submit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                        </div>
+
+                        {yun:}elseif $smarty.get.type=="training"{/yun}
+                        <ul class="yunset_list mt15">
+                            <li class="yunset_list_text"><span class="yunset_list_name">培训中心</span > <span class="yunset_list_commentary"><input type="text" name="name" id="name"  value="{yun:}$row.name{/yun}" placeholder="请输入培训中心"></span></li>
+                            <li class="yunset_list_text"><span class="yunset_list_name">培训方向</span > <span class="yunset_list_commentary"><input type="text" name="title" id="title"  value="{yun:}$row.title{/yun}" placeholder="请输入培训方向"></span></li>
+                        </ul>
+                        <ul class="yunset_list mt15">
+                            <li><span class="yunset_list_name">开始时间</span > <span class="yunset_list_commentary"><button id='sdatePicker' data-options='{"type":"month","value":"{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}","beginYear":1955,"endYear":{yun:}time()|date_format:"%Y"{/yun}}'  class="btn mui-btn mui-btn-block">{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}else{/yun}请选择开始时间{yun:}/if{/yun}</button>
+							<input type="hidden" id="sdate" name="sdate" value="{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}"></span>
+
+                            </li>
+                            <li><span class="yunset_list_name">结束时间</span > <span class="yunset_list_commentary"><button id='edatePicker' data-options='{"type":"month","value":"{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}","beginYear":1955,"endYear":{yun:}time()|date_format:"%Y"{/yun}}'  class="btn mui-btn mui-btn-block">{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}else{/yun}请选择结束时间{yun:}/if{/yun}</button>
+							<input type="hidden" id="edate" name="edate" value="{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m'{/yun}{yun:}/if{/yun}"></span>
+                            </li>
+                        </ul>
+                        <ul class="yunset_list mt15">
+                            <li>
+                                <a href="#contenthtml"><span class="yunset_list_name">培训描述</span > <span class="yunset_list_commentary" id="contentshow">{yun:}if $row.content{/yun}{yun:}$row.content{/yun}{yun:}else{/yun}请填写培训描述{yun:}/if{/yun}</span></a>
+                            </li>
+                        </ul>
+                        <div class="yunset_bth_box">
+                            <input type="hidden" id="table" value="training" />
+                            <input type="hidden" id="eid" value="{yun:}$smarty.get.eid{/yun}" />
+                            <input type="hidden" id="id" value="{yun:}$row.id{/yun}" />
+                            <button id="submit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                        </div>
+
+                        {yun:}elseif $smarty.get.type=="other"{/yun}
+                        <ul class="yunset_list mt15">
+                            <li class="yunset_list_text"><span class="yunset_list_name">其他标题</span > <span class="yunset_list_commentary"><input type="text" name="name" id="name"  value="{yun:}$row.name{/yun}" placeholder="请输入其他标题"></span></li>
+                        </ul>
+
+                        <ul class="yunset_list mt15">
+                            <li>
+                                <a href="#contenthtml"><span class="yunset_list_name">其他描述</span > <span class="yunset_list_commentary" id="contentshow">{yun:}if $row.content{/yun}{yun:}$row.content{/yun}{yun:}else{/yun}请填写其他描述{yun:}/if{/yun}</span></a>
+                            </li>
+                        </ul>
+                        <div class="yunset_bth_box">
+                            <input type="hidden" id="table" value="other" />
+                            <input type="hidden" id="eid" value="{yun:}$smarty.get.eid{/yun}" />
+                            <input type="hidden" id="id" value="{yun:}$row.id{/yun}" />
+                            <button id="submit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                        </div>
+
+                        {yun:}elseif $smarty.get.type=="desc"{/yun}
+                        <div class="yun_info_fl">
+
+                            <div class="yun_info_fl_c">
+                                <div class="yun_info_fl_tit">自我评价</div>
+
+                                <div class="yun_info_textarea"> <textarea name="description" id="description" class="yun_wap_addresume_texttextAreaMsg" placeholder="说说自己的优势">{yun:}$description{/yun}</textarea></div>
+                                <div class="">
+                                    <form class="" id="addtaglist">
+                                        {yun:}foreach from=$arrayTag key=key item=tv{/yun}
+                                        <div class="yun_info_fl_list">
+                                            <div class="mui-input-row mui-checkbox">
+                                                <label>{yun:}$tv{/yun}</label>
+                                                <input name="tag[]" value="{yun:}$tv{/yun}" class="tag" data-name="{yun:}$tv{/yun}" type="checkbox" {yun:}if $arrayTag && in_array($tv,$arrayTag){/yun}checked{yun:}/if{/yun}>
+                                            </div>
+                                        </div>
+                                        {yun:}/foreach{/yun} {yun:}foreach from=$userdata.user_tag key=key item=v{/yun} {yun:}if !in_array({yun:}$userclass_name[$v]{/yun},$arrayTag){/yun}
+                                        <div class="yun_info_fl_list">
+                                            <div class="mui-input-row mui-checkbox">
+                                                <label>{yun:}$userclass_name[$v]{/yun} </label>
+                                                <input name="tag[]" value="{yun:}$v{/yun}" type="checkbox" class="tag" data-name="{yun:}$userclass_name[$v]{/yun}" {yun:}if $arrayTag && in_array($userclass_name[$v],$arrayTag){/yun}checked{yun:}/if{/yun}>
+                                            </div>
+                                        </div>
+                                        {yun:}/if{/yun} {yun:}/foreach{/yun}
+                                    </form>
+                                    <div class="yun_info_fl_zdy_tip"> 您也可以自定义个人标签</div>
+                                    <div class="yun_info_fl_zdy"><input type="text" value="" class="" tabindex="1000" id="addfuli" placeholder="请输入标签名称">
+                                        <div class="yun_info_fl_zdy_tj"> <button type="button" class="addtagbox">+ 添加标签</button></div>
+                                    </div>
+                                    <div class="yun_wap_addresume_box_group" style="background: transparent; border: none;">
+                                        <input type="hidden" name="table" id="table" value="resume" />
+                                        <input type="hidden" name="eid" id="eid" value="{yun:}$smarty.get.eid{/yun}" />
+                                        <input type="hidden" id="id" value="{yun:}$row.id{/yun}" />
+                                        <button id="submit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {yun:}elseif $smarty.get.type=="doc"{/yun}
+                        <div class="wap_member_comp_h1"><span>黏贴简历内容</span></div>
+                        <div class="yun_wap_addresume_box">
+
+                            <div class="yun_wap_addresume_box_group">
+                                <div class="yun_wap_addresume_box_control_text" style="height:300px;"> <textarea name="doc" id="doc" style="height:300px;" class="yun_wap_addresume_texttextAreaMsg">{yun:}$row.doc{/yun}</textarea></div>
+                            </div>
+                            <div class="yun_wap_addresume_box_group" style="background: transparent; border: none;">
+                                <input type="hidden" name="table" id="table" value="doc" />
+                                <input type="hidden" name="eid" id="eid" value="{yun:}$smarty.get.eid{/yun}" />
+                                <input type="hidden" name="id" id="id" value="{yun:}$row.id{/yun}" />
+                                <button id="submit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                            </div>
+
+                        </div>
+                        <script type="text/javascript">
+                            var ue = UM.getEditor('doc', {
+                                toolbar: false,
+                                elementPathEnabled: false,
+                                wordCount: false,
+                                autoHeightEnabled: false
+                            });
+                        </script>
+                        {yun:}/if{/yun}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页面主内容区结束-->
+</div>
+<!--单页面结束-->
+<div id="contenthtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_wap_addresume_box_group">
+                    <div class="yun_wap_addresume_box_control_text">
+                        <textarea name="content" id="content" style="height:200px;" class="yun_wap_addresume_texttextAreaMsg ">{yun:}$row.content{/yun}</textarea>
+                    </div>
+                    <a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/resume.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+    var formData = new FormData(),
+        newuploadpic;
+
+    var eduData = [];
+    '{yun:}foreach from=$userdata.user_edu item=v{/yun}'
+    eduData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$userclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    mui.init();
+    var viewApi = mui('#app').view({
+        defaultPage: '#main'
+    });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll({
+        scrollY: true, //是否竖向滚动
+        scrollX: false, //是否横向滚动
+        startX: 0, //初始化时滚动至x
+        startY: 0, //初始化时滚动至y
+        indicators: true, //是否显示滚动条
+        deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+        // bounce: true //是否启用回弹
+    });
+    var view = viewApi.view;
+    var oldBack = mui.back;
+    mui.back = function() {
+        if(viewApi.canBack()) {
+            viewApi.back();
+        } else {
+            oldBack();
+        }
+    };
+    view.addEventListener('pageBack', function(e) {
+        if(e.detail.page.id == 'contenthtml') {
+            if(document.getElementById('content')) {
+                document.getElementById('contentshow').innerText = document.getElementById('content').value.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+            }
+        }
+
+    });
+    mui('.totoday').each(function() {
+        this.addEventListener('toggle', function(event) {
+            if(event.detail.isActive) {
+                document.getElementById('edatePicker').disabled = true;
+                document.getElementById('edatePicker').innerText = "{yun:}time()|date_format:'%Y-%m'{/yun}"
+                document.getElementById('totoday').value = 1;
+            } else {
+                document.getElementById('totoday').value = '';
+                document.getElementById('edatePicker').disabled = false;
+                document.getElementById('edatePicker').innerText = "请选择离职时间"
+            }
+        });
+    });
+    $(function() {
+        var submit = document.getElementById('submit');
+        submit.addEventListener('tap', kresume, false)
+    });
+    //上传图片
+</script>
+<script src="{yun:}$wap_style{/yun}/js/publicselect.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

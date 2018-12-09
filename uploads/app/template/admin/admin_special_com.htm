@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<title>后台管理</title>
+</head>
+<script>
+$(function(){
+	$(".status").click(function(){
+		var id=$(this).attr("pid");
+		$("input[name=pid]").val($(this).attr("pid"));
+ 		var status=$(this).attr("status");
+		$("#status"+status).attr("checked",true);
+			layui.use(['form'],function(){
+		var form = layui.form;
+		form.render();
+		});
+		var pytoken=$("#pytoken").val();
+		$.post("index.php?m=special&c=getinfo",{id:id,pytoken:pytoken},function(msg){
+			$("#statusbody").val(msg);
+			add_class('申请审核','390','260','#status_div','');
+		}); 
+	});
+})
+$(document).ready(function(e) {
+    $("#status2").click(function(){
+		if($("#status2").attr('checked')=='checked'){
+			$(".body").show();
+		}
+	});
+	$("#status0").click(function(){
+		$(".body").hide();
+	});
+	$("#status1").click(function(){
+		$(".body").hide();
+	});
+});
+
+
+function audall(status){
+	var codewebarr="";
+	$(".check_all:checked").each(function(){ //由于复选框一般选中的是多个,所以可以循环输出
+		if(codewebarr==""){codewebarr=$(this).val();}else{codewebarr=codewebarr+","+$(this).val();}
+	});
+	if(codewebarr==""){
+		parent.layer.msg("您还未选择任何信息！",2,8);return false;
+	}else{
+		$("input[name=pid]").val(codewebarr);
+		$("input[name=status]").attr("checked",false);
+		add_class('申请审核','390','260','#status_div',''); 
+	}
+}
+</script>
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+
+<body class="body_ifm">
+<div id="status_div"  style="display:none; width: 390px; "> 
+  <form class="layui-form" action="index.php?m=special&c=statuscom" target="supportiframe" method="post" id="formstatus" onsubmit="return Pend();">
+  <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+          <table cellspacing='1' cellpadding='1' class="admin_examine_table">
+  <tr>
+    <th width="80">审核操作：</th>
+      <td align="left">
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<div class="admin_examine_right" style="width:300px">
+						<input name="status" id="status0" value="0" title="待审核" type="radio"/>
+						<input name="status" id="status1" value="1" title="已通过" type="radio"/>
+						<input name="status" id="status2" value="2" title="未通过" type="radio"/>
+					</div>
+                </div>
+			</div>
+		
+         </td>
+          </tr>
+          <tr>
+            <th>审核说明：</th>
+   <td align="left">	<textarea id="statusbody"  name="statusbody" class="admin_explain_textarea"></textarea></td>
+   </tr>
+     <tr>
+       <td colspan='2' align="center">
+       <div class="admin_Operating_sub"> 
+       <input name="pid" value="0" type="hidden">
+       <input type="submit"  value='确认' class="admin_examine_bth"> 
+       <input type="button" onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消'>
+       </div>
+       </td>
+   </tr>
+    </table>
+   
+	<input name="pid" type="hidden">
+  </form> 
+</div>
+
+
+<div class="infoboxp"> 
+
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">操作提示</div>
+</div>
+
+</div>
+{yun:}if $applyman{/yun}
+<div class="admin_new_search_box">
+<a href="index.php?m=special&c=addlist&sid={yun:}$sid{/yun}" class="admin_new_cz_tj" style=" margin-left:0px;">添加招聘企业</a>
+</div>
+{yun:}/if{/yun}
+<div class="clear"></div>
+<div style="height:10px;"></div>
+
+
+<div class="table-list">
+  <div class="admin_table_border">
+    <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form action="" name="myform" method="get" id='myform' target="supportiframe">
+     <input name="m" value="special" type="hidden"/>
+        <input name="c" value="delcom" type="hidden"/>
+    <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+      <table width="100%">
+        <thead>
+          <tr class="admin_table_top">
+            <th style="width:20px;"><label for="chkall"><input type="checkbox" id='chkAll' onclick='CheckAll(this.form)' /></label></th>
+            <th>编号</th>
+            <th align="left">会员名称</th>  
+            <th>状态</th> 
+            <th class="admin_table_th_bg">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+        {yun:}foreach item=v key=key from=$rows{/yun}
+        <tr align="center"{yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun}>
+          <td><input type="checkbox" value="{yun:}$v.id{/yun}" class="check_all" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+          <td><span>{yun:}$v.id{/yun}</span></td>
+          <td align="left"><a href="{yun:}url m=company c=show id=$v.uid{/yun}" target="_blank">{yun:}$v.name{/yun}</a></td>  
+          <td>
+            {yun:}if $v.status==1{/yun}<font color="blue">通过审核</font>{yun:}elseif $v.status==2{/yun}<font color="red">未通过</font>{yun:}else{/yun}待审核{yun:}/if{/yun}
+            </td> 
+        <td>
+       {yun:}if $v.status!=2{/yun} <a href="javascript:void(0)" pid="{yun:}$v.id{/yun}" status='{yun:}$v.status{/yun}' class="admin_new_c_bth admin_new_c_bthsh status">审核</a>{yun:}/if{/yun}
+        <a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=special&c=delcom&id={yun:}$v.id{/yun}');"class="admin_new_c_bth admin_new_c_bth_sc"> 删除</a></td>
+         
+        </tr>
+        {yun:}/foreach{/yun}
+        <tr style="background:#f1f1f1;">
+            <td  align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+            <td colspan="2">
+            <label for="chkAll2">全选</label>&nbsp;
+            
+          <input class="admin_button"  type="button" name="delsub" value="删除所选"  onclick="return really('del[]')"/>&nbsp;
+		  <input class="admin_button" type="button" onclick="audall('1');" value="批量审核" name="delsub">
+		  </td>
+		  <td colspan="2" class="digg">{yun:}$pagenav{/yun}</td>
+        </tr>
+          </tbody> 
+      </table>
+    </form>
+  </div>
+</div>
+</div>
+<script>
+
+  layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+  });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="pay_choice_box">
+                    <form action="" method="post" onsubmit="return order_form();" id="paymentform">
+                        <div class="pay_xymoney">
+                            <span class="pay_xymoney_name">订单号</span>
+                            <div class="pay_xymoney_t"><em class="">{yun:}$order.order_id{/yun}</em></div>
+                        </div>
+                        <div class="pay_xymoney">
+                            <span class="pay_xymoney_name">支付金额</span>
+                            <div class="pay_xymoney_t"><em class="pay_xymoney_t_n"><span id="price">{yun:}$order.order_price{/yun}</span></em> 元</div>
+                        </div>
+                        <div class="pay_xymoney">
+                            <span class="pay_xymoney_name">订单类型</span>
+                            <div class="pay_xymoney_t">
+                                <em class="">
+				            		{yun:}if $order.type==1{/yun}购买会员
+									{yun:}else if $order.type=='2'{/yun}{yun:}$config.integral_pricename{/yun}充值
+									{yun:}else if $order.type=='3'{/yun}银行转帐
+									{yun:}else if $order.type=='4'{/yun}金额充值
+									{yun:}else if $order.type=='14'{/yun}简历置顶
+ 									{yun:}/if{/yun}
+					           	</em>
+                            </div>
+                        </div>
+                        <div class="member_set_meal_fk_fbox mt10">
+                            {yun:}if $config.alipay==1{/yun}
+                            <div class="member_set_meal_fk_fs member_set_meal_fk_fs_zfb" onclick="paycheck('alipay');">
+                                <i class="alipay member_set_meal_fk_xz"></i>支付宝
+                            </div>
+                            {yun:}/if{/yun} {yun:}if $config.bank==1 && $banks{/yun}
+                            <div class="member_set_meal_fk_fs member_set_meal_fk_fs_yl" onclick="paycheck('bank');">
+                                <i class="bank member_set_meal_fk_xz"></i>银行汇款
+                            </div>
+
+                            <div class="paybank item" style="display: none;">
+                                <div class="paybank_tip"><span class="com_remind">汇款前请仔细核对银行帐号</span></div>
+
+                                <div class="admin_note2">
+                                    <div class="my_table_msg">
+                                        {yun:}if is_array($banks){/yun} {yun:}foreach item=blist from=$banks{/yun}
+                                        <div class="pay_bank_list">
+                                            <div class="">{yun:}$blist.bank_name{/yun}</div>
+                                            <div class="">{yun:}$blist.name{/yun}</div>
+                                            <div class="">{yun:}$blist.bank_number{/yun}</div>
+                                            <div class="">{yun:}$blist.bank_address{/yun}</div>
+                                        </div>
+                                        {yun:}/foreach{/yun} {yun:}else{/yun}
+                                        <div class="wap_member_no">暂未添加银行</div>
+                                        {yun:}/if{/yun}
+                                    </div>
+
+                                    <div class="paybank_tip">填写汇款凭证：</div>
+                                    <div class="my_table_msg">
+                                        <div class="paybank_hk_list">
+                                            <div class="paybank_name">汇款银行</div>
+                                            <div class="">
+                                                <input type="text" id="bank_name" name="bank_name" class="paybank_hk_text" value="" placeholder="如：中国银行+沭阳开发区支行" />
+                                            </div>
+                                        </div>
+
+                                        <div class="paybank_hk_list">
+                                            <div class="paybank_name">汇入账号</div>
+                                            <div class=""><input type="text" id="bank_number" name="bank_number" class="paybank_hk_text" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" value="" /></div>
+                                        </div>
+
+                                        <div class="paybank_hk_list">
+                                            <div class="paybank_name">汇款金额</div>
+                                            <div class=""><input type="text" id="bank_price" name="bank_price" class="paybank_hk_text" value="{yun:}$order.order_price{/yun}" /></div>
+                                        </div>
+
+                                        <div class="paybank_hk_list">
+                                            <div class="paybank_name">汇款时间</div>
+                                            <div class=""><button id='banktimePicker' data-options='{"type":"date"}' style="border:none;">请选择汇款时间</button>
+                                                <input type="hidden" id="bank_time" name="bank_time" /></div>
+                                        </div>
+
+                                        <div class="paybank_hk_list">
+                                            <div class="paybank_name">汇款单</div>
+                                            <div class="" style="text-align:right">
+                                            	<span class="once_cont_wate_list_photo_pic" id="preview" style="display: none;"> <img id="photoshow" width="35" height="35"></span>
+                                                	<div class="paybank_hk_file_box">
+					                                    <i class="paybank_hk_file_icon"></i> 上传汇款单
+					                                	<input type="file" name="pic" id="pic" onchange="previewImage(this)" class="paybank_hk_file" />
+					                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {yun:}/if{/yun}
+
+                        </div>
+                        <input type="hidden" value="" id="paytype" name="paytype" />
+                        <input type="hidden" value="{yun:}$order.order_price{/yun}" id="order_price" name="price" /> {yun:}if  $config.alipay==1 || ($config.bank==1 && $banks){/yun}
+                        <div class="member_set_meal_fk_zf">
+                            <input type="submit" class="member_set_meal_fk_zf_bth" value="确认支付">
+                        </div>
+                        {yun:}else{/yun}
+                       <div class="pay_zfgb_tip">
+                            <span>网站已关闭支付功能，请联系管理员！</span>
+                        </div>
+                        {yun:}/if{/yun}
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--页面主内容区结束-->
+</div>
+ 
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+ <script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+ 
+<script language="javascript">
+    mui.init();
+    var viewApi = mui('#app').view({
+        defaultPage: '#main'
+    });
+    
+    
+    var view = viewApi.view;
+    (function($) {
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+        //处理view的后退与webview后退
+        var oldBack = $.back;
+        $.back = function() {
+            if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                viewApi.back();
+            } else { //执行webview后退
+                oldBack();
+            }
+        };
+
+    })(mui);
+	$(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+    function order_form() {
+        var paytype = $('#paytype').val();
+        if(paytype == "") {
+            layermsg('请选择一种支付方式！', 2);
+            return false;
+        } else if(paytype == 'alipay') {
+            $("#paymentform").attr("action", "{yun:}$config.sy_weburl{/yun}/api/wapalipay/alipayto.php?dingdan={yun:}$order.order_id{/yun}&dingdanname={yun:}$order.order_id{/yun}&alimoney={yun:}$order.order_price{/yun}");
+        } else if(paytype == 'bank') {
+            $("#paymentform").attr("action", "index.php?c=paybank&id={yun:}$order.id{/yun}");
+        }
+
+        if(paytype == 'bank') {
+            if($('#bank_name').val() == '') {
+                layermsg('请填写汇款银行！', 2);
+                return false;
+            } else if($('#bank_number').val() == '') {
+                layermsg('请填写汇入账号！', 2);
+                return false;
+            } else if($('#bank_price').val() == '') {
+                layermsg('请填写汇款金额！', 2);
+                return false;
+            } else if($('#bank_time').val() == '') {
+                layermsg('请填写汇款时间！', 2);
+                return false;
+            }
+        }
+    }
+</script>
+<script src="{yun:}$wap_style{/yun}/js/pay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

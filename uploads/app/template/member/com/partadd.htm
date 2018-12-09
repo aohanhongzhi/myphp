@@ -1,0 +1,341 @@
+{yun:}include file="$comstyle/header.htm"{/yun} 
+<script src="{yun:}$config.sy_weburl{/yun}/js/lssave.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script> 
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+    <div class=right_box>
+      <div class=admincont_box>
+        <div class="com_tit"><span class="com_tit_span">新增兼职</span></div>
+        <div class="com_body">
+          <div class="admin_new_tip ">
+            <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+            <div class="admin_new_tip_list_cont">
+				<div class="admin_new_tip_list"> 
+					{yun:}if $save&& !$row{/yun}
+						<div id="forms" >您有上次未提交成功的数据 <a href="javascript:;" onclick="savepart();" class="f60">恢复数据</a></div>
+					{yun:}/if{/yun} 
+					{yun:}if $statis.vip_etime < time(){/yun}
+						您的会员已到期，为了更好的招聘人才，请先<a href="index.php?c=right" class="cblue"> 升级会员</a>！
+					{yun:}/if{/yun} 
+				</div>
+            </div>
+          </div>
+          <div class="com_release_box">
+            <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+            <form name="MyForm" target="supportiframe" method="post" action="index.php?c=partadd&act=save" onsubmit="return CheckPost_part();" class="layui-form">
+              <ul>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 兼职名称</div>
+                  <div class="com_release_cont_text">
+                    <input type="text" placeholder="兼职名称" size="45" id='name' name="name" value="{yun:}$row.name{/yun}" class="layui-input" >
+                  </div>
+                </li>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 兼职类型</div>
+                  <div class="com_release_cont">
+                    <div class="com_release_selectbox">
+                  <div class="layui-input-inline">
+                    <select name="type" lay-filter="type" id="type">{yun:}foreach from=$partdata.part_type key=j item=v{/yun}<option value="{yun:}$v{/yun}" {yun:}if $row.type == $v{/yun} selected{yun:}/if{/yun}>{yun:}$partclass_name[$v]{/yun}</option>{yun:}/foreach{/yun}</select>
+                  </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 招聘人数 </div>
+                  <div class="com_release_cont">
+                    <div class="layui-input-inline inline">
+                      <input type="text" size="10" name="number" id="number" value="{yun:}$row.number{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="招聘人数" class="layui-input">
+                    </div>
+                    <div class="inline">人</div>
+                  </div>
+                </li>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 兼职时间</div>
+                  <div class="com_release_cont">
+                    <table class="tjob_timetable" cellpadding="0" cellspacing="1" >
+                      <tr>
+                        <th>&nbsp;</th>
+                        <th>周一</th>
+                        <th>周二</th>
+                        <th>周三</th>
+                        <th>周四</th>
+                        <th>周五</th>
+                        <th>周六</th>
+                        <th>周日</th>
+                      </tr>
+                      <tr>
+                        <th>上午</th>
+                        {yun:}foreach from=$morning item=v{/yun}
+                        <td><input data-mark='isneed' name='worktime[]' type="checkbox" {yun:}if in_array($v,$row.worktime){/yun}checked="checked"{yun:}/if{/yun}value='{yun:}$v{/yun}' lay-skin="primary" /></td>
+                        {yun:}/foreach{/yun} </tr>
+                      <tr>
+                        <th>下午</th>
+                        {yun:}foreach from=$noon item=v{/yun}
+                        <td><input data-mark='isneed' name='worktime[]' type="checkbox" {yun:}if in_array($v,$row.worktime){/yun}checked="checked"{yun:}/if{/yun} value='{yun:}$v{/yun}' lay-skin="primary" /></td>
+                        {yun:}/foreach{/yun} </tr>
+                      <tr>
+                        <th>晚上</th>
+                        {yun:}foreach from=$afternoon item=v{/yun}
+                        <td><input data-mark='isneed' name='worktime[]' type="checkbox" {yun:}if in_array($v,$row.worktime){/yun}checked="checked"{yun:}/if{/yun} value='{yun:}$v{/yun}' lay-skin="primary" /></td>
+                        {yun:}/foreach{/yun} </tr>
+                      <tr>
+                        <td colspan="8"><input id='ckAll' type="checkbox" lay-filter="ckAll" lay-skin="primary">
+                          全选</td>
+                      </tr>
+                    </table>
+                    <span class="com_Release_job_qx"> </span> </div>
+                </li>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 兼职有效期</div>
+                  <div class="com_release_cont">
+                    <input id="sdate" class="input-text com_info_text com_info_text_time com_info_textw158 item_date" type="text" readonly="" size="15" value="{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m-%d'{/yun}{yun:}/if{/yun}" name="sdate" placeholder="兼职开始日期"/>
+                    <span class="part_zhi">到</span>
+                    <input id="edate" class="input-text com_info_text com_info_text_time com_info_textw158 item_date" type="text" readonly="" size="15" value="{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m-%d'{/yun}{yun:}/if{/yun}" name="edate" placeholder="兼职结束日期" {yun:}if $row.edate==0{/yun}style="display:none"{yun:}/if{/yun}/>
+                    <input type="checkbox" value='1' id="timetype" name="timetype" class="input-text" {yun:}if $row.edate==0{/yun}checked="checked"{yun:}/if{/yun} onclick="change()" lay-filter="timetype" title="长期招聘" lay-skin="primary"/>
+                  </div>
+                  <span id="by_edate" class="errordisplay">截止日期要大于当前日期</span> </li>
+                <li id="dline" {yun:}if $row.edate==0{/yun}style="display:none"{yun:}/if{/yun}>
+                  <div class="com_release_name"><i class="ff0">*</i> 报名截止：</div>
+                  <div class=textbox>
+                    <input type="hidden" id="today" value="{yun:}$today{/yun}" />
+                    <input id="deadline" class="input-text com_info_text com_info_text_time com_info_textw158 item_date" type="text" readonly="" size="10" value="{yun:}if $row.deadline{/yun}{yun:}$row.deadline|date_format:'%Y-%m-%d'{/yun}{yun:}/if{/yun}" name="deadline" placeholder="报名截止">
+                  </div>
+                </li>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 薪资水平：</div>
+                  <div class="com_release_cont">
+                   <input type="text" size="25" name="salary" id="salary" value="{yun:}$row.salary{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" style="float:left" class="com_info_text com_info_text_w103 " placeholder="薪资水平">
+                      <div class="layui-input-inline">
+                        <select name="salary_type" id="salary_type" lay-filter="salary_type">{yun:}foreach from=$partdata.part_salary_type key=j item=v{/yun}<option value="{yun:}$v{/yun}" {yun:}if $row.salary_type == $v{/yun} selected{yun:}/if{/yun}>
+{yun:}$partclass_name[$v]{/yun}</option>{yun:}/foreach{/yun}</select>
+                      </div>
+                  </div>
+                </li>
+                <li class="job_add_bc">
+                  <div class="com_release_name"><i class="ff0">*</i> 薪资结算：</div>
+           
+                    <div class="com_release_selectbox">
+                 <div class="layui-input-inline">
+                        <select name="billing_cycle" id="billing_cycle" lay-filter="billing_cycle">{yun:}foreach from=$partdata.part_billing_cycle key=j item=v{/yun}<option value="{yun:}$v{/yun}" {yun:}if $row.billing_cycle == $v{/yun} selected{yun:}/if{/yun}>{yun:}$partclass_name[$v]{/yun}</option>{yun:}/foreach{/yun}</select>
+                      </div>
+                    </div>
+                </li>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 兼职内容：</div>
+                  <div class=textbox>
+ 					<script id="content" name="content" type="text/plain" style="width:600px; height:200px;"> {yun:}$row.content{/yun} </script>
+                  </div>
+                </li>
+                <li class="job_add_bc">
+                  <div class="com_release_name">性别要求：</div>
+                  <div class="com_release_cont">
+                  
+                      <div class="layui-input-inline">
+                        <select name="sex" lay-filter="sex" id="sex">{yun:}foreach from=$arr_data.sex key=j item=v{/yun}<option value="{yun:}$j{/yun}" {yun:}if $row.sex == $j{/yun} selected{yun:}/if{/yun}>{yun:}$arr_data.sex[$j]{/yun}</option>{yun:}/foreach{/yun}
+</select>
+                      </div>
+                  
+                    <span id="by_ltsexid" class="errordisplay">请选择性别</span> </div>
+                </li>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 工作地点：</div>
+                  <div class="com_release_cont">
+                   <div class="layui-input-inline">
+                        <select name="provinceid" id="provinceid" lay-filter="citys">
+                          <option value="">请选择</option>{yun:}foreach from=$city_index key=j item=v{/yun}<option value="{yun:}$v{/yun}" {yun:}if $row.provinceid == $v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>{yun:}/foreach{/yun}</select>
+                      </div>
+                      <div class="layui-input-inline">
+                        <select name="cityid" lay-filter="citys" id="cityid"><option value="">请选择</option>{yun:}foreach from=$city_type[$row.provinceid] key=j item=v{/yun}<option value="{yun:}$v{/yun}" {yun:}if $row.cityid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun} </option>{yun:}/foreach{/yun} </select></div>
+                      <div class="layui-input-inline">
+                     <select name="three_cityid" lay-filter="three_cityid" id="three_cityid"><option value="">请选择</option>{yun:}foreach from=$city_type[$row.cityid] key=j item=v{/yun}<option value="{yun:}$v{/yun}" {yun:}if $row.three_cityid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun} </option>{yun:}/foreach{/yun}</select>
+                      </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 详细地址：</div>
+                  <div class="com_release_cont">
+                    <input type="text" size="45" id='address' name="address" value="{yun:}$row.address{/yun}" class="com_info_text" onblur="localsearch('全国');" style="width:400px;" placeholder="详细地址">
+                  </div>
+                  <div class="clear"></div>
+                  <script src="{yun:}$config.mapurl{/yun}"></script> 
+                  <script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/map.js?v={yun:}$config.cachecode{/yun}"></script>
+                  <div id="map_container" style="width:70%;height:300px; left:0px;"></div>
+                  <input name="x" id="map_x" type="hidden" value="{yun:}$row.x{/yun}">
+                  <input name="y" id="map_y" type="hidden" value="{yun:}$row.y{/yun}">
+                </li>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 联系人：</div>
+                  <div class="com_release_cont">
+                    <input type="text" placeholder="联系人" size="45" id='linkman' name="linkman" value="{yun:}if $row.linkman{/yun}{yun:}$row.linkman{/yun}{yun:}else{/yun}{yun:}$company.linkman{/yun}{yun:}/if{/yun}" class="com_info_text" maxlength="12">
+                  </div>
+                </li>
+                <li>
+                  <div class="com_release_name"><i class="ff0">*</i> 联系手机：</div>
+                  <div class="com_release_cont">
+                    <input type="text" size="45" id='linktel' name="linktel" value="{yun:}if $row.linktel{/yun}{yun:}$row.linktel{/yun}{yun:}else{/yun}{yun:}$company.linktel{/yun}{yun:}/if{/yun}" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" class="com_info_text" maxlength="12" placeholder="联系手机">
+                  </div>
+                </li>
+                <li> 
+                <input name="id" id="id" value="{yun:}$smarty.get.id{/yun}" type="hidden"/>
+                <input class="btn_01" type="submit" name="submit" value=" 提 交 操 作 "></li>
+                
+              </ul>
+           
+            </form>
+          </div>
+        </div>
+        <br>
+        {yun:}if !$row.linkmak && !$row.content{/yun}
+        <div class="text_tips_bc">
+          <div class="text_tips_bc_h1"> 信息保存</div>
+          <div class="text_tips_bc_cont"> {yun:}if $save.time{/yun}
+            <div class="text_tips_bc_l">信息已于{yun:}$save.time{/yun}保存</div>
+            {yun:}/if{/yun}
+            <div class="text_tips_bc_r">
+              <div class="text_tips_bc_time"> <span id="totalSecond"></span>s后将自动保存<br>
+                已填信息</div>
+              <a  id="atime" href="javascript:;" onclick="savepartform();" class="text_tips_bc_bth">临时保存</a> </div>
+          </div>
+        </div>
+        {yun:}/if{/yun} </div>
+    </div>
+  </div>
+</div>
+<script>
+var map=new BMap.Map("map_container");
+setLocation('map_container',116.404,39.915,"map_x","map_y");
+	$(document).ready(function() {
+		{yun:}if ($row.x=="" || $row.y=="") && $row.address!=""{/yun}
+			$("#address").val("{yun:}$row.address{/yun}");
+			var address="{yun:}$row.address{/yun}";
+			localsearch('{yun:}$city_name[$row.provinceid]{/yun}{yun:}$city_name[$row.cityid]{/yun}{yun:}$city_name[$row.three_cityid]{/yun}'+address.replace(/\s+/g,""));
+		{yun:}elseif $row.x!="" && $row.y!=""{/yun}
+			setLocation('map_container',{yun:}$row.x{/yun},{yun:}$row.y{/yun},"map_x","map_y");
+		{yun:}else{/yun}
+			//根据IP到城市开始
+			function myFun(result){
+				var cityName = result.name;
+				map.setCenter(cityName);
+			}
+			var myCity = new BMap.LocalCity();
+			myCity.get(myFun);
+			//根据IP到城市结结束
+		{yun:}/if{/yun}
+	});
+	var local ;
+	function localsearch(city){
+	    if($("#address").val()!=$("#address").attr('placeholder')){
+		    if($("#address").val()==""){
+				layer.msg('请输入详细地址！', 2, 8);return false;
+			}
+			
+			map.centerAndZoom(new BMap.Point(116.404, 39.915), 4);
+			
+			var province = $("#provinceid").find("option:selected").text().replace("请选择", "");	
+			var city = $('#cityid').find("option:selected").text().replace("请选择", "");
+			var three_city = $('#three_cityid').find("option:selected").text().replace("请选择", "");
+			var local = new BMap.LocalSearch(map, {
+				renderOptions: {
+					map: map
+				}
+			});
+			local.clearResults();
+			local.search(province+city+three_city+$("#address").val().replace(/\s+/g,""));
+		}
+	}
+	function getLocalResult(){
+		var address=$.trim($("#address").val());
+		var points=local.getResults();
+		var lngLat=points.getPoi(0).point;
+		setLocation('map_container',lngLat.lng,lngLat.lat,"map_x","map_y");
+		document.getElementById("map_x").value=lngLat.lng;
+		document.getElementById("map_y").value=lngLat.lat;
+	}
+	function setLocation(id,x,y,xid,yid){
+		var data=get_map_config();
+		var config=eval('('+data+')');
+		var rating,map_control_type,map_control_anchor;
+		if(!x && !y){x=config.map_x;y=config.map_y;}
+		var point = new BMap.Point(x,y);
+		var marker = new BMap.Marker(point);
+		var opts = {type:BMAP_NAVIGATION_CONTROL_LARGE}
+		map.enableScrollWheelZoom(true);
+		map.addControl(new BMap.NavigationControl(opts));
+		map.centerAndZoom(point, 15);
+		map.addOverlay(marker);
+		map.addEventListener("click",function(e){
+		   var info = new BMap.InfoWindow('', {width: 260});
+			var projection = this.getMapType().getProjection();
+			var lngLat = e.point;
+			document.getElementById(xid).value=lngLat.lng;
+			document.getElementById(yid).value=lngLat.lat;
+			map.clearOverlays();
+			var point = new BMap.Point(lngLat.lng,lngLat.lat);
+			var marker = new BMap.Marker(point);
+			map.addOverlay(marker);
+		});
+	}
+</script> 
+<script>
+layui.use(['form', 'laydate'], function(){
+    var form = layui.form,
+		laydate = layui.laydate,
+		$ = layui.$,
+		url = weburl+"/index.php?m=ajax&c=get_city_option";  
+
+	 //全选  
+	form.on('checkbox(ckAll)', function(data){  
+		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');  
+		child.each(function(index, item){  
+			item.checked = data.elem.checked;  
+		});  
+		form.render('checkbox');  
+	});  
+ 		
+	form.on('checkbox(timetype)', function(data){
+		if(data.elem.checked){
+			$("#edate").hide();
+			$("#dline").hide();
+		}else{
+			$("#dline").show();
+			$("#edate").show();
+		}
+	 });
+	
+	lay('.item_date').each(function(){
+		laydate.render({
+		  elem: this
+		  ,trigger: 'click'
+		});
+	  });
+
+  });
+</script> 
+<script language="javascript">
+var saveid=$("#id").val();
+var start = 30;
+var step = -1;
+if(!saveid){
+	function count()
+	{
+	$("#atime").click(function(){ start=30});
+	document.getElementById("totalSecond").innerHTML = start;
+	start += step;
+	if(start < 0 ){
+		savepartform();
+		start = 30;
+		}
+		setTimeout("count()",1000);
+	}
+	window.onload = count;	
+}
+</script>
+<script src="{yun:}$com_style{/yun}/js/part.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+<script language=javascript src='{yun:}$config.sy_weburl{/yun}/js/city.js?v={yun:}$config.cachecode{/yun}'></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript">
+	var editor = UE.getEditor('content',{
+		toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|','link', 'unlink', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],wordCount:false,elementPathEnabled:false,initialFrameHeight:200
+	});
+</script>
+{yun:}include file="$comstyle/footer.htm"{/yun}

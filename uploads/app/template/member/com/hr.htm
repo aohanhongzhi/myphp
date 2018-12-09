@@ -1,0 +1,307 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+
+<div class="w1000">
+    <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+        <div class=right_box>
+            <div class=admincont_box>
+                <div class="com_tit"><span class="com_tit_span">我的简历</span></div>
+                <div class="job_list_tit">
+                    <ul class="">
+                        <li {yun:}if $smarty.get.c=="hr" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=hr" title="应聘简历">应聘简历</a>
+                        </li>
+                        <li {yun:}if $smarty.get.c=="down" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=down" title="您已下载的简历记录">已下载简历</a>
+                        </li>
+                        <li {yun:}if $smarty.get.c=="talent_pool" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=talent_pool" title="加入人才库的简历">收藏简历</a>
+                        </li>
+                        <li {yun:}if $smarty.get.c=="look_resume" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=look_resume" title="您浏览简历的记录">浏览简历</a>
+                        </li>
+                        <li {yun:}if $smarty.get.c=="record" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=record" title="网站为您推荐的简历">网站推荐简历</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="com_body">
+                    <div class=admin_textbox_04>
+                        <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                        <div class="hr_tip_box">
+                            <div class="hr_subMetx">
+                                <span class="hr_resumesearch_span fltL">招聘职位：</span>
+                                <div class="text_seclet text_seclet_cur2 re">
+                                    <input id="qypr" class="SpFormLBut text_seclet_w250" type="button" onclick="search_show('job_qypr');" {yun:}if $current.id{/yun}value="{yun:}$current.name{/yun}" {yun:}else{/yun}value="全部职位" {yun:}/if{/yun}>
+
+                                    <div id="job_qypr" class="cus-sel-opt-panel " style="display: none;">
+                                        <ul class="Search_Condition_box_list">
+                                            <li>
+                                                <a href="index.php?c=hr&state={yun:}$smarty.get.state{/yun}&resumetype={yun:}$smarty.get.resumetype{/yun}&keyword={yun:}$smarty.get.keyword{/yun}">全部职位</a>
+                                            </li>
+                                            {yun:}foreach from=$JobList item=one{/yun}
+                                            <li>
+                                                <a href="index.php?c=hr&jobid={yun:}$one.id{/yun}-{yun:}$one.type{/yun}&state={yun:}$smarty.get.state{/yun}&resumetype={yun:}$smarty.get.resumetype{/yun}&keyword={yun:}$smarty.get.keyword{/yun}">{yun:}$one.name{/yun}{yun:}if $one.type==2{/yun}（猎）{yun:}/if{/yun}</a>
+                                            </li>
+                                            {yun:}/foreach{/yun}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <form action="index.php" method="get">
+                                    <div class="joblist_search_box" style="border-radius:3px;">
+                                        <input name="c" type="hidden" value="hr">
+                                        <input name="resumetype" type="hidden" value="{yun:}$smarty.get.resumetype{/yun}">
+                                        <input name="jobid" type="hidden" value="{yun:}$smarty.get.jobid{/yun}">
+                                        <input name="state" type="hidden" value="{yun:}$smarty.get.state{/yun}">
+                                        <input name="keyword" type="text" class="joblist_search_box_text" placeholder="请输入姓名查找" value="{yun:}$smarty.get.keyword{/yun}">
+                                        <input type="submit" class="joblist_search_bth" value=" ">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="hr_subMetx">
+                                <span class="hr_resumesearch_span fltL">人才类型：</span>
+                                <a href="index.php?c=hr&jobid={yun:}$smarty.get.jobid{/yun}&state={yun:}$smarty.get.state{/yun}&keyword={yun:}$smarty.get.keyword{/yun}" class="hr_subMetx_a {yun:}if $smarty.get.resumetype==''{/yun}hr_subMetx_cur{yun:}/if{/yun}">不限</a>
+
+                                <a class="hr_subMetx_a {yun:}if $smarty.get.resumetype=='1'{/yun}hr_subMetx_cur{yun:}/if{/yun}" href="index.php?c=hr&jobid={yun:}$smarty.get.jobid{/yun}&state={yun:}$smarty.get.state{/yun}&resumetype=1&keyword={yun:}$smarty.get.keyword{/yun}">普通人才</a>
+
+                             </div>
+
+                            <div class="hr_subMetx">
+                                <span class="hr_resumesearch_span fltL">简历状态：</span>
+
+                                <a class="hr_subMetx_a {yun:}if $smarty.get.state==''{/yun}hr_subMetx_cur{yun:}/if{/yun}" href="index.php?c=hr&jobid={yun:}$smarty.get.jobid{/yun}&resumetype={yun:}$smarty.get.resumetype{/yun}&keyword={yun:}$smarty.get.keyword{/yun}">不限</a>
+
+                                {yun:}foreach from=$StateList item=one{/yun}
+                                <a {yun:}if $smarty.get.state==$one.id{/yun}class="hr_subMetx_cur" {yun:}/if{/yun} href="index.php?c=hr&jobid={yun:}$smarty.get.jobid{/yun}&state={yun:}$one.id{/yun}&resumetype={yun:}$smarty.get.resumetype{/yun}&keyword={yun:}$smarty.get.keyword{/yun}">{yun:}$one.name{/yun}</a>
+                                {yun:}/foreach{/yun}
+                            </div>
+                        </div>
+
+                        <div class="clear"></div>
+
+                        <form action="{yun:}$now_url{/yun}&act=hrset" target="supportiframe" method="post" id='myform'>
+
+                            <div class="clear"></div>
+                            <table class="com_table mt20">
+                                {yun:}if $rows{/yun}
+                                <tr>
+                                    <th width="20">&nbsp;</th>
+                                    <th>姓名</th>
+                                    <th>意向职位</th>
+                                    <th>基本信息</th>
+                                    <th>申请职位 </th>
+                                    <th>申请时间</th>
+                                    <th>简历状态</th>
+                                    <th>操作</th>
+                                </tr>
+
+                                {yun:}foreach item=v from=$rows{/yun}
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="delid[]" eid="{yun:}$v.eid{/yun}" value="{yun:}$v.id{/yun}" class="job_hr_list_boxcheckbox_c"></td>
+                                    <td>
+                                        <a href="{yun:}url m=resume c=show id='`$v.eid`'{/yun}" target="_blank" class="yun_m_jobname_a">
+                                            {yun:}$v.name{/yun}&nbsp; {yun:}if $v.is_browse == 1{/yun}
+                                            <span class="job_hr_job_cz_line">(未查看)</span> {yun:}/if{/yun}
+                                        </a>
+
+                                         
+                                    </td>
+                                    <td width="220"><span class="" style="color:#f60; font-weight:bold">{yun:}$v.jobname{/yun}</span>
+                                    </td>
+                                    <td align="center">
+                                        {yun:}$v.exp{/yun}经验<span class="job_hr_job_cz_line">|</span> {yun:}$v.edu{/yun}学历
+
+                                    </td>
+
+                                    <td align="center">
+                                        <a  href="{yun:}url m=job c=comapply id='`$v.job_id`'{/yun}"  target="_blank" class="uesr_name_a">
+                                            {yun:}$v.job_name{/yun}
+                                        </a>
+                                    </td>
+
+                                    <td align="center">{yun:}$v.datetime|date_format:'%Y-%m-%d'{/yun}</td>
+
+                                    <td align="center">
+                                        <div class="hr_resume_chlose " onmousemove="isBrowseShow('{yun:}$v.id{/yun}');" onmouseout="isBrowseHide('{yun:}$v.id{/yun}');">
+
+                                            <div class="hr_resume_zt">
+                                                {yun:}if $v.is_browse=='1'{/yun}未查看 {yun:}elseif $v.is_browse=='2'{/yun}已查看 {yun:}elseif $v.is_browse=='3'{/yun}等待通知 {yun:}elseif $v.is_browse=='4'{/yun}拒绝面试 {yun:}elseif $v.is_browse=='5'{/yun}无法联系 {yun:}/if{/yun}
+                                            </div>
+
+                                            <div class="hr_resume_box hr_resume_chlose_cur" style="display:none;" id="{yun:}$v.id{/yun}">
+                                                <ul>
+                                                    <li><span class="hr_resume_box_list browsej" browse='1' sid='{yun:}$v.id{/yun}'>未查看</span></li>
+                                                    <li><span class="hr_resume_box_list browsej" browse='2' sid='{yun:}$v.id{/yun}'>已查看</span></li>
+                                                    <li><span class="hr_resume_box_list browsej" browse='3' sid='{yun:}$v.id{/yun}'>等待通知</span></li>
+                                                    <li><span class="hr_resume_box_list browsej" browse='4' sid='{yun:}$v.id{/yun}'>拒绝面试</span></li>
+                                                    <li><span class="hr_resume_box_list browsej" browse='5' sid='{yun:}$v.id{/yun}'>无法联系</span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td align="center">
+                                        {yun:}if $v.is_browse!=4{/yun} {yun:}if $v.userid_msg==1{/yun} {yun:}if $v.is_browse==5{/yun}
+                                        <span class="job_hr_bth_bj">无法联系</span> {yun:}else{/yun}
+                                        <span class="job_hr_bth_bj">已邀请</span> {yun:}/if{/yun} {yun:}else{/yun}
+                                        <a href="javascript:void(0);" uid="{yun:}$v.uid{/yun}" username="{yun:}$v.name{/yun}" jobid="{yun:}$v.job_id{/yun}" jobname="{yun:}$v.job_name{/yun}" class=" com_bth cblue sq_resume job_hr_bth " jobtype='{yun:}$v.type{/yun}'>邀请</a>
+
+                                        <a href="javascript:void(0)" sid='{yun:}$v.id{/yun}' browse='4' class=" com_bth cblue browsej job_hr_bth">拒绝</a>
+                                        {yun:}/if{/yun} {yun:}else{/yun}
+                                        <span class="job_hr_job_cz_a">已拒绝</span> {yun:}/if{/yun}
+
+                                        <a href="javascript:void(0)" onclick="layer_del('确定要删除该条职位申请吗？', 'index.php?c=hr&act=hrset&delid={yun:}$v.id{/yun}');" class=" com_bth cblue">删除</a>
+                                    </td>
+                                </tr>
+
+                                <tr>
+
+                                </tr>
+                                {yun:}/foreach{/yun}
+
+                                <tr>
+                                    <td colspan="7" class="table_end">
+                                        <div class="com_Release_job_bot" style="margin-top:10px;">
+                                            <span class="com_Release_job_qx">
+												<input id='checkAll'  type="checkbox" onclick='m_checkAll(this.form)' class="com_Release_job_qx_check">全选
+											</span>
+                                            <input class="c_btn_02" type="button" name="subdel" value="批量删除" onclick="return really('delid[]');">
+                                            <input class='c_btn_02' type="button" name="subdel" value="批量阅读" onclick="return really_read('delid[]');" style="margin-left:10px;">
+                                        </div>
+                                        <div class="diggg mt10 fltR">{yun:}$pagenav{/yun}</div>
+                                    </td>
+                                </tr>
+                                {yun:}else{/yun}
+                                <tr>
+                                    <td colspan="7" class="table_end">
+                                        <div class="msg_no">
+                                            {yun:}if $smarty.get.keyword!="" {/yun}
+                                            <p>没有搜索到相关简历记录！</p>
+                                            {yun:}else{/yun}
+                                            <p>亲爱的用户，目前还没有人才申请贵公司职位</p>
+                                            <a href="{yun:}url m=resume{/yun}" class="com_msg_no_bth com_submit">我要主动找人才</a>
+                                            {yun:}/if{/yun}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {yun:}/if{/yun}
+                            </table>
+                        </form>
+
+                        <div class="clear"></div>
+                        <div class="wxts_box wxts_box_mt30">
+                            <div class="wxts">温馨提示：</div>
+                            1. 共有（<span class="f60">{yun:}if $jobnum{/yun}{yun:}$jobnum{/yun}{yun:}else{/yun}0{yun:}/if{/yun}</span>）份简历申请贵公司发布的职位 <br> 2.对于求职者来说即使是被拒绝，也胜过毫无音讯的等待。
+                            <br> 3.请邀约或者设置为不合适给求职者投递的简历，做一个回馈
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	
+	function isBrowseShow(id){
+    	$("#"+id).show();
+    }
+    function isBrowseHide(id){
+    	$("#"+id).hide();
+    }
+    
+    $(document).ready(function() {
+        $(".browsej").click(function() {
+            var browse = $(this).attr('browse');
+            var id = $(this).attr('sid');
+            $.post("index.php?c=hr&act=hrset", {
+                id: id,
+                browse: browse
+            }, function(data) {
+                location.reload();
+            });
+        });
+
+    });
+    
+    
+    
+</script>
+<style>
+    .admin_resume_dc {
+        width: 100%;
+        float: left
+    }
+    
+    .admin_resume_dc_p {
+        width: 650px;
+        float: left;
+        padding: 10px 0;
+    }
+    
+    .admin_resume_dc_s {
+        display: block;
+        width: 110px;
+        height: 30px;
+        line-height: 30px;
+        float: left;
+        padding-left: 10px;
+        margin: 5px 0px 0px 5px;
+        border: 1px solid #eee;
+        cursor: pointer
+    }
+    
+    .admin_resume_dc_n {
+        width: 110px;
+        float: left;
+        height: 30px;
+        line-height: 30px;
+        text-align: right;
+    }
+    
+    .admin_resume_dc_ntext {
+        width: 118px;
+        border: 1px solid #ddd;
+        height: 30px;
+        line-height: 30px;
+        float: left;
+    }
+    
+    .admin_resume_dc_tip {
+        float: left;
+        height: 30px;
+        line-height: 30px;
+    }
+    
+    .admin_resume_dc_sub {
+        width: 650px;
+        text-align: center;
+        border-top: 1px solid #ddd;
+        float: left;
+        padding-top: 10px;
+    }
+    
+    .admin_resume_dc_bth1 {
+        width: 90px;
+        height: 30px;
+        background: #f60;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    .admin_resume_dc_bth2 {
+        width: 90px;
+        height: 30px;
+        background: #eee;
+        color: #333;
+        border: none;
+        cursor: pointer;
+        margin-left: 10px;
+        font-size: 16px;
+    }
+</style>
+{yun:}include file="$comstyle/yqms.htm"{/yun} {yun:}include file="$comstyle/footer.htm"{/yun}

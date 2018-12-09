@@ -1,0 +1,42 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<div class="jobadd_ok">职位发布成功</div>
+<div class="jobadd_ok_bth">
+	<a href="index.php?c=job" class="jobadd_ok_bth_a jobadd_ok_bth_a_gl">管理信息</a>
+	<a href="{yun:}url m=wap c=job a=view id=$job.id{/yun}" class="jobadd_ok_bth_a jobadd_ok_bth_a_look">查看信息</a>
+	<a href="javascript:void(0)" onclick="jobadd_url('{yun:}$statis.addjobnum{/yun}','{yun:}$config.integral_job{/yun}','job','{yun:}$config.com_integral_online{/yun}','{yun:}$config.integral_proportion{/yun}');"  class="jobadd_ok_bth_a jobadd_ok_bth_a_zf">再发一条</a>
+	<a href="{yun:}url m=wap c=job a=share id=$job.id{/yun}" class="jobadd_ok_bth_a jobadd_ok_bth_a_fx">分享职位</a>
+</div>
+
+<div class="jobadd_ok_settip">为了吸引更多求职者的关注，建议您设置</div>
+<ul class="jobadd_ok_setlist">
+	 
+	<li>
+		<a href="index.php?c=getserver&id={yun:}$job.id{/yun}&server=3"><i class="jobadd_ok_setlist_icon jobadd_ok_setlist_icontj"></i><span class="jobadd_ok_setlist_name">职位推荐</span><em class="jobadd_ok_setlist_tip">迅速提高招聘效果</em></a>
+	</li>
+	<li>
+		<a href="index.php?c=getserver&id={yun:}$job.id{/yun}&server=2"><i class="jobadd_ok_setlist_icon jobadd_ok_setlist_iconzd"></i><span class="jobadd_ok_setlist_name">职位置顶</span><em class="jobadd_ok_setlist_tip">立即提升职位排名</em></a>
+	</li>
+	<li>
+		<a href="index.php?c=getserver&id={yun:}$job.id{/yun}&server=4"><i class="jobadd_ok_setlist_icon"></i><span class="jobadd_ok_setlist_name">职位紧急</span><em class="jobadd_ok_setlist_tip">强烈提升职位曝光度</em></a>
+	</li>
+ 
+	<li>
+		<a href="index.php?c=getserver&id={yun:}$job.id{/yun}&server=1"><i class="jobadd_ok_setlist_icon jobadd_ok_setlist_icon_sx"></i><span class="jobadd_ok_setlist_name">自动刷新</span><em class="jobadd_ok_setlist_tip">让职位管理轻松更高效</em></a>
+	</li>
+</ul>
+
+<!--微信分享专用---->
+<div style='margin:0 auto;width:0px;height:0px;overflow:hidden;'><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}"></div>
+<!--<script>
+	var config = {
+		url:'{yun:}url m=wap c=job a=share id=$job.id{/yun}',
+		title:'{yun:}$title{/yun}',
+		desc:'{yun:}$description{/yun}',
+		img:'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+		img_title:'{yun:}$job.name{/yun}',
+		from:'{yun:}$config.sy_webname{/yun}'
+	};
+</script>-->
+{yun:}include file="$wapstyle/footer.htm"{/yun}

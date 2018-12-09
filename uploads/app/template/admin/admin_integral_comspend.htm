@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+
+	<form class="layui-form">
+	
+	<div class="infoboxp">
+		<div class="tabs_info">
+	<ul>
+		<li><a href="index.php?m=admin_comset">企业设置</a></li>
+		<li><a href="index.php?m=admin_comset&c=logo">头像设置</a></li> 
+		<li><a href="index.php?m=admin_comset&c=set">{yun:}$config.integral_pricename{/yun}设置</a></li> 
+		<li class="curr"><a href="index.php?m=admin_comset&c=comspend">消费设置</a></li>  
+		<li><a href="index.php?m=admin_comset&c=rating">套餐设置</a></li>  
+ 	</ul>
+</div>
+    
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站企业消费设置管理</div>
+<div class="admin_new_tip_list">当前{yun:}$config.integral_pricename{/yun}兑换比为1元={yun:}$config.integral_proportion{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}，可设置最低金额是 {yun:}1/$config.integral_proportion{/yun}元。</div>
+</div>
+</div>
+
+		<div class="main_tag mt10">
+			<div class="clear"></div>
+			<div class="tag_box">
+				<div>
+					<table width="100%" class="table_form">
+						
+						<tr class="admin_table_trbg">
+							<th width="220" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+							<td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+						</tr>
+
+						<tr>
+							<th width="220">发布职位：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="checkbox" name="integral_job_type" id="integral_job_type" lay-skin="switch" lay-text="加|减"
+										{yun:}if $config.integral_job_type=="1"{/yun}checked{yun:}/if{/yun} disabled/>
+
+										<input class="input-text" type="text" name="integral_job" id="integral_job" value="{yun:}$config.integral_job{/yun}" autocomplete="off" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"   onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');"/> 元 / 份
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th width="220">下载人才简历：</th>
+							<td>
+				   
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="checkbox" name="integral_down_resume_type" id="integral_down_resume_type" lay-skin="switch" lay-text="加|减" {yun:}if $config.integral_down_resume_type=="1"{/yun} checked {yun:}/if{/yun} disabled/>
+
+										<input class="input-text" type="text" name="integral_down_resume" id="integral_down_resume" value="{yun:}$config.integral_down_resume{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"   onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');"/> 元 / 份
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr class="admin_table_trbg">
+							<th width="220">发送面试人才：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										
+										<input type="checkbox" name="integral_interview_type" id="integral_interview_type" lay-skin="switch" lay-text="加|减" {yun:}if $config.integral_interview_type=="1"{/yun} checked {yun:}/if{/yun} disabled/>
+
+										<input class="input-text" type="text" name="integral_interview" id="integral_interview" value="{yun:}$config.integral_interview{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"   onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');"/> 元 / 份
+									</div>
+								</div>
+							</td>
+						</tr>
+
+
+						<tr class="admin_table_trbg">
+							<th width="220">刷新职位：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="checkbox" name="integral_jobefresh_type" id="integral_jobefresh_type" lay-skin="switch" lay-text="加|减"
+										{yun:}if $config.integral_jobefresh_type=="1"{/yun} checked {yun:}/if{/yun} disabled/>
+
+										<input class="input-text" type="text" name="integral_jobefresh" id="integral_jobefresh" value="{yun:}$config.integral_jobefresh{/yun}" autocomplete="off" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"   onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');"/> 元 / 份
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr class="admin_table_trbg">
+							<th width="220">发布兼职职位：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="checkbox" name="integral_partjob_type" id="integral_partjob_type" lay-skin="switch" lay-text="加|减" {yun:}if $config.integral_partjob_type=="1"{/yun} checked {yun:}/if{/yun} disabled/>
+
+										<input class="input-text" type="text" name="integral_partjob" id="integral_partjob" value="{yun:}$config.integral_partjob{/yun}" autocomplete="off" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"   onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');"/> 元 / 份
+									</div>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<th width="220">刷新兼职职位：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="checkbox" name="integral_partjobefresh_type" id="integral_partjobefresh_type" lay-skin="switch" lay-text="加|减" {yun:}if $config.integral_partjobefresh_type=="1"{/yun} checked {yun:}/if{/yun} disabled/>
+
+										<input class="input-text" type="text" name="integral_partjobefresh" id="integral_partjobefresh" value="{yun:}$config.integral_partjobefresh{/yun}" autocomplete="off" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"   onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');"/> 元 / 份
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th width="220">发布紧急招聘：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="checkbox" name="com_urgent_type" id="com_urgent_type" lay-skin="switch" lay-text="加|减" {yun:}if $config.com_urgent_type=="1"{/yun} checked {yun:}/if{/yun} disabled/>
+
+										<input type="text" name="com_urgent" id="com_urgent" required  lay-verify="required" value="{yun:}$config.com_urgent{/yun}" autocomplete="off" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" class="input-text"   onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');"> 元 / 天          
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th width="220">发布置顶职位：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="checkbox" name="integral_jobtop_type" id="integral_jobtop_type" lay-skin="switch" lay-text="加|减" {yun:}if $config.integral_jobtop_type=="1"{/yun} checked {yun:}/if{/yun} disabled/>
+
+										<input type="text" name="integral_job_top" id="integral_job_top" required  lay-verify="required" value="{yun:}$config.integral_job_top{/yun}" autocomplete="off" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" class="input-text"   onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');"> 元 / 天          
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr class="admin_table_trbg">
+							<th width="220">发布推荐招聘：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="checkbox" name="com_recjob_type" id="com_recjob_type" lay-skin="switch" lay-text="加|减" {yun:}if $config.com_recjob_type=="1"{/yun} checked {yun:}/if{/yun} disabled/>
+
+										<input type="text" name="com_recjob" id="com_recjob" required  lay-verify="required" value="{yun:}$config.com_recjob{/yun}" autocomplete="off" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" class="input-text"   onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');"> 元 / 天          
+									</div>
+								</div>
+							</td>
+						</tr>
+   
+						<tr class="admin_table_trbg">
+							<th width="220">职位自动刷新：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="checkbox" name="job_auto_type" id="job_auto_type" lay-skin="switch" lay-text="加|减" {yun:}if $config.job_auto_type=="1"{/yun} checked {yun:}/if{/yun} disabled/>
+
+										<input type="text" name="job_auto" id="job_auto" required  lay-verify="required" value="{yun:}$config.job_auto{/yun}" autocomplete="off" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" class="input-text"   onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');"> 元 / 天          
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr class="admin_table_trbg">
+							<th width="220">发布推荐兼职：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="checkbox" name="com_recpartjob_type" id="com_recpartjob_type" lay-skin="switch" lay-text="加|减" {yun:}if $config.com_recpartjob_type=="1"{/yun} checked {yun:}/if{/yun} disabled />
+
+										<input class="input-text" type="text" name="com_recpartjob" id="com_recpartjob" value="{yun:}$config.com_recpartjob{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"  onBlur="payintegral(this,'{yun:}$config.integral_proportion{/yun}');" /> 元 / 天
+									</div>
+							  </div>
+							</td>
+						</tr>
+   
+						<tr class="admin_table_trbg">
+							 <th style="border-bottom:none;">&nbsp;</th>
+          <td align="left" style="border-bottom:none;"> 
+								<input class="admin_button" id="integral" type="button" name="config" value="提交" />&nbsp;&nbsp;
+								<input class="admin_button" type="reset" value="重置" />
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+	
+	<script>
+	layui.use(['layer', 'form'], function(){
+		var layer = layui.layer
+			,form = layui.form
+			,$ = layui.$;
+	});
+	
+	$(function(){
+		$("#integral").click(function(){
+			$.post("index.php?m=admin_comset&c=save",{
+			config : $("#integral").val(),
+
+			integral_job_type : $("input[name=integral_job_type]").is(":checked") ? 1 : 2,
+			integral_job : $("#integral_job").val(),
+
+			integral_down_resume_type : $("input[name=integral_down_resume_type]").is(":checked") ? 1 : 2,
+			integral_down_resume : $("#integral_down_resume").val(),
+      
+			integral_interview_type : $("input[name=integral_interview_type]").is(":checked") ? 1 : 2,
+			integral_interview : $("#integral_interview").val(),
+      
+		  
+			integral_jobefresh_type : $("input[name=integral_jobefresh_type]").is(":checked") ? 1 : 2,
+			integral_jobefresh : $("#integral_jobefresh").val(),
+
+			integral_partjob_type : $("input[name=integral_partjob_type]").is(":checked") ? 1 : 2,
+			integral_partjob : $("#integral_partjob").val(),
+
+			integral_partjobefresh_type : $("input[name=integral_partjobefresh_type]").is(":checked") ? 1 : 2,
+			integral_partjobefresh : $("#integral_partjobefresh").val(),
+      
+			com_urgent_type : $("input[name=com_urgent_type]").is(":checked") ? 1 : 2,
+			com_urgent : $("#com_urgent").val(),
+		  
+			com_recjob_type : $("input[name=com_recjob_type]").is(":checked") ? 1 : 2,
+			com_recjob : $("#com_recjob").val(),
+			
+			job_auto_type : $("input[name=job_auto_type]").is(":checked") ? 1 : 2,
+			job_auto : $("#job_auto").val(),
+			
+			integral_jobtop_type : $("input[name=integral_jobtop_type]").is(":checked") ? 1 : 2,
+			integral_job_top : $("#integral_job_top").val(),
+
+			com_recpartjob_type : $("input[name=com_recpartjob_type]").is(":checked") ? 1 : 2,
+			com_recpartjob : $("#com_recpartjob").val(),
+		  
+			pytoken : $("#pytoken").val()
+			},
+		
+			function(data,textStatus){
+				config_msg(data);
+			});
+		});
+	})
+
+	</script>
+	</form>
+
+</body>
+</html>

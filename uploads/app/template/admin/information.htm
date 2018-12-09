@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tabs_info">
+				<ul>
+					<li {yun:}if $smarty.get.c=='' {/yun}class="curr" {yun:}/if{/yun}>
+						<a href="index.php?m=email">邮件推广</a>
+					</li>
+					<li {yun:}if $smarty.get.c=='msgtg' {/yun}class="curr" {yun:}/if{/yun}>
+						<a href="index.php?m=email&c=msgtg">短信推广</a>
+					</li>
+					<li {yun:}if $smarty.get.c=='tgresume' {/yun}class="curr" {yun:}/if{/yun}>
+						<a href="index.php?m=email&c=tgresume">简历推广</a>
+					</li>
+					<li {yun:}if $smarty.get.c=='tgjob' {/yun}class="curr" {yun:}/if{/yun}>
+						<a href="index.php?m=email&c=tgjob">职位推广</a>
+					</li>
+					<li {yun:}if $smarty.get.c=='email' {/yun}class="curr" {yun:}/if{/yun}>
+						<a href="index.php?m=email&c=email">自定义邮件</a>
+					</li>
+					<li {yun:}if $smarty.get.c=='msg' {/yun}class="curr" {yun:}/if{/yun}>
+						<a href="index.php?m=email&c=msg">自定义短信</a>
+					</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<div class="admin_new_tip">
+				<a href="javascript:;" class="admin_new_tip_close"></a>
+				<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">发送短信时，请选择合适的时间进行发送</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="tag_box mt10">
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form name="myform" target="supportiframe" action="index.php?m=email&c=msgsave" method="post" onSubmit="return message_submit();" class="layui-form">
+					<table width="100%" class="table_form ">
+						<tr>
+							<th bgcolor="#f0f6fb" colspan="2"><span class="admin_bold">自定义短信</span></th>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">选择用户</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<div class="layui-input-inline">
+											<input type="radio" name="all" value="1" id="CheckboxGroup1_1" title="个人用户">
+											<input type="radio" name="all" value="2" id="CheckboxGroup1_2" title="企业用户">
+											<input type="radio" name="all" value="4" id="CheckboxGroup1_4" title="自定义用户">
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr id="user_email" style="display:none;">
+							<th>手机号：</th>
+							<td><input class="input-text" type="text" id="userarr" name="userarr" size="40" value="" /><span class="admin_web_tip">多个用户请用,(半角)隔开</span></td>
+						</tr>
+						<tr>
+							<th width="120">短信内容</th>
+							<td>
+								<textarea id="content" name="content" cols="100" rows="8" class="web_text_textarea"></textarea>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<td align="center" colspan="2">
+								<input class="layui-btn layui-btn-normal" type="submit" name="message_send" value="&nbsp;发 送&nbsp;" />
+								<input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" />
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+				</form>
+			</div>
+		</div>
+		<script>
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+				$("input[name='all']").each(function() {
+					$(this).next().click(function() {
+						var val = $(this).prev().val();
+						if(val == '4') {
+							$("#user_email").show();
+						} else {
+							$("#user_email").hide();
+							$("input[name=userarr]").val('');
+						}
+					});
+				});
+			});
+
+			function message_submit() {
+				var allaa = $("input[name=all]:checked").val();
+				if(!allaa) {
+					parent.layer.msg('请选择发送信息的用户！', 2, 8);
+					return false;
+				}
+				if(allaa == "4") {
+					if($("#userarr").val() == "") {
+						parent.layer.msg('请输入手机号码！', 2, 8);
+						return false;
+					}
+				}
+				var content = $("#content").val();
+				if(content == '') {
+					parent.layer.msg('短信内容不能为空！', 2, 8);
+					return false;
+				}
+				loadlayer();
+			}
+		</script>
+	</body>
+
+</html>

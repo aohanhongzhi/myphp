@@ -1,0 +1,54 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<div class="" style="width:100%;background:#7eaaec url({yun:}$config.sy_weburl{/yun}{yun:}$info.background{/yun}) no-repeat center top;background-size: 200%;">
+<div class="special_seniorpd">
+<div class="special_seniorpd_box">
+<div class="special_seniorpd_tit">专题介绍</div>
+<div class="special_seniorpd_cont">{yun:}$info.intro{/yun}</div>
+</div>
+<div class="special_seniorpd_box">
+<div class="special_seniorpd_tit">名企招聘</div>
+<div class="special_seniorpd_cont">
+
+{yun:}specialcom sid='auto.id' namelen=18 jobnamelen=6 item=clist{/yun}
+	{yun:}if $clist.jobs{/yun}
+    <div class="special_seniorpd_list">
+
+   
+                <div class="special_seniorpd_comname"><a href="{yun:}url m=wap c=company a=show id=$clist.id{/yun}">{yun:}$clist.name_n{/yun}</a></div>
+				<div class="special_seniorpd_job">
+                招聘职位：{yun:}foreach from=$clist.jobs key=key item=jlist{/yun}{yun:}if $key>0{/yun},{yun:}/if{/yun}<a href="{yun:}url m=wap c=job a=view id=$jlist.id{/yun}">{yun:}$jlist.name_n{/yun}</a>{yun:}/foreach{/yun} 
+       
+			</div>
+         <div class="senior_job_zt"> 
+         <span class="">共{yun:}$clist.jobnum{/yun}个在招职位</span><a href="{yun:}url m=wap c=company a=show id='`$clist.uid`'{/yun}#job" class="special_seniorpd_more">更多>></a></div>
+		</div>
+	{yun:}/if{/yun}
+{yun:}specialcomelse{/yun}
+  <div class="wap_member_no">暂无信息</div> 
+{yun:}/specialcom{/yun}
+
+
+</div>
+</div>
+{yun:}if !$isapply{/yun}
+
+<div class="special_seniorpd_box">
+<div class="special_seniorpd_cont">
+<div class="special_box_bm">我是企业,我想参加招聘</div>
+<div class="special_box_bth_c">
+<input type='button' value="参加报名" onclick="comapply('{yun:}$info.id{/yun}','{yun:}$info.integral{/yun}','{yun:}url m=wap c=special a=apply{/yun}')" class="special_box_bth" />
+</div>
+</div>
+</div>
+{yun:}/if{/yun}
+
+</div>
+
+
+
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/special.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

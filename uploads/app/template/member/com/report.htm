@@ -1,0 +1,42 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+<div class="admin_mainbody">
+{yun:}include file="$comstyle/left.htm"{/yun}
+<div class="right_box">
+<div class="admincont_box" >
+         <div class="com_tit"><span class="com_tit_span">投诉记录</span></div>
+<div class="clear"></div>
+<div class="com_body" style=" margin-top:10px;">
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+ <table class="com_table mt20">
+ {yun:}if $rows{/yun}
+ <tr>
+              <th>被投诉者</th>
+              <th>投诉者</th>
+              <th>投诉内容</th>
+              <th>投诉时间 </th>
+              <th>回复结果 </th>
+              <th>操作</th>
+            </tr>
+
+{yun:}/if{/yun}
+ {yun:}foreach from=$rows item=msg{/yun}
+ <tr>
+              <td align="center">{yun:}$msg.r_name{/yun} </td>
+              <td align="center">{yun:}$msg.username{/yun}</td>
+              <td align="center">{yun:}$msg.r_reason{/yun}</td>
+              <td align="center">{yun:}$msg.inputtime|date_format:'%Y-%m-%d %H:%M'{/yun} </td>
+               <td align="center">{yun:}if $msg.result{/yun}{yun:}$msg.result{/yun}{yun:}else{/yun}未回复{yun:}/if{/yun} </td>
+              <td align="center"><a href="javascript:void(0)" onclick="layer_del('您确定要删除？', 'index.php?c=report&act=del&id={yun:}$msg.id{/yun}'); " class="cblue">删除</a></th>
+            </tr>
+ 
+{yun:}foreachelse{/yun}
+<div class="msg_no">您还没有投诉记录。</div>
+
+{yun:}/foreach{/yun}
+</table>
+<div class="diggg" style="margin-top:10px;">{yun:}$pagenav{/yun}</div>
+</div> </div></div>
+</div></div>
+
+{yun:}include file="$comstyle/footer.htm"{/yun}

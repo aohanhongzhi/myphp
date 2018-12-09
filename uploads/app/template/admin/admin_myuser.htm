@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="./images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="./images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<link href="./images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title></title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">我的帐号主要显示网站当前的管理员帐号信息，如用户名、姓名和管理员姓名参数！当前管理员还可以修改自己的密码操作。</div>
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="common-form">
+<div class="tag_box mt10">
+<table width="100%" class="table_form " >
+           <tbody>
+  <tr class="admin_table_trbg">
+    <th width="160" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+    <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>   
+  </tr>
+ </tbody>
+     <tr>
+        <th width="150">用户名：</th>
+        <td>   <div class="admin_td_h">{yun:}$adminuser.username{/yun} 
+        <a href="javascript:void(0)" onclick="layer_logout('index.php?m=index&c=logout');" class="admin_logout_bth">退出登录</a>
+        <a href="index.php?m=admin_user&c=pass" class="admin_logout_bth">修改密码</a>
+        </div></td>
+    </tr>
+    <tr class="admin_table_trbg">
+        <th >真实姓名：</th>
+        <td> <div class="admin_td_h">{yun:}$adminuser.name{/yun}</div></td>
+    </tr>
+   	<tr >
+        <th>权限：</th>
+        <td> <div class="admin_td_h">{yun:}$user_group.group_name{/yun}</div></td>
+    </tr>
+    <tr class="admin_table_trbg">
+        <th >上一次登录时间：</th>
+        <td> <div class="admin_td_h">{yun:}$adminuser.lasttime|date_format:'%Y-%m-%d %H:%M:%S'{/yun}</div></td>
+    </tr>
+ </table>
+</div>
+</div></div>
+</body>
+</html>

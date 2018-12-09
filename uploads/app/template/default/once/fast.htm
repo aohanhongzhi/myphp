@@ -1,0 +1,149 @@
+<div class=" none" style="_position:absolute;" id="fast_order_log">
+    <div class="once_paytck_cont">
+        <div class="once_paytck_box">
+            {yun:}if $paylog{/yun} 
+            
+            {yun:}foreach item=log from=$paylog{/yun}
+
+            <div class="once_paylog">
+                <div class="once_paylog_tit">
+
+            	<span class="once_paylog_tit_dh">充值单号：</span>{yun:}$log.order_id{/yun}<span class="once_paylog_tit_zt">未付款</span></div>
+                	<div class="once_paylog_pbox">
+
+                    <div class="once_paylog_p"><span class="member_c9">订单类型：</span> 店铺招聘 </div>
+                    <div class="once_paylog_p">
+                        <span class="member_c9">支付形式：</span> 
+						{yun:}if $log.order_type=='alipay'{/yun}支付宝支付{yun:}else{/yun}手动{yun:}/if{/yun}</div>
+
+                    <div class="once_paylog_p"><span class="member_c9">时间：</span>{yun:}$log.order_time|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</div>
+                    {yun:}if $log.order_remark{/yun}
+                    <div class="once_paylog_p"><span class="member_c9">备注：</span>{yun:}$log.order_remark{/yun}</div>
+                    {yun:}/if{/yun}
+                    <div class="once_paylog_money_box"><span class="member_c9">充值金额：</span><span class="once_paylog_money">{yun:}$log.order_price{/yun}</span></div>
+                </div>
+                {yun:}if $log.order_state=='1' && $log.order_type!='bank'{/yun}
+                <div class="once_paylog_cz">
+                    <a href="{yun:}url m=once c=show id=$log.once_id pay=$fast{/yun}" class="yun_member_hr_bth">招聘信息</a>
+                    <a href="javascript:void(0)" onclick="fast_pay('{yun:}$log.once_id{/yun}')" class="yun_member_hr_bth">去付款</a>
+                    <a href="javascript:void(0)" onclick="layer_del('确定要取消该订单吗？','{yun:}url m=once c=delpaylog id=$log.id{/yun}')" class="yun_member_hr_bth">取消充值</a>
+                </div>{yun:}/if{/yun}
+            </div>
+            {yun:}foreachelse{/yun}
+            	<div class="wap_member_no">暂无相关信息</div>
+            {yun:}/foreach{/yun} 
+            
+            {yun:}/if{/yun}
+        </div>
+    </div>
+</div>
+
+<div style="display:none;" id="fastjob">
+    <div class="job_recom_box">
+
+        <div class="job_recom_list" style="padding-bottom:10px; padding-top:10px;">
+
+            <span class="job_recom_s">应付金额：</span>
+            <div class="job_recom_list_jobtime">
+                <div class="job_recom_list_jobtime_money">
+                    <span id="resume_price" class="job_recom_list_jobtime_s">{yun:}$config.once_pay_price{/yun}</span>元
+                </div>
+            </div>
+        </div>
+
+        <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+
+        <form name="alipayment" id="payform_fast" action="../api/alipay/alipayto_fast.php" method="post" target="_blank" onsubmit="return payform_fast();">
+            <div class="job_redpack_list" style="margin-top:15px;">
+                <div>
+                    {yun:}if $config.alipay=='1' {/yun}
+                    <div class="job_recom_s">支付方式：</div>
+                    {yun:}if $config.alipay=='1'{/yun}
+                    <div class="job_redpack_pay">
+                        <a href="javascript:;" onclick="getOrder('alipay');"><img src="{yun:}$com_style{/yun}/images/ap_pay.png"> 支付宝支付</a>
+                    </div>
+                    {yun:}/if{/yun}
+					{yun:}else{/yun}
+                    <div class="con_banner_no" style="width:300px;"><span></span><em>网站已关闭支付接口，请联系管理员</em></div>
+                    {yun:}/if{/yun}
+                </div>
+                <input type="hidden" value="" id="pay_type" name="pay_type" value='' />
+                <input type="hidden" name="dingdan" id="order_fast_id" value="" />
+                <input type="hidden" value="店铺招聘金额" name="subject" value='' />
+                <input type="hidden" name="pay_bank" value="directPay">
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<input type="hidden" name="orderid" id="orderid" value="" />
+<input type="hidden" name="onceid" id="onceid" value="" />
+
+ 
+<!--支付弹出框-->
+<div id="payshow" style="width:450px; position:absolute;left:0px;top:0px; background:#fff; display:none;">
+    <div class="payment_tip">请在新打开的支付页面上完成付款，付款完成前请不要关闭此窗口。<br>如您在支付过程中遇到问题，请联系客服：<span class="payment_tip_s">{yun:}$config.sy_freewebtel{/yun}</span></div>
+    <div class="payment_bottom">
+        <a href="{yun:}url m=once{/yun}" class="payment_bottombutt">已完成付款</a>
+    </div>
+</div>
+
+<script>
+    function payform_fast() {
+        var pay_type = $("#pay_type").val();
+
+        if(pay_type == '') {
+            layer.msg('请选择支付方式！', 2, 8);
+
+        }  else {
+
+            $.layer({
+                type: 1,
+                title: '提示',
+                closeBtn: [0, true],
+                border: [10, 0.3, '#000', true],
+                area: ['450px', '280px'],
+                page: {
+                    dom: "#payshow"
+                }
+            });
+        }
+    }
+
+    /*生成订单*/
+    function getOrder(pay_type) {
+        $('#pay_type').val(pay_type);
+        var onceid = $('#onceid').val();
+
+        if(onceid == "") {
+            layer.msg('参数错误！', 2, 8);
+            return false;
+        } else {
+            var index = layer.load('执行中，请稍候...', 0);
+            $.ajax({
+                async: false, //设置ajax同步  
+                type: 'POST',
+                global: false,
+                url: weburl + "/once/index.php?c=pay",
+                data: {
+                    onceid: onceid,
+                    pay_type: pay_type
+                },
+                success: function(data) {
+                    layer.close(index);
+                    var data = eval('(' + data + ')');
+
+                    if(data.error == 1) {
+                        layer.msg(data.msg, 2, 8);
+                    } else if(data.error == 0) {
+                        $('#order_fast_id').val(data.orderid);
+                        $('#orderid').val(data.id);
+                        //提交表单
+                        $('#payform_fast').submit();
+                    }
+                }
+            });
+        }
+    }
+</script>

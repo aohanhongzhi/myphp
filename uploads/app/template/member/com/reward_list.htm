@@ -1,0 +1,106 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+    <div class=right_box>
+      <div class=admincont_box>
+            	<div class="yun_com_tit"><span class="yun_com_tit_s">{yun:}$config.integral_pricename{/yun}管理</span></div>
+      <div class="job_list_tit">
+         <ul class="">
+       <li {yun:}if $smarty.get.c=="integral"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=integral">{yun:}$config.integral_pricename{/yun}任务</a></li>
+       <li {yun:}if $smarty.get.c=="integral_reduce"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=integral_reduce">消费规则</a></li>
+       <li {yun:}if $smarty.get.c=="reward_list"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=reward_list">{yun:}$config.integral_pricename{/yun}兑换</a></li>
+         </ul>
+         </div>
+       
+        <div class="com_body">
+      
+   <div class="admin_new_tip mt20">
+        <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+        <div class="admin_new_tip_list_cont">
+          <div class="admin_new_tip_list">您还有{yun:}$statis.integral{/yun}个{yun:}$config.integral_pricename{/yun}</div>
+      </div>      </div>
+         <div id="job_checkbokid">
+          {yun:}if $rows{/yun}
+         <table class="com_table mt20"> 
+        <tr>
+            <th>商品名称</th>
+           <th>消耗{yun:}$config.integral_pricename{/yun}</th>
+           <th>兑换数量</th>
+           <th>兑换时间</th>
+           <th>联系人</th>
+           <th>状态</th>
+           <th> 操作</th>
+        </tr>
+		{yun:}foreach from=$rows item=v{/yun}
+	   <tr>
+			<td class="table_end">{yun:}$v.name{/yun}</td>
+			<td class="table_end">{yun:}$v.integral{/yun}</td>
+			<td class="table_end">{yun:}$v.num{/yun}(件)</td>
+			<td class="table_end">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+			<td class="table_end">{yun:}$v.linkman{/yun}&nbsp;Tel:{yun:}$v.linktel{/yun}</td>
+		
+			
+            {yun:}if $v.status=="0"{/yun} 
+            <td class="table_end"align="center"><span class="wate_verify">未审核</span> </td>
+            <td class="table_end"align="center"><a href="javascript:void(0)" onclick="layer_del('确定要取消？', 'index.php?c=reward_list&act=del&id={yun:}$v.id{/yun}');" class="com_bth cblue">取消</a></td>
+            {yun:}elseif $v.status=="1"{/yun} 
+           <td class="table_end"align="center"> <span class="y_verify">已审核</span></td>
+          <td class="table_end" align="center">-</td>
+             {yun:}else if $v.status=="2"{/yun} 
+             <td class="table_end"align="center"><span class="n_verify">未通过</span></td>
+          <td class="table_end" align="center">
+            {yun:}if $v.statusbody{/yun}
+            <a href="javascript:;" onclick="show_msg('{yun:}$v.statusbody{/yun}')"class="com_bth cblue">原因</a>
+            {yun:}/if{/yun} </td>
+            {yun:}/if{/yun}
+          
+			  </tr>
+               <tr>
+              <td colspan="7"  style="padding-top:0px;">备注： {yun:}$v.body{/yun} {yun:}if $v.express||$v.expnum{/yun}<span class="reward_wl">物流：<span class="reward_wl_name">{yun:}$v.express{/yun}</span><span class="reward_wl_name">{yun:}$v.expnum{/yun}</span></span>{yun:}/if{/yun}
+               </td>
+              </tr>
+                {yun:}/foreach{/yun} 
+              <tr>
+              <td colspan="7" class="table_end">
+              <div class="diggg">{yun:}$pagenav{/yun}</div> 
+              </td>
+              </tr>
+              </table>
+                <div class="wxts_box">
+          <div class="wxts">温馨提示：</div>
+         	您已兑换（<span class="f60">{yun:}$num{/yun}</span>）份礼品， 还有<span class="f60">{yun:}$statis.integral{/yun}</span>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}。<a href="{yun:}url m=redeem{/yun}" class="fb_Com_xz"  target="_blank" style="text-align:center; line-height:25px;">我要兑换</a><br>
+        </div>       		
+            {yun:}else{/yun}
+          <div class="msg_no"><p>您共有<span class="f60">{yun:}$statis.integral{/yun}</span>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}，还没有在商城兑换礼品，快去商城兑换礼品吧！</p><a href="{yun:}url m=redeem{/yun}" target="_blank" class="com_msg_no_bth com_submit">我要兑换</a></div>
+			</div> 
+              {yun:}/if{/yun}
+              
+			</div>
+		  </div>
+		</div>
+  </div>
+
+</div>
+
+<script>
+function show_msg(msg){
+	$("#msgs").html(msg);
+	var layindex = $.layer({
+		type : 1,
+		title :'查看原因', 
+		closeBtn : [0 , true],
+		border : [10 , 0.3 , '#000', true],
+		area : ['400px','200px'],
+		page : {dom :"#showmsg"}
+	});
+	$("#layindex").val(layindex);
+}
+</script>
+<div id="showmsg"  style="display:none; width: 400px;"> 
+	 <div class="admin_Operating_sh" style="padding:10px; ">
+	<div class="admin_Operating_sh_h1" style="padding:5px;"><div style="height:80px;overflow:auto;" id="msgs"></div></div>
+	<div class="admin_Operating_sub" style="margin-top:10px;"> 
+	  &nbsp;&nbsp;<input type="button" onClick="layer.close($('#layindex').val());" class="cancel_btn" value='确认'></div>
+	</div>  
+</div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

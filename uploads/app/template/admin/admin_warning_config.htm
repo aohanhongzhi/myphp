@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了预警配置。</div>
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="admin_new_search_box">
+
+  
+<a href="index.php?m=warning" class="admin_new_cz_tj" style="margin-left:0px;">预警列表</a>
+</div>
+
+
+
+<div class="tag_box ">
+
+
+<form class="layui-form">
+<table width="100%" class="table_form">
+ <tr>
+              <td colspan="2" bgcolor="#f0f6fb"><div class="admin_bold">预警配置</div></td>
+            </tr>
+    <tr class="admin_table_trbg">
+	<th width="220">每天发布职位：</th>
+		<td>
+            <input class="admin_text_w130" type="text" name="warning_addjob" id="warning_addjob" value="{yun:}$config.warning_addjob{/yun}" size="13" maxlength="255" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"/>  <span class="admin_text_dw"> 条，</span> 
+          
+            <div class="yun_admin_select_box yun_admin_select_boxw130  z_index15">                  
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <input name="warning_addjob_switch" lay-filter="warning_addjob_switch" lay-skin="switch" lay-text="是|否"
+                            {yun:}if $config.warning_addjob_type==1{/yun}
+                            checked
+                            {yun:}/if{/yun}
+                            type="checkbox"/>
+                    </div>
+                </div>
+            </div>
+            <span class="admin_text_dw">  锁定帐号</span>
+        </td>
+	</tr>
+    <tr>
+	<th width="220">每天下载简历：</th>
+		<td>
+            <input class="admin_text_w130" type="text" name="warning_downjob" id="warning_downresume" value="{yun:}$config.warning_downresume{/yun}" size="13" maxlength="255" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"/> <span class="admin_text_dw"> 条，</span>           
+            <div class="yun_admin_select_box yun_admin_select_boxw130  z_index14">                  
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <input name="warning_downresume_switch" lay-filter="warning_downresume_switch" lay-skin="switch" lay-text="是|否"
+                            {yun:}if $config.warning_downresume_type==1{/yun}
+                            checked
+                            {yun:}/if{/yun}
+                            type="checkbox"/>
+                        <input name="warning_downresume_type" type="hidden" id="warning_downresume_type" value="{yun:}$config.warning_downresume_type{/yun}">
+                    </div>
+                </div>
+            </div>              
+            <span class="admin_text_dw"> 锁定帐号</span>
+        </td>
+	</tr>
+    <tr class="admin_table_trbg">
+	<th width="220">每天发布简历：</th>
+		<td>
+            <input class="admin_text_w130" type="text" name="warning_addresume" id="warning_addresume" value="{yun:}$config.warning_addresume{/yun}" size="13" maxlength="255" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"/> 
+            <span class="admin_text_dw">份，</span>            
+            <div class="yun_admin_select_box yun_admin_select_boxw130  z_index13">     
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <input name="warning_addresume_switch" lay-filter="warning_addresume_switch" lay-skin="switch" lay-text="是|否"
+                            {yun:}if $config.warning_addresume_type==1{/yun}
+                            checked
+                            {yun:}/if{/yun}
+                            type="checkbox"/>
+                        <input name="warning_addresume_type" type="hidden" id="warning_addresume_type" value="{yun:}$config.warning_addresume_type{/yun}">
+                    </div>
+                </div>
+            </div>
+            <span class="admin_text_dw"> 锁定帐号</span>  
+        </td>
+	</tr>
+    <tr>
+	<tr>
+		<th width="220">一小时内发送短信数量预警：</th>
+		<td><input class="admin_text_w130" type="text" name="sy_hour_msgnum" id="sy_hour_msgnum" value="{yun:}$config.sy_hour_msgnum{/yun}" size="10" maxlength="255" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/> <span class="admin_text_dw"> 条，  </span>
+            <div class="yun_admin_select_box yun_admin_select_boxw130  z_index12">
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <input name="warning_recharge_switch" lay-filter="warning_recharge_switch" lay-skin="switch" lay-text="是|否"
+                            {yun:}if $config.warning_recharge_type==1{/yun}
+                            checked
+                            {yun:}/if{/yun}
+                            type="checkbox"/>
+                        <input name="warning_recharge_type" type="hidden" id="warning_recharge_type" value="{yun:}$config.warning_recharge_type{/yun}">
+                    </div>
+                </div>
+            </div>
+            <span class="admin_text_dw">关闭短信</span>
+		</td>
+	</tr>
+    <tr class="admin_table_trbg">
+		  <th>&nbsp;</th>
+			<td align="left" >
+        <input class="admin_button" id="integral" type="button" name="config" value="提交" />&nbsp;&nbsp;
+        <input class="admin_button" type="reset" value="重置" /></td>
+	</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+$(function(){
+	$("#integral").click(function(){
+        $.post("index.php?m=warning&c=config",{
+			config : $("#integral").val(),
+			warning_addjob_type : $("input[name=warning_addjob_switch]").attr('checked') == 'checked' ? 1 : 2,
+			warning_addjob : $("#warning_addjob").val(),
+			warning_downresume_type : $("#warning_downresume_type").val(),
+			warning_downresume : $("#warning_downresume").val(),　
+			sy_hour_msgnum : $("#sy_hour_msgnum").val(),
+			warning_addresume_type : $("#warning_addresume_type").val(),
+			warning_close_msg : $("#warning_close_msg").val(),
+			warning_addresume : $("#warning_addresume").val(),
+			warning_recharge_type : $("#warning_recharge_type").val(),
+			pytoken : $("#pytoken").val()
+		},function(data,textStatus){
+			config_msg(data);
+		});
+	});
+});
+
+layui.use(['form'], function(){
+    var form = layui.form,
+        $ = layui.$;
+
+    form.on('switch(warning_downresume_switch)', function(data){
+        var v = this.checked ? 1 : 2;
+        $("#warning_downresume_type").val(v);
+    });
+
+    form.on('switch(warning_addresume_switch)', function(data){
+        var v = this.checked ? 1 : 2;
+        $("#warning_addresume_type").val(v);
+    });
+
+    form.on('switch(warning_recharge_switch)', function(data){
+        var v = this.checked ? 1 : 2;
+        $("#warning_recharge_type").val(v);
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun} 
+<script src="{yun:}$wap_style{/yun}/js/binding.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";var usertype="{yun:}$usertype{/yun}";</script>
+
+<section class="wap_member">
+
+  
+  {yun:}if $smarty.get.type=="email"{/yun}
+  
+   <ul class="yunset_password mt15">
+<li><span class="yunset_password_mname">邮&nbsp;&nbsp; 箱 </span> 
+<div class="yunset_sj_box_y">
+ <input type="text" class="yunset_sjtext" name="email" id="emailval" value="{yun:}$member.email{/yun}"placeholder="请输入邮箱">
+ 
+ 
+ </div></li>
+ <li><span class="yunset_password_mname">验证码</span> 
+<div class="yunset_sj_box_y">
+<input type="text" name="authcode" class="yunset_sjtext"placeholder="请输入验证码">
+ <img id="vcode_img" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php" class="yunset_sj_boxyzm" onclick="checkCode('vcode_img');"> 
+ </div></li>
+ 
+ 
+</ul>
+
+<div class="yunset_bth_box">
+              <input type="button" value="发送验证邮箱" class="yunset_bth" onclick="check_email('vcode_img');">
+
+
+</div>
+
+
+
+    {yun:}/if{/yun}
+    {yun:}if $smarty.get.type=="moblie"{/yun}
+       <ul class="yunset_password mt15">
+<li><span class="yunset_password_mname">手机号码 </span> 
+<div class="yunset_sj_box_y">
+ <input type="text" class="yunset_sjtext" name="moblie" id="moblieval" value="{yun:}$member.moblie{/yun}" placeholder="请输入手机号">
+ </div></li>
+</ul>
+ <ul class="yunset_password mt15">
+ 
+<li><span class="yunset_password_mname">图片验证码</span> 
+<div class="yunset_sj_box_y">
+<input type="text" name="authcode" class="yunset_sjtext" placeholder="输入图片验证码">
+        <img id="vcode_img" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php"  class="yunset_sj_boxyzm" onclick="checkCode('vcode_img');">
+        
+        
+        </div></li>
+<li><span class="yunset_password_mname">短信验证码</span>
+<div class="yunset_sj_box_y">
+<input type="text" class="yunset_sjtext" placeholder="输入验证码" id="moblie_code">
+<a href="javascript:void(0);" onclick="sendmoblie('vcode_img');" class="yunset_sj_yzm" id="time">获取验证码</a>
+</div></li>
+
+</ul>
+
+
+<div class="yunset_bth_box">
+         <input type="button" value="提交" class="yunset_bth" onclick="check_moblie('vcode_img');">
+
+</div>
+
+    {yun:}/if{/yun} 
+</section>
+<input type="hidden" id="send" value="0" />
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

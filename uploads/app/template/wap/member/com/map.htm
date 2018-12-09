@@ -1,0 +1,105 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<script type="text/javascript">
+var weburl='{yun:}$config_wapdomain{/yun}'; 
+
+</script>
+<section class="wap_member">
+ 
+  
+  <div class="yun_wap_addresume_box" style="background:none;">
+    <form action="" method="post">
+    
+      <div class="yun_wap_mapsetadd">
+            <input type="text" name="address" id='address' value="{yun:}$row.address{/yun}"  placeholder="请填写详细地址" class="yun_wap_mapset_text">
+          
+        </div>
+     
+              <div class="yun_wap_mapset_ts_wz "> <span class="yun_wap_mapset_ts">点击搜索即可获得地址的相应位置 </span>
+          <input type="button" value="搜索" onclick="localsearch('全国');" class="yun_wap_mapsetadd_bth">
+                  </div>
+                        <div class="yun_wap_mapsetadd ">
+       <div class="yun_wap_mapset">
+        <div class=""> 设置地图 <span class="resume-cont_wate_bj">*</span> <span class="yun_wap_mapset_ts">( 在地图上点击所在位置即可 )</span></div>
+        <div class="yun_wap_mapset_mapbox ">
+          <div id="map_container" style="width:100%;height:200px; left:0;"></div>
+          <div class="yun_wap_mapset_mapbox_wz">
+         <div class="yun_wap_mapset_mapbox_wz_c"> <span class="yun_wap_mapset_mapbox_wz_c_s">X轴：</span><input name="xvalue" id="map_x" type="text" value="{yun:}$row.x{/yun}" readonly="readonly"class="yun_wap_mapset_text">  </div>
+          </div>
+          <div class="yun_wap_mapset_mapbox_wz">
+          <div class="yun_wap_mapset_mapbox_wz_c"> <span class="yun_wap_mapset_mapbox_wz_c_s"> Y轴：</span><input name="yvalue" id="map_y" type="text" value="{yun:}$row.y{/yun}" readonly="readonly"class="yun_wap_mapset_text">
+          </div> </div>
+        </div>       </div>
+      </div>
+		<div class="yun_wap_mapset_mapbox_bth mt10" style="background: transparent; border: none;">
+        <input type="submit" name="submit" value="提交操作" class="reinputText2">
+		</div>
+   
+      </form>
+    </div> 
+</section>
+</div>
+
+<script type="text/javascript" src="{yun:}$config.mapurl{/yun}"></script> 
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/map.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+	var map=new BMap.Map("map_container");
+	setLocation('map_container',116.404, 39.915,"map_x","map_y");
+	$(document).ready(function() {
+		{yun:}if ($row.x=="" || $row.y=="") && $row.address!=""{/yun}
+			localsearch();
+		{yun:}elseif $row.x!="" && $row.y!=""{/yun}
+			setLocation('map_container',{yun:}$row.x{/yun},{yun:}$row.y{/yun},"map_x","map_y");
+		{yun:}else{/yun}
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function (r) {
+			
+	        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+	            location_r = r;
+				setLocation('map_container',r.point.lng,r.point.lat,"map_x","map_y"); 
+	        }
+	    }, { enableHighAccuracy: true });
+		{yun:}/if{/yun}
+	});
+
+	function localsearch(){
+		if($("#address").val()==""){
+			layermsg('请输入地址！', 2, 8);return false;
+		}
+		// 创建地址解析器实例
+		var myGeo = new BMap.Geocoder();
+		// 将地址解析结果显示在地图上,并调整地图视野
+		myGeo.getPoint('{yun:}$city_name[$row.provinceid]{/yun}{yun:}$city_name[$row.cityid]{/yun}{yun:}$city_name[$row.three_cityid]{/yun}'+$("#address").val().replace(/\s+/g,""), function(point){
+			if(point){
+				$("#map_x").val(point.lng);
+				$("#map_y").val(point.lat);
+				map.centerAndZoom(point, 16);
+				map.addOverlay(new BMap.Marker(point));
+			}
+		}, "北京市");
+	}
+	function setLocation(id,x,y,xid,yid){
+		
+		var rating,map_control_type,map_control_anchor;
+		if(!x && !y){x='116.404';y='39.915';}
+		var point = new BMap.Point(x,y);
+		var marker = new BMap.Marker(point);
+		var opts = {type:BMAP_NAVIGATION_CONTROL_LARGE}
+		map.enableScrollWheelZoom(true);
+		map.addControl(new BMap.NavigationControl(opts));
+		map.centerAndZoom(point, 15);
+		map.addOverlay(marker);
+		map.addEventListener("click",function(e){
+		   var info = new BMap.InfoWindow('', {width: 260});
+			var projection = this.getMapType().getProjection();
+			var lngLat = e.point;
+			document.getElementById(xid).value=lngLat.lng;
+			document.getElementById(yid).value=lngLat.lat;
+			map.clearOverlays();
+			var point = new BMap.Point(lngLat.lng,lngLat.lat);
+			var marker = new BMap.Marker(point);
+			map.addOverlay(marker);
+		});
+	}  
+	
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

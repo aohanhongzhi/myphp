@@ -1,0 +1,220 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/search.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+{yun:}include file="$tplstyle/public_search/index_search.htm"{/yun}
+<script>
+function CheckPost(){
+	var minsalary=$.trim($("#minsalary").val());
+	var maxsalary=$.trim($("#maxsalary").val());
+	if(maxsalary){
+		if(parseInt(maxsalary)<=parseInt(minsalary)){
+			layer.msg('最高工资必须大于最低工资！', 2, 8);return false;
+		}
+	}
+}
+</script>
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+    
+       <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">职位搜索器</span> <i class="member_right_h1_icon user_bg"></i></div>
+
+        <div style="clear:both"></div>
+        <div style="float:left" class="formbox02">
+           
+            <div style="clear:both"></div>
+            <form action="index.php?c=finder&act=save" method="post" target="supportiframe" name="MyForm" onsubmit="return CheckPost();" class="layui-form">
+                <ul class="Finder_box">
+                    <li><span class="Finder_span">搜索器名称：</span><input name="name" type='text' style="width:260px" value="{yun:}$info.name{/yun}" class="layui-input" placeholder=" 如，搜索会计"></li>
+                    <li><span class="Finder_span">搜索关键字：</span><input name="keyword" type='text' style="width:260px" value="{yun:}$parav.keyword{/yun}" class="layui-input" placeholder=" 如，会计"></li>
+                    <li><span class="Finder_span">行业类别：</span>
+                    <div class="text" ><div class="text_seclet text_seclet_cur0 fltL ">
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline">
+                        <select name="hy" lay-filter="" id="hyid">
+                          <option value="">请选择行业</option>
+                          {yun:}foreach from=$industry_index key=j item=v{/yun}
+                          <option value="{yun:}$v{/yun}" {yun:}if $parav.hy==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$industry_name[$v]{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                    </div>
+                    </div></div>
+                    </li>
+                    <li><span class="Finder_span">职位类别：</span>
+                    <div class="text" ><div class="text_seclet_cur fltL">
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline">
+                        <select name="job1" lay-filter="job" id="job1id">
+                          <option value="">请选择职位类别</option>
+                          {yun:}foreach from=$job_index key=j item=v{/yun}
+                          <option value="{yun:}$v{/yun}" {yun:}if $parav.job1==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$job_name[$v]{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                      <div class="layui-input-inline">
+                        <select name="job1_son" lay-filter="job" id="job1_sonid">
+                          <option value="">请选择职位类别</option>
+                          {yun:}foreach from=$job_type[$parav.job1] key=j item=v{/yun}
+                          <option value="{yun:}$v{/yun}" {yun:}if $parav.job1_son==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$job_name[$v]{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                      <div class="layui-input-inline">
+                        <select name="job_post" lay-filter="" id="job_postid">
+                          <option value="">请选择职位类别</option>
+                          {yun:}foreach from=$job_type[$parav.job1_son] key=j item=v{/yun}
+                          <option value="{yun:}$v{/yun}" {yun:}if $parav.job_post==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$job_name[$v]{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                    </div>
+                    </div></div>
+                    </li>
+                    <li><span class="Finder_span">工作地区：</span>
+                    <div class="text" ><div class=" text_seclet_cur2 fltL">
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline">
+                        <select name="provinceid" lay-filter="city" id="provinceid">
+                          <option value="">请选择工作地区</option>
+                          {yun:}foreach from=$city_index key=j item=v{/yun}
+                          <option value="{yun:}$v{/yun}" {yun:}if $parav.provinceid==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                      <div class="layui-input-inline">
+                        <select name="cityid" lay-filter="city" id="cityid">
+                          <option value="">请选择工作地区</option>
+                          {yun:}foreach from=$city_type[$parav.provinceid] key=j item=v{/yun}
+                          <option value="{yun:}$v{/yun}" {yun:}if $parav.cityid==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                      <div class="layui-input-inline" {yun:}if !$parav.three_cityid{/yun}style='display:none;'{yun:}/if{/yun} id="cityshowth">
+                        <select name="three_cityid" lay-filter="" id="three_cityid">
+                          <option value="">请选择工作地区</option>
+                          {yun:}foreach from=$city_type[$parav.cityid] key=j item=v{/yun}
+                          <option value="{yun:}$v{/yun}" {yun:}if $parav.three_cityid==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                    </div>
+                    </div></div>
+                    </li>
+                    <li><span class="Finder_span">薪资待遇：</span>
+                    <div class="text" ><div class="text_seclet text_seclet_cur3 fltL">
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline">
+                      <input id="minsalary" name="minsalary" type="text" value="{yun:}$parav.minsalary{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="layui-input" placeholder="最低薪资">
+                      </div>
+                      <div class="layui-input-inline">
+                      <input id="maxsalary" name="maxsalary" type="text" value="{yun:}$parav.maxsalary{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"class="layui-input" placeholder="最高薪资">
+                      </div>
+                    </div>
+                    </li>
+                    <li><span class="Finder_span">学历要求：</span>
+                    <div class="text" ><div class="text_seclet text_seclet_cur4 fltL">
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline">
+                        <select name="edu" lay-filter="" id="eduid">
+                          <option value="">请选择学历要求</option>
+                          {yun:}foreach from=$comdata.job_edu item=v{/yun}
+                          <option value="{yun:}$v{/yun}" {yun:}if $parav.edu==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                    </div>
+                    </div></div>
+                    </li>
+                    <li><span class="Finder_span">工作经验：</span>
+                    <div class="text" ><div class="text_seclet text_seclet_cur5 fltL">
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline">
+                        <select name="exp" lay-filter="" id="expid">
+                          <option value="">请选择工作经验</option>
+                          {yun:}foreach from=$comdata.job_exp item=v{/yun}
+                          <option value="{yun:}$v{/yun}" {yun:}if $parav.exp==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                    </div>
+                    </div></div>
+                    </li>
+                    <li><span class="Finder_span">性别要求：</span>
+                    <div class="text" ><div class="text_seclet text_seclet_cur6 fltL">
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline">
+                        <select name="sex" lay-filter="" id="sexid">
+                          <option value="">请选择性别要求</option>
+                          {yun:}foreach item=v key=j from=$arr_data.sex{/yun}
+                          <option value="{yun:}$j{/yun}" {yun:}if $parav.sex==$j{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$v{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                    </div>
+                    </div></div>
+                    </li>
+                    <li><span class="Finder_span">到岗时间：</span>
+                    <div class="text" ><div class="text_seclet text_seclet_cur8 fltL">
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline">
+                        <select name="report" lay-filter="" id="reportid">
+                          <option value="">请选择到岗时间</option>
+                          {yun:}foreach from=$comdata.job_report item=v{/yun}
+                          <option value="{yun:}$v{/yun}" {yun:}if $parav.report==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                    </div>
+                    </div></div>
+                    </li>
+                    <li><span class="Finder_span">更新时间：</span>
+                    <div class="text" ><div class="text_seclet text_seclet_cur10 fltL">
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline">
+                        <select name="uptime" lay-filter="" id="uptimeid">
+                          <option value="">请选择更新时间</option>
+                          {yun:}foreach from=$uptime item=v key=j{/yun}
+                          <option value="{yun:}$j{/yun}" {yun:}if $parav.uptime==$j{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$v{/yun}</option>
+                          {yun:}/foreach{/yun}
+                        </select>
+                      </div>
+                    </div>
+                    </div></div>
+                    </li> 
+                    <li><span class="Finder_span"></span><input name="id" value="{yun:}$info.id{/yun}" type="hidden" /><input class="layui-btn layui-btn-normal" type="submit" value="保存信息" name="submitBtn"></li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+	form.on('select(city)', function(data){
+		$.post(weburl+"/index.php?m=ajax&c=ajax",{str:data.value},function(htm){
+			if(data.elem.name=='provinceid'){
+				$("#cityid").html(htm);
+				$("#three_cityid").html("<option value=''>请选择</option>");
+			}else if(data.elem.name=='cityid'){
+				$("#cityshowth").show();
+				$("#three_cityid").html(htm);
+			}
+			form.render('select');
+		});
+	});
+	form.on('select(job)', function(data){
+		$.post(weburl+"/member/index.php?m=ajax&c=getjoblist",{id:data.value},function(htm){
+			if(data.elem.name=='job1'){
+				$("#job1_sonid").html(htm);
+				$("#job_postid").html("<option value=''>请选择</option>");
+			}else if(data.elem.name=='job1_son'){
+				$("#job_postid").html(htm);
+			}
+			form.render('select');
+		});
+	});
+});
+</script>
+{yun:}include file="$userstyle/footer.htm"{/yun}

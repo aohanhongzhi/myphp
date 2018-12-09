@@ -1,0 +1,88 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<div class="redeemshow_pic"><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$row.pic{/yun}"/></div>
+<div class="redeemshow_spinfo redeemshow_spinfo_line">
+<span class="redeemshow_name">{yun:}$row.name{/yun}</span>
+
+
+</div>
+<div class="redeemshow_spinfo">
+ <div class="redeemshow_spinfo_box">  
+
+ <div class="redeemshow_spinfo_list"><span class="redeemshow_spinfo_list_s">剩余库存</span> {yun:}$row.stock{/yun} 件 </div>
+ <div class="redeemshow_spinfo_list"><span class="redeemshow_spinfo_list_s">限购数量</span>  {yun:}if $row.restriction=="0"{/yun}不限{yun:}else{/yun}{yun:}$row.restriction{/yun} 件{yun:}/if{/yun}</div>
+ <span class="redeemshow_jf">{yun:}$row.integral{/yun} {yun:}$config.integral_pricename{/yun}</span>
+ </div>
+
+ </div>
+    <div class="intro ">
+ 
+         {yun:}if $row.stock!="0"{/yun}
+          <form action="index.php" method="get" onsubmit="return checkform_redeem_show();">
+          <input type="hidden" value="redeem" name="c" />
+          <input type="hidden" name="a" value="dh"/>
+          <input type="hidden" name="id" value="{yun:}$row.id{/yun}"/>
+          <input type="hidden" id="uid" value="{yun:}$uid{/yun}"/>
+          <input type="hidden" id="stock" value="{yun:}$row.stock{/yun}"/>
+          <input type="hidden" id="restriction" value="{yun:}$row.restriction{/yun}"/>
+         <div class="intro_nb_wr">
+              <span class="infor_nb_sh">兑换数量</span>
+            
+			  <div class="intro_bt">
+				  <div class="mui-numbox" data-numbox-step='1' data-numbox-min='1' {yun:}if $row.restriction!="0"{/yun}data-numbox-max='{yun:}$row.restriction{/yun}' {yun:}/if{/yun} >
+						<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+						<input class="mui-input-numbox" type="number"  id="num" name="num" />
+						<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+					</div>
+               </div>
+               <input class="intro_but_dh" style="border:none" type="submit" value="我要兑换"/>
+               <input type="hidden" id="memberintegral" value="{yun:}$statis.integral{/yun}" /><input type="hidden" id="redeemintegral" value="{yun:}$row.integral{/yun}" />
+       {yun:}if $uid{/yun}<div style="padding-top:10px; text-align:center">您当前总{yun:}$config.integral_pricename{/yun}：<i style="color:#e30000;">{yun:}$statis.integral{/yun}</i> {yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>{yun:}/if{/yun}
+         </div>
+         </form>
+          {yun:}else{/yun}
+          商品下架
+         {yun:}/if{/yun}
+    </div>
+    <div class="pr_scr">
+         <div class="pr_scr_tit">礼品详情</div>
+         <div class="pr_src_ct">
+         {yun:}if $row.content{/yun}
+            <div class="rem_show_c">{yun:}$row.content{/yun}</div>
+           {yun:}else{/yun} 
+           <div class="wap_member_no">暂无详情内容</div> 
+           {yun:}/if{/yun} 
+         </div>
+    </div> 
+   
+    </div> 
+    
+    
+    <div class="redeemshow"></div>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/redeem.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script language="javascript" type="text/javascript">
+mui.init();
+	
+$(function(){
+    var t = $("#num");  
+    $("#add").click(function(){       
+        t.val(parseInt(t.val())+1)  
+        setTotal();  
+    })  
+    $("#min").click(function(){
+		if(t.val()>0){
+        t.val(parseInt(t.val())-1)  		
+        setTotal(); 
+		}   
+    })   
+    function setTotal(){  
+        $("#integral").html((parseInt(t.val())*"{yun:}$row.integral{/yun}").toFixed(2));  
+    }  
+    setTotal();  
+}) 
+</script>  
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

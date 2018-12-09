@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script> var weburl = '{yun:}$config.sy_weburl{/yun}';</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+	<div id="preview"  style="display:none; width:400px; "> 
+		<div style="height:300px; overflow:auto; width:auto; " > 
+			<div class="job_box_div" style="text-align:center;margin-top:10px;"></div>
+		</div>	
+	</div>  
+
+	<div class="infoboxp">
+
+		<div class="admin_new_tip">
+			<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+			<div class="admin_new_tip_list_cont">
+				<div class="admin_new_tip_list">添加招聘会展示的图片</div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+		
+		<div class="admin_new_search_box">
+			<a href="index.php?m=zhaopinhui" class="admin_new_cz_tj" style="width:140px; margin-left:0px;">< 返回招聘会列表</a>
+		</div>
+
+		<div class="clear"></div>
+	
+		{yun:}foreach from=$rows item=list{/yun}
+			<div class="admin_zph_img">
+				<div class="admin_zph_img_box">
+					<div class="admin_zph_img_box_img"><img src="{yun:}$config.sy_weburl{/yun}{yun:}$list.pic{/yun}" onerror="imghidden(this)">	<div class="admin_zph_img_box_img_p">{yun:}$list.title{/yun}</div></div>
+				
+				
+
+					<div class="admin_zph_img_box_p">
+
+						<a href="javascript:addImg('{yun:}$list.id{/yun}','{yun:}$list.title{/yun}','{yun:}$list.sort{/yun}','修改图片')" class="admin_new_c_bth">修改</a>
+						
+						<a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=zhaopinhui&c=pic&delid={yun:}$list.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a>
+
+						<a href="###"class="admin_new_c_bth ttt" style="width:68px">设为缩略图</a> 
+					</div>
+				</div>
+			</div>
+		{yun:}/foreach{/yun}
+
+		
+		<div class="admin_zph_img addimg">
+			<div class="admin_zph_img_box">
+				<a href="javascript:addImg('','','','添加图片')"><div class="admin_zph_img_box_img"><span class="admin_zph_img_box_tj">+</span></div>
+				<div class="admin_zph_img_box_p">添加图片</div></a>
+			</div>
+		</div>
+
+	</div>
+<div class="clear"></div>
+	  
+	
+	<div class="subnav" id="addImage" style="display:none">
+		<div class="">
+			<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+			<form name="myform" target="supportiframe" action="index.php?m=zhaopinhui&c=uploadsave" method="post" encType="multipart/form-data" onsubmit="return ckform()">
+				
+				<input class="input-text" name="zid" type="hidden" value="{yun:}$row.id{/yun}" />
+				<input type="hidden" name="pytoken" id="pytoken"  value="{yun:}$pytoken{/yun}">
+				
+ 				<div class="zph_tjlist"><em class="zph_tjlist_s">图片名称：</em>
+				<input class="input-text" name="title" id="title" type="text" value="" /> 
+                    </div>
+				<div class="zph_tjlist"><em class="zph_tjlist_s">上传图片：</em>
+					<button type="button" class="yun_bth_pic" id="noupload">选择图片</button>
+					<input type="hidden" id="laynoupload" value="1"/>
+				</div>
+
+				<div class="zph_tjlist"><em class="zph_tjlist_s">排序：</em>
+				<input class="input-text" name="sort" type="text" value="" style="width:40px;"/> 
+ 				</div>
+
+ 				<div class="zph_tjlist">
+				<input class="admin_button" type="hidden" name="id" value=""/>
+				
+				<input class="admin_button" type="submit" name="update" value="修改">
+				<input class="admin_button" type="submit" name="add" value="添加">
+				</div>	
+			</form>
+		</div>
+	</div>
+	 
+
+</div>
+
+<script>
+	function imghidden($this){
+		$($this).each(function(){
+			$(this).parent().parent().find('.ttt').hide();
+		});
+	}
+	function ckform(){
+		var title=$("input[name='title']").val();
+		if(title==''){
+			layer.msg('请填写图片名称！',2,8);return false;
+		}
+
+		if($("input[name=id]").val() != ''){
+			var pic = $("input[name=file]").val();
+			if(!pic){
+				layer.msg('请上传图片！',2,8);return false;
+			}
+		}
+	}
+ 
+	function addImg(id,name,sort,title){
+
+		$("input[name=title]").val(name);
+		$("input[name=id]").val(id);
+		$("input[name=sort]").val(sort);
+		
+		if(id){
+			$("input[name=add]").hide();
+			$("input[name=update]").show();
+
+			$("input[name=id]").val(id);
+		}else{
+			$("input[name=add]").show();
+			$("input[name=update]").hide();
+		}
+		$.layer({
+			type : 1,
+			title :title,
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area : ['400px','270px'],
+			page : {dom :"#addImage"}
+		});
+	}
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+</body>
+</html>

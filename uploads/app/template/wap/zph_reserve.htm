@@ -1,0 +1,244 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+
+<div id="bg" class="bg" style="width:100%;height:100%;background-color:#000;opacity:0.3;display:none; position:fixed;left:0px;top:0px;filter: alpha(opacity=30); z-index:100"></div>
+<section>
+    <div class="zph_bg_pd" style="border-radius:0px;">
+        <div class="zph_bg_name">
+            <h2> 
+            	{yun:}$Info.title{/yun}
+            	{yun:}if $Info.stime<'0'&&$row.etime>'0'{/yun}{yun:}elseif $Info.stime>'0'{/yun}<div class=" zph_yd">火热预定中！</div>{yun:}/if{/yun}
+       		</h2>
+            <div class="zph_tim_name">招聘会时间：</div>
+            <div class="job_fair_state_show_time">{yun:}$Info.starttime{/yun} 至 {yun:}$Info.endtime{/yun}</div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="user_contnet">
+        <div class="zph_bg_pd mt15">
+            {yun:}if $space.pic{/yun}
+            <div class="wap_title">
+                <span class="">招聘会展位图</span>
+            </div>
+            <div class="fairs_display">
+                <img src="{yun:}$config.sy_weburl{/yun}/{yun:}$space.pic{/yun}" class="png" style="max-width:100%" /> </div>
+            {yun:}/if{/yun}
+
+            <div class="wap_title">
+                <span class="">招聘会展位在线预订</span>
+            </div>
+            <div class="fairs_title_list">
+                <dl class="fairs_title_items">
+                    <dt>
+                        <img src="{yun:}$wap_style{/yun}/images/fairs_no.png">
+                    </dt>
+                    <dd>不可
+                        <br>预定</dd>
+                </dl>
+                <dl class="fairs_title_items">
+                    <dt>
+                        <img src="{yun:}$wap_style{/yun}/images/fairs_have.png">
+                    </dt>
+                    <dd>已被
+                        <br>预定</dd>
+                </dl>
+                <dl class="fairs_title_items">
+                    <dt>
+                        <img src="{yun:}$wap_style{/yun}/images/fairs_can.png">
+                    </dt>
+                    <dd>可以
+                        <br>预定</dd>
+                </dl>
+                <dl class="fairs_title_items">
+                    <dt>
+                        <img src="{yun:}$wap_style{/yun}/images/fairs_start.png">
+                    </dt>
+                    <dd>审核
+                        <br>中</dd>
+                </dl>
+            </div>
+            {yun:}foreach item=v from=$spacelist{/yun}
+
+            <div class="fairs_display_con">
+                <div class="fairs_display_left"> {yun:}$v.name{/yun} </div>
+                <div class="fairs_display_right">
+                    <ul class="fairs_display_list">
+
+                        {yun:}foreach item=val key=key from=$v.list{/yun}
+                        <li class="fairs_disp_a {yun:}if !in_array({yun:}$val.id{/yun},$reserved){/yun}fairs_disp_position{yun:}/if{/yun}" aid="{yun:}$val.id{/yun}">
+
+                            {yun:}if in_array({yun:}$val.id{/yun},$reserved){/yun}
+                            <dl class="fairs_disp_items">
+                                <dt>
+                                    <img src="{yun:}$wap_style{/yun}/images/fairs_no.png">
+                                </dt>
+                                <dd>{yun:}$val.name{/yun}</dd>
+                            </dl>
+                            {yun:}elseif $val.comstatus==0 || $val.comstatus==1{/yun}
+                            <dl class="fairs_disp_items">
+                                {yun:}if $val.comstatus==0{/yun}
+                                <dt>
+                                    <img src="{yun:}$wap_style{/yun}/images/fairs_start.png" />
+                                </dt> {yun:}else{/yun}
+                                <dt>
+                                    <img src="{yun:}$wap_style{/yun}/images/fairs_have.png" />
+                                </dt> {yun:}/if{/yun}
+                                <dd>{yun:}$val.name{/yun}</dd>
+                            </dl>
+                            <div id="showstatus{yun:}$val.id{/yun}" style="width:100%;display:none; position:fixed;left:0px;top:200px; padding:10px; z-index:1000">
+                                <div class="zph_yyd">
+                                    
+                                    <div class="zph_yyd_tit"><span class="zph_yyd_tit_s">温馨提示</span>
+                                        <a href="javascript:void(0);" onclick="closeShowStatus('{yun:}$val.id{/yun}');" class="zph_yyd_tit_close">关闭</a>
+                                    </div>
+                                    
+                                    <div class="zph_yyd_box">
+                                        <div class="">
+                                            该展位已被
+                                            <a href="{yun:}url m=wap c=company a=show id=$val.uid{/yun}" target="_blank" class="zph_yyd_comname">{yun:}$val.comname|mb_substr:0:14:'utf-8'{/yun}</a> 预订
+                                        </div>
+                                        <div class="">
+                                            参加的职位：
+                                            <div class="zph_yyd_jobbox">
+                                                {yun:}foreach item=value from=$val.joblist{/yun}
+                                                <div class="zph_yyd_list">
+                                                    <a href="{yun:}url m=wap c=job a=view id=$value.id{/yun}" class="">{yun:}$value.name{/yun}</a>
+                                                    <span class="zph_yyd_list_time">{yun:}$value.lastupdate|date_format:"%Y-%m-%d"{/yun}</span>
+                                                </div>
+                                                {yun:}/foreach{/yun}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {yun:}elseif $val.comstatus=="-1"|| $val.comstatus==2{/yun}
+                            <dl class="fairs_disp_items">
+                                <dt>
+                                    <img src="{yun:}$wap_style{/yun}/images/fairs_can.png">
+                                </dt>
+                                <dd>{yun:}$val.name{/yun}</dd>
+                            </dl>
+                            <div id="showstatus{yun:}$val.id{/yun}" style="width:260px; display:none; position:fixed;left:50%; margin-left:-130px;top:160px; z-index:1000">
+                                <div class="zph_yd_zw_box">
+                                    <div class="zph_yd_zw_tit">欢迎预定展位
+                                        <a href="javascript:void(0);" onclick="closeShowStatus('{yun:}$val.id{/yun}');" class="zph_yd_zw_tit_qx">取消</a>
+                                    </div>
+                                    <div class="zph_yd_zw_p">展位状态：可预订</div>
+                                    <div class="zph_yd_zw_p"> 展位号：{yun:}$val.name{/yun} </div>
+                                    <div class="zph_yd_zw_p">展位价格：
+                                        <font color="#f00">{yun:}$val.price{/yun}</font>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}
+                                    </div>
+                                    <div class="zph_yd_zw_bth">
+                                        <a href="javascript:void(0);" onclick="clickzph('{yun:}$val.id{/yun}','{yun:}$Info.id{/yun}','{yun:}$val.price{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}');" class="vip_zph_yd_bth">立即预订</a>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            {yun:}/if{/yun}
+                        </li>
+                        {yun:}/foreach{/yun}
+                    </ul>
+                </div>
+            </div>
+            {yun:}/foreach{/yun}
+        </div>
+    </div>
+</section>
+{yun:}if $Info.body{/yun}
+<div class="user_contnet">
+    <section>
+        <div class="zph_bg_pd mt15">
+            <div class="user_contnet_box ">
+                <div class="wap_title">
+                    <span class="">招聘会介绍</span>
+                </div>
+                {yun:}$Info.body{/yun}
+            </div>
+        </div>
+    </section>
+    {yun:}/if{/yun} {yun:}if $Info.media{/yun}
+    <section>
+
+        <div class="zph_bg_pd mt15">
+            <div class="user_contnet_box ">
+                <div class="wap_title">
+                    <span class="">媒体宣传</span>
+                </div>
+                {yun:}$Info.media{/yun}
+            </div>
+        </div>
+    </section>
+    {yun:}/if{/yun} {yun:}if $Info.packages{/yun}
+    <section>
+
+        <div class="zph_bg_pd mt15">
+            <div class="user_contnet_box ">
+                <div class="wap_title">
+                    <span class="">超值服务套餐</span>
+                </div>
+                {yun:}$Info.packages{/yun}
+            </div>
+        </div>
+    </section>
+    {yun:}/if{/yun} {yun:}if $Info.booth{/yun}
+    <section>
+
+        <div class="zph_bg_pd mt15">
+            <div class="user_contnet_box ">
+                <div class="wap_title">
+                    <span class="">展位设置方案</span>
+                </div>
+                {yun:}$Info.booth{/yun}
+            </div>
+        </div>
+    </section>
+    {yun:}/if{/yun} {yun:}if $Info.participate{/yun}
+    <section>
+
+        <div class="zph_bg_pd mt15">
+            <div class="user_contnet_box ">
+                <div class="wap_title">
+                    <span class="">参与办法</span>
+                </div>
+                {yun:}$Info.participate{/yun}
+            </div>
+        </div>
+    </section>
+    {yun:}/if{/yun}
+</div>
+<section>
+
+    <div class="job_fair_state_lok">
+        <a href="{yun:}url m=wap c=zph a=com id=$Info.id{/yun}" class="job_fair_state_lok_bth">查看参会企业</a>
+    </div>
+
+</section>
+<!---->
+<div id="TB_window" class="Corporate_box none">
+    <div id="error_zph" class="error_zph"></div>
+    <div id="TB_ajaxContent" class="Corporate_box_cont">
+        <input id="bid" value="0" type="hidden" />
+        <input id="zid" value="{yun:}$Info.id{/yun}" type="hidden" />
+
+        <div class="zph_tck_box_close_post">
+
+            <div class="zph_tck_box_close">请选择参与招聘会的职位：</div>
+            <div id="joblist" class="zph_tck_post" style="padding-bottom:5px;"></div>
+        </div>
+        <div class="Corporate_box_subs">
+            <input type='button' value="提交" onclick="submitzph()" class="Corporate_box_bth" />
+            <input id="usertype" value="{yun:}$usertype{/yun}" type="hidden" />
+            <span id="zphaddjob"></span>
+        </div>
+    </div>
+</div>
+<input id="zph_etime" value='{yun:}$Info.etime{/yun}' type="hidden" />
+<input id="zph_stime" value='{yun:}$Info.stime{/yun}' type="hidden" />
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/zph.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

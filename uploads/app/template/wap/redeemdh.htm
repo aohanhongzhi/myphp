@@ -1,0 +1,155 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+    <div class="mui-view">
+
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<div id="redeemdh" class="mui-page">
+
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <ul class="mui-table-view mui-table-view-chevron">
+                    <li class="">
+                        <a href="#dhplaces" class="">
+                            <div class="redeemd_address">
+                                <div class="redeemd_address_name">收货人：<em id="dhlinkman">{yun:}$uinfo.linkman{/yun}</em> <span class="redeemd_address_tel"><em id="dhlinktel" >{yun:}$uinfo.moblie{/yun}</em></span></div>
+                                <div class="">收货地址：<em id="dhbody">{yun:}$change.body{/yun}</em></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <div class="redeemd_commodity mt15">
+                    <div class="redeemd_commodity_pic">
+                        <img class="dh_store_tit_pc" style="width:60px; height:60px;" src="{yun:}$config.sy_weburl{/yun}/{yun:}$row.pic{/yun}" />
+                    </div>
+                    <div class="redeemd_commodity_name">{yun:}$row.name{/yun}</div>
+                    <div class="redeemd_commodity_money">
+                        <span class="redeemd_commodity_money_n">{yun:}$row.integral{/yun}</span> {yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun} <span class="redeemd_commodity_n"> ×{yun:}$smarty.get.num{/yun}</span>
+                    </div>
+                </div>
+                <div class="redeemd_commodity_number_box"><span class="redeemd_commodity_number_box_name">留言备注</span><input type="text" id="other" value="" class="redeemd_commodity_number_text" placeholder="请提前与客服沟通确认"></div>
+                <div class="redeemd_commodity_number_all">共 {yun:}$smarty.get.num{/yun} 件商品<span class="redeemd_commodity_number_all_r">小计：<span class="redeemd_commodity_number_all_n">{yun:}$integral{/yun}</span> {yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</span>
+                </div>
+                <input id='id' value='{yun:}$row.id{/yun}' type='hidden'>
+                <input id='num' value='{yun:}$smarty.get.num{/yun}' type='hidden'>
+                <div class="">
+                    <a class="redeemd_commodity_bth" href="javascript:void(0)" onclick="redeem_dh()">立即支付</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="dhplaces" class="mui-page">
+
+    <div class="mui-page-content">
+        <!--新增收货地址-->
+        <div class="dh_store_ps_msg">
+            <div class="mui-content">
+                <div class="mui-content-padded" style="margin:0; padding:0">
+                    <form class="mui-input-group">
+                        <div class="mui-input-row jf_add_text">
+                            <span class="jf_add_text_name">收货人</span>
+                            <input type="text" class="mui-input-clear" id="linkman" value="{yun:}$uinfo.linkman{/yun}" placeholder="请输入收货人姓名">
+                        </div>
+                        <div class="mui-input-row jf_add_text">
+                            <span class="jf_add_text_name">手机号码</span>
+                            <input type="text" class="mui-input-clear" id="linktel" value="{yun:}$uinfo.moblie{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="请输入手机号码">
+                        </div>
+
+                        <div class="mui-input-row jf_add_text">
+                            <span class="jf_add_text_name">配送地址</span>
+                            <button id='cityPicker' class=" " type='button'>{yun:}if $change.cityname{/yun}{yun:}$change.cityname{/yun}{yun:}else{/yun}请选择配送地址{yun:}/if{/yun}</button>
+                            <input type="hidden" id="provinceid" name="provinceid">
+                            <input type="hidden" id="cityid" name="cityid">
+                            <input type="hidden" id="three_cityid" name="three_cityid">
+                        </div>
+                        <div class="mui-input-row jf_add_text">
+                            <span class="jf_add_text_name">详细地址</span>
+                            <input type="text" class="mui-input-clear" id="address" value="{yun:}$change.address{/yun}" placeholder="请输入收货人地址">
+                        </div>
+                        <div class="mui-button-row">
+                            <button type="button" class="mui-btn mui-btn-primary" onclick="dhplace()">确认</button>&nbsp;&nbsp;
+                            <button type="button" class="mui-action-back mui-btn  mui-btn-nav  mui-btn-danger">取消
+						</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/redeem.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+    mui.init();
+    var viewApi = mui('#app').view({
+        defaultPage: '#redeemdh'
+    });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+    var view = viewApi.view;
+    (function($) {
+        //处理view的后退与webview后退
+        var oldBack = $.back;
+        $.back = function() {
+            if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                viewApi.back();
+            } else { //执行webview后退
+                oldBack();
+            }
+        };
+    })(mui);
+
+    function dhplace() {
+        var linkman = $("#linkman").val();
+        var linktel = $("#linktel").val();
+        var showcity = $("#cityPicker").html();
+        var body = '';
+        if(showcity != '' && showcity!='请选择配送地址') {
+            body = showcity;
+        }
+        var address = $("#address").val();
+        body = body +' '+ address;
+        if(!linkman) {
+            layermsg('收件人不能为空！');
+            return false;
+        } else if(!linktel) {
+            layermsg('手机号码不能为空！');
+            return false;
+        } else if(linktel && !isjsMobile(linktel)) {
+            layermsg('手机号码格式错误！');
+            return false;
+        }
+		if($("#cityid").val() == '' && $("#address").val() == '') {
+            layermsg('请选择配送地址！');
+            return false;
+        }
+		if($("#address").val() == '') {
+            layermsg('请填写详细地址！');
+            return false;
+        }
+        $("#dhlinkman").html(linkman);
+        $("#dhlinktel").html(linktel);
+        if(body) {
+            $("#dhbody").html(body);
+        } else {
+            $("#dhbody").html('无');
+        }
+        viewApi.back();
+    }
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

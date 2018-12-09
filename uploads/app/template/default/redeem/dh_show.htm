@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun}"/>
+<meta name="description" content="{yun:}$description{/yun}"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/yun_job_fairs.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+</head>
+<body>
+{yun:}include file="$tplstyle/header.htm"{/yun}
+<div class="redeem">
+  <div class="current_Location icon png"> 您当前的位置：<a href="{yun:}$config.sy_weburl{/yun}">首页</a> > <a href="{yun:}url m=redeem{/yun}">{yun:}$config.integral_pricename{/yun}商城</a> > {yun:}$row.name{/yun}</div>
+  
+
+  <div class="dh_show_box">
+    <div class="dh_show_ddtit">请确认订单信息</div>
+    
+  <div class="dh_show_boxcont">
+   <div class="dh_show_box_pic"><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$row.pic{/yun}" width="88" height="88"></div>
+   <div class="dh_show_box_name">{yun:}$row.name{/yun}</div>
+  <div class="dh_show_box_p"> 所需积分：{yun:}$row.integral*$smarty.get.num{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</div>
+    <div class="dh_show_box_p">数量：{yun:}$smarty.get.num{/yun}件</div>
+   </div>
+
+  
+  </div>
+  <div class="dh_show_tit mt20">请填写收货地址</div>
+  
+  <form action="{yun:}url m=redeem c=savedh{/yun}" target="supportiframe" method="post" onsubmit="return redeem_dh();">
+        <input name="num" value="{yun:}$smarty.get.num{/yun}" type="hidden">
+        <div class="redeem_show_img_text">
+          <div class="redeem_show_img_text_list"><span class="redeem_show_img_text_list_s">&nbsp;</span><span class="redeem_show_img_text_span">请填写联系方式；以便尽快将礼品送给您！</span></div>
+          <div class="redeem_show_img_text_list redeem_show_img_text_list_300"> <span class="redeem_show_img_text_list_s"><span style="color:red;">*</span> 联系人：</span>
+            <input type="text"  name="linkman" class="supportiframe_text_in" value="{yun:}$uinfo.linkman{/yun}">
+          </div>
+          <div class="redeem_show_img_text_list redeem_show_img_text_list_300"> <span class="redeem_show_img_text_list_s"><span style="color:red;">*</span> 联系电话：</span>
+            <input type="text" name="linktel" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" class="supportiframe_text_in"  value="{yun:}$uinfo.moblie{/yun}">
+          </div>
+		  <div class="redeem_show_img_text_list "> <span class="redeem_show_img_text_list_s"><span style="color:red;">*</span> 收货地区：</span>
+           <div class="redeem_city_list_w fl cur150">
+          <input type="button" value="{yun:}if $change.province{/yun}{yun:}$change.province{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}" class="redeem_city_select"id="province_name" onclick="redeem_show('redeem_province');"/>
+          <input  type="hidden" id="province" name="provinceid" value="{yun:}$change.province{/yun}">
+          <ul class="redeem_city_list none" id="redeem_province">
+          {yun:}foreach from=$city_index item=v{/yun}
+          <li> <a href="javascript:;" onclick="redeem_city('{yun:}$v{/yun}','province','{yun:}$city_name[$v]{/yun}','city');"> {yun:}$city_name[$v]{/yun} </a> </li>
+          {yun:}/foreach{/yun}
+          </ul>
+          </div>
+          <div class="redeem_city_list_w fl cur150">
+          <input type="button" value="{yun:}if $change.city{/yun}{yun:}$change.city{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}" class="redeem_city_select" id="city_name" onclick="redeem_show('redeem_city');"/>
+          <input  type="hidden" id="city" name="cityid" value="{yun:}$change.city{/yun}">
+          <ul class="redeem_city_list none" id="redeem_city">
+          </ul>
+          </div>
+          <div class="redeem_city_list_w fl cur150" id="cityshowth">
+          <input type="button" value="{yun:}if $change.threecity{/yun}{yun:}$change.threecity{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}" class="redeem_city_select"  id="three_city_name" onclick="redeem_show('redeem_three_city');"/>
+          <input  type="hidden" id="three_city" name="three_cityid" value="{yun:}$change.threecity{/yun}">
+          <ul class="redeem_city_list none" id="redeem_three_city">
+          </ul>
+          </div>
+          </div>
+		
+		  <div class="redeem_show_img_text_list "> <span class="redeem_show_img_text_list_s"><span style="color:red;">*</span> 详细地址：</span>
+            <input type="text"  name="address" class="supportiframe_text_in" style="width:400px;" value="{yun:}$change.address{/yun}">
+          </div>
+          <div class="redeem_show_img_text_list"> <span class="redeem_show_img_text_list_s"><span style="color:red;">*</span>留言备注：</span>
+            <textarea class="supportiframe_textarea" name="other"  placeholder="请提前与客服沟通确认"></textarea>
+          </div>
+          <div class="redeem_show_img_text_list redeem_show_img_text_list_300"> <span class="redeem_show_img_text_list_s"><span style="color:red;">*</span> 帐号密码：</span>
+            <input type="password" name="password" value="" class="supportiframe_text_in">
+          </div>
+          <div class="redeem_show_img_text_list"> <span class="redeem_show_img_text_list_s">&nbsp;</span>
+            <input name='id' value='{yun:}$row.id{/yun}' type='hidden'>
+            <input type="submit" value="提交" name="submit" class="supportiframe_text_bth">
+          </div>
+        </div>
+      </form>
+  
+      </div>
+  
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png');
+</script>
+<![endif]-->
+ <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" class="none"></iframe>
+{yun:}include file="$tplstyle/footer.htm"{/yun}

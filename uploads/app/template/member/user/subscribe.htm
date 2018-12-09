@@ -1,0 +1,87 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+    
+            <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">订阅管理</span> <i class="member_right_h1_icon user_bg"></i> </div>
+        <div  class="resume_Prompt_box">
+        <div  class="resume_Prompt">
+        <i class="resume_Prompt_icon"></i>订阅职位，系统会根据您订阅的职位信息，按照您设定的条件自动发送到你的邮箱！<a class="cblue" href="{yun:}url m=subscribe{/yun}">立即订阅</a>
+        </div>
+        </div>
+        
+       
+        <div class="remindbox01 mt10">
+            <div id="gms_showclew"></div>
+            <form action="index.php" method="get" target="supportiframe" id='myform'>
+                <input type="hidden" name="c" value="subscribe" />
+                <input type="hidden" name="act" value="del" />
+                <div class="resumelistbox01 mt10">
+                
+                    <div class="resume_box_list">
+                    {yun:}if !empty($rows){/yun}
+                    
+                    
+                    
+                    
+                        <div class="jobsubscribe_list_tit">
+                            <div class="jobsubscribe_list_span jobsubscribe_listcheck">&nbsp;</div>
+                            <div class="jobsubscribe_list_span jobsubscribe_list_jobname">职位类别</div>
+                            <div class="jobsubscribe_list_span jobsubscribe_list_jobcity ">所在城市</div>
+                            <div class="jobsubscribe_list_span jobsubscribe_list_jobxz">月薪范围</div>
+                            <div class="jobsubscribe_list_span jobsubscribe_list_jobzq">发送周期</div>
+                            <div class="jobsubscribe_list_span jobsubscribe_list_jobrz">订阅认证</div>
+                            <div class="jobsubscribe_list_span jobsubscribe_list_jobcz">操作</div>
+                        </div>
+                        {yun:}/if{/yun}
+                        {yun:}foreach item=v from=$rows{/yun}
+                        <div class="jobsubscribe_list_list">
+                            <div class="jobsubscribe_list_span jobsubscribe_listcheck">
+                            <input type=checkbox name="del[]" value="{yun:}$v.id{/yun}" class="jobsubscribe_listcheckbox">
+                            </div>
+                          <div class="jobsubscribe_list_span jobsubscribe_list_jobname">
+                                <span class="List_Title_span_com">{yun:}$v.jobname{/yun}</span>
+                               &nbsp;
+                            </div>
+                                    <div class="jobsubscribe_list_span jobsubscribe_list_jobcity ">&nbsp;{yun:}$v.city_name{/yun}</div>
+                              <div class="jobsubscribe_list_span jobsubscribe_list_jobxz">&nbsp;{yun:}if $v.minsalary&&$v.maxsalary{/yun}￥{yun:}$v.minsalary{/yun}-{yun:}$v.maxsalary{/yun}{yun:}else if $v.minsalary{/yun}￥{yun:}$v.minsalary{/yun}以上{yun:}else{/yun}面议{yun:}/if{/yun}</div>
+							  <div class="jobsubscribe_list_span jobsubscribe_list_jobzq">&nbsp;{yun:}$v.time{/yun}天</div>
+                                <div class="jobsubscribe_list_span jobsubscribe_list_jobrz">&nbsp;{yun:}if $v.status=='1'{/yun}已认证{yun:}else{/yun}未认证{yun:}/if{/yun}</div>
+                            <div class="jobsubscribe_list_span jobsubscribe_list_jobcz">
+								<a href="index.php?c=subscribe&act=record&id={yun:}$v.id{/yun}" class="List_dete cblue">发送记录</a>
+                                <em class="jobnotice_cz_line">|</em>
+                                <a href="{yun:}url m=subscribe id='`$v.id`'{/yun}" class="List_dete cblue" target="_blank"> 修改</a>
+                                <em class="jobnotice_cz_line">|</em>
+                                <a href="javascript:void(0)" onclick="layer_del('确定要删除？','index.php?c=subscribe&act=del&id={yun:}$v.id{/yun}');" class="List_dete cblue"> 删除</a>
+                            </div> 
+                        </div>
+                        {yun:}foreachelse{/yun}
+                        <div class="msg_no">
+              			<p>亲爱的用户，您还没有订阅职位哦，想要获得更多工作机会</p>
+              			<p>立即订阅职位吧！</p>
+              			<a href="{yun:}url m=subscribe{/yun}" target="_blank"class="msg_no_sq uesr_submit">立即去订阅>></a>
+              			</div>
+                        {yun:}/foreach{/yun}
+                        {yun:}if $rows{/yun}
+                        
+                         <div class="job_operation_bot">
+                       <input id="checkAll" type="checkbox" onclick="m_checkAll(this.form)" class="job_operation_botcheckbox">
+                       
+                            <input type="button" name="subdel" value="批量删除" onclick="return really('del[]');" class="job_operation_bth">
+             
+             
+             
+      </div>
+
+
+
+       
+                        <div class="diggg">{yun:}$pagenav{/yun}</div>
+                        {yun:}/if{/yun}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{yun:}include file="$userstyle/footer.htm"{/yun} 

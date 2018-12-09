@@ -1,0 +1,74 @@
+{yun:}include file="$userstyle/header.htm"{/yun} 
+<script src="{yun:}$config.sy_weburl{/yun}/js/class.public.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script> 
+<script> 
+</script>
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+		<div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">简历模板</span> <i class="member_right_h1_icon user_bg"></i></div> 
+		       
+<div  class="resume_Prompt_box">
+<div  class="resume_Prompt"><i class="resume_Prompt_icon"></i>提示：所有简历均可用于投递职位；当隐私设置为"公开"时，仅默认简历可以被企业搜索到</div>
+</div>
+
+			
+			<div class="resume_template_box"> 
+				<dl class="resume_template">
+					<dt> <img src="{yun:}$user_style{/yun}/images/mr.png"width="238" height="315"> </dt>
+					<dd>
+					<div class="resume_template_pd">
+					<div class="resume_template_name">	默认模板 </div>
+						<div class="resume_template_p">
+							模板价格：<b class="comtpl_b">免费</b>
+						</div>
+						</div>
+							<div class="resume_template_cz">
+							{yun:}if $statis.tpl=='0'{/yun}
+							<span class=" resume_template_bth_sy">使用中</span>
+							<i class="resume_template_cz_icon"></i>
+							{yun:}else{/yun}  
+								<a href="javascript:void(0);" onclick="layer_del('确定试用该模板？', 'index.php?c=resumetpl&act=settpl&id=0');" class="resume_template_bth">使用</a> 
+							{yun:}/if{/yun} 
+							<a href="{yun:}url m=resume c=show uid=$uid tmp=2{/yun}" target="_blank" class="resume_template_ylbth">预览</a>
+
+						</div>
+					</dd>
+				</dl>
+				
+				{yun:}foreach from=$rows item=style{/yun} 
+				<dl class="resume_template">
+					<dt> <img alt="{yun:}$style.name{/yun}" src="../{yun:}$style.pic{/yun}"width="238" height="315"> </dt>
+					<dd>
+						<div class="resume_template_pd">
+						<div class="resume_template_name">{yun:}$style.name{/yun} </div>
+						<div class="resume_template_p" id="list_tpl_{yun:}$style.id{/yun}">
+							模板价格：
+								{yun:}if $style.price!=0{/yun}
+								<span class="resume_template_jg">{yun:}$style.price{/yun}</span> {yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}
+								{yun:}else{/yun}
+								<span class="resume_template_jg">免费</span>
+								{yun:}/if{/yun}
+								</div>
+						</div>
+						<div class="resume_template_cz">
+							{yun:}if $statis.tpl==$style.id{/yun}
+							<div class=" resume_template_bth_sy">使用中</div>
+								<i class="resume_template_cz_icon"></i>
+							{yun:}else{/yun} 
+								{yun:}if in_array($style.id,$paytpls){/yun}
+									<a href="javascript:void(0);" onclick="layer_del('确定试用该模板？', 'index.php?c=resumetpl&act=settpl&id={yun:}$style.id{/yun}');" class="resume_template_bth">使用</a>
+								{yun:}else{/yun}
+									<a href="javascript:void(0);" onclick="layer_del('购买模板将花费{yun:}$style.price{/yun}{yun:}$config.integral_pricename{/yun}，是否继续？', 'index.php?c=resumetpl&act=pay&id={yun:}$style.id{/yun}');" class="resume_template_bth">购买</a>
+								{yun:}/if{/yun} 
+							{yun:}/if{/yun}
+							<a href="{yun:}url m=resume c=show uid=$uid tmp=$style.id{/yun}" target="_blank" class="resume_template_ylbth">预览</a>
+
+						</div>
+					</dd>
+				</dl>
+			
+				{yun:}/foreach{/yun} 
+			</div>
+		</div> 
+</div> 
+{yun:}include file="$userstyle/footer.htm"{/yun}

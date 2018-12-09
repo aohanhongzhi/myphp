@@ -1,0 +1,552 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/umeditor/themes/default/css/umeditor.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<div id="app" class="mui-views">
+	<div class="mui-view">
+		<div class="mui-pages"></div>
+	</div>
+</div>
+<div id="main" class="mui-page">
+	<!--页面主内容区开始-->
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member">
+				<ul class="yunset_list mt10">
+					<li class="yunset_list_text"><span class="yunset_list_name">职位名称</span>
+						<span class="yunset_list_commentary"> 
+							<input type="text" name="name" id='name' value="{yun:}$row.name{/yun}" placeholder="请填写职位名称" class="">
+			            </span>
+					</li>
+					<li class="yunset_list_select"><span class="yunset_list_name">职位类别</span>
+						<span class="yunset_list_commentary">
+							<button id="jobPicker" class="mui-btn mui-btn-block" type="button" data-job1="{yun:}$row.job1{/yun}" data-job1_son="{yun:}$row.job1_son{/yun}" data-job_post="{yun:}$row.job_post{/yun}">{yun:}if $job_name[$row.job1_son]{/yun}{yun:}if !$job_name[$row.job_post]{/yun}{yun:}$job_name[$row.job1_son]{/yun}{yun:}else{/yun}{yun:}$job_name[$row.job_post]{/yun}{yun:}/if{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+							<input type="hidden" id="job1" name="job1" value="{yun:}$row.job1{/yun}">
+							<input type="hidden" id="job1_son" name="job1_son" value="{yun:}$row.job1_son{/yun}">
+							<input type="hidden" id="job_post" name="job_post" value="{yun:}$row.job_post{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_select">
+						<span class="yunset_list_name">工作地点</span>
+						<span class="yunset_list_commentary">
+							<button id='cityPicker' class="mui-btn mui-btn-block" type='button' data-provinceid="{yun:}$row.provinceid{/yun}" data-cityid="{yun:}$row.cityid{/yun}" data-three_cityid="{yun:}$row.three_cityid{/yun}">{yun:}if $row.provinceid{/yun}{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.three_cityid]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+							<input type="hidden" id="provinceid" name="provinceid" value="{yun:}$row.provinceid{/yun}">
+							<input type="hidden" id="cityid" name="cityid" value="{yun:}$row.cityid{/yun}">
+							<input type="hidden" id="three_cityid" name="three_cityid" value="{yun:}$row.three_cityid{/yun}">
+						</span>
+					</li>
+					<li>
+						<a href="#salaryhtml"><span class="yunset_list_name">薪资待遇</span><span class="yunset_list_commentary yunset_list_js" id="salary">{yun:}if !$row.minsalary&&!$row.maxsalary&&$row.id{/yun}面议{yun:}else{/yun}{yun:}if $row.maxsalary{/yun}{yun:}$row.minsalary{/yun}-{yun:}$row.maxsalary{/yun}元/月{yun:}elseif $row.minsalary{/yun}{yun:}$row.minsalary{/yun}元以上/月{yun:}else{/yun}请填写{yun:}/if{/yun}</span>{yun:}/if{/yun}</a>
+					</li>
+					<li>
+						<a href="#contenthtml"><span class="yunset_list_name">职位描述</span><span class="yunset_list_commentary yunset_list_js" id="contentshow">{yun:}if $row.description{/yun}{yun:}$row.description_t{/yun}{yun:}else{/yun}请填写{yun:}/if{/yun}</span></a>
+					</li>
+					<textarea style="display:none" id="contenttext">{yun:}$row.description{/yun}</textarea>
+					<li>
+						<a href="#linkhtml"><span class="yunset_list_name">联系方式</span><span class="yunset_list_commentary yunset_list_js" id="link">
+						{yun:}if $row.islink==3{/yun}
+							不向求职者展示联系方式
+						{yun:}elseif $row.islink==2{/yun}
+							{yun:}$job_link.link_man{/yun}-{yun:}$job_link.link_moblie{/yun}
+						{yun:}else{/yun}
+							{yun:}if $company.linktel{/yun}
+								{yun:}$company.linkman{/yun}&nbsp;{yun:}$company.linktel{/yun}
+							{yun:}elseif $company.linkphone{/yun}
+								{yun:}$company.linkman{/yun}&nbsp;{yun:}$company.linkphone{/yun}
+							{yun:}else{/yun}
+								请选择
+							{yun:}/if{/yun}
+						{yun:}/if{/yun}
+						</span></a>
+						<input type="hidden" id="islink" name="islink" value="{yun:}if $row.islink{/yun}{yun:}$row.islink{/yun}{yun:}else{/yun}1{yun:}/if{/yun}" />
+						<input type="hidden" id="link_moblie" name="link_moblie" value="{yun:}$job_link.link_moblie{/yun}">
+						<input type="hidden" id="link_man" name="link_man" value="{yun:}$job_link.link_man{/yun}">
+						<input type="hidden" id="tblink" name="tblink" value="">
+					</li>
+
+					<li>
+						<a href="#emailhtml"><span class="yunset_list_name" style="width:150px;">接收简历的邮箱</span><span id="emailshow" class="yunset_list_commentary yunset_list_js">
+							{yun:}if $row.isemail==3{/yun}
+								不需要将收到的简历发送到邮箱
+							{yun:}elseif $row.isemail==2{/yun}
+								{yun:}$job_link.email{/yun}
+							{yun:}else{/yun}
+								{yun:}if $company.linkmail{/yun}
+									{yun:}$company.linkmail{/yun}
+								{yun:}else{/yun}
+									请选择
+								{yun:}/if{/yun}
+							{yun:}/if{/yun}
+							</span></a>
+						<input type="hidden" id="isemail" name="isemail" value="{yun:}if $row.isemail{/yun}{yun:}$row.isemail{/yun}{yun:}else{/yun}{yun:}if $company.linkmail{/yun}1{yun:}else{/yun}0{yun:}/if{/yun}{yun:}/if{/yun}" />
+						<input type="hidden" id="email" name="email" value="{yun:}$job_link.email{/yun}">
+					</li>
+				</ul>
+				<div class="yunset_bth_box" style="background: transparent; border: none; padding:0px;">
+					<a href="#addnexthtml" class="yun_wap_info_brief_tit_bc addnext">下一步</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div id="addnexthtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member">
+				<div class="yun_wap_xtbox" style="display:block">
+					<ul class="yunset_list">
+						<li class="yunset_list_select">
+							<span class="yunset_list_name">从事行业<em class="yunset_xttip"></em></span>
+							<span class="yunset_list_commentary">
+								<button id="hyPicker" class="mui-btn mui-btn-block" type="button" data-hy="{yun:}$row.hy{/yun}">{yun:}if $industry_name[$row.hy]{/yun}{yun:}$industry_name[$row.hy]{/yun}{yun:}else{/yun}{yun:}if $industry_name[$company.hy]{/yun}{yun:}$industry_name[$company.hy]{/yun}{yun:}/if{/yun}{yun:}/if{/yun}</button>
+								<input type="hidden" id="hy" name="hy" value="{yun:}if $row.hy{/yun}{yun:}$row.hy{/yun}{yun:}else{/yun}{yun:}if $company.hy{/yun}{yun:}$company.hy{/yun}{yun:}/if{/yun}{yun:}/if{/yun}">
+							</span>
+						</li>
+						<li class="yunset_list_select">
+							<span class="yunset_list_name">招聘人数<em class="yunset_xttip"></em></span>
+							<span class="yunset_list_commentary">
+								<button id="numberPicker" class="mui-btn mui-btn-block" type="button" data-number="{yun:}$row.number{/yun}">{yun:}if $comclass_name[$row.number]{/yun}{yun:}$comclass_name[$row.number]{/yun}{yun:}/if{/yun}</button>
+								<input type="hidden" id="number" name="number" value="{yun:}$row.number{/yun}">
+							</span>
+						</li>
+						<li class="yunset_list_select">
+							<span class="yunset_list_name">工作经验<em class="yunset_xttip"></em></span>
+							<span class="yunset_list_commentary">
+								<button id="expPicker" class="mui-btn mui-btn-block" type="button" data-exp="{yun:}$row.exp{/yun}">{yun:}if $comclass_name[$row.exp]{/yun}{yun:}$comclass_name[$row.exp]{/yun}{yun:}else{/yun}不限{yun:}/if{/yun}</button>
+								<input type="hidden" id="exp" name="exp" value="{yun:}$row.exp{/yun}">
+							</span>
+						</li>
+						<li class="yunset_list_select">
+							<span class="yunset_list_name">到岗时间<em class="yunset_xttip"></em></span>
+							<span class="yunset_list_commentary">
+								<button id="reportPicker" class="mui-btn mui-btn-block" type="button" data-report="{yun:}$row.report{/yun}">{yun:}if $comclass_name[$row.report]{/yun}{yun:}$comclass_name[$row.report]{/yun}{yun:}/if{/yun}</button>
+								<input type="hidden" id="report" name="report" value="{yun:}$row.report{/yun}">
+							</span>
+						</li>
+						<li class="yunset_list_select">
+							<span class="yunset_list_name">年龄要求<em class="yunset_xttip"></em></span>
+							<span class="yunset_list_commentary">
+								<button id="agePicker" class="mui-btn mui-btn-block" type="button" data-age="{yun:}$row.age{/yun}">{yun:}if $comclass_name[$row.age]{/yun}{yun:}$comclass_name[$row.age]{/yun}{yun:}/if{/yun}</button>
+								<input type="hidden" id="age" name="age" value="{yun:}$row.age{/yun}">
+							</span>
+						</li>
+						<li class="yunset_list_select">
+							<span class="yunset_list_name">性别要求<em class="yunset_xttip"></em></span>
+							<span class="yunset_list_commentary">
+								<button id="sexPicker" class="mui-btn mui-btn-block" type="button" data-sex="{yun:}$row.sex{/yun}">{yun:}if $arr_data.sex[$row.sex]{/yun}{yun:}$arr_data.sex[$row.sex]{/yun}{yun:}else{/yun}不限{yun:}/if{/yun}</button>
+								<input type="hidden" id="sex" name="sex" value="{yun:}$row.sex{/yun}">
+							</span>
+						</li>
+						<li class="yunset_list_select">
+							<span class="yunset_list_name">教育程度<em class="yunset_xttip"></em></span>
+							<span class="yunset_list_commentary">
+								<button id="eduPicker" class="mui-btn mui-btn-block" type="button" data-edu="{yun:}$row.edu{/yun}">{yun:}if $comclass_name[$row.edu]{/yun}{yun:}$comclass_name[$row.edu]{/yun}{yun:}else{/yun}不限{yun:}/if{/yun}</button>
+								<input type="hidden" id="edu" name="edu" value="{yun:}$row.edu{/yun}">
+							</span>
+						</li>
+						<li class="yunset_list_text">
+							<span class="yunset_list_name" style="width:150px;">可接受应届生<em class="yunset_xttip"></em></span>
+							<div class="yunset_kg_box">
+								<div class="yunset_kg">
+									<div class="mui-switch mui-switch-mini is_graduate {yun:}if $row.is_graduate{/yun}mui-active{yun:}/if{/yun}">
+										<div class="mui-switch-handle"></div>
+									</div>
+									<input type="hidden" id="is_graduate" name="is_graduate" value="{yun:}if $row.is_graduate{/yun}{yun:}$row.is_graduate{/yun}{yun:}else{/yun}0{yun:}/if{/yun}">
+								</div>
+							</div>
+						</li>
+						<li class="yunset_list_select">
+							<span class="yunset_list_name">婚姻状况<em class="yunset_xttip"></em></span>
+							<span class="yunset_list_commentary">
+								<button id="marriagePicker" class="mui-btn mui-btn-block" type="button" data-marriage="{yun:}$row.marriage{/yun}">{yun:}if $comclass_name[$row.marriage]{/yun}{yun:}$comclass_name[$row.marriage]{/yun}{yun:}/if{/yun}</button>
+								<input type="hidden" id="marriage" name="marriage" value="{yun:}$row.marriage{/yun}">
+							</span>
+						</li>
+						<li>
+							<a href="#languagehtml"><span class="yunset_list_name">语言要求<em class="yunset_xttip"></em></span><span class="yunset_list_commentary yunset_list_js" id="langshow">
+								{yun:}if $row.lang{/yun}
+									{yun:}foreach item=v key=key from=$comdata.job_lang{/yun}
+										{yun:}if in_array($v,$row.lang){/yun}
+											{yun:}if ($v!=$row.lang[0]){/yun}
+												,{yun:}$comclass_name[$v]{/yun}
+											{yun:}else{/yun}
+												{yun:}$comclass_name[$v]{/yun}
+											{yun:}/if{/yun}
+										{yun:}/if{/yun}
+									{yun:}/foreach{/yun}
+								{yun:}else{/yun}
+								请选择
+								{yun:}/if{/yun}
+							</span></a>
+							<input type="hidden" id="lang" name="lang" value="{yun:}$row.langid{/yun}">
+						</li>
+					</ul>
+				</div>
+				<div class="yunset_bth_box" style="background: transparent; border: none;">
+					<input id="id" name="id" value="{yun:}$row.id{/yun}" type="hidden" />
+					<input id="state" name="state" value="{yun:}$row.state{/yun}" type="hidden" />
+
+					<input type="submit" id="jobsubmit" value="提交操作" class="reinputText2">
+					<a class="yun_wap_info_brief_tit_bc mui-action-back" style="background:#f8f8f8;border:1px solid #eee;color:#333">返回上一步</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div id="contenthtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="yun_wap_info_brief">
+					<div class="yun_wap_info_brief_c">
+						<div class="yun_wap_addresume_box_nexttit">职位描述</div>
+						<textarea class="textAreaMsg tip" id="content" name="content" style="width: 100%;">{yun:}$row.description{/yun}</textarea></div>
+					<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="salaryhtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member">
+				<ul class="yunset_list">
+					<li class="yunset_list_text"><span class="yunset_list_name">最低薪资</span>
+						<div class="yunset_list_xzbox">
+							<input type="number" id="minsalary" value="{yun:}$row.minsalary{/yun}" placeholder="请填写最低薪资">
+							<span class="yunset_list_xz">元/月</span>
+						</div>
+					</li>
+					<li class="yunset_list_text"><span class="yunset_list_name">最高薪资</span>
+						<div class="yunset_list_xzbox">
+							<input type="number" id="maxsalary" value="{yun:}$row.maxsalary{/yun}" placeholder="请填写最高薪资">
+							<span class="yunset_list_xz">元/月</span> </div>
+					</li>
+					<li class="yunset_list_text"><span class="yunset_list_name">面议</span>
+						<div class="yunset_kg_box">
+							<div class="yunset_kg">
+								<div class="mui-switch mui-switch-mini salary_type">
+									<div class="mui-switch-handle"></div>
+								</div>
+								<input type="hidden" id="salary_type" value="{yun:}if !$row.minsalary&&!$row.maxsalary&&$row.id{/yun}1{yun:}else{/yun}2{yun:}/if{/yun}"></div>
+						</div>
+					</li>
+				</ul>
+				<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="linkhtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member">
+				<div class="yun_wap_addresume_box_group">
+					<div class="yun_wap_addresume_box_nexttit">联系方式</div>
+					<div class="">
+						<div class="admin_job_js_list_rt">
+							<span class="admin_job_style {yun:}if $row.islink==1|| $row.islink==''{/yun}admin_job_style_n{yun:}/if{/yun}" onclick="choice('1','link')" id="islink1">{yun:}$company.linkman{/yun}&nbsp;{yun:}if $company.linktel{/yun}{yun:}$company.linktel{/yun}{yun:}else{/yun}{yun:}$company.linkphone{/yun}{yun:}/if{/yun}</span>
+						</div>
+						<div class="admin_job_js_list_rt">
+							<span class="admin_job_style {yun:}if $row.islink==2{/yun}admin_job_style_n{yun:}/if{/yun}" onclick="choice('2','link')" id="islink2">使用新联系方式</span>
+						</div>
+						<div class="admin_job_js mt10" id="newlink" style=" {yun:}if $row.islink!=2{/yun}display:none;{yun:}/if{/yun}">
+							<div class="job_touch_other">
+								<div class="job_touch_other_tit">使用新联系方式</div>
+								<ul>
+									<li>
+										<div class="job_touch_other_text"> <input type="text" class="payment_fp_touch_text payment_fp_touch_text_p" value="{yun:}if $job_link.link_man&&$row.islink=='2'{/yun}{yun:}$job_link.link_man{/yun}{yun:}/if{/yun}" id="lxr" placeholder="请输入联系人">
+										</div>
+									</li>
+									<li>
+										<div class="job_touch_other_text"> <input type="text" value="{yun:}if $job_link.link_moblie&&$row.islink=='2' {/yun}{yun:}$job_link.link_moblie{/yun}{yun:}/if{/yun}" id="lxdh" placeholder="请输入联系电话" class="payment_fp_touch_text"> </div>
+									</li>
+									<li>
+										同步到所有职位
+										<div class="mui-switch mui-switch-mini tblink">
+											<div class="mui-switch-handle"></div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="admin_job_style {yun:}if $row.islink==3{/yun}admin_job_style_n{yun:}/if{/yun}" onclick="choice('3','link')" id="islink3">不向求职者展示联系方式（不想受到骚扰）</div>
+						<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="emailhtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member">
+				<div class="yun_wap_addresume_box_group">
+					<div class="yun_wap_addresume_box_nexttit">接收简历的邮箱</div>
+
+					<div class="admin_job_js_list_rt">
+						{yun:}if $company.linkmail{/yun}<span class="admin_job_style {yun:}if $row.isemail==1||!$row.isemail{/yun}admin_job_style_n{yun:}/if{/yun}" onclick="choice('1','email')" id="isemail1">{yun:}$company.linkmail{/yun}</span>{yun:}/if{/yun}
+					</div>
+					<div class="admin_job_js_list_rt">
+						<span class="admin_job_style {yun:}if $row.isemail==2{/yun}admin_job_style_n{yun:}/if{/yun}" onclick="choice('2','email')" id="isemail2">使用新邮箱</span>
+					</div>
+					<div class="admin_job_js mt10" id="newemail" style="{yun:}if $row.isemail!=2{/yun}display:none;{yun:}/if{/yun}">
+						<div class="job_touch_other">
+							<div class="job_touch_other_tit">使用新邮箱</div>
+							<div class="job_touch_other_text"> <input type="text" id="xyx" value="{yun:}$job_link.email{/yun}" placeholder="请填写新邮箱" class="payment_fp_touch_text"> </div>
+						</div>
+					</div>
+					<div class="admin_job_style {yun:}if $row.isemail==3{/yun}admin_job_style_n{yun:}/if{/yun}" onclick="choice('3','email')" id="isemail3">不需要将收到的简历发送到邮箱</div>
+					<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="languagehtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="yun_info_fl">
+					<div class="yun_info_fl_c">
+						<div class="yun_wap_addresume_box_nexttit">语言要求</div>
+						{yun:}foreach item=v from=$comdata.job_lang{/yun}
+						<div class="yun_info_fl_list">
+							<div class="mui-input-row mui-checkbox">
+								<label>{yun:}$comclass_name[$v]{/yun} </label>
+								<input name="yyyq" value="{yun:}$v{/yun}" type="checkbox" class="lang" data-id="{yun:}$v{/yun}" data-name="{yun:}$comclass_name[$v]{/yun}" {yun:}if in_array($v,$row.lang){/yun}checked{yun:}/if{/yun}>
+							</div>
+						</div>
+						{yun:}/foreach{/yun}
+						<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/jobadd.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/job.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script type="text/javascript">
+	var umeditor = UM.getEditor('content', {
+		toolbar: false,
+		elementPathEnabled: false,
+		wordCount: false,
+		autoHeightEnabled: false
+	});
+	mui.init();
+	var viewApi = mui('#app').view({
+		defaultPage: '#main'
+	});
+	
+	var view = viewApi.view;
+	(function($) {
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll({
+			indicators: false, //是否显示滚动条
+			bounce: false //是否启用回弹
+		});
+		//处理view的后退与webview后退
+		var oldBack = $.back;
+		$.back = function() {
+			if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+				viewApi.back();
+			} else { //执行webview后退
+				oldBack();
+			}
+		};
+		view.addEventListener('pageBeforeShow', function(e) { //动画开始前触发
+			if(e.detail.page.id == 'contenthtml') {
+				var contenttext = document.getElementById('contenttext').value;
+				if(contenttext != "") {
+					umeditor.setContent(contenttext);
+				}
+			}
+		});
+		view.addEventListener('pageBeforeBack', function(e) {
+			if(e.detail.page.id == 'salaryhtml') {
+				//薪资待遇
+				var salarytype = document.getElementById('salary_type').value;
+				if(salarytype == 2) {
+					var minsalary = document.getElementById('minsalary').value;
+					var maxsalary = document.getElementById('maxsalary').value;
+					if(minsalary != "") {
+						document.getElementById('salary').innerText = minsalary + '元以上/月';
+					}
+					if(parseInt(maxsalary) > 0) {
+						if(parseInt(maxsalary) <= parseInt(minsalary)) {
+							mui.toast('最高薪资必须大于最低薪资');
+							document.getElementById('salary').innerText = "";
+						} else {
+							document.getElementById('salary').innerText = minsalary + '-' + maxsalary + '元/月';
+						}
+					}
+				} else if(salarytype == 1) {
+					document.getElementById('salary').innerText = '面议';
+				}
+			}
+			if(e.detail.page.id == 'contenthtml') {
+				var content = umeditor.getContent();
+				if(content != "") {
+					document.getElementById('contentshow').innerText = content.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+					document.getElementById('contenttext').innerText = content;
+				}
+			}
+			if(e.detail.page.id == 'linkhtml') {
+				//联系方式
+				var islink = document.getElementById('islink').value;
+				if(islink == 1) {
+					document.getElementById('link').innerText = document.getElementById('islink1').innerText;
+				} else if(islink == 2) {
+					var linkman = document.getElementById('lxr').value,
+						linkphone = document.getElementById('lxdh').value;
+					document.getElementById('link_man').value = linkman;
+					document.getElementById('link_moblie').value = linkphone;
+					document.getElementById('link').innerText = linkman + ' ' + linkphone;
+				} else if(islink == 3) {
+					document.getElementById('link').innerText = '不向求职者展示联系方式';
+				}
+			}
+			if(e.detail.page.id == 'languagehtml') {
+				//语言要求
+				var yyyq = "",
+					langshow = "";
+				$(".lang").each(function(w, lang) {
+					if(lang.checked == true) {
+						if(yyyq == "") {
+							yyyq = lang.dataset.id;
+						} else {
+							yyyq = yyyq + "," + lang.dataset.id;
+						}
+						if(langshow == "") {
+							langshow = lang.dataset.name;
+						} else {
+							langshow = langshow + "," + lang.dataset.name;
+						}
+					}
+				});
+				document.getElementById("lang").value = yyyq;
+				document.getElementById("langshow").innerText = langshow != "" ? langshow : "请选择";
+
+			}
+			if(e.detail.page.id == 'emailhtml') {
+				//接收简历的邮箱
+				var isemail = document.getElementById('isemail').value;
+				if(isemail == 1) {
+					document.getElementById('emailshow').innerText = document.getElementById('isemail1').innerText;
+				} else if(isemail == 2) {
+					var xyx = document.getElementById('xyx');
+					if(xyx) {
+						document.getElementById('email').value = xyx.value;
+						document.getElementById('emailshow').innerText = xyx.value;
+					}
+				} else if(isemail == 3) {
+					document.getElementById('emailshow').innerText = '不需要将收到的简历发送到邮箱';
+				}
+			}
+		});
+	})(mui);
+	$(document).ready(function() {
+		if(document.getElementById('addnexthtml')){
+			document.getElementById('addnexthtml').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+	var hyData = [];
+	'{yun:}foreach item=v from=$industry_index{/yun}';
+	hyData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$industry_name[$v]{/yun}'
+	});
+	'{yun:}/foreach{/yun}';
+	var numberData = [];
+	'{yun:}foreach item=v from=$comdata.job_number{/yun}';
+	numberData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$comclass_name[$v]{/yun}'
+	});
+	'{yun:}/foreach{/yun}';
+	var expData = [];
+	'{yun:}foreach item=v from=$comdata.job_exp{/yun}';
+	expData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$comclass_name[$v]{/yun}'
+	});
+	'{yun:}/foreach{/yun}';
+	var reportData = [];
+	'{yun:}foreach item=v from=$comdata.job_report{/yun}';
+	reportData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$comclass_name[$v]{/yun}'
+	});
+	'{yun:}/foreach{/yun}';
+	var ageData = [];
+	'{yun:}foreach item=v from=$comdata.job_age{/yun}';
+	ageData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$comclass_name[$v]{/yun}'
+	});
+	'{yun:}/foreach{/yun}';
+	var sexData = [];
+	'{yun:}foreach item=v key=key from=$arr_data.sex{/yun}';
+	sexData.push({
+		value: '{yun:}$key{/yun}',
+		text: '{yun:}$v{/yun}'
+	});
+	'{yun:}/foreach{/yun}';
+	var eduData = [];
+	'{yun:}foreach item=v from=$comdata.job_edu{/yun}';
+	eduData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$comclass_name[$v]{/yun}'
+	});
+	'{yun:}/foreach{/yun}';
+	var marriageData = [];
+	'{yun:}foreach item=v from=$comdata.job_marriage{/yun}';
+	marriageData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$comclass_name[$v]{/yun}'
+	});
+	'{yun:}/foreach{/yun}';
+
+	function choice(id, type) {
+		if(type == 'link' || type == 'email') {
+			if(id == 1) {
+				$("#is" + type + "3").removeClass('admin_job_style_n');
+				$("#is" + type + "2").removeClass('admin_job_style_n');
+				$("#is" + type + id).addClass('admin_job_style_n');
+				$("input[name='is" + type + "']").val(id);
+				$("#new" + type).hide();
+			} else if(id == 2) {
+				$("#is" + type + "3").removeClass('admin_job_style_n');
+				$("#is" + type + "1").removeClass('admin_job_style_n');
+				$("#is" + type + id).addClass('admin_job_style_n');
+				$("input[name='is" + type + "']").val(id);
+				$("#new" + type).show();
+			} else if(id == 3) {
+				$("#is" + type + "1").removeClass('admin_job_style_n');
+				$("#is" + type + "2").removeClass('admin_job_style_n');
+				$("#is" + type + id).addClass('admin_job_style_n');
+				$("input[name='is" + type + "']").val(id);
+				$("#new" + type).hide();
+			}
+		}
+	}
+</script>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun}

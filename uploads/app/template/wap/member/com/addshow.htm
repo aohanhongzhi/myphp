@@ -1,0 +1,44 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script type="text/javascript">
+  	function check_company_cert() {
+ 
+          if ($.trim($("#preview").val()) == '' && $("#previewimg").attr('src') == weburl) {
+            layermsg('请上传企业环境！');
+            return false;
+        }
+        return true;
+    }
+</script>
+<form method="post" action="" onsubmit="return check_company_cert();">
+    <ul class="yunset_password mt15">
+        <li>
+            <span class="yunset_password_mname">标题</span>
+            <input type="text" name="title" id="title" value="{yun:}$row.title{/yun}" class="yunset_text">
+            <input type="hidden" name="id" value="{yun:}$row.id{/yun}" class="yunset_text">
+        </li>
+    </ul>
+    <div class="yunset_identity_box">
+        <div class="yunset_identity">
+            <div align="center" class="yunset_identity_pic_img" id="previewshow" {yun:}if !$row.picurl{/yun}style="display: none;" {yun:}/if{/yun}>
+                <img src="{yun:}$config.sy_weburl{/yun}{yun:}$row.picurl{/yun}"  id="previewimg" />
+            </div>
+            <div class="yunset_identity_pic">
+                <input type="file" name="picurl" id="pic" onchange="previewImage(this,'preview')" accept="image/*" class="yunset_identity_pic_file">
+                <input type='hidden' name='preview' value='' id='preview'>
+            </div>
+            <i class="yunset_identity_pic_tj"></i>
+            <div class="yunset_identity_tip"></div>
+            <div class="yunset_identity_tip_c">上传企业环境 </div>
+            <span class="yunset_identity_tip_a">选择上传图片</span>
+        </div>
+    </div>
+    <div class="yunset_identity_msg">
+        <i class="yunset_identity_msg_icon"></i>格式为 {yun:}$config.pic_type{/yun} 不得超过{yun:}$config.file_maxsize{/yun}M</div>
+    <div class="yunset_bth_box">
+        <input type="hidden" id="img" value="1">
+        <input type="submit" name="submit" value="保存" class="yunset_bth">
+    </div>
+</form>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun}

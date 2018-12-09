@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun}"/>
+<meta name="description" content="{yun:}$description{/yun}"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/yun_job_fairs.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+</head>
+<body class="Integral_body">
+	{yun:}include file="$tplstyle/header.htm"{/yun}
+
+	<div class="yun_Integral">
+		<div class="yun_Integral_list_content">
+			<div class="yun_Integral_search">
+				<span class="yun_Integral_search_name">商品分类：</span>
+				<div class="yun_Integral_search_right"> 
+					<a href="{yun:}listurl m=redeem c=list untype=nid{/yun}" {yun:}if $smarty.get.nid==''{/yun} class="yun_Integral_cur" {yun:}/if{/yun}">全部</a>      
+					{yun:}foreach from=$redeem_index item=v{/yun}
+						<a href="{yun:}listurl m=redeem c=list type=nid untype=tnid v=$v {/yun}" {yun:}if $smarty.get.nid==$v{/yun}class="yun_Integral_cur"{yun:}/if{/yun}>{yun:}$redeem_name[$v]{/yun}</a>
+					{yun:}/foreach{/yun}
+				</div>
+			</div>
+			{yun:}if $smarty.get.nid!=""&&$redeem_type[$smarty.get.nid]{/yun}
+			<div class="yun_Integral_search">
+				<span class="yun_Integral_search_name">商品子类：</span>
+				<div class="yun_Integral_search_right"> 
+					<a href="{yun:}listurl m=redeem c=list type=tnid v=0{/yun}" {yun:}if $smarty.get.tnid==''{/yun} class="yun_Integral_cur" {yun:}/if{/yun}">全部</a>      
+					{yun:}foreach from=$redeem_type[$smarty.get.nid] item=v{/yun}
+						<a href="{yun:}listurl m=redeem c=list type=tnid v=$v {/yun}" {yun:}if $smarty.get.tnid==$v{/yun}class="yun_Integral_cur"{yun:}/if{/yun}>{yun:}$redeem_name[$v]{/yun}</a>
+					{yun:}/foreach{/yun}
+				</div>
+			</div>
+			
+			{yun:}/if{/yun}
+			<div class="yun_Integral_search">
+				<span class="yun_Integral_search_name">{yun:}$config.integral_pricename{/yun}范围：</span>
+				<div class="yun_Integral_search_right">
+					<a href="{yun:}listurl m=redeem c=list untype=intinfo{/yun}" {yun:}if $intinfo==''{/yun}class="yun_Integral_cur"{yun:}/if{/yun}>全部</a>
+					{yun:}foreach from=$integlist item=v key=key{/yun}
+						<a href="{yun:}listurl m=redeem c=list  type=intinfo v=$v{/yun}" {yun:}if $intinfo==$v{/yun}class="yun_Integral_cur"{yun:}/if{/yun}>{yun:}$v{/yun}</a>
+					{yun:}/foreach{/yun} 
+				</div>
+			</div>
+		</div>
+
+  <!--全部商品-->
+  <div class="yun_Integral_box">
+    <div class="yun_Integral_box_h1"><span class="yun_Integral_box_h1_name">全部商品</span></div>
+    <div class="yun_Integral_cont">
+      <div class="yun_Integral_cont_w">
+	  {yun:}redeem item=val nid='auto.nid'  tnid='auto.tnid' limit=15 intinfo='auto.intinfo' ispage=1{/yun}
+        <div class="yun_Integral_cont_list"> 
+        <div class="yun_Integral_cont_list_a">
+       
+          <dl class="yun_Integral_list_dl">
+            <dt> <a href="{yun:}$val.url{/yun}"><img src="{yun:}$val.pic{/yun}" width="189" height="167"/></a></dt>
+            <dd class="yun_Integral_list_dl_name"> <a href="{yun:}$val.url{/yun}">{yun:}$val.name{/yun}</a></dd>
+            <dd class="yun_Integral_list_dl_n">所需{yun:}$config.integral_pricename{/yun}: {yun:}$val.integral{/yun}</dd>
+          </dl>
+          </a> </div>
+          </div>
+        {yun:}redeemelse{/yun}
+       <!--没搜索到-->
+        <div class="seachno" style="width:1000px;">
+          <div class="seachno_left"><img src="{yun:}$style{/yun}/images/search-no.gif" width="144" height="102"></div>
+          <div class="listno-content"> <strong>很抱歉，没有找到满足条件的商品</strong><br>
+            <span> 建议您：<br>
+            适当减少已选择的条件
+            </span> 
+            </div>
+        </div>
+        </div>
+        {yun:}/redeem{/yun} 
+        <div class="clear"></div>
+        <div class="pages">{yun:}$pagenav{/yun}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png');
+</script>
+<![endif]-->
+{yun:}include file="$tplstyle/footer.htm"{/yun}

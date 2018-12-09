@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>{yun:}$title{/yun}</title>
+        <meta name="keywords" content="{yun:}$keywords{/yun}" />
+        <meta name="description" content="{yun:}$description{/yun}" />
+        <link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link rel="stylesheet" href="{yun:}$style{/yun}/style/login.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <script>
+            var weburl = "{yun:}$config.sy_weburl{/yun}",
+                integral_pricename = '{yun:}$config.integral_pricename{/yun}',
+                pricename = '{yun:}$config.integral_pricename{/yun}',
+                code_web = '{yun:}$config.code_web{/yun}',
+                code_kind = '{yun:}$config.code_kind{/yun}';
+        </script>
+    </head>
+
+    <body>
+        <div class="register_header">
+            <div class="reg_w980">
+                <div class="reg_logo">
+                    <a href="{yun:}$config.sy_weburl{/yun}"><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_logo{/yun}" class="png"></a>
+                </div>
+                <div class="reg_msg">欢迎注册</div>
+                <a href="{yun:}$config.sy_weburl{/yun}" class="reg_fh yun_text_color fr">返回首页</a>
+            </div>
+        </div>
+        <!--content  start-->
+        <div class="reg_chosecontent">
+
+            <div class="reg_content_tit">请选择注册账号的类型</div>
+            <div class="reg_box">
+                <div class="reg_box_list">
+                    <a href="{yun:}$reg_url{/yun}">
+                        <div class="reg_box_list_userimg"><img src="{yun:}$style{/yun}/images/zc-lawyer.jpg" width="80"></div>
+                        <div class="reg_box_list_username">个人用户</div>
+                        <div class="reg_box_list_userp">
+                            <div class="reg_box_list_userp_c">
+                                <span class="reg_box_list_userp_s">免费创简历</span>
+                                <span class="reg_box_list_userp_s">职位海量淘</span>
+                                <span class="reg_box_list_userp_s">简历轻松投</span>
+                            </div>
+                            <div class=""><span class="reg_box_list_bth">立即注册</span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="reg_box_list">
+                    <a href="{yun:}$reg_com_url{/yun}">
+                        <div class="reg_box_list_userimg"><img src="{yun:}$style{/yun}/images/zc-lawfirm.jpg" width="80"></div>
+                        <div class="reg_box_list_username">企业用户</div>
+                        <div class="reg_box_list_userp">
+                            <div class="reg_box_list_userp_c">
+                                <span class="reg_box_list_userp_s">发布招聘信息</span>
+                                <span class="reg_box_list_userp_s">收取简历投递</span>
+                                <span class="reg_box_list_userp_s">多种职位分享</span>
+                            </div>
+                            <div class=""><span class="reg_box_list_bth">立即注册</span></div>
+                        </div>
+
+                    </a>
+                </div>
+               
+            </div>
+
+        </div>
+        <style>
+            .icon2 {
+                background-image: none;
+                background-repeat: no-repeat;
+            }
+        </style>
+        <!--content  end-->
+        <div class="clear"></div>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$style{/yun}/js/reg_ajax.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/geetest/gt.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/geetest/pc.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+        <!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+  DD_belatedPNG.fix('.png,.#bg');
+</script>
+<![endif]-->
+        <script>
+            {yun:}if $type == 1 {/yun}
+                    $(document).ready(function() {
+                        $(document).keydown(function(e) {
+                            var ev = document.all ? window.event : e;
+                            if(ev.keyCode == 13) {
+                                check_user(1, 'vcode_imgs');
+                            }
+                        });
+                        $("#xieyi1").keyup(function(event) {
+                            var myEvent = event || window.event;
+                            if(myEvent.keyCode == 13) {
+                                check_user(1, 'vcode_imgs');
+                            } else {
+                                return;
+                            };
+                        });
+                    }) 
+					{yun:}else if $type == 2 {/yun}
+                            $(document).ready(function() {
+                                $(document).keydown(function(e) {
+                                    var ev = document.all ? window.event : e;
+                                    if(ev.keyCode == 13) {
+                                        check_user(2, 'vcode_img');
+                                    }
+                                });
+                                $("#xieyi2").keyup(function(event) {
+                                    var myEvent = event || window.event;
+                                    if(myEvent.keyCode == 13) {
+                                        check_user(2, 'vcode_img');
+                                    } else {
+                                        return;
+                                    };
+                                });
+                            }) {yun:}else if $type == 3 {/yun}
+                                $(document).ready(function() {
+                                    $(document).keydown(function(e) {
+                                        var ev = document.all ? window.event : e;
+                                        if(ev.keyCode == 13) {
+                                            check_user(3, 'vcodeimg');
+                                        }
+                                    });
+                                    $("#xieyi3").keyup(function(event) {
+                                        var myEvent = event || window.event;
+                                        if(myEvent.keyCode == 13) {
+                                            check_user(3, 'vcodeimg');
+                                        } else {
+                                            return;
+                                        };
+                                    });
+                                }) {yun:}/if{/yun}
+        </script>
+        {yun:}include file="$tplstyle/footer.htm"{/yun}

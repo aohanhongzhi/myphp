@@ -1,0 +1,50 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<script>
+var tplPath='{yun:}$config.sy_weburl{/yun}/';
+var serverPath='index.php?c=show&act=save';
+var returnUrl='index.php?c=show';
+var fileNumLimit=50;
+</script>
+<link rel="stylesheet" type="text/css" href="{yun:}$config.sy_weburl{/yun}/js/webuploader/webuploader.css?v={yun:}$config.cachecode{/yun}" />
+<link rel="stylesheet" type="text/css" href="{yun:}$config.sy_weburl{/yun}/js/webuploader/style.css?v={yun:}$config.cachecode{/yun}" />
+<script charset="utf-8" src="{yun:}$config.sy_weburl{/yun}/js/webuploader/webuploader.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script charset="utf-8" src="{yun:}$config.sy_weburl{/yun}/js/webuploader/upload.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="w1000">
+  <div class="admin_mainbody"> 
+  {yun:}include file="$comstyle/left.htm"{/yun}
+    <div class='right_box'>
+      <div class='admincont_box'>
+      <div class="com_tit"><span class="com_tit_span">上传企业环境</span></div>   
+       <div class="com_body">
+		<div class="com_banner_show_box">
+          <div class="index_photo_new fltL mt10">
+          <div class="com_add_show_box">
+				<div id="uploader">
+					<div class="queueList">
+						<div id="dndArea" class="placeholder">
+							<div id="filePicker"></div>
+							<p>或将照片拖到这里</p>
+						</div>
+					</div>
+					<div class="statusBar" style="display:none;">
+						<div class="progress">
+							<span class="text">0%</span>
+							<span class="percentage"></span>
+						</div>
+						<div class="info"></div>
+						<div class="btns">
+							<div id="filePicker2"></div>
+							<div class="uploadBtn">开始上传</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div> 
+      </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+</div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

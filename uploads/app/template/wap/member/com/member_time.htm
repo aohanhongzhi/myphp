@@ -1,0 +1,301 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+  
+<script>
+    var integral = '{yun:}$statis.integral{/yun}';
+    var pro = '{yun:}$config.integral_proportion{/yun}';
+</script>
+
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <section class="wap_member">
+                    <div class="clear"></div>
+
+                    <ul class="yun_m_tit_three">
+                        {yun:}if $config.com_vip_type==2 || $config.com_vip_type==0{/yun}
+                        <li><a href="index.php?c=rating">套餐会员</a></li>
+                        {yun:}/if{/yun} 
+						{yun:}if $config.com_vip_type==1 || $config.com_vip_type==0{/yun}
+                        <li class="yun_m_tit_cur"><a href="index.php?c=time">时间会员</a></li>
+                        {yun:}/if{/yun} 
+                        <li><a href="index.php?c=added">增值服务</a></li>
+                    </ul>
+
+                    <div class="clear"></div>
+                    <div class="clear"></div>
+
+                    <div class="member_tc_list">
+                        <ul id="level_rating">
+                            {yun:}foreach from=$rows item=v key=key{/yun}
+                            <li {yun:}if $key=='0' {/yun}class="member_set_meal_cur" {yun:}/if{/yun}>
+                                <div class="member_set_meal_name">
+                                    <i class="member_set_meal_name_q"></i>
+                                    <span class="member_set_meal_name_s">{yun:}$v.name{/yun}</span> {yun:}if $config.com_integral_online==3 && $config.member_meal!=1{/yun}
+                                    <span class="member_set_meal_jg">
+	 			   				<span>
+		 			   				{yun:}if $v.time_start < time()&& $v.time_end > time(){/yun}
+										{yun:}$v.yh_price*$config.integral_proportion{/yun}
+									{yun:}else{/yun}
+										{yun:}$v.service_price*$config.integral_proportion{/yun}
+									{yun:}/if{/yun} 
+								</span>
+                                    <em class="member_set_meal_time">
+	 			   					{yun:}if $v.time_start < time()&& $v.time_end > time(){/yun} 
+	 			   						<i class="member_set_meal_yj">{yun:}$v.service_price*$config.integral_proportion{/yun}</i> 
+	 			   					{yun:}/if{/yun} 	
+	 			   					{yun:}$config.integral_pricename{/yun}/ {yun:}if $v.service_time>0{/yun}{yun:}$v.service_time{/yun}天{yun:}else{/yun}永久{yun:}/if{/yun}
+	 			   				</em>
+                                    </span>
+                                    {yun:}else{/yun}
+                                    <span class="member_set_meal_jg">
+	  							<span>
+	  								{yun:}if $v.time_start < time()&& $v.time_end > time(){/yun}
+										￥{yun:}$v.yh_price{/yun}
+									{yun:}else{/yun}
+										￥{yun:}$v.service_price{/yun}
+									{yun:}/if{/yun}
+								</span>
+                                    <em class="member_set_meal_time">
+									{yun:}if $v.time_start < time()&& $v.time_end > time(){/yun}
+										<i class="member_set_meal_yj">￥{yun:}$v.service_price{/yun}</i>
+									{yun:}/if{/yun}
+									/ {yun:}if $v.service_time>0{/yun}{yun:}$v.service_time{/yun}天{yun:}else{/yun}永久{yun:}/if{/yun}
+								</em>
+                                    </span>
+                                    {yun:}/if{/yun}
+
+                                </div>
+
+                                <div class="member_set_meal_cont">
+                                    <div class="member_set_meal_cont_box">
+                                        <div class="member_set_meal_showboxtime">
+                                            {yun:}if $v.rname == ''{/yun} 
+                                            <div class="member_set_meal_showboxtime_js">时间模式会员，有效时间内，发布职位、下载简历等操作不受限制！</div>
+                                             {yun:}else{/yun} 
+                                              <div class="member_set_meal_showboxtime_js">有效时间内，每日最大操作次数限制</div>
+                                              {yun:}$v.rname{/yun}
+                                              <div class="member_set_meal_showboxtime_js"> 多日累计总数不限</div> {yun:}/if{/yun}
+                                        </div>
+
+                                        <div class="member_tc_sm">
+                                            <div class="member_tc_sm_c">
+                                                <font color="#CC3300">说明：</font>
+                                                {yun:}if $v.explains{/yun}{yun:}$v.explains{/yun}{yun:}else{/yun}{yun:}$v.name{/yun}{yun:}/if{/yun} {yun:}if $v.integral_buy>0{/yun}赠送{yun:}$v.integral_buy{/yun}{yun:}$config.integral_pricename{/yun}{yun:}/if{/yun} 
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <span id="ratingid" style="display: none;">{yun:}$v.id{/yun}</span>
+                                <input type="hidden" id="server_price" value="{yun:}if $v.time_start<time()&& $v.time_end>time(){/yun}{yun:}$v.yh_price{/yun}{yun:}else{/yun}{yun:}$v.service_price{/yun}{yun:}/if{/yun} ">
+                            </li>
+                            {yun:}foreachelse{/yun}
+                            <div class="wap_member_no">没有时间会员服务</div>
+                            {yun:}/foreach{/yun}
+
+                            <input type="hidden" value="{yun:}$row.id{/yun}" id="rating_id" />
+                            <input type="hidden" id="r_price" value="{yun:}if $row.time_start<time()&& $row.time_end>time(){/yun}{yun:}$row.yh_price{/yun}{yun:}else{/yun}{yun:}$row.service_price{/yun}{yun:}/if{/yun}">
+
+                        </ul>
+
+						{yun:}if $rows{/yun}
+                        {yun:}if $config.com_integral_online==3 && $config.member_meal!=1{/yun}
+
+                        <div class="member_set_meal_fk_zf">
+                            <input type="button" class="member_set_meal_fk_zf_bth" value="确认支付" onclick="integral_rating_buy();">
+                        </div>
+
+                        {yun:}else{/yun}
+
+                        <div class="member_set_meal_fk_fbox mt10">
+                            <div class="member_set_meal_fk">
+                                订单金额
+                                <span class="member_set_meal_fk_jg">￥
+	 					<span id="price">
+	 					{yun:}if $row.time_start < time()&& $row.time_end > time(){/yun}
+							{yun:}$row.yh_price{/yun}
+						{yun:}else{/yun}
+							{yun:}$row.service_price{/yun}
+						{yun:}/if{/yun}
+						</span>
+                                </span>
+                            </div>
+
+                            {yun:}if $config.com_integral_online==1 && $config.member_meal!=1{/yun}
+                            <div class="spread_box" style="border-bottom:1px solid #eee">
+                                积分抵扣
+                                <div class="spread_box_hs">当前共有
+                                    <font color="#3399FF"> {yun:}$statis.integral{/yun} </font>
+                                    积分 (1元=10积分)
+                                </div>
+                                <div class="mui-switch mui-switch-mini" id="integral_switch_rating" style="position: absolute;right: 10px;top: 15px;">
+                                    <div class="mui-switch-handle"></div>
+                                </div>
+                                <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none;">
+                                    积分抵扣数量：
+                                    <input type="text" onkeyup="checkNum('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="integral_pay">
+                                </div>
+                            </div>
+
+                            <div class="spread_box_yfmoney">
+                                应付金额： <span class="spread_box_yfmoney_n">￥ 	<span id="order_price">
+	 					{yun:}if $row.time_start < time()&& $row.time_end > time(){/yun}
+							{yun:}$row.yh_price{/yun}
+						{yun:}else{/yun}
+							{yun:}$row.service_price{/yun}
+						{yun:}/if{/yun}
+						</span></span>
+                            </div>
+
+                            {yun:}/if{/yun}
+                        </div>
+
+                        <form action="index.php?c=dingdan" method="post" onsubmit="return pay_form();" id="paymentform">
+
+                         
+
+                            <div class="member_set_meal_fk_fbox">
+                                 {yun:}if $config.alipay==1{/yun}
+                                <div class="member_set_meal_fk_fs member_set_meal_fk_fs_zfb" onclick="paycheck('alipay');">
+                                    <i class="alipay member_set_meal_fk_xz"></i>支付宝
+                                </div>
+                                {yun:}/if{/yun} {yun:}if $config.bank==1 && $banks{/yun}
+                                <div class="spread_box_more" id="spreadpaymore">其他支付方式</div>
+                                <div class="member_set_meal_fk_fs member_set_meal_fk_fs_yl" id="spreadotherpay" onclick="paycheck('bank');" style="display:none">
+                                    <i class="bank member_set_meal_fk_xz" id="switchbank"></i>银行汇款
+                                </div>
+                                <div class="paybank item" id="spreadpaybank" style="display: none;">
+                                    <div class="paybank_tip"><span class="com_remind">汇款前请仔细核对银行帐号</span></div>
+
+                                    <div class="admin_note2">
+                                        <div class="my_table_msg">
+                                            {yun:}if is_array($banks){/yun} {yun:}foreach item=blist from=$banks{/yun}
+                                            <div class="pay_bank_list">
+                                                <div class="">{yun:}$blist.bank_name{/yun}</div>
+                                                <div class="">{yun:}$blist.name{/yun}</div>
+                                                <div class="">{yun:}$blist.bank_number{/yun}</div>
+                                                <div class="">{yun:}$blist.bank_address{/yun}</div>
+                                            </div>
+                                            {yun:}/foreach{/yun} {yun:}else{/yun}
+                                            <div class="wap_member_no">暂未添加银行</div>
+                                            {yun:}/if{/yun}
+                                        </div>
+
+                                        <div class="paybank_tip">填写汇款凭证：</div>
+                                        <div class="my_table_msg">
+                                            <div class="paybank_hk_list">
+                                                <div class="paybank_name">汇款银行</div>
+                                                <div class="">
+                                                    <input type="text" id="bank_name" name="bank_name" class="paybank_hk_text" value="" placeholder="如：中国银行+沭阳开发区支行" />
+                                                </div>
+                                            </div>
+
+                                            <div class="paybank_hk_list">
+                                                <div class="paybank_name">汇入账号</div>
+                                                <div class=""><input type="text" id="bank_number" name="bank_number" class="paybank_hk_text" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" value="" placeholder="请填写汇入账号" /></div>
+                                            </div>
+
+                                            <div class="paybank_hk_list">
+                                                <div class="paybank_name">汇款金额</div>
+                                                <div class=""><input type="text" id="bank_price" name="bank_price" class="paybank_hk_text" value="{yun:}if $row.order_price{/yun}{yun:}$row.order_price{/yun}{yun:}else{/yun}{yun:}if $row.time_start < time()&& $row.time_end > time(){/yun}{yun:}$row.yh_price{/yun}{yun:}else{/yun}{yun:}$row.service_price{/yun}{yun:}/if{/yun}{yun:}/if{/yun}" placeholder="请填写汇款金额" /></div>
+                                            </div>
+
+                                            <div class="paybank_hk_list">
+                                                <div class="paybank_name">汇款时间</div>
+                                                <div class=""><button id='banktimePicker' data-options='{"type":"date"}' style="border:none;">请选择汇款时间</button>
+                                                    <input type="hidden" id="bank_time" name="bank_time" /></div>
+                                            </div>
+
+                                            <div class="paybank_hk_list">
+                                                <div class="paybank_name">汇款单</div>
+                                                <div class="" style="text-align:right">
+                                                	<span class="once_cont_wate_list_photo_pic" id="previewshow" style="display: none;"> <img id="previewimg" width="35" height="35"></span>
+                                                	<div class="paybank_hk_file_box">
+					                                    <i class="paybank_hk_file_icon"></i> 上传汇款单
+					                                	<input type="file" name="pic" id="pic" onchange="previewImage(this,'preview')" class="paybank_hk_file" />
+					                                	<input type='hidden' name='preview' value='' id='preview'>
+					                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {yun:}/if{/yun}
+                            </div>
+                            
+                            <input type="hidden" value="{yun:}$row.id{/yun}" id="id" name="comvip" />
+                            <input type="hidden" value="" id="paytype" name="paytype" />
+                            <input type="hidden" value="" id="dkjf" name="dkjf" />
+                            <input type="hidden" value="{yun:}if $row.time_start<time()&& $row.time_end>time(){/yun}{yun:}$row.yh_price{/yun}{yun:}else{/yun}{yun:}$row.service_price{/yun}{yun:}/if{/yun}" id="vip_price" name="price" /> {yun:}if  $config.alipay==1 || ($config.bank==1 && $banks){/yun}
+                            <div class="member_set_meal_fk_zf">
+                                <input type="submit" class="member_set_meal_fk_zf_bth" style="border:none" value="确认支付">
+                            </div>
+                            {yun:}else{/yun}
+                           <div class="pay_zfgb_tip">
+                                <span>网站已关闭支付功能，请联系管理员！</span>
+                            </div>
+                            {yun:}/if{/yun}
+                        </form>
+
+                        <div class="member_set_meal_fk_zf" style="display: none;" id="integral_buy">
+                            <input type="button" class="member_set_meal_fk_zf_bth" style="border:none;color:white" value="确认支付" onclick="integral_rating_buy();">
+                        </div>
+                        {yun:}/if{/yun}
+                        {yun:}/if{/yun}
+
+                    </div>
+
+                    <div class="clear"></div>
+
+                </section>
+            </div>
+
+        </div>
+    </div>
+    <!--页面主内容区结束-->
+</div>
+<!--单页面结束-->
+<!--单页面结束-->
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script language="javascript">
+    mui.init();
+    var viewApi = mui('#app').view({
+        defaultPage: '#main'
+    });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+    var view = viewApi.view;
+    (function($) {
+        //处理view的后退与webview后退
+        var oldBack = $.back;
+        $.back = function() {
+            if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                viewApi.back();
+            } else { //执行webview后退
+                oldBack();
+            }
+        };
+         
+    })(mui);
+	$(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+</script>
+<script src="{yun:}$wap_style{/yun}/js/pay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

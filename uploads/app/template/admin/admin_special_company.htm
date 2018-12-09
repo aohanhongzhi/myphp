@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<title>后台管理</title>
+</head>
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">操作提示</div>
+    
+</div>
+</div>
+<div class="clear"></div>
+<div style="height:10px;"></div>
+<div class="table-list">
+  <div class="admin_table_border">
+    <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form action="" name="myform" method="get" id='myform' target="supportiframe">
+     <input name="m" value="special" type="hidden"/>
+        <input name="c" value="delcom" type="hidden"/>
+    <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+      <table width="100%">
+        <thead>
+          <tr class="admin_table_top">
+            <th>专题编号</th>
+            <th>编号</th>
+            <th align="left">企业名称</th>  
+            <th class="admin_table_th_bg">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+        {yun:}foreach item=v from=$rows{/yun}
+        <tr align="center"{yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun}>
+            <td><span>{yun:}$sid{/yun}</span></td>   
+          <td><span>{yun:}$v.uid_n{/yun}</span></td>
+          <td align="left">{yun:}$v.name_n{/yun}</td>     
+        <td>
+            {yun:}if $v.cuid{/yun}
+              <a href="javascript:;"  class="admin_new_cz_tj" style=" margin-left:0px;">已添加</a>
+            {yun:}else{/yun}
+            <a href="javascript:;" onclick="companysave('{yun:}$sid{/yun}','{yun:}$v.uid_n{/yun}');" class="admin_new_cz_tj" style=" margin-left:0px;">添加报名</a>
+            {yun:}/if{/yun}
+        </td>
+        </tr>
+        {yun:}/foreach{/yun}
+        <tr style="background:#f1f1f1;">
+            <td colspan="2">
+		  </td>
+		  <td colspan="2" class="digg">{yun:}$pagenav{/yun}</td>
+        </tr>
+          </tbody> 
+      </table>
+    </form>
+  </div>
+</div>
+</div>
+<script>
+function companysave(sid,uid){
+    var pytoken=$("#pytoken").val();
+   $.post("index.php?m=special&c=savespecial",{sid:sid,uid:uid,pytoken:pytoken},function(data){
+       if(data==1){
+           layer.msg("该专题禁止报名", 2,8,function(){
+                window.location.href='index.php?m=special';
+           });
+       }else if(data==2){
+            layer.msg("你已经帮企业已报名该专题！", 2,8);
+       }else if(data==3){
+            layer.msg("报名已满", 2,8,function(){
+                window.location.href='index.php?m=special';
+           });
+       }/*else if(data==4){
+            layer.msg("企业暂无公开且合适职位！", 2,8);   
+       }*/else if(data==5){
+            layer.msg("添加成功", 2,9,function(){
+               window.location.reload();
+            });
+       }else if(data==6){
+           layer.msg("添加失败", 2,8);
+       }
+     })
+}
+</script>
+<script>
+  layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+  });
+  </script>
+  
+</body>
+</html>

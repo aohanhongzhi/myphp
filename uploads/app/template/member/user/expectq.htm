@@ -1,0 +1,265 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_user_member_w1100">
+	{yun:}include file="$tplstyle/public_search/index_search.htm"{/yun}
+	<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/search.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/class.public.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/data/plus/job.cache.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+	<link rel="stylesheet" href="{yun:}$style{/yun}/style/class.public.css?v={yun:}$config.cachecode{/yun}" type="text/css"> 
+	<div class="yun_w1200">
+		<div class="paste_resume fltL">
+			<div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">黏贴简历</span> <i class="member_right_h1_icon user_bg"></i></div>
+			<div class="clear"></div>
+			<form name="MyForm" action='index.php?c=expectq&act=save' method="POST" target="supportiframe" onsubmit="return Checkexpectq();" class="layui-form">
+				<div class="clear"></div>
+				<div class="paste_resume_info">
+					<div class="yun_m_info">
+						<ul>
+							<li class="yun_m_info_list">
+								<div class="yun_m_info_name"><b>*</b> 期望岗位：</div>
+								<div class="yun_m_info_text">
+									<div class="yun_m_info_text_box">
+										<input name="name" type="text" value="{yun:}$row.name{/yun}" maxlength="100" id='name' class="yun_m_info_fill" />
+									</div>
+								</div>
+							</li>
+							<li class="yun_m_info_list">
+								<div class="yun_m_info_name"> <b>*</b>期望从事行业：</div>
+								<div class="yun_m_info_text">
+									<div class="layui-form-item">
+										<div class="layui-input-inline">
+											<select name="hy" lay-filter="" id="hyid">
+												<option value="">请选择行业</option>
+												{yun:}foreach from=$industry_index key=j item=v{/yun}
+												<option value="{yun:}$v{/yun}" {yun:}if $row.hy==$v{/yun}selected="selected" {yun:}/if{/yun}>{yun:}$industry_name[$v]{/yun}</option>
+												{yun:}/foreach{/yun}
+											</select>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="yun_m_info_list">
+								<div class="yun_m_info_name"><b>*</b> 期望职位：</div>
+								<div class="yun_m_info_text">
+									<div class="yun_uesr_text yun_uesr_textw380">
+										<input type="button" {yun:}if $job_classname{/yun}value="{yun:}$job_classname{/yun}" {yun:}else{/yun} value=" 请选择 " {yun:}/if{/yun}style=" float:left;" class="layui-input" onclick="index_job(5,'#workadds_job','#job_class','left:100px;top:100px; position:absolute;','{yun:}$row.job_classid{/yun}');" id="workadds_job">
+										<input name='job_classid' id='job_class' {yun:}if $row.job_classid {/yun} value="{yun:}$row.job_classid{/yun}" {yun:}/if{/yun} type='hidden' />
+									</div>
+								</div>
+							</li>
+							<li class="yun_m_info_list">
+								<div class="yun_m_info_name"><b>*</b> 期望工作地点：</div>
+								<div class="yun_m_info_text">
+									<div class="yun_uesr_text yun_uesr_textw380">
+										<input type="button" {yun:}if $city_classname{/yun}value="{yun:}$city_classname{/yun}" {yun:}else{/yun} value=" 请选择 " {yun:}/if{/yun}style=" float:left;" class="layui-input" onclick="index_city(5,'#workadds_city','#city_class','left:100px;top:100px; position:absolute;','{yun:}$row.city_classid{/yun}');" id="workadds_city">
+										<input name='city_classid' id='city_class' {yun:}if $row.city_classid {/yun} value="{yun:}$row.city_classid{/yun}" {yun:}/if{/yun} type='hidden' />
+									</div>
+								</div>
+							</li>
+							<!--li class="yun_m_info_list">
+								<div class="yun_m_info_name"> <b>*</b> 期望工作地点：</div>
+								<div class="yun_m_info_text" style="width:620px;">
+									<div class="layui-form-item">
+										<div class="layui-input-inline" style="width:109px;">
+											<select name="provinceid" lay-filter="citys" id="provinceid">
+												<option value="">请选择</option>
+												{yun:}foreach from=$city_index key=j item=v{/yun}
+												<option value="{yun:}$v{/yun}" {yun:}if $row.provinceid==$v{/yun}selected="selected" {yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+												{yun:}/foreach{/yun}
+											</select>
+										</div>
+										<div class="layui-input-inline" style="width:109px;">
+											<select name="cityid" lay-filter="citys" id="cityid">
+												<option value="">请选择</option>
+												{yun:}foreach from=$city_type[$row.provinceid] key=j item=v{/yun}
+												<option value="{yun:}$v{/yun}" {yun:}if $row.cityid==$v{/yun}selected="selected" {yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+												{yun:}/foreach{/yun}
+											</select>
+										</div>
+										<div class="layui-input-inline" style="width:109px;">
+											<select name="three_cityid" lay-filter="citys" id="three_cityid">
+												<option value="">请选择</option>
+												{yun:}foreach from=$city_type[$row.cityid] key=j item=v{/yun}
+												<option value="{yun:}$v{/yun}" {yun:}if $row.three_cityid==$v{/yun}selected="selected" {yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+												{yun:}/foreach{/yun}
+											</select>
+										</div>
+									</div>
+								</div>
+							</li-->
+							<li class="yun_m_info_list">
+								<div class="yun_m_info_name">
+									<font color="#FF0000">*</font> 薪资待遇：</div>
+								<div class="yun_m_info_text">
+									<div class="layui-form-item">
+										<div class="layui-input-inline" style="width:159px;">
+											<input type="text" {yun:}if $row.minsalary{/yun} value="{yun:}$row.minsalary{/yun}" {yun:}/if{/yun} id="minsalary" name="minsalary" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="layui-input info_textw100" placeholder="最低薪资" />
+										</div>
+										<div class="layui-input-inline" style="width:159px;">
+											<input type="text" {yun:}if $row.maxsalary{/yun} value="{yun:}$row.maxsalary{/yun}" {yun:}/if{/yun} id="maxsalary" name="maxsalary" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="layui-input info_textw100" placeholder="最高薪资" />
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="yun_m_info_list">
+								<div class="yun_m_info_name">
+									<font color="#FF0000">*</font> 期望工作性质：</div>
+								<div class="yun_m_info_text">
+									<div class="layui-form-item">
+										<div class="layui-input-inline">
+											<select name="type" lay-filter="" id="typeid">
+												<option value="">请选择工作性质</option>
+												{yun:}foreach from=$userdata.user_type key=j item=v{/yun}
+												<option value="{yun:}$v{/yun}" {yun:}if $row.type==$v{/yun}selected="selected" {yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+												{yun:}/foreach{/yun}
+											</select>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="yun_m_info_list">
+								<div class="yun_m_info_name">
+									<font color="#FF0000">*</font> 到岗时间：</div>
+								<div class="yun_m_info_text">
+									<div class="layui-form-item">
+										<div class="layui-input-inline">
+											<select name="report" lay-filter="" id="reportid">
+												<option value="">请选择到岗时间</option>
+												{yun:}foreach from=$userdata.user_report key=j item=v{/yun}
+												<option value="{yun:}$v{/yun}" {yun:}if $row.report==$v{/yun}selected="selected" {yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+												{yun:}/foreach{/yun}
+											</select>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="yun_m_info_list">
+								<div class="yun_m_info_name">
+									<font color="#FF0000">*</font> 求职状态：</div>
+								<div class="yun_m_info_text">
+									<div class="layui-form-item">
+										<div class="layui-input-inline">
+											<select name="jobstatus" lay-filter="" id="jobstatusid">
+												<option value="">请选择求职状态</option>
+												{yun:}foreach from=$userdata.user_jobstatus key=j item=v{/yun}
+												<option value="{yun:}$v{/yun}" {yun:}if $row.jobstatus==$v{/yun}selected="selected" {yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+												{yun:}/foreach{/yun}
+											</select>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="yun_m_info_list">
+								<div class="yun_m_info_name"> 黏贴简历内容：</div>
+								<div class="yun_m_info_text">
+									<script id="content" name="doc" type="text/plain" style="width:500px; height:160px;"> {yun:}$row.doc{/yun} </script>
+								</div>
+							</li>
+							<li class="yun_m_info_list">
+								<div class="yun_m_info_name">&nbsp;</div>
+								<div class="yun_m_info_text">
+									<input name="eid" type="hidden" value="{yun:}$smarty.get.e{/yun}" />
+									<input type="submit" name="submit" value=" 保 存" class="layui-btn layui-btn-normal" />
+								</div>
+							</li>
+						</ul>
+					</div>
+			</form>
+			</div>
+		</div>
+		<div class="paste_resume_msg">
+			<div class="paste_resume_msg_b">
+				<div class="paste_resume_msg_tit">黏贴简历说明：</div>
+				快速黏贴简历只需选择基本求职意向，然后复制已有简历到内容框中即可！ 我们并不推荐这种方式，因为我们提供了更加规范的简历格式，一份漂亮的简历可以体现一个人的做事态度，直接影响你的求职成功率！
+			</div>
+			<div class="paste_resume_msg_b">
+				<div class="yun_resume_czewmpic"><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_qcode{/yun}" width="150" height="150"></div>
+				<div class="yun_resume_czewmpic_p">
+					<div>扫一扫</div>手机上也可以编辑简历了</div>
+				<div class=""></div>
+			</div>
+		</div>
+
+	</div>
+	<script language=javascript>
+		layui.use(['layer', 'form', 'laydate'], function() {
+			var layer = layui.layer,
+				form = layui.form,
+				laydate = layui.laydate,
+				$ = layui.$;
+			laydate.render({
+				elem: '#birthday',
+				max: -5113
+			});
+			form.on('select(citys)', function(data) {
+				$.post(weburl + "/index.php?m=ajax&c=ajax", {
+					str: data.value
+				}, function(htm) {
+					if(data.elem.name == 'provinceid') {
+						$("#cityid").html(htm);
+						$("#three_cityid").html("<option value=''>请选择</option>");
+					} else if(data.elem.name == 'cityid') {
+						$("#three_cityid").html(htm);
+					}
+					form.render('select');
+				});
+			});
+		});
+
+		function Checkexpectq() {
+			if($.trim($("#name").val()) == '') {
+				layer.msg('请填写期望岗位', 2, 8);
+				return false;
+			}
+			if($.trim($("#job_class").val()) == '') {
+				layer.msg('请选择工作职能', 2, 8);
+				return false;
+			}
+			if($.trim($("#hyid").val()) == '') {
+				layer.msg('请选择期望行业', 2, 8);
+				return false;
+			}
+			if($.trim($("#city_class").val()) == '') {
+				layer.msg('请选择工作地点', 2, 8);
+				return false;
+			}
+			var min = $.trim($("#minsalary").val());
+			var max = $.trim($("#maxsalary").val());
+			if(min == '' || min == '0') {
+				layer.msg('请填写薪资待遇', 2, 8);
+				return false;
+			}
+			if(max && parseInt(max) <= parseInt(min)) {
+				layer.msg('最高薪资必须大于最低薪资', 2, 8);
+				return false;
+			}
+			if($.trim($("#typeid").val()) == '') {
+				layer.msg('请选择工作性质', 2, 8);
+				return false;
+			}
+			if($.trim($("#reportid").val()) == '') {
+				layer.msg('请选择到岗时间', 2, 8);
+				return false;
+			}
+			if($.trim($("#jobstatusid").val()) == '') {
+				layer.msg('请选择求职状态', 2, 8);
+				return false;
+			}
+
+			layer.load('执行中，请稍候...', 0);
+		}
+	</script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script language="javascript">
+		var editor = UE.getEditor('content', {
+			toolbars: [
+				['Source', '|', 'Undo', 'Redo', 'Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize', 'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|', 'simpleupload', '|', 'link', 'unlink', 'indent', '|', 'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']
+			],
+			wordCount: false,
+			elementPathEnabled: false,
+			initialFrameHeight: 200
+		});
+	</script>
+	{yun:}include file="$userstyle/footer.htm"{/yun}

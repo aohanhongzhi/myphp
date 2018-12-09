@@ -1,0 +1,56 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+    
+        <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">我的关注</span> <i class="member_right_h1_icon user_bg"></i></div>
+   		<div id="gms_showclew"></div>
+        <div class="job_list_tit"> 
+		<ul class="">
+   	  <li {yun:}if $smarty.get.c=='atn'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=atn">关注的企业</a>{yun:}if $msgnum{/yun}<i class="left_sidebar_leftmune_icon">{yun:}$msgnum{/yun}</i>{yun:}/if{/yun}</li>
+    
+    
+     </ul> 
+	</div>
+        <div class="resume_box_list mt20">
+        {yun:}if !empty($rows){/yun}
+            <div class="attention_enterprises_tit">
+                <div style="width:300px;" class="attention_enterprises_span attention_enterprises_name"><em class="List_Title_span_name">企业名称</em></div>
+                <div style="width:300px;" class="attention_enterprises_span attention_enterprises_job">正在招聘</div>
+                <div style="width:150px;" class="attention_enterprises_span attention_enterprises_time">关注时间</div>
+                <div style="width:150px;" class="attention_enterprises_span attention_enterprises_cz">操作</div>
+            </div>
+            {yun:}/if{/yun}
+            {yun:}foreach item=log from=$rows{/yun}
+            <div class="attention_enterprises_list">
+                <div style="width:300px;" class="attention_enterprises_span attention_enterprises_name">
+                    <a href="{yun:}url m=company c=show id='`$log.sc_uid`'{/yun}" target="_blank" class="attention_enterprises_name_a">{yun:}$log.com_name{/yun}&nbsp;</a>
+
+					<div class="mt10">{yun:}$log.com_pr{/yun}<span class="look_myresume_comline">|</span>{yun:}$log.com_mun{/yun}{yun:}if $log.com_sdate{/yun}<span class="look_myresume_comline">|</span>{yun:}$log.com_sdate{/yun}年{yun:}/if{/yun}</div>
+                </div>
+                <div style="width:300px;" class="attention_enterprises_span attention_enterprises_job mt15">
+                    {yun:}if $log.jobnum>0{/yun}
+                    {yun:}$log.jobname{/yun} 
+                    <a href="{yun:}url m=company c=show id='`$log.sc_uid`'{/yun}#job" target="_blank" class="attention_enterprises_job_n">共{yun:}$log.jobnum{/yun}个职位>></a>
+                    {yun:}else{/yun}
+                    暂无职位
+                    {yun:}/if{/yun}
+                    &nbsp;
+                </div>
+                <div style="width:150px;" class="attention_enterprises_span attention_enterprises_time mt15">{yun:}$log.time|date_format:'%Y-%m-%d'{/yun}</div>
+                <div style="width:150px;" class="attention_enterprises_span attention_enterprises_cz mt15"><a href="javascript:void(0)" onclick="layer_del('您确定要取消关注？', '{yun:}$config.sy_weburl{/yun}/member/index.php?c=atn&act=del&id={yun:}$log.id{/yun}&uid={yun:}$log.sc_uid{/yun}');" class="cblue">取消关注</a>
+                </div>
+            </div>
+            {yun:}foreachelse{/yun}
+           <div class="msg_no">
+      <p>亲爱的用户，目前您未关注任何企业，想要了解企业近况</p>
+  <p>立即搜索我感兴趣的企业关注吧！</p>
+<a href="{yun:}url m=company{/yun}" target="_blank" class="msg_no_sq uesr_submit">立即搜索我感兴趣的企业>></a>
+</div>
+            {yun:}/foreach{/yun}
+            <div class="clear"></div>
+            <div class="diggg">{yun:}$pagenav{/yun}</div>
+        </div>
+    </div>
+</div>
+{yun:}include file="$userstyle/footer.htm"{/yun} 

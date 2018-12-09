@@ -1,0 +1,25 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+
+
+<!--内容-->
+
+<div class="evaluate_show">
+<div class="evaluate_name">{yun:}$info.name{/yun}</div>
+<div class="evaluate_pall">{yun:}$info.description{/yun}</div>
+<div class="evaluate_cs">{yun:}$info.visits{/yun}人访问过</div>
+<div class="evaluate_cs_bth"><a href="{yun:}url m=wap c=evaluate a=paper id=$info.id{/yun}">开始测试</a></div>
+<div class="evaluate_cs_tm">共{yun:}$questions|@count{/yun}题</div> 
+<a href="javascript:void(0);" id="shareClick" class="evaluate_cs_fx"> <i class="evaluate_cs_fx_icon"></i> <span class="yun_job_footer_s">分享到朋友圈</span></a>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+    var config = {
+        url: '{yun:}url m=wap c=evaluate a=show id=$info.id{/yun}',
+        title: '{yun:}$info.name{/yun}-{yun:}$config.sy_webname{/yun}',
+        desc: '',
+        img: '{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+        img_title: '{yun:}$info.name{/yun}',
+        from: '{yun:}$config.sy_webname{/yun}'
+    };
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

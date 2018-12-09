@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<script>var weburl = '{yun:}$config.sy_weburl{/yun}';</script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+
+<script language="javascript">
+
+function checkform(){
+	if($("#title").val()=="") { 
+      	parent.layer.msg('请填写招聘会标题！', 2, 8);
+      	return (false);
+      }		
+	var time = $("#time").val();
+	if(time==""){
+		parent.layer.msg('举办时间不能为空！', 2, 8);
+		return false
+	}
+	$("#zphform").submit();
+}
+function setStandaside(){
+	var zid='{yun:}$info.id{/yun}';
+	var sid=$("#sid").val();
+	var pytoken=$("#pytoken").val();
+	if(sid==""){
+		parent.layer.msg("请先选择场地！",2,8);
+	}else{
+		$.post("index.php?m=zhaopinhui&c=getzhanwei",{sid:sid,zid:zid,pytoken:pytoken},function(data){
+			$("#zhanwei").html(data);
+			$.layer({
+				type : 1,
+				title : '设置预留展位',
+				offset: ['100px', ''],
+				closeBtn : [0 , true], 
+				border : [10 , 0.3 , '#000', true],
+				area : ['400px','320px'],
+				page : {dom : '#Standaside'}
+			});
+		})
+
+	}
+}
+function check_zhanwei(){
+	var chk_value =[];    
+	$('input[name="zhanwei"]:checked').each(function(){
+		chk_value.push($(this).val());   
+	}); 
+	$("#reserved").val(chk_value);  
+	layer.closeAll();
+}
+function news_preview(url){
+	$(".job_box_div").html("<img src='"+url+"' style='max-width:500px' />");//
+ 	$.layer({
+		type : 1,
+		title : '查看图片',
+		closeBtn : [0 , true],
+		offset : ['20%' , '30%'],
+		border : [10 , 0.3 , '#000', true],
+		area : ['560px','auto'],
+		page : {dom : '#news_preview'}
+	}); 
+}
+</script>
+ 
+<style>
+* {margin: 0 ;padding: 0;}
+body,div{ margin: 0 ;padding: 0;}
+</style>
+<title>后台管理</title>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">管理员根据自己需求，填写该场招聘会常规设置！招聘会名称、日期、举办方、招聘会地址和参与说明等设置。还可以上传招聘会的现场图片等个性化设置。</div>
+</div>
+</div>
+<div class="clear"></div>
+
+
+ <div class="tag_box mt10"> 
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+<form id="zphform" name="myform" target="supportiframe" action="index.php?m=zhaopinhui&c=save" method="post"  encType="multipart/form-data" class="layui-form">
+<table width="100%" class="table_form" style="background:#fff;">
+ <tr class="admin_table_trbg">
+          <th colspan="4" bgcolor="#f0f6fb"><span class="admin_bold">添加招聘会信息</span></th>
+    </tr>
+	<tr>
+		<th width="120">招聘会标题：</th>
+		<td>
+		  <div class="layui-form-item">
+            <div class="layui-input-block">
+            <div class="layui-input-inline">
+              <input type="text" name="title" id="title"  lay-verify="required" placeholder="请输入招聘会标题" value="{yun:}$info.title{/yun}" size="60" autocomplete="off" class="layui-input input-text">
+              </div>
+            </div>
+          </div>
+		</td>
+	</tr>
+	<tr class="vip_type_2 admin_table_trbg" >
+		<th width="120">举办场地：</th>
+		<td>
+		{yun:}if $space{/yun}
+		
+		
+		<div class="layui-input-inline" style='float:left'>
+	      <select name="sid" id='sid'>
+		    {yun:}if $info.sid{/yun}
+	 		  {yun:}foreach item=v from=$space{/yun}
+                    {yun:}if $v.id eq $info.sid{/yun}
+                    <option value="{yun:}$v.id{/yun}" selected>{yun:}$v.name{/yun}</option>
+                    {yun:}else{/yun}
+                    <option value="{yun:}$v.id{/yun}" >{yun:}$v.name{/yun}</option>
+                    {yun:}/if{/yun}
+                {yun:}/foreach{/yun}
+            {yun:}else{/yun}
+                <option value="">请选择</option>
+            {yun:}/if{/yun}
+	        
+	        {yun:}if !$info.sid{/yun}
+		        {yun:}foreach item=v from=$space{/yun}
+                	<option value="{yun:}$v.id{/yun}">{yun:}$v.name{/yun}</option>
+                {yun:}/foreach{/yun}
+            {yun:}/if{/yun}
+            
+	      </select>
+	    </div>
+        <a href="javascript:void(0);" onClick="setStandaside()" class="zph_sz_b">设置预留展位</a>
+        <a href="index.php?m=zph_space"  class="zph_sz_b_tjcd">添加场地</a>
+        
+        <input type="hidden" value="{yun:}$info.reserved{/yun}" id="reserved" name="reserved">
+        {yun:}else{/yun}
+        <span class="admin_web_tip">
+      当前暂无可选场地
+   </span>
+    
+        <a href="index.php?m=zph_space" class="zph_sz_b_tjcd">添加场地</a>
+        {yun:}/if{/yun}
+        </td>
+	</tr>
+   
+    <tr>
+        <th>使用范围：</th>
+        <td><input type="button" value="{yun:}if $info.did{/yun}{yun:}$Dname[$info.did]{/yun}{yun:}else{/yun}总站{yun:}/if{/yun}" class="city_news_but" onClick="add_site('{yun:}$info.did{/yun}','{yun:}$Dname[$info.did]{/yun}');">
+        <input id="did" type="hidden" name="did" value="{yun:}$info.did{/yun}" />
+        </td>
+      </tr> 
+	<tr  class="admin_table_trbg">
+		<th width="120">举办时间：</th>
+		<td>
+		
+        <div class="layui-inline">
+	      <div class="layui-input-inline">
+	        <input type="text" class="layui-input input-text" id="time" name="time" value="{yun:}if $info.starttime||$info.endtime{/yun}{yun:}$info.starttime{/yun} ~ {yun:}$info.endtime{/yun}{yun:}/if{/yun}" placeholder="yyyy-MM-dd HH:mm:ss ~ yyyy-MM-dd HH:mm:ss" lay-key="6" size="60">
+	      </div>
+	    </div>
+        
+        </td>
+	</tr>
+    <tr>
+		<th width="120">举办会场：</th>
+		<td>
+		  <div class="layui-form-item">
+	        <div class="layui-input-block">
+            <div class="layui-input-inline">
+	          <input type="text" name="address" id="address"  lay-verify="required" placeholder="请输入举办会场" value="{yun:}$info.address{/yun}" size="60"  autocomplete="off" class="layui-input input-text">
+              </div>
+	        </div>
+	      </div>
+		</td>
+	</tr>
+ 	<tr  class="admin_table_trbg">
+		<th width="120">交通路线：</th>
+		<td>
+		
+		<div class="layui-form-item">
+		  <div class="layui-input-block">
+          <div class="layui-input-inline">
+			<textarea name="traffic" cols="59" rows="3" placeholder="请输入交通路线"   lay-verify="required" class="layui-input input-text"autocomplete="off">{yun:}$info.traffic{/yun}</textarea>
+            </div>
+		  </div>
+		</div>
+		
+		</td>
+	</tr>
+    <tr>
+		<th width="120">联系电话：</th>
+		<td>
+			
+			<div class="layui-form-item">
+		        <div class="layui-input-block">
+                <div class="layui-input-inline">
+		          <input type="text" name="phone" id="phone"  lay-verify="required" placeholder="请输入联系电话" value="{yun:}$info.phone{/yun}" size="60" autocomplete="off" class="layui-input input-text" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')">
+                  </div>
+		        </div>
+	     	 </div>
+			
+			</td>
+	</tr>
+   	<tr  class="admin_table_trbg">
+		<th width="120">主办方：</th>
+		<td>
+		
+		  <div class="layui-form-item">
+	        <div class="layui-input-block">
+            <div class="layui-input-inline">
+	          <input type="text" name="organizers" id="organizers"  lay-verify="required" placeholder="请输入主办方" value="{yun:}$info.organizers{/yun}" size="60" autocomplete="off" class="layui-input input-text">
+              </div>
+	        </div>
+	      </div>
+		
+		</td>
+	</tr>
+    <tr>
+		<th width="120">联系人：</th>
+		<td>
+		
+		
+		<div class="layui-form-item">
+	        <div class="layui-input-block">
+            <div class="layui-input-inline">
+	          <input type="text" name="user" id="user"  lay-verify="required" placeholder="请输入联系人" value="{yun:}$info.user{/yun}" size="60" autocomplete="off" class="layui-input input-text">
+              </div>
+	        </div>
+	      </div>
+		
+		</td>
+	</tr>
+   
+	<tr>	
+		<th width="120">缩略图：</th>
+			<td>
+				<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'is_themb',imgid: 'imgicon'}">上传图片</button>
+				<input type="hidden" id="layupload_type" value="2"/>
+				<input type="hidden" id="upload_path" value="zhaopinhui"/>
+				<input type="hidden" name="is_themb" value="{yun:}$info.is_themb{/yun}"/>
+				<img id="imgicon" src="{yun:}$config.sy_weburl{/yun}/{yun:}$info.is_themb{/yun}" style="width:200px;height:150px;" {yun:}if !$info.is_themb{/yun}class="none"{yun:}/if{/yun}>
+			  </td>
+			</tr>
+    <tr>
+		<th width="120">招聘会介绍：</th>
+		<td>
+ 		<script id="content" name="body" type="text/plain" style="width:820px;height:300px;">{yun:}$info.body{/yun}</script>
+		</td>
+	</tr>
+	<tr  class="admin_table_trbg">
+		<th width="120">媒体宣传：</th>
+		<td>
+		<script id="media" name="media" type="text/plain" style="width:820px;height:300px;">{yun:}$info.media{/yun}</script>
+		</td>
+	</tr>
+    <tr>
+		<th width="120">服务套餐：</th>
+		<td>
+ 		<script id="packages" name="packages" type="text/plain" style="width:820px;height:300px;">{yun:}$info.packages{/yun}</script>
+		</td>
+	</tr>
+ 	<tr  class="admin_table_trbg">
+		<th width="120">展位设置方案：</th>
+		<td>
+ 		<script id="booth" name="booth" type="text/plain" style="width:820px;height:300px;">{yun:}$info.booth{/yun}</script>
+		</td>
+	</tr>
+    <tr>
+		<th width="120">参与办法：</th>
+		<td>
+ 		<script id="participate" name="participate" type="text/plain" style="width:820px;height:300px;">{yun:}$info.participate{/yun}</script>
+		</td>
+	</tr>
+
+		<tr  class="admin_table_trbg">
+		<td align="center" colspan="2">
+        {yun:}if is_array($info){/yun}
+        <input type="hidden" name="id" value="{yun:}$info.id{/yun}" />
+        <input class="layui-btn layui-btn-normal" type="button" onclick="checkform()" value="&nbsp;修 改&nbsp;" />
+        {yun:}else{/yun}
+        <input class="layui-btn layui-btn-normal" type="button" onclick="checkform()" value="&nbsp;添 加&nbsp;" />
+        {yun:}/if{/yun}
+		<input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+	</tr>
+</table>
+<input type="hidden" name="pytoken"  id="pytoken" value="{yun:}$pytoken{/yun}">
+</form>
+</div></div>
+<div id="news_preview"  style="display:none;width:560px ">
+	<div style="height:300px; overflow:auto;width:560px;" >
+		<div class="job_box_div" style="text-align:center;margin-top:10px;"></div>
+	</div>
+</div>
+{yun:}include file="$adminstyle/checkdomain.htm"{/yun}
+
+<div id="Standaside" style="display:none;">
+	<div style=" margin-top:10px;">
+    <div id="zhanwei"></div>
+  </div>
+</div>
+<style>
+.layui-form-item {
+    margin-bottom: 0px;
+    clear: both;
+}
+.layui-form-label {
+    width: 60px;
+    padding: 9px 1px;
+}
+</style>
+
+<script language="javascript">
+	layui.use(['layer', 'form','element','laydate'], function(){
+		var layer = layui.layer
+		,form = layui.form
+		,element = layui.element
+		,$ = layui.$;
+		var laydate = layui.laydate;
+		  //时间选择器
+		  laydate.render({
+			elem: '#time'
+			,type: 'datetime'
+			,range:'~'
+		});
+	});
+UE.getEditor('content',{
+ 	toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|','link', 'unlink', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],
+	wordCount:false,
+	elementPathEnabled:false,
+	initialFrameHeight:300
+});
+UE.getEditor('booth',{
+ 	toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|','link', 'unlink', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],
+	wordCount:false,
+	elementPathEnabled:false,
+	initialFrameHeight:300
+});
+UE.getEditor('media',{
+ 	toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|','link', 'unlink', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],
+	wordCount:false,
+	elementPathEnabled:false,
+	initialFrameHeight:300
+});
+UE.getEditor('packages',{
+ 	toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|','link', 'unlink', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],
+	wordCount:false,
+	elementPathEnabled:false,
+	initialFrameHeight:300
+});
+UE.getEditor('participate',{
+ 	toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|','link', 'unlink', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],
+	wordCount:false,
+	elementPathEnabled:false,
+	initialFrameHeight:300
+});
+ 
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+</body>
+</html>

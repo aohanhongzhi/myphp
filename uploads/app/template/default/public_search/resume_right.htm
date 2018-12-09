@@ -1,0 +1,109 @@
+		<!-- 企业查看简历 -->
+		{yun:}if $smarty.get.see!=member && $smarty.get.see!=used && $uid!=$Info.uid{/yun}
+			<div class="yun_resume_cz  noprint" id="operation_box"> 
+				{yun:}if $usertype==2{/yun}
+					{yun:}if $usermsgnum{/yun}
+						<input class="yun_resume_cz_a" type="button" onClick="layer.msg('您已经邀请过该简历！',2,9);" value="已邀请面试">
+					{yun:}else{/yun}
+ 						<input class="yun_resume_cz_a sq_resume" type="button" value="邀请面试 " name="submit" username="{yun:}$Info.name{/yun}" eid="" uid="{yun:}$Info.uid{/yun}">
+					{yun:}/if{/yun}
+				{yun:}else{/yun}
+					{yun:}if $uid{/yun}
+							<input class="yun_resume_cz_a" onClick="layer.msg('只有企业用户，才可以邀请！',2,8);" type="button" value="邀请面试 ">
+					{yun:}else{/yun}
+						<input class="yun_resume_cz_a" onClick="showlogin('2');" type="button" value="邀请面试 ">
+					{yun:}/if{/yun}
+				{yun:}/if{/yun}
+				
+				<div class="">
+					{yun:}if is_array($talent_pool){/yun}
+						<input class="yun_resume_cz_bth fl"type="button" onClick="layer.msg('该简历已加入到人才库！',2,8);" value="已收藏">
+					{yun:}else{/yun}
+						<input class="yun_resume_cz_bth fl" type="button" onClick="add_user_talent('{yun:}$Info.id{/yun}','{yun:}$usertype{/yun}')" value="收藏">
+					{yun:}/if{/yun}
+					
+					<div class="yun_resume_cz_bth_xz_box">
+						{yun:}if $uid==$Info.uid{/yun}
+							<input class="yun_resume_xz " onClick="for_link('{yun:}$Info.id{/yun}','{yun:}url m=ajax c=for_link{/yun}','{yun:}url m=ajax c=resume_word id=$Info.id{/yun}');" type="button" name="submit" value="下载 ">
+						{yun:}/if{/yun}
+		
+						{yun:}if $usertype==2 ||$uid==$Info.uid{/yun}
+							{yun:}if $jobnum{/yun}
+								{yun:}if $Info.downresume==1{/yun}
+									<a href="{yun:}url m=ajax c=resume_word id=$Info.id{/yun}" class="yun_resume_xz_a">下载</a>
+								{yun:}else{/yun}
+									<input class="yun_resume_xz" onClick="for_link('{yun:}$Info.id{/yun}','{yun:}url m=ajax c=for_link{/yun}','{yun:}url m=ajax c=resume_word id=$Info.id{/yun}');" type="button" name="submit" value="下载 ">
+								{yun:}/if{/yun}
+							{yun:}else{/yun}
+								<input class="yun_resume_xz" onClick="addjob();" type="button" name="submit" value="下载 ">             
+							{yun:}/if{/yun}
+						{yun:}else{/yun}
+							{yun:}if $uid{/yun}
+								<input class="yun_resume_xz" onClick="layer.msg('只有企业用户，才可以下载！',2,8);" type="button" name="submit" value="下载 ">
+							{yun:}else{/yun}
+								<input class="yun_resume_xz" onClick="showlogin('2');" type="button" name="submit" value="下载 ">
+							{yun:}/if{/yun}
+						{yun:}/if{/yun}
+					</div>
+			
+					<input class="yun_resume_cz_bth  yun_resume_cz_bth_dy fl" type="button" onClick="dayin()" value="打印 " name="button">
+					{yun:}if !$uid && !$username{/yun}
+						 
+							<input class="yun_resume_cz_bth yun_resume_cz_bth_fx fr" type="button" onClick="showlogin('2');" value="分享" name="submit">
+ 					{yun:}else{/yun}
+						<input class="yun_resume_cz_bth yun_resume_cz_bth_fx fr" type="button" onClick="recommendInterval('{yun:}$uid{/yun}','{yun:}url m=resume c=resumeshare id='`$Info.id`'{/yun}');" value="分享" name="submit">
+					{yun:}/if{/yun}
+					<input type="hidden" value="{yun:}$Info.id{/yun}" id="eid">
+				</div>
+		
+				<form action="index.php?m=resume&c=show&a=report" method="post" id='myform'target="supportiframe" class="layui-form">
+					<input type="hidden" name="r_uid" value="{yun:}$Info.uid{/yun}">
+					<input type="hidden" name="r_eid" value="{yun:}$Info.id{/yun}">
+					<input type="hidden" name="r_name" value="{yun:}$Info.name{/yun}">
+					<div class="yun_resume_ts_tit">简历投诉</div>
+					<div class="yun_resume_cz_dt">若该简历为无效简历，您可以在此举报：</div>
+					<div class="yun_resume_cz_dt">
+						<input type="checkbox" name="reason[]" id="reason_1" lay-skin="primary" title="无人接听" value="无人接听">
+						<input type="checkbox" name="reason[]" id="reason_2" lay-skin="primary" title="打广告" value="打广告">
+						<input type="checkbox" name="reason[]" id="reason_3" lay-skin="primary" title="找到工作" value="找到工作">
+						<input type="checkbox" name="reason[]" id="reason_4" lay-skin="primary" title="信息不实" value="信息不实">
+						<input type="checkbox" name="reason[]" id="reason_5" lay-skin="primary" title="号码错误" value="号码错误">
+						<input type="checkbox" name="reason[]" id="reason_6" lay-skin="primary" title="骗子" value="骗子">
+					</div>
+					<div class="yun_resume_cz_dt">
+						{yun:}if !$uid && !$username{/yun}
+							<input type="button" name="submit" value="举报" onClick="showlogin('2');" class="yun_resume_cz_jb_a">
+						{yun:}else if $usertype!=2 {/yun}
+							<input class="yun_resume_cz_jb_a" onClick="layer.msg('只有企业用户才可以举报！',2,8);" type="button" name="submit" value="举报 ">
+						{yun:}else{/yun}
+							<input type="submit" name="submit" value="举报" class="yun_resume_cz_jb_a">
+						{yun:}/if{/yun}
+					</div>
+				</form>
+			</div>
+			
+			<div id='for_link'  class="none"  style="width:350px;text-align: center;margin: 0 auto;">
+				<div class="city_1" style="padding:20px 0;width:100%;"></div>
+				<div class="btn" style="padding-bottom: 20px; padding-top: 10px; width: auto; ">  
+				   <a href="{yun:}url m=ajax c=resume_word id=$Info.id{/yun}" class="resume_bthxz" style="display: block;">下载简历</a>
+				</div>
+			</div>
+		{yun:}/if{/yun}
+
+		<!-- 自己预览简历 --> 
+		{yun:}if $uid==$Info.uid{/yun}
+			<div class="yun_resume_ylcz noprint">
+				<div class="yun_resume_cz ">
+					<a href="{yun:}url m=member c=expect e=$Info.id{/yun}" class="yun_resume_cz_xg">修改简历</a>
+					<div class="">
+						<input class="yun_resume_cz_bc yun_resume_cz_bth_xz fl " onClick="for_link('{yun:}$Info.id{/yun}','{yun:}url m=ajax c=for_link{/yun}','{yun:}url m=ajax c=resume_word id=$Info.id{/yun}');" type="submit" name="submit" value="保存到电脑 ">
+						<input type="button" onClick="dayin()" value="打印简历" class="yun_resume_cz_bc  yun_resume_cz_bth_dy fl">
+						<div class="yun_resume_cz_gz">如需手机上传或修改个人形象照，请关注微信进行操作</div>
+					</div>
+				</div>	
+				<div class="yun_resume_czewm">
+					<div class="yun_resume_czewmpic"><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_qcode{/yun}" width="150" height="150"></div>
+					<div class="yun_resume_cz_tit">扫一扫手机上也可以编辑简历了</div>
+				</div>
+			</div>
+		{yun:}/if{/yun}

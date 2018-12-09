@@ -1,0 +1,204 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script type="text/javascript">
+    (function() {
+        var num = '{yun:}$nopayorder{/yun}';
+
+        if(parseInt(num) > 0) {
+            layer.open({
+                content: '您还有{yun:}$nopayorder{/yun}个订单未付款，是否继续充值！',
+                btn: ['去付款', '继续充值'],
+                shadeClose: false,
+                yes: function() {
+                    setTimeout(function() {
+                        location.href = 'index.php?c=paylog';
+                    }, 0);
+                }
+            });
+        }
+
+    })()
+
+    var integral = '{yun:}$statis.integral{/yun}';
+    var pro = '{yun:}$config.integral_proportion{/yun}';
+    var min_integral = '{yun:}$config.integral_min_recharge{/yun}'; //最低充值积分
+    var jifen = '{yun:}$config.integral_pricename{/yun}';
+    var integralclass = [];
+    '{yun:}foreach from=$integralclass_index item=v{/yun}'
+    integralclass.push({
+        id: '{yun:}$v{/yun}',
+        integral: '{yun:}$integralclass_name[$v]{/yun}',
+        discount: '{yun:}$integralclass_discount[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+</script>
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_com_msg">
+                    当前{yun:}$config.integral_pricename{/yun}兑换比为1元={yun:}$config.integral_proportion{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}{yun:}if $config.integral_min_recharge>0{/yun}，单次最低充值{yun:}$config.integral_min_recharge{/yun}{yun:}$config.integral_pricename{/yun}。{yun:}/if{/yun}
+                </div>
+
+                <div class="pay_choice_box">
+
+                    <form action="index.php?c=dingdan" method="post" onsubmit="return integral_form();" id="paymentform">
+
+                        <ul class="pay_choice" id="integral_num">
+                            {yun:}foreach from=$integralclass_index item=v key=k{/yun}
+                            <li {yun:}if $k==0{/yun}class="pay_choice_cur" {yun:}/if{/yun} data-id="{yun:}$v{/yun}" data-integral="{yun:}$integralclass_name[$v]{/yun}" data-discount="{yun:}$integralclass_discount[$v]{/yun}"><span class=""><i class="pay_choice_n">{yun:}$integralclass_name[$v]{/yun}</i>{yun:}$config.integral_pricename{/yun}{yun:}if $integralclass_discount[$v] gt 0{/yun}<em class="pay_choice_zk">{yun:}$integralclass_discount[$v]{/yun}折</em>{yun:}/if{/yun}</span></li>
+
+                            {yun:}/foreach{/yun}
+                            <li data-integral="0"><span class=""><i class="pay_choice_n">自定义</i>{yun:}$config.integral_pricename{/yun}</span></li>
+                        </ul>
+
+                        <div class="pay_xymoney defined" style="display: none;">
+                            <span class="pay_xymoney_name">自定义{yun:}$config.integral_pricename{/yun}</span>
+                            <input type="text" value="" class="pay_xymoney_text" placeholder="输入要充值的{yun:}$config.integral_pricename{/yun}" id="user_defined" onkeyup="checkIntegralNum();" onBlur="autointegral();" oninput="myFunction(this)" maxlength="6">
+                        </div>
+
+                        <div class="pay_xymoney">
+                            <span class="pay_xymoney_name">所需金额</span>
+                            <div class="pay_xymoney_t"><em class="pay_xymoney_t_n"><span id="price">{yun:}if $integralclass_discount[$integralclass_index[0]] gt 0{/yun}{yun:}$integralclass_name[$integralclass_index[0]]/$config.integral_proportion*$integralclass_discount[$integralclass_index[0]]/100{/yun}{yun:}else{/yun}{yun:}$integralclass_name[$integralclass_index[0]]/$config.integral_proportion{/yun}{yun:}/if{/yun}</span></em> 元</div>
+                        </div>
+                         
+
+                        <div class="member_set_meal_fk_fbox mt10">
+                             {yun:}if $config.alipay==1{/yun}
+                            <div class="member_set_meal_fk_fs member_set_meal_fk_fs_zfb" onclick="paycheck('alipay');">
+                                <i class="alipay member_set_meal_fk_xz"></i>支付宝
+                            </div>
+
+                            {yun:}/if{/yun} {yun:}if $config.bank==1 && $banks{/yun}
+                            <div class="spread_box_more" id="spreadpaymore">其他支付方式</div>
+                            <div class="member_set_meal_fk_fs member_set_meal_fk_fs_yl" id="spreadotherpay" onclick="paycheck('bank');" style="display:none">
+                                <i class="bank member_set_meal_fk_xz" id="switchbank"></i>银行汇款
+                            </div>
+                            <div class="paybank item" id="spreadpaybank" style="display: none;">
+                                <div class="paybank_tip"><span class="com_remind">汇款前请仔细核对银行帐号</span></div>
+
+                                <div class="admin_note2">
+                                    <div class="my_table_msg">
+                                        {yun:}if is_array($banks){/yun} {yun:}foreach item=blist from=$banks{/yun}
+                                        <div class="pay_bank_list">
+                                            <div class="">{yun:}$blist.bank_name{/yun}</div>
+                                            <div class="">{yun:}$blist.name{/yun}</div>
+                                            <div class="">{yun:}$blist.bank_number{/yun}</div>
+                                            <div class="">{yun:}$blist.bank_address{/yun}</div>
+                                        </div>
+                                        {yun:}/foreach{/yun} {yun:}else{/yun}
+                                        <div class="wap_member_no">暂未添加银行</div>
+                                        {yun:}/if{/yun}
+                                    </div>
+
+                                    <div class="paybank_tip">填写汇款凭证：</div>
+                                    <div class="my_table_msg">
+                                        <div class="paybank_hk_list">
+                                            <div class="paybank_name">汇款银行</div>
+                                            <div class="">
+                                                <input type="text" id="bank_name" name="bank_name" class="paybank_hk_text" value="" placeholder="如：中国银行+沭阳开发区支行" />
+                                            </div>
+                                        </div>
+
+                                        <div class="paybank_hk_list">
+                                            <div class="paybank_name">汇入账号</div>
+                                            <div class=""><input type="text" id="bank_number" name="bank_number" class="paybank_hk_text" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" value="" /></div>
+                                        </div>
+
+                                        <div class="paybank_hk_list">
+                                            <div class="paybank_name">汇款金额</div>
+                                            <div class=""><input type="text" id="bank_price" name="bank_price" class="paybank_hk_text" value="{yun:}if $integralclass_discount[$integralclass_index[0]] gt 0{/yun}{yun:}$integralclass_name[$integralclass_index[0]]/$config.integral_proportion*$integralclass_discount[$integralclass_index[0]]/100{/yun}{yun:}else{/yun}{yun:}$integralclass_name[$integralclass_index[0]]/$config.integral_proportion{/yun}{yun:}/if{/yun}" /></div>
+                                        </div>
+
+                                        <div class="paybank_hk_list">
+                                            <div class="paybank_name">汇款时间</div>
+                                            <div class=""><button id='banktimePicker' data-options='{"type":"date"}' style="border:none;">请选择汇款时间</button>
+                                                <input type="hidden" id="bank_time" name="bank_time" /></div>
+                                        </div>
+
+                                        <div class="paybank_hk_list">
+                                            <div class="paybank_name">汇款单</div>
+                                            <div class="" style="text-align:right">
+                                            	
+                                            	<span class="once_cont_wate_list_photo_pic" id="previewshow" style="display: none;"> <img id="previewimg" width="35" height="35"></span>
+                                                	<div class="paybank_hk_file_box">
+					                                    <i class="paybank_hk_file_icon"></i> 上传汇款单
+					                                	<input type="file" name="pic" id="pic" onchange="previewImage(this,'preview')" accept="image/*" class="paybank_hk_file" />
+					                                	<input type='hidden' name='preview' value='' id='preview'>
+					                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {yun:}/if{/yun}
+                        </div>
+                        <input type="hidden" value="" id="paytype" name="paytype" />
+                        <input type="hidden" value="{yun:}if $integralclass_discount[$integralclass_index[0]] gt 0{/yun}{yun:}$integralclass_name[$integralclass_index[0]]/$config.integral_proportion*$integralclass_discount[$integralclass_index[0]]/100{/yun}{yun:}else{/yun}{yun:}$integralclass_name[$integralclass_index[0]]/$config.integral_proportion{/yun}{yun:}/if{/yun}" id="order_price" name="price" />
+                        <input type="hidden" value="{yun:}$integralclass_name[$integralclass_index[0]]{/yun}" id="integral_int" name="price_int" />
+                        <input type="hidden" id="integralid" name="integralid" value="{yun:}$integralclass_index[0]{/yun}" /> {yun:}if  $config.alipay==1 || ($config.bank==1 && $banks){/yun}
+                        <div class="member_set_meal_fk_zf">
+                            <input type="submit" class="member_set_meal_fk_zf_bth" value="确认支付">
+                        </div>
+                        {yun:}else{/yun}
+                         <div class="pay_zfgb_tip">
+                            <span>网站已关闭支付功能，请联系管理员！</span>
+                        </div>
+                        {yun:}/if{/yun}
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--页面主内容区结束-->
+</div>
+ 
+
+ 
+
+<link rel="stylesheet" type="text/css" href="{yun:}$wap_style{/yun}/js/webapppic/cropper.css?v={yun:}$config.cachecode{/yun}" />
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+ <script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+ 
+
+<script language="javascript">
+    mui.init();
+    var viewApi = mui('#app').view({
+        defaultPage: '#main'
+    });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+    var view = viewApi.view;
+    (function($) {
+        //处理view的后退与webview后退
+        var oldBack = $.back;
+        $.back = function() {
+            if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                viewApi.back();
+            } else { //执行webview后退
+                oldBack();
+            }
+        };
+         
+    })(mui);
+	$(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+</script>
+<script src="{yun:}$wap_style{/yun}/js/pay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

@@ -1,0 +1,190 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<link rel="stylesheet" type="text/css" href="{yun:}$wap_style{/yun}/js/webapppic/cropper.css?v={yun:}$config.cachecode{/yun}" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/yun_wap_member.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+
+<script>var wapurl="{yun:}url m=wap{/yun}"</script>
+<script type="text/javascript">
+    (function() {
+        var num = '{yun:}$num{/yun}';
+		
+        if(parseInt(num) > 0 ) {
+            layer.open({
+                content: '您还有{yun:}$num{/yun}个订单未付款，是否继续发布！',
+                btn: ['去付款', '继续发布'],
+                shadeClose: false,
+                yes: function() {
+                    setTimeout(function() {
+                        location.href = wapurl+"index.php?c=once&a=paylog";
+                    }, 0);
+                }
+            });
+        }
+
+    })()
+</script>
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+    	
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <ul class="yun_newwap_box">
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">我想招聘</span>
+                        <span class="yun_newwap_text_box"> 
+							<input type="text" id="title" name="title" value="{yun:}$row.title{/yun}" class="reinputText" placeholder="请填写招聘名称,如厨师">
+			            </span>
+                    </li>
+				 
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">工作薪资</span>
+                        <span class="yun_newwap_text_box"> 
+							<input type="text" id="salary" name="salary" value="{yun:}$row.salary{/yun}"  class="reinputText" placeholder="请填写工资">
+			            </span>
+                    </li>
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">工作地点</span>
+                        <span class="yun_newwap_text_box"> 
+							<input type="text" id="address" name="address" value="{yun:}$row.address{/yun}"  class="reinputText" placeholder="请填写工作地点">
+			            </span>
+                    </li>
+                    <li>
+                        <a href="#contenthtml"><span class="yun_newwap_text_name">招聘要求</span><div class="yun_newwap_text_box yun_newwap_text_box_p" id="contentshow">{yun:}if $row.require{/yun}{yun:}$row.require{/yun}{yun:}else{/yun}请填写{yun:}/if{/yun}</div></a>
+                    </li>
+                </ul>
+
+                <ul class="yun_newwap_box mt15">
+                    
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">店面名称</span>
+                        <div class="yun_newwap_text_box">
+                            <input type="text" id="companyname" name="companyname" value="{yun:}$row.companyname{/yun}" class="reinputText" placeholder="请填写店铺名称">
+                        </div>
+                    </li>
+                    
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">联&nbsp;系&nbsp; 人</span>
+                        <div class="yun_newwap_text_box">
+                            <input type="text" id="linkman" name="linkman" value="{yun:}$row.linkman{/yun}" class="reinputText" placeholder="请填写联系人">
+                        </div>
+                    </li>
+                    
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">联系电话</span>
+                        <div class="yun_newwap_text_box">
+                            <input type="text" id="phone" name="phone" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" value="{yun:}$row.phone{/yun}" class="reinputText" placeholder="请填写联系电话">
+                        </div>
+                    </li>
+                    
+                    <li class=""><span class="yun_newwap_text_name">店面形象</span>
+                        <div class="yun_newwap_text_box">
+                        	<span class="once_cont_wate_list_photo_pic" id="previewshow" style="right:30px;"> <img id="previewimg" src="{yun:}$row.pic{/yun} "   width="35" height="35"></span>
+                            <div class="once_cont_wate_list_photo">
+                           		<div class="yunset_list_file"> 
+                            	<input type="file" id="pic" name="pic" onchange="previewImage(this,'preview')" accept="image/*"  />
+                           		</div>
+                           		<input type='hidden' name='preview' value='' id='preview'>  
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">招聘有效期</span>
+                        <div class=" yun_newwap_text_time">
+                            <input type="text" id="edate" name="edate" value="{yun:}if $row.edate{/yun}{yun:}$row.edate{/yun}{yun:}else{/yun}60{yun:}/if{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="3" class=" " placeholder="请输入招聘有效期">
+                            <span class="yun_newwap_text_time_dw">天</span>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <div class="yun_newwap_box_ts">提示：密码可用于刷新/修改/删除此信息</div>
+                <ul class="yun_newwap_box ">
+                    {yun:}if $row.id==''{/yun}
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">设置密码</span>
+                        <div class="yun_newwap_text_box">
+                            <input type="password" id="password" name="password" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" class=" " placeholder="请输入密码">
+                        </div>
+                    </li>
+                    {yun:}else{/yun}
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
+                        <div class="yun_newwap_text_box">
+                            <input type="password" id="password" name="password" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" class=" " placeholder="请输入密码">
+                        </div>
+                    </li>
+					{yun:}/if{/yun} {yun:}if strpos($config.code_web,"店铺招聘")!==false{/yun} {yun:}if $config.code_kind==3{/yun}
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">安全验证</span>
+                        <div class="yun_newwap_text_box">
+                            <div id="mask"></div>
+                            <div id="popup-captcha-mobile" data-id='subreg' data-type='click'></div>
+                            <input type='hidden' id="popup-submit">
+                        </div>
+                    </li>
+                    <style>
+                        .geetest_holder.geetest_wind {
+                            min-width: 160px;
+                        }
+                    </style>
+                    {yun:}else{/yun}
+                    <li class="yun_newwap_text"><span class="yun_newwap_text_name">验证码</span>
+                        <div class="yun_newwap_yz">
+                            <input type="text" id="checkcode" name="checkcode" id="checkcode" value="" placeholder="请输入图片验证码">
+                            <div class="yun_newwap_yz_img">
+                                <img id="vcode_img" class="authcode" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php" onclick="checkCode('vcode_img');" />
+                            </div>
+                        </div>
+                    </li>
+                    {yun:}/if{/yun}
+					{yun:}/if{/yun}
+                </ul>
+                <div class="yun_newwap_bth ">
+					<input id="id" name="id" value="{yun:}$row.id{/yun}" type="hidden" /> 
+					<button id="oncesubmit" type="button" class="mui-btn mui-btn-block mui-btn-primary">提交操作</button>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--单页面结束-->
+<div id="contenthtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_wap_info_brief">
+                    <div class="yun_wap_info_brief_c">
+                        <div class="yun_wap_info_brief_tit"> 招聘要求 </div>
+                        <textarea class="textAreaMsg tip contenttext" id="content" name="require" placeholder="请填写招聘的具体要求，如性别、学历、年龄、工作经验和工作待遇等">{yun:}$row.require{/yun}</textarea></div>
+                    <a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var weburl = "{yun:}$config.sy_weburl{/yun}";
+    var code_web = "{yun:}$config.code_web{/yun}";
+	var formData = new FormData(),newuploadpic;
+</script>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/geetest/gt.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/geetest/mobile.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/onceadd.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script language="javascript">
+	$(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+<script>
+function tip(id){
+	layer.tips('关闭模块后请在导航设置中对相应导航作隐藏或删除处理！', '#'+id,{time:2,guide: 2,style: ['background-color:#5EA7DC; color:#fff;top:-7px', '#5EA7DC']});
+	$(".xubox_layer").addClass("xubox_tips_border");
+}
+</script>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">如果关闭模块，请对系统->导航管理里面删除或取消显示！</div>
+</div>
+</div>
+<div class="clear"></div>
+<div style="height:10px;"></div>
+<div class="main_tag">
+<div class="tag_box">
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+<form name="myform" target="supportiframe" action="index.php?m=model_config&c=save" method="post" class="layui-form">
+<table width="100%" class="table_form">
+  <tr class="admin_table_trbg">
+          <th width="180" bgcolor="#f0f6fb"><span class="admin_bold">模块名称</span></th>
+          <td width="220" bgcolor="#f0f6fb"><span class="admin_bold">状态</span></td>
+		  <td width="350" bgcolor="#f0f6fb"><span class="admin_bold">二级域名<span class="admin_web_tip">（无需http，未绑定则留空）</span></span></td>
+		  <td width="200" bgcolor="#f0f6fb"><span class="admin_bold">指向目录</span></td>
+		  <td width="200" bgcolor="#f0f6fb"><span class="admin_bold">综合设置</span></td>
+    </tr>
+	{yun:}foreach from=$newModel key=key item=mconfig{/yun}
+	<tr class="admin_com_td_bg">
+			<th width="180">{yun:}$mconfig.value{/yun}：</th>
+			<td>
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+              <input name="sy_{yun:}$key{/yun}_web" value="1" title="开启"
+                {yun:}if $mconfig.web=="1"{/yun}
+                 checked 
+                {yun:}/if{/yun}
+                 type="radio"/>
+              <input name="sy_{yun:}$key{/yun}_web" value="2" title="关闭"
+                {yun:}if $mconfig.web=="2"{/yun}
+                 checked 
+                {yun:}/if{/yun}
+               type="radio"/>
+          </div>
+        </div>
+			</td>
+			<td>
+
+            <div class="layui-form-item">
+                  <div class="layui-input-block">
+                  <div  style="float:left">
+				  <input name="sy_{yun:}$key{/yun}ssl" value="1" title="HTTPS"
+                {yun:}if $mconfig.ssl=="1"{/yun}
+                 checked 
+                {yun:}/if{/yun}
+                 type="checkbox"/>
+                 
+                 </div>
+                    <div class="layui-input-inline">
+                      <input name="sy_{yun:}$key{/yun}domain" autocomplete="off" class="layui-input" type="text" value="{yun:}$mconfig.domain{/yun}"
+                       size="30" maxlength="255"/>
+                    </div>
+                  </div>
+                </div>
+             </td>
+			<td>
+            <div class="layui-form-item">
+                  <div class="layui-input-block">
+                    <div class="layui-input-inline">
+                      <input name="sy_{yun:}$key{/yun}dir" autocomplete="off" class="layui-input" type="text" value="{yun:}$mconfig.dir{/yun}"
+                       size="20" maxlength="255"/>
+                    </div>
+                  </div>
+                </div>
+            </td>
+			<td>
+			{yun:}if $key!='error'{/yun}
+			  <input type='button' value='导航设置' class='navset admin_button' data-config='{yun:}$key{/yun}' data-name='{yun:}$mconfig.value{/yun}'> 
+			 <input type='button' class="seoset admin_button" value='SEO设置'  data-config='{yun:}$key{/yun}'>
+			  {yun:}/if{/yun}
+			</td>
+		</tr>
+	{yun:}/foreach{/yun}
+    <input type="hidden" value="company"  name="sy_companydir">
+    <tr class="admin_com_td_bg">
+	    <th>&nbsp;</th>
+          <td colspan="3" align="left">
+		<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+        <input class="admin_button admin_buttonpz"  type="submit" name="config" value="保存" />&nbsp;&nbsp;
+        <input class="admin_button admin_buttonpz" type="reset" value="重置" /></td>
+	</tr>
+</table>
+</form>
+</div>
+</div>
+</div>
+<script>
+layui.use(['layer', 'form'], function(){});	
+
+$(function(){
+	$('.navset').click(function(){
+		var config = $(this).attr('data-config');
+		var name = $(this).attr('data-name');
+    layer.open({
+    	type : 2 //iframe 类型弹窗
+    	,title : '设置导航'
+    	,content : 'index.php?m=model_config&c=setnav&config='+config+'&name='+name
+    	,skin : 'layui-layer-molv'
+    	,maxmin: true //显示最大化按钮
+    	,area: ['900px', '450px']
+    });
+	});//end click()
+
+	$('.seoset').click(function(){
+		var config = $(this).attr('data-config');
+    layer.open({
+    	type : 2 //iframe 类型弹窗
+    	,title : '设置SEO'
+    	,content : 'index.php?m=model_config&c=setseo&config='+config
+    	,skin : 'layui-layer-lan'
+    	,maxmin: true //显示最大化按钮
+    	,area: ['900px', '450px']
+    	,moveOut : true
+    });
+	});//end click()
+});
+</script>
+
+</body>
+</html>

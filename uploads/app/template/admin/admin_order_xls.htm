@@ -1,0 +1,48 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>PHP output Excel Example</title>
+    </head>
+        <table width="100%" border="1">
+    <tr>
+			<th>编号</th>
+			<th>用户名称</th>
+			<th>公司名称（姓名）</th>
+			<th>充值单号</th>
+			<th>支付类型</th>
+			<th>订单类型</th>
+			<th>订单金额</th>
+			<th>时间</th>
+			<th>状态</th>
+    </tr>
+    {yun:}foreach item=v key=key from=$list{/yun}
+    <tr>
+			<td>{yun:}$v.id{/yun}</td>
+			<td>{yun:}$v.username{/yun}</td>
+			<td>{yun:}$v.comname{/yun}</td>
+			<td style="vnd.ms-excel.numberformat:@"> {yun:}$v.order_id{/yun} </td>
+			<td>{yun:}$v.order_type_n{/yun}</td>
+			<td>{yun:}if $v.type==1{/yun}购买会员
+        	{yun:}elseif $v.type=='2'{/yun}{yun:}$config.integral_pricename{/yun}充值
+        	{yun:}elseif $v.type=='3'{/yun}银行转帐
+        	{yun:}elseif $v.type=='4'{/yun}金额充值
+        	{yun:}elseif $v.type=='5'{/yun}购买增值包
+         	{yun:}elseif $v.type=='10'{/yun}购买职位置顶
+        	{yun:}elseif $v.type=='11'{/yun}购买紧急招聘
+        	{yun:}elseif $v.type=='12'{/yun}购买职位推荐
+        	{yun:}elseif $v.type=='13'{/yun}购买职位自动刷新
+        	{yun:}elseif $v.type=='14'{/yun}简历置顶
+ 			{yun:}elseif $v.type=='16'{/yun}职位刷新
+			{yun:}elseif $v.type=='17'{/yun}兼职刷新
+ 			{yun:}elseif $v.type=='19'{/yun}下载简历
+			{yun:}elseif $v.type=='20'{/yun}发布职位
+			{yun:}elseif $v.type=='21'{/yun}发布兼职
+ 			{yun:}elseif $v.type=='23'{/yun}面试邀请
+			{yun:}elseif $v.type=='24'{/yun}兼职推荐
+			{yun:}elseif $v.type=='25'{/yun}店铺招聘
+         	{yun:}/if{/yun}</td>
+			<td>{yun:}$v.order_price{/yun}</td>
+			<td>{yun:}$v.order_time|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+			<td>{yun:}$v.order_state_n{/yun}</td>
+    </tr>
+    {yun:}/foreach{/yun}
+    </table>

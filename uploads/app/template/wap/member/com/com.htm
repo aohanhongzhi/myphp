@@ -1,0 +1,121 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<section class="wap_member">
+    <div class="set_meal_tip">
+        <div class="set_meal_tip_name">尊敬的企业用户：</div>
+        <div class="">您当前是：
+        	<span class="set_meal_tip_name_hy">{yun:}$statis.rating_name{/yun}</span> <a href="index.php?c={yun:}if $config.com_vip_type==2||$config.com_vip_type==0{/yun}rating{yun:}else{/yun}time{yun:}/if{/yun}" class="set_meal_tip_a">升级套餐</a>
+        	<br>服务时间：
+        	{yun:}if $statis.vip_etime > time(){/yun}
+        		{yun:}$statis.vip_stime|date_format:'%Y-%m-%d'{/yun} - {yun:}$statis.vip_etime|date_format:'%Y-%m-%d'{/yun}
+        	{yun:}else if $statis.vip_etime==0 {/yun}
+        		永久
+        	{yun:}else{/yun}
+        		{yun:}$statis.vip_stime|date_format:'%Y-%m-%d'{/yun} - <span class="set_meal_tip_name_hy">{yun:}$statis.vip_etime|date_format:'%Y-%m-%d'{/yun}</span>
+                        
+        	{yun:}/if{/yun}
+        	</br>
+        </div>
+
+    </div>
+
+    <div class="set_meal_fa">
+        <ul>
+
+            <li>
+                <div class="set_meal_fa_list">
+                    <div class="set_meal_fa_name">职位发布</div>
+                    <div class="set_meal_fa_sy">剩余职位数 {yun:}if $statis.rating_type=='2'{/yun} {yun:}if $rating.job_num == 0{/yun} 不限 {yun:}else{/yun} {yun:}$rating.job_num{/yun}次/天 {yun:}/if{/yun} {yun:}else{/yun} {yun:}$statis.job_num{/yun} {yun:}/if{/yun}
+                    </div>
+                    <div class="set_meal_fa_fb">
+                        <a href="javascript:void(0)" onclick="jobadd_url('{yun:}$addjobnum{/yun}','{yun:}$config.integral_job{/yun}','job','{yun:}$config.com_integral_online{/yun}','{yun:}$config.integral_proportion{/yun}');" class="wap_member_comsytc_list_bth">发布职位</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="set_meal_fa_list">
+                    <div class="set_meal_fa_name">面试邀请</div>
+                    <div class="set_meal_fa_sy">剩余邀请数 {yun:}if $statis.rating_type=='2'{/yun} {yun:}if $rating.interview == 0{/yun} 不限 {yun:}else{/yun} {yun:}$rating.interview{/yun}次/天 {yun:}/if{/yun} {yun:}else{/yun} {yun:}$statis.invite_resume{/yun} {yun:}/if{/yun}
+                    </div>
+                    <div class="set_meal_fa_fb">
+                        <a href="{yun:}url m=wap c=resume{/yun}">搜人才</a>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="set_meal_tit">专属服务使用情况</div>
+    <div class="set_meal_tit_p">彩线上方数字表示服务剩余次数</div>
+    <div class="set_meal_box">
+        <div class="set_meal_box_cont">
+            <ul class="set_meal_box_list">
+
+                <li>
+                    <div class="set_meal_box_list_box">
+                        <div class="set_meal_name">简历下载</div>
+                        <div class="set_meal_n set_meal_n_line3">
+                            {yun:}if $statis.rating_type=='2'{/yun} {yun:}if $rating.resume == 0{/yun}
+
+                            <span class="set_meal_n_p"> 不限</span> {yun:}else{/yun} {yun:}$rating.resume{/yun}次/天 {yun:}/if{/yun} {yun:}else{/yun} {yun:}$statis.down_resume{/yun} {yun:}/if{/yun}
+                        </div>
+                        <div class="set_meal_yn">总：{yun:}if $statis.rating_type=='2'{/yun}不限{yun:}else{/yun}{yun:}$rating.resume{/yun}{yun:}/if{/yun}/{yun:}if $rating.resume-$statis.down_resume>=0{/yun} {yun:}$rating.resume-$statis.down_resume{/yun} {yun:}else if $rating.resume-$statis.down_resume
+                            <0{/yun} 增值:{yun:}$statis.down_resume-$rating.resume{/yun} {yun:}/if{/yun}</div>
+                        </div>
+                </li>
+                <li>
+                    <div class="set_meal_box_list_box">
+                        <div class="set_meal_name">职位刷新</div>
+                        <div class="set_meal_n set_meal_n_line4">{yun:}if $statis.rating_type=='2'{/yun}
+                            <span class="set_meal_n_p"> 不限</span>{yun:}else{/yun}{yun:}$statis.breakjob_num{/yun}{yun:}/if{/yun}</div>
+                        <div class="set_meal_yn">总：{yun:}if $statis.rating_type=='2'{/yun}不限{yun:}else{/yun}{yun:}$rating.breakjob_num{/yun}{yun:}/if{/yun}/{yun:}if $rating.breakjob_num-$statis.breakjob_num >= 0{/yun} {yun:}$rating.breakjob_num-$statis.breakjob_num{/yun} {yun:}else if $rating.breakjob_num-$statis.breakjob_num
+                            < 0{/yun} 增值：{yun:}$statis.breakjob_num-$rating.breakjob_num{/yun} {yun:}/if{/yun}</div>
+                        </div>
+                </li>
+
+                <li>
+                    <div class="set_meal_box_list_box">
+                        <div class="set_meal_name">发布兼职</div>
+                        <div class="set_meal_n set_meal_n_line5">{yun:}if $statis.rating_type=='2'{/yun}
+                            <span class="set_meal_n_p"> 不限</span>{yun:}else{/yun}{yun:}$statis.part_num{/yun}{yun:}/if{/yun}</div>
+                        <div class="set_meal_yn">总：{yun:}if $statis.rating_type=='2'{/yun}不限{yun:}else{/yun}{yun:}$rating.part_num{/yun}{yun:}/if{/yun}/{yun:}if $rating.part_num-$statis.part_num>=0{/yun} {yun:}$rating.part_num-$statis.part_num{/yun} {yun:}else if $rating.part_num-$statis.part_num
+                            <0{/yun} 增值：{yun:}$statis.part_num-$rating.part_num{/yun} {yun:}/if{/yun}</div>
+                        </div>
+                </li>
+
+                <li>
+                    <div class="set_meal_box_list_box">
+                        <div class="set_meal_name">刷新兼职</div>
+                        <div class="set_meal_n set_meal_n_line6">{yun:}if $statis.rating_type=='2'{/yun}
+                            <span class="set_meal_n_p"> 不限</span>{yun:}else{/yun}{yun:}$statis.breakpart_num{/yun}{yun:}/if{/yun}</div>
+                        <div class="set_meal_yn">总：{yun:}if $statis.rating_type=='2'{/yun}不限{yun:}else{/yun}{yun:}$rating.breakpart_num{/yun}{yun:}/if{/yun} /{yun:}if $rating.breakpart_num-$statis.breakpart_num>=0{/yun} {yun:}$rating.breakpart_num-$statis.breakpart_num{/yun} {yun:}else if $rating.breakpart_num-$statis.breakpart_num
+                            <0{/yun} 增值：{yun:}$statis.breakpart_num-$rating.breakpart_num{/yun} {yun:}/if{/yun}</div>
+                        </div>
+                </li>
+
+                <li>
+                    <div class="set_meal_box_list_box">
+                        <div class="set_meal_name">招聘会报名</div>
+                        <div class="set_meal_n set_meal_n_line7">{yun:}if $statis.rating_type=='2'{/yun}
+                            <span class="set_meal_n_p"> 不限</span>{yun:}else{/yun}{yun:}$statis.zph_num{/yun}{yun:}/if{/yun}</div>
+                        <div class="set_meal_yn">总：{yun:}if $statis.rating_type=='2'{/yun}不限{yun:}else{/yun}{yun:}$rating.zph_num{/yun}{yun:}/if{/yun}/{yun:}if $rating.zph_num-$statis.zph_num>=0{/yun} {yun:}$rating.zph_num-$statis.zph_num{/yun} {yun:}else if $rating.zph_num-$statis.zph_num
+                            <0{/yun} 增值：{yun:}$statis.zph_num-$rating.zph_num{/yun} {yun:}/if{/yun}</div>
+                        </div>
+                </li>
+
+                
+            </ul>
+            </div>
+            </div>
+            <div class="clear"></div>
+              <div class="tcteq">
+                        <a href="index.php?c={yun:}if $config.com_vip_type==2||$config.com_vip_type==0{/yun}rating{yun:}else{/yun}time{yun:}/if{/yun}">
+                            <div class="tcteq_a">查看会员套餐特权></div>
+                        </a>
+                    </div>
+
+</section>
+</div>
+ 
+ 
+{yun:}include file="$wapstyle/footer.htm"{/yun}

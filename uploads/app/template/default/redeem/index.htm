@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun}"/>
+<meta name="description" content="{yun:}$description{/yun}"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/yun_job_fairs.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+</head>
+<body class="Integral_body">
+{yun:}include file="$tplstyle/header.htm"{/yun} 
+<div class="yun_Integral">
+ 
+<div class="integral_login">
+{yun:}if !$uid{/yun}
+<div class="integral_login_tx"><img src="{yun:}$style{/yun}/images/zc-lawyer.jpg" width="70" height="70"></div>
+<div class="integral_login_hi">欢迎访问{yun:}$config.integral_pricename{/yun}商城 !</div>
+
+<div class="integral_login_box"><a href="{yun:}url m=login{/yun}" class="integral_login_box_dl">登录</a> <a href="{yun:}url m=register{/yun}">注册</a></div>
+
+<div class="integral_login_p">登录积分查询</div>
+    {yun:}else {/yun}
+    <div class="integral_login_hi"> 欢迎访问{yun:}$config.integral_pricename{/yun}商城 !</div> 
+      <div class="integral_login_zjf">{yun:}$statis.integral{/yun}</div>
+    <div class="integral_login_zjf_p">您当前总{yun:}$config.integral_pricename{/yun}
+   </div>
+    
+     <div class="integral_loginbth_box"> 
+   <div class="integral_loginbth"> <a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=integral">赚取{yun:}$config.integral_pricename{/yun}</a></div>
+   <div class="integral_loginbth"> <a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=integral_reduce">消费规则</a></div>
+   <div class="integral_loginbth"> <a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=reward_list">兑换记录</a></div>
+    </div>
+        {yun:}/if {/yun}
+        
+</div>
+
+  <div class="Projector">
+  	<div class="Projector_img">
+      <div id="slides" class="s_lb">
+        <div class="slides_container"> 
+	        <div class="layui-carousel" id="test1" lay-filter="test1">
+			  <div carousel-item="">
+			  	{yun:}adlist classid=34 item="lunbo" key=key{/yun}
+			      <div>{yun:}$lunbo.html{/yun}</div>
+			    {yun:}/adlist{/yun}
+			  </div>
+			</div> 
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="yun_Integral_top_right"> 
+   <div class="yun_Integral_ta_h1">TA们正在换好礼…</div>
+    <div class="yun_Integral_ta">
+     
+      <ul class="yun_Integral_ta_box fl">
+        {yun:}foreach item=v key=j from=$lipin{/yun}
+        <li>
+          <dl class="yun_Integral_ta_box_list  fl">
+            <dt><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$v.pic{/yun}" width="50" height="50"></dt>
+            <dd>
+              <div class="yun_Integral_ta_name">{yun:}$v.username{/yun} 会员</div>
+              <div class="yun_Integral_ta_dh">兑换了<a href="{yun:}url m=redeem c=show id='`$v.gid`'{/yun}" target="_blank">{yun:}$v.name{/yun}</a></div>
+              <em>花了{yun:}$v.integral{/yun}{yun:}$config.integral_pricename{/yun}</em> </dd>
+          </dl>
+        </li>
+        {yun:}/foreach{/yun}
+      </ul>
+    </div>
+  </div>
+  
+ 
+  <!--推荐商品-->
+  
+  <div class="yun_Integral_box">
+    <div class="yun_Integral_box_h1"><span class="yun_Integral_box_h1_name">推荐商品</span><a href="{yun:}url m=redeem c=list {/yun}" class="yun_Integral_box_h1_more">更多>></a></div>
+    <div class="yun_Integral_cont">
+      <div class="yun_Integral_cont_w"> 
+	  {yun:}redeem item=val rec=1 limit=16{/yun}
+        <div class="yun_Integral_cont_list"> <div class="yun_Integral_cont_list_a">
+          <dl class="yun_Integral_list_dl">
+            <dt> <a href="{yun:}$val.url{/yun}" target="_blank"><img src="{yun:}$val.pic{/yun}" width="260" height="210"></a></dt>
+            <dd class="yun_Integral_list_dl_name"> <a href="{yun:}$val.url{/yun}" target="_blank">{yun:}$val.name{/yun}</a></dd>
+            <dd class="yun_Integral_list_dl_n">{yun:}$val.integral{/yun}{yun:}$config.integral_pricename{/yun}</dd>
+          </dl>
+          </div> </div>
+        {yun:}/redeem{/yun} </div>
+    </div>
+  </div>
+  <!--热门兑换-->
+  <div class="yun_Integral_box">
+    <div class="yun_Integral_box_h1"><span class="yun_Integral_box_h1_name yun_Integral_box_h1_name_hot">热门兑换</span><a href="{yun:}url m=redeem c=list {/yun}" class="yun_Integral_box_h1_more">更多>></a></div>
+    <div class="yun_Integral_cont">
+      <div class="yun_Integral_cont_w"> 
+	  {yun:}redeem item=v hot=1 limit=16{/yun}
+        <div class="yun_Integral_cont_list">
+         <div class="yun_Integral_cont_list_a">
+          <dl class="yun_Integral_list_dl">
+            <dt><a href="{yun:}$v.url{/yun}" target="_blank"><img src="{yun:}$v.pic{/yun}" width="260" height="210"></a></dt>
+            <dd class="yun_Integral_list_dl_name"><a href="{yun:}$v.url{/yun}" target="_blank">{yun:}$v.name{/yun} </a></dd>
+            <dd class="yun_Integral_list_dl_n">{yun:}$v.integral{/yun}{yun:}$config.integral_pricename{/yun}</dd>
+          </dl>
+         
+          </div> </div>
+        {yun:}/redeem{/yun} </div>
+    </div>
+  </div>
+   <!--热门兑换-->
+    <div class="yun_Integral_box">
+    <div class="yun_Integral_box_h1"><span class="yun_Integral_box_h1_name yun_Integral_box_h1_name_hot">最新礼品</span><a href="{yun:}url m=redeem c=list {/yun}" class="yun_Integral_box_h1_more">更多>></a></div>
+    <div class="yun_Integral_cont">
+      <div class="yun_Integral_cont_w"> 
+         {yun:}redeem  item=new limit=16{/yun}
+        <div class="yun_Integral_cont_list">
+         <div class="yun_Integral_cont_list_a">
+          <dl class="yun_Integral_list_dl">
+            <dt><a href="{yun:}$new.url{/yun}" target="_blank"><img src="{yun:}$new.pic{/yun}" width="260" height="210"></a></dt>
+            <dd class="yun_Integral_list_dl_name"><a href="{yun:}$new.url{/yun}" target="_blank">{yun:}$new.name{/yun} </a></dd>
+            <dd class="yun_Integral_list_dl_n">{yun:}$new.integral{/yun}{yun:}$config.integral_pricename{/yun}</dd>
+          </dl>
+         
+          </div> </div>
+        {yun:}/redeem{/yun} </div>
+    </div>
+  </div>
+   
+   
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/slides.jquery.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png');
+</script>
+<![endif]-->
+<script language="javascript">
+layui.use(['carousel'], function(){
+  var carousel = layui.carousel;
+  carousel.render({
+    elem: '#test1'
+    ,width: '650px'
+    ,height: '280px'
+  });
+});
+$(function(){
+	$("#slides").slides({
+		preload: true,
+		preloadImage: '{yun:}$style{/yun}/images/loading.gif',
+		play: 5000,
+		pause: 2500,
+		hoverPause: true
+	});
+	marquee("2000",".yun_Integral_ta ul");
+});
+</script>
+{yun:}include file="$tplstyle/footer.htm"{/yun}

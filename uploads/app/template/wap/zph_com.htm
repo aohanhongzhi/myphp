@@ -1,0 +1,49 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<section>
+
+    <div class="zph_bg_pd  " style="border-radius:0px;">
+        <div class="zph_bg_name">
+            <h2> {yun:}$row.title{/yun}
+         {yun:}if $row.stime<'0'&&$row.etime>'0'{/yun}
+        <!-- <div class="job_fair_showstate job_fair_state_yd">已开始</div>-->
+        {yun:}elseif $row.stime>'0'{/yun}
+        <div class=" zph_yd">火热预定中！</div>
+         {yun:}/if{/yun}
+       </h2>
+            <div class="zph_tim_name">招聘会时间：</div>
+            <div class="job_fair_state_show_time">{yun:}$row.starttime{/yun} 至 {yun:}$row.endtime{/yun}</div>
+
+        </div>
+    </div>
+</section>
+
+<section>
+    {yun:}foreach item=zph from=$rows key=key{/yun}
+    <div class="zph_show_com_list">
+        <div class="zph_show_comname">
+            <div class="zph_show_comname_box">
+                <a href="{yun:}url m=wap c=company a=show id='`$zph.uid`'{/yun}">{yun:}$zph.comname{/yun} </a>
+            </div>
+            <span class="zph_show_comzwh">展位号：{yun:}$zph.sidname{/yun} - {yun:}$zph.cidname{/yun} - {yun:}$zph.bidname{/yun}</span>
+        </div>
+        <div class="zph_show_com_box">
+            <div class="zph_show_com_job">
+                招聘职位： {yun:}if $zph.job{/yun} {yun:}foreach from=$zph.job item=jlist{/yun}
+                <a href="{yun:}url m=wap c=job a=view id=$jlist.id{/yun}">{yun:}$jlist.name{/yun}</a>
+                {yun:}/foreach{/yun} {yun:}/if{/yun}
+            </div>
+
+        </div>
+    </div>
+    {yun:}foreachelse{/yun}
+    <div class="job_fair_msg">
+        <div class="wap_member_no">暂无公司报名！</div>
+    </div>
+    {yun:}/foreach{/yun}
+</section>
+<div class="pages"> {yun:}$pagenav{/yun} </div>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

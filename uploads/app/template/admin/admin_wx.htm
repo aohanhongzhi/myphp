@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script> 
+var weburl = '{yun:}$config.sy_weburl{/yun}';
+</script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">公众号为认证服务号，到微信公众号平台设置服务器IP白名单</div>
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="tag_box mt10">
+	<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+	<form name="myform" target="supportiframe" action="index.php?m=wx&c=save" method="post" enctype="multipart/form-data" class="layui-form">
+         <table width="100%" class="table_form">
+            <tr class="admin_table_trbg">
+        	<th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">微信公众号设置</span></th>
+            </tr>
+			 <tr>
+                <th width="160">公众号：</th>
+                <td><input class="input-text" type="text" name="wx_name" id="wx_name" size="30" value="{yun:}$config.wx_name{/yun}" maxlength="255" >
+                <span class="admin_web_tip">在微信公众平台获取</span></td>
+            </tr>
+             <tr>
+                <th width="160">URL：</th>
+                <td style="height:30px">{yun:}$config.sy_weburl{/yun}/weixin/index.php</td>
+            </tr>
+          <tr>
+                <th width="160">Token</th>
+                <td><input class="input-text" type="text" name="wx_token" id="wx_token" size="30" value="{yun:}$config.wx_token{/yun}" maxlength="255" >
+                <span class="admin_web_tip">自定义填写，需和微信公众平台一致</span></td>
+            </tr>
+              <tr class="admin_table_trbg">
+              <th>&nbsp;</th>
+                <td align="left">
+                <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}"/>	
+                <input class="layui-btn layui-btn-normal" id="wxconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;<input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+            </tr>
+        </table>
+		</form>
+             
+             <form name="myform" target="supportiframe" action="index.php?m=wx&c=save" method="post" enctype="multipart/form-data">
+             <table width="100%" class="table_form">
+            <tr >
+                <th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">开发者凭据</span></th>
+            </tr>
+          <tr>
+                <th width="160">AppId：</th>
+                <td><input class="input-text" type="text" name="wx_appid" id="wx_appid" value="{yun:}$config.wx_appid{/yun}" size="30" maxlength="255"/><span class="admin_web_tip">如：1002478xx</span></td>
+            </tr>
+            <tr>
+                <th width="160">AppSecret：</th>
+                <td><input class="input-text" type="text" name="wx_appsecret" id="wx_appsecret" value="{yun:}$config.wx_appsecret{/yun}" size="30" maxlength="255"/><span class="admin_web_tip">如：4dd1c30d472676914f2fbfbnjt33</span></td>
+            </tr>
+            
+          <tr class="admin_table_trbg">
+              <th>&nbsp;</th>
+                <td align="left">
+                <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}"/>	
+                <input class="layui-btn layui-btn-normal" id="wxconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;<input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+            </tr>
+        </table>
+		</form>
+             
+             <form name="myform" target="supportiframe" action="index.php?m=wx&c=save" method="post" enctype="multipart/form-data" class="layui-form">
+             <table width="100%" class="table_form">
+			
+		<tr>
+                <th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">体验设置</span></th>
+            </tr>
+
+			 <tr>
+                <th width="160">关注欢迎语：</th>
+                <td><textarea  name="wx_welcom"  rows="10" cols='40' maxlength="255" class="wx_search_textarea web_text_textarea">{yun:}$config.wx_welcom{/yun}</textarea></td>
+            </tr>
+			<tr>
+                <th width="160">搜索提示：</th>
+                <td><textarea  name="wx_search"  rows="10" cols='40'  maxlength="255" class="wx_search_textarea web_text_textarea">{yun:}$config.wx_search{/yun}</textarea></td>
+            </tr>
+			<tr>	
+			<th width="160">公众号二维码：</th>
+			<td>
+			<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'sy_wx_qcode',imgid: 'imgqcode'}">上传图片</button>
+			<input type="hidden" id="layupload_type" value="2"/>
+			<input type="hidden" id="upload_path" value="logo"/>
+			<input type="hidden" name="sy_wx_qcode" value="{yun:}$config.sy_wx_qcode{/yun}"/>
+			<img id="imgqcode" src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_qcode{/yun}" style="max-width:200px" {yun:}if !$config.sy_wx_qcode{/yun}class="none"{yun:}/if{/yun}>
+			  </td>
+			</tr>
+			 <tr>	
+			<th width="160">微信封面：<br>(360px * 100px)</th>
+			<td>
+			<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'sy_wx_logo',imgid: 'imglogo'}">上传图片</button>
+			<input type="hidden" name="sy_wx_logo" value="{yun:}$config.sy_wx_logo{/yun}"/>
+			<img id="imglogo" src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_logo{/yun}" style="max-width:150px" {yun:}if !$config.sy_wx_logo{/yun}class="none"{yun:}/if{/yun}>
+			  </td>
+			</tr>
+			<tr>       
+			<th width="160">微信分享图片：<br>(300px X 300px)</th>
+			<td>
+			<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'sy_wx_sharelogo',imgid: 'imgshare'}">上传图片</button>
+			<input type="hidden" name="sy_wx_sharelogo" value="{yun:}$config.sy_wx_sharelogo{/yun}"/>
+			<img id="imgshare" src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}" style="max-width:100px" {yun:}if !$config.sy_wx_sharelogo{/yun}class="none"{yun:}/if{/yun}>
+			  </td>
+			</tr>
+			<tr>
+                <th width="160">微信手机登录：</th>
+                <td> 
+                <div class="layui-form-item">
+                  <div class="layui-input-block">
+                     <div class="layui-input-inline">
+                       <input type="radio" name="wx_rz" checked value='0' id="wx_rz_11" title="否" >
+                       <input type="radio" {yun:}if $config.wx_rz=='1'{/yun}checked{yun:}/if{/yun} name="wx_rz" value='1' id="wx_rz_12" title="是" >
+                     </div>
+                     <div class="layui-form-mid layui-word-aux">说明：必须为已认证的服务号</div>
+                   </div>
+                </div>
+                </td>
+            </tr>
+			<tr>
+                <th width="160">微信PC扫码登录：</th>
+                <td>
+                <div class="layui-form-item">
+                  <div class="layui-input-block">
+                     <div class="layui-input-inline">
+                       <input type="radio" name="wx_author" {yun:}if $config.wx_author!='1'{/yun}checked{yun:}/if{/yun} value='0' id="RadioGroup1_11" title="否" >
+                       <input type="radio" {yun:}if $config.wx_author=='1'{/yun}checked{yun:}/if{/yun} name="wx_author" value='1' id="RadioGroup1_12" title="是" >
+                     </div>
+                     <div class="layui-form-mid layui-word-aux">说明：必须为已认证的服务号</div>
+                   </div>
+                </div>
+				</td>
+            </tr>
+            
+            <tr class="admin_table_trbg">
+              <th>&nbsp;</th>
+                <td align="left">
+                <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}"/>	
+                <input class="layui-btn layui-btn-normal" id="wxconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;<input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+            </tr>
+        </table>
+		</form>
+             
+    </div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+<script>
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+
+<!-- layui 当前显示弹出框index-->
+<input type='hidden' id="layindex" value="">
+
+<div class="clear"></div>
+<div class=footer>
+    <div class=w900>
+        <div class=footernav>
+            <div class="footer_bot_p">{yun:}$config.sy_webcopyright{/yun}{yun:}$config.sy_webrecord{/yun} </div>
+            <div class="footer_bot_p">地址:{yun:}$config.sy_webadd{/yun} 电话(Tel):{yun:}$config.sy_freewebtel{/yun} EMAIL:{yun:}$config.sy_webemail{/yun}</div>
+            <div class="footer_bot_p">Powered by
+                <a target="_blank" href="http://www.phpyun.com">PHPYun.</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clear"></div>
+
+<div id="bg" {yun:}if $company.hy=="" && ($smarty.get.c=="index" || $smarty.get.c=="" ) {/yun}style="display:block" {yun:}/if{/yun}></div>
+<div id="uclogin" style="display:none"></div>
+<div class="clear"></div>
+
+<div style="width:550px;height:440px; background:#fff;  display: none; z-index:100000000000" id="tcmsg">
+    <div class="job_add_tck">
+
+        <div class="job_add_tck_tip">
+            <div class="job_add_tck_hi"><span class="job_add_tck_hi_n">尊敬的企业用户您好！</span></div>
+            <div class="job_add_tck_bq">
+                <span id="msg_show">很抱歉，您的套餐已用完，请先升级会员</span>
+            </div>
+
+            <div class="job_add_tck_bth" id="btn_value">确定</div>
+
+            <input type="hidden" id="pay_jobid" value="" />
+            <input type="hidden" id="pay_need" value="" />
+
+        </div>
+
+        <div class="job_add_tck_cont">
+            <div class="job_add_tck_fqtip">成为付费用户即可享受免费服务</div>
+
+            <div class="job_add_tck_tc_box">
+                <ul class="job_add_tck_tc_tit" id="rating_type">
+                   {yun:}if $config.com_vip_type==2||$config.com_vip_type==0{/yun} <li class="job_add_tck_tc_tit_cur">套餐会员</li>{yun:}/if{/yun}
+                   {yun:}if $config.com_vip_type==1||$config.com_vip_type==0{/yun} <li {yun:}if $config.com_vip_type==1{/yun}class="job_add_tck_tc_tit_cur"{yun:}/if{/yun}>时间会员</li>{yun:}/if{/yun}
+                    <li>增值包</li>
+                </ul>
+
+                <div class="job_add_tck_tc_cont">
+                    <ul class="job_add_tck_tc_list" id="rating_1" {yun:}if $config.com_vip_type==1{/yun}style="display:none"{yun:}/if{/yun}>
+
+                        {yun:}foreach from=$rating_1 item=v{/yun}
+                        <li>
+                            <div class="job_add_tck_tc_list_tit">
+                                <span class="job_add_tck_tc_name">{yun:}$v.name{/yun}</span>
+                               
+									<span class="job_add_tck_tc_jg"><em class="job_add_tck_tc_money">
+									 {yun:}if $config.com_integral_online==3{/yun}
+										{yun:}if $v.time_start < time()&& $v.time_end > time(){/yun}
+											{yun:}$v.yh_price * $config.integral_proportion{/yun}
+										{yun:}else{/yun}
+											{yun:}$v.service_price * $config.integral_proportion{/yun}
+										{yun:}/if{/yun} 
+											{yun:}$config.integral_pricename{/yun}
+									{yun:}else{/yun}
+										￥{yun:}if $v.time_start < time()&& $v.time_end > time(){/yun}
+											{yun:}$v.yh_price{/yun}
+										{yun:}else{/yun}
+											{yun:}$v.service_price{/yun}
+										{yun:}/if{/yun} 
+									{yun:}/if{/yun}
+									</em>/ 
+									{yun:}if $v.service_time>0{/yun}{yun:}$v.service_time{/yun}天{yun:}else{/yun}永久{yun:}/if{/yun}
+									</span>
+								
+                                <a href="index.php?c=right" class="job_add_tck_tc_buy">购买</a>
+                            </div>
+
+                            <span class="job_add_tck_tc_s">发布职位数 {yun:}$v.job_num{/yun}</span>
+                            <span class="job_add_tck_tc_s">刷新职位数 {yun:}$v.breakjob_num{/yun}</span>
+                            <span class="job_add_tck_tc_s">下载简历数 {yun:}$v.resume{/yun}</span>
+                            <span class="job_add_tck_tc_s">邀请面试数 {yun:}$v.interview{/yun}</span>
+                            <span class="job_add_tck_tc_s">发布兼职数 {yun:}$v.part_num{/yun}</span>
+                            <span class="job_add_tck_tc_s">刷新兼职数 {yun:}$v.breakpart_num{/yun}</span>
+                            <div class="job_add_tck_tcsm">套餐说明：{yun:}if $v.explains{/yun}{yun:}$v.explains{/yun}{yun:}else{/yun}{yun:}$v.name{/yun}{yun:}/if{/yun}
+							{yun:}if $v.integral_buy>0{/yun}赠送{yun:}$v.integral_buy{/yun}{yun:}$config.integral_pricename{/yun}{yun:}/if{/yun}
+							 
+							</div>
+                        </li>
+                        {yun:}/foreach{/yun}
+                    </ul>
+                    <ul class="job_add_tck_tc_list" id="rating_2" {yun:}if $config.com_vip_type==2 || $config.com_vip_type==0{/yun}style="display:none"{yun:}/if{/yun}>
+                        {yun:}foreach from=$rating_2 item=v{/yun}
+                        <li>
+                            <div class="job_add_tck_tc_list_tit">
+                                <span class="job_add_tck_tc_name">{yun:}$v.name{/yun}</span>
+                                <span class="job_add_tck_tc_jg"><em class="job_add_tck_tc_money">
+								{yun:}if $config.com_integral_online==3{/yun}
+									{yun:}if $v.time_start < time()&& $v.time_end > time(){/yun}
+										{yun:}$v.yh_price * $config.integral_proportion{/yun}
+								   {yun:}else{/yun}
+										{yun:}$v.service_price * $config.integral_proportion{/yun}
+									{yun:}/if{/yun}
+												
+								{yun:}$config.integral_pricename{/yun}
+								{yun:}else{/yun}
+									￥{yun:}if $v.time_start < time()&& $v.time_end > time(){/yun}
+										{yun:}$v.yh_price{/yun}
+									{yun:}else{/yun}
+										{yun:}$v.service_price{/yun}
+									{yun:}/if{/yun}
+								{yun:}/if{/yun}
+								
+								</em>/{yun:}if $v.service_time>0{/yun}{yun:}$v.service_time{/yun}天{yun:}else{/yun}永久{yun:}/if{/yun}</span>
+                                <em class="job_add_tck_tc_jg">套餐总数不限</em>
+                                <a href="index.php?c=right&act=time" class="job_add_tck_tc_buy">购买</a>
+                            </div>
+
+                            <span class="job_add_tck_tc_s">发布职位 {yun:}if $v.job_num > 0{/yun}{yun:}$v.job_num{/yun}次/日{yun:}else{/yun}不限{yun:}/if{/yun}</span>
+                            <span class="job_add_tck_tc_s">刷新职位 {yun:}if $v.breakjob_num > 0{/yun}{yun:}$v.job_num{/yun}次/日{yun:}else{/yun}不限{yun:}/if{/yun}</span>
+                            <span class="job_add_tck_tc_s">下载简历 {yun:}if $v.resume > 0{/yun}{yun:}$v.resume{/yun}次/日{yun:}else{/yun}不限{yun:}/if{/yun}</span>
+                            <span class="job_add_tck_tc_s">邀请面试 {yun:}if $v.interview > 0{/yun}{yun:}$v.interview{/yun}次/日{yun:}else{/yun}不限{yun:}/if{/yun}</span>
+                            <span class="job_add_tck_tc_s">发布兼职 {yun:}if $v.part_num > 0{/yun}{yun:}$v.part_num{/yun}次/日{yun:}else{/yun}不限{yun:}/if{/yun}</span>
+                            <span class="job_add_tck_tc_s">刷新兼职 {yun:}if $v.breakpart_num > 0{/yun}{yun:}$v.breakpart_num{/yun}次/日{yun:}else{/yun}不限{yun:}/if{/yun}</span>
+                            <div class="job_add_tck_tcsm">套餐说明：{yun:}if $v.explains{/yun}{yun:}$v.explains{/yun}{yun:}else{/yun}{yun:}$v.name{/yun}{yun:}/if{/yun}
+							{yun:}if $v.integral_buy>0{/yun}赠送{yun:}$v.integral_buy{/yun}{yun:}$config.integral_pricename{/yun}{yun:}/if{/yun}
+							 
+							</div>
+                        </li>
+                        {yun:}/foreach{/yun}
+                    </ul>
+                    <ul class="job_add_tck_tc_list" id="add_pack" style="display: none;">
+                        {yun:}foreach from=$added item=v{/yun}
+                        <li>
+                            <div class="job_add_tck_tc_list_tit">
+                                <span class="job_add_tck_tc_name">{yun:}$v.name{/yun}
+	                                <span class="job_add_tck_tc_jg">
+	                                	套餐价：<em class="job_add_tck_tc_money">￥{yun:}$v.service_price[0]{/yun}</em> 元 
+	                                	<!--会员价：<em class="job_add_tck_tc_money">￥10</em> 元-->
+	                                </span>
+                                </span>
+                                <a href="index.php?c=right&act=added&id={yun:}$v.id{/yun}" class="job_add_tck_tc_buy">详情</a>
+                            </div>
+                            
+                        <div class="job_add_tck_tc_list_zzb">   
+                        	下载简历：{yun:}$v.resume[0]{/yun}份，	邀请面试：{yun:}$v.interview[0]{/yun}份，	发布职位：{yun:}$v.job_num[0]{/yun}份， 刷新职位：{yun:}$v.breakjob_num[0]{/yun}份， 发布兼职：{yun:}$v.part_num[0]{/yun}份， 刷新兼职：{yun:}$v.breakpart_num[0]{/yun}份
+                        </div>
+                        </li>
+                        {yun:}/foreach{/yun}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("ul#rating_type").on("click", "li", function() {
+        $(this).addClass("job_add_tck_tc_tit_cur");
+        $(this).siblings('li').removeClass("job_add_tck_tc_tit_cur");
+
+        var text = this.innerHTML;
+
+        if(text == '套餐会员') {
+            $("#rating_1").show();
+            $("#rating_2").hide();
+            $("#add_pack").hide();
+
+        } else if(text == '时间会员') {
+            $("#rating_1").hide();
+            $("#rating_2").show();
+            $("#add_pack").hide();
+
+        } else if(text == '增值包') {
+
+            $("#rating_1").hide();
+            $("#rating_2").hide();
+            $("#add_pack").show();
+
+        }
+    })
+
+    var height = "300px";
+
+    function addjob_job() {
+        $.layer({
+            type: 1,
+            title: '发布职位',
+            closeBtn: [0, true],
+            border: [10, 0.3, '#000', true],
+            area: ['480px', height],
+            page: {
+                dom: '#issue_job'
+            }
+        });
+    }
+
+    function onRefresh() {
+        var jobid = $("#pay_jobid").val();
+        $("#sxjobid").val(jobid);
+
+        var need = $("#pay_need").val();
+        if(need != '') {
+            $("#sxneed").html(need);
+        }
+        $.layer({
+            type: 1,
+            title: '刷新职位',
+            closeBtn: [0, true],
+            border: [10, 0.3, '#000', true],
+            area: ['480px', height],
+            page: {
+                dom: '#refresh'
+            }
+        });
+    }
+
+    function addjob_part() {
+        $.layer({
+            type: 1,
+            title: '发布兼职',
+            closeBtn: [0, true],
+            border: [10, 0.3, '#000', true],
+            area: ['480px', height],
+            page: {
+                dom: '#issue_part'
+            }
+        });
+    }
+
+    function onRefreshPart() {
+        var jobid = $("#pay_jobid").val();
+        $("#partjobid").val(jobid);
+        var need = $("#pay_need").val();
+        if(need != '') {
+            $("#sxpneed").html(need);
+        }
+        $.layer({
+            type: 1,
+            title: '刷新职位',
+            closeBtn: [0, true],
+            border: [10, 0.3, '#000', true],
+            area: ['480px', height],
+            page: {
+                dom: '#part_refresh'
+            }
+        });
+    }
+
+    
+   
+
+    function onResume_invite() {
+        $.layer({
+            type: 1,
+            title: '邀请面试',
+            closeBtn: [0, true],
+            border: [10, 0.3, '#000', true],
+            area: ['480px', height],
+            page: {
+                dom: '#invite_server'
+            }
+        });
+    }
+</script>
+
+</body>
+
+</html>

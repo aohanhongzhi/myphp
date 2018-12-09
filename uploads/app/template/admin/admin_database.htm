@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<title>后台管理</title> 
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="tabs_info">
+    <ul>
+      <li class="curr"> <a href="index.php?m=database">备份数据</a></li>
+      <li><a href="index.php?m=database&c=backin">恢复数据</a></li>
+      <li><a href="index.php?m=database&c=optimizing">优化数据</a></li>
+      <li><a href="index.php?m=database&c=clear">数据清理</a></li>
+    </ul>
+  </div>
+  <div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+    <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+    <div class="admin_new_tip_list_cont">
+      <div class="admin_new_tip_list">该页面展示了网站数据库信息，可对数据库进行备案还原操作，也可通过其它软件进行操作。</div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  
+<div class="table-list mt10" id="databaseshow">
+<div class="admin_table_border">
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+<!-- <form action="index.php?m=database&c=backup" name="myform" method="post" target="_self" id='myform'  class="layui-form" onsubmit="return check_backup()" >
+ -->
+<form  class="layui-form" >
+<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+<table width="100%">
+<thead>
+<tr class="admin_table_top">
+<th colspan="4" align="left"><span style="padding-left:10px;">备份类型</span></th>
+</tr></thead>
+<tr>
+	<td colspan="4"> 
+		<div class="layui-form-item" style="float:left; margin-bottom:0px;">
+			<div class="layui-input-block" >
+				<input name="basetype" value="1" title="全部备份   备份数据库所有表"  type="radio" lay-filter="batesave" checked/>
+			</div>
+		</div>
+	</td>
+</tr>
+<tr>
+	<td colspan="4"align="left">
+		<div class="layui-form-item" style="float:left; margin-bottom:0px;">
+			<div class="layui-input-block" >
+				<input name="basetype" value="2" title="自定义备份    根据自行选择备份数据表" type="radio" lay-filter="batesave"/>
+			</div>
+		</div>
+	</td>
+</tr>
+
+<tr   class="batabaseselect"  style="display:none">
+    <td colspan="4" width="40" align="left">
+  <input type="checkbox" id='chkAll' lay-filter="chkall" title="全选"  lay-skin="primary"  checked/>
+    &nbsp;
+    </td>
+  </tr>
+{yun:}foreach item=v key=key from=$list{/yun}  
+<tr style="display:none"   class="batabaseselect">
+	{yun:}foreach item=vv from=$v{/yun}  
+		<td >
+	<input type="checkbox" name="table[]" value="{yun:}$vv.name{/yun}" title="{yun:}$vv.name{/yun} "   checked onclick='unselectall()' class="check_all"  lay-skin="primary" >
+	</td>
+	{yun:}/foreach{/yun}  
+</tr>
+{yun:}/foreach{/yun}
+
+<thead>
+<tr class="admin_table_top">
+<th colspan="4" align="left"><span style="padding-left:10px;">其他选项</span></th>
+</tr></thead>
+<tr>
+<td>分卷备份 - 文件长度限制(kb)</td>
+	<td colspan="3">
+<input type="text" name="maxfilesize" id="maxfilesize" value="2048"class="admin_comedity_text"/>
+ </td>
+</tr>
+<tr>
+<td>备份文件名</td>
+	<td colspan="3">
+<input type="text" name="basename" value="{yun:}$basename{/yun}" class="admin_comedity_text"/>
+ </td>
+</tr>
+
+<tr align="center">
+	<td colspan="4"><input type="button"  class="layui-btn layui-btn-normal"onclick="check_backup()" value="提交备份"/></td>
+</tr>
+
+</table>
+</form>
+</div>
+</div>
+
+<div class="table-list mt10" style="display:none" id="success">
+
+<div class="admin_table_border">
+<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo">
+  <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+</div>
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+    form.on('checkbox(chkall)', function(data){
+        $(".check_all").prop("checked", this.checked);
+        form.render();
+      });
+    form.on('radio(batesave)', function(data){
+    	if(data.value==1){
+    		$(".batabaseselect").hide();
+    		$(".check_all").prop("checked", "true");
+    	}else{
+    		$(".batabaseselect").show();
+    		 $(".check_all").removeProp("checked");
+    		 $("#chkAll").removeProp("checked");
+    	}
+    	form.render();
+    });
+   
+  });
+function check_backup(){
+	var pytoken=$("#pytoken").val();
+	var maxfilesize=$("#maxfilesize").val();
+	var chk_value =[];
+	$('input[name="table[]"]:checked').each(function(){
+		chk_value.push($(this).val());
+	});
+	var basetype=$('input[name="basetype"]:checked').val();
+
+	
+	if(chk_value.length==0 && basetype==2){
+		parent.layer.msg("请选择要备份的数据！",2,8);return false;
+	}else{
+		parent.layer.confirm("确定备份吗？",function(){
+			parent.layer.closeAll();
+			//document.getElementById('myform').submit(); 
+			
+			$.post('index.php?m=database&c=backup',{pytoken:pytoken,table:chk_value,maxfilesize:maxfilesize},function(data){
+				//alert(data)
+				var data=eval("("+data+")");
+				$("#databaseshow").hide();
+				$("#success").show();
+				BackupDatabaseFileSize(data.c,data.t,data.s,data.p,data.mypath,'','','','',data.waitbaktime,pytoken,chk_value.length)
+			})
+		});
+	} 
+}
+function BackupDatabaseFileSize(c,t,s,p,mypath,alltotal,thenof,fnum,stime,waitbaktime,pytoken,count){
+	$.get('index.php?m=database&c='+c,{pytoken:pytoken,t:t,s:s,p:p,mypath:mypath,alltotal:alltotal,thenof:thenof,fnum:fnum,stime:stime},function(arr){
+		//alert(arr)
+		var arr=eval("("+arr+")");
+		layui.use('element', function(){
+			  var $ = layui.jquery
+			  ,element = layui.element; 
+			  n = parseInt(arr.t/count*100);  
+		        element.progress('demo', n+'%');
+
+			});
+		if(arr.bt>=count){
+			parent.layer.msg(arr.msg, 2,9,function(){location=location ;});return false;
+		}
+		BackupDatabaseFileSize(c,arr.t,arr.s,arr.p,arr.mypath,arr.alltotal,arr.thenof,arr.fnum,arr.stime,arr.waitbaktime,pytoken,count)
+	})
+}
+
+</script>
+</body>
+</html>

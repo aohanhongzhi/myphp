@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站问答详情。</div>
+</div>
+</div>
+<div class="admin_new_search_box">
+
+  <a href="index.php?m=admin_question" class="admin_new_cz_tj" style="margin-left:0px;">&lt; 问题列表</a> 
+ 
+</div>
+
+  <div class="tag_box">
+  <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+   <form name="myform" target="supportiframe" action="index.php?m=admin_question&c=save" method="post"  class="layui-form" encType="multipart/form-data"  onSubmit="return checkform(this);">
+      <table width="100%" class="table_form" style="background:#fff;">
+       <tr>
+              <td colspan="2" bgcolor="#f0f6fb"><div class="admin_bold">{yun:}if $question_show.id{/yun}修改问答{yun:}else{/yun}添加问答{yun:}/if{/yun}</div></td>
+            </tr>
+        <tr >
+          <th>问答标题：</th>
+          <td>
+          
+          <div class="layui-form-item">
+				<div class="layui-input-block">
+				  <input type="text" name="title" id="title"  lay-verify="required" placeholder="请输入问答标题" value="{yun:}$question_show.title{/yun}" size="80" style="display:inline;width:227px;" autocomplete="off" class="layui-input input-text">
+				</div>
+			</div>
+          
+          </td>
+        </tr>
+        <tr class="admin_table_trbg" >
+          <th>问答类别：</th>
+          <td>
+          
+       		<div class="layui-input-inline" style='float:left;margin-right:12px;z-index:1000;'>
+	        <input name="pid" type="hidden" id="pid_val" value="{yun:}$pid{/yun}"><!--这块后加-->
+		      <select name="job_nid_name" id='job_nid_name' lay-filter="swId">
+			    {yun:}if $pid{/yun}
+		 		  {yun:}foreach item=v from=$class_list{/yun}
+	                    {yun:}if $v.id eq $pid{/yun}
+	                    <option value="{yun:}$v.id{/yun}" selected>{yun:}$v.name{/yun}</option>
+	                    {yun:}else{/yun}
+	                    <option value="{yun:}$v.id{/yun}" >{yun:}$v.name{/yun}</option>
+	                    {yun:}/if{/yun}
+	                {yun:}/foreach{/yun}
+	            {yun:}else{/yun}
+	                <option value="">请选择</option>
+	            {yun:}/if{/yun}
+		        
+		        {yun:}if !$pid{/yun}
+			        {yun:}foreach item=v from=$class_list{/yun}
+	                	<option value="{yun:}$v.id{/yun}">{yun:}$v.name{/yun}</option>
+	                {yun:}/foreach{/yun}
+	            {yun:}/if{/yun}
+		      </select>
+		    </div>
+		    
+		    <div class="layui-input-inline" style='float:left;z-index:1000;'>
+	         <input name="cid" type="hidden" id="cid_val" value="{yun:}$question_show.cid{/yun}"> 
+		      <select name="job_keyid_select" id='job_keyid_select' lay-filter="swIds">
+			    {yun:}if $question_show.cid{/yun}
+		 		  {yun:}foreach item=v from=$s_class{/yun}
+	                    {yun:}if $v.id eq $question_show.cid{/yun}
+	                    <option value="{yun:}$v.id{/yun}" selected>{yun:}$v.name{/yun}</option>
+	                    {yun:}else{/yun}
+	                    <option value="{yun:}$v.id{/yun}" >{yun:}$v.name{/yun}</option>
+	                    {yun:}/if{/yun}
+	                {yun:}/foreach{/yun}
+	            {yun:}else{/yun}
+	                <option value="">请选择</option>
+	            {yun:}/if{/yun}
+		        
+		        {yun:}if !$question_show.cid{/yun}
+			        {yun:}foreach item=v from=$s_class{/yun}
+	                	<option value="{yun:}$v.id{/yun}">{yun:}$v.name{/yun}</option>
+	                {yun:}/foreach{/yun}
+	            {yun:}/if{/yun}
+		      </select>
+		    </div>
+            </td>
+        </tr>
+        <tr >
+          <th>访问次数：</th>
+          <td>
+           <div class="layui-form-item">
+				<div class="layui-input-block">
+				  <input type="text" name="visit" id="visit"  lay-verify="required" placeholder="请输入访问次数" value="{yun:}$question_show.visit{/yun}" size="80" style="display:inline;width:227px;" autocomplete="off"  onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" class="layui-input input-text">
+				</div>
+			</div>
+          
+          </td>
+        </tr>
+        
+            
+        <tr class="admin_table_trbg" >
+          <th>是否推荐：</th>
+          <td>
+	        <div class="layui-form-item">
+	          <div class="layui-input-block">
+	          	<input type="hidden" name="is_recom" id="is_recom" value="{yun:}$question_show.is_recom{/yun}"/>
+	            <input type="checkbox" lay-skin="switch" lay-text="是|否"  lay-filter="swiId"
+	              {yun:}if $question_show.is_recom=="1"{/yun}
+	             	 checked
+	              {yun:}/if{/yun}
+	              />
+	          </div>
+	        </div>   
+            </td>
+        </tr>
+        <tr >
+          <th>问答内容： </th>
+          <td>
+ 		  <script id="myEditor" name="content" type="text/plain" style="width:700px;height:300px;">{yun:}$question_show.content{/yun}</script>
+		  </td>
+        </tr>
+        <tr class="admin_table_trbg" >
+		<th>&nbsp;</th>
+          <td align="left"> {yun:}if $question_show.id{/yun}
+            <input type="hidden" name="id" value="{yun:}$question_show.id{/yun}"/>
+            <input type="hidden" name="back_url"  value="{yun:}$smarty.get.back_url{/yun}"/>
+            <input class="layui-btn layui-btn-normal" type="submit" name="update" value="&nbsp;更 新&nbsp;"  />
+            {yun:}else{/yun}
+            <input class="layui-btn layui-btn-normal" type="submit" name="add" value="&nbsp;添 加&nbsp;"  />
+            {yun:}/if{/yun}
+            <input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+        </tr>
+      </table>
+	  <input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+    </form>
+  </div>
+</div>
+<style>
+.layui-form-item {
+    margin-bottom: 0px;
+    clear: both;
+}
+</style>
+<script language="javascript">
+  layui.use(['layer', 'form','element'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+	,element = layui.element
+    ,$ = layui.$;
+	form.on('select(swId)',function(data){
+		val = $('#job_nid_name').val();
+		if(val>0){
+			var pytoken=$("#pytoken").val(); 
+			$.post("index.php?m=admin_question&c=get_class",{pid:val,pytoken:pytoken},function(data){		   
+				$("#job_keyid_select").html(data);$('#cid_val').val($('#job_keyid_select').val());
+				form.render();
+			});
+			$('#pid_val').val(val);
+		}else{
+			$("#job_keyid_select").html('<option value="">请选择</option>');$('#pid_val').val('');form.render();
+		}
+	});
+	
+	form.on('switch(swiId)', function(data){
+    	if(this.checked){
+    		$('#is_recom').val(1);
+    	}else{
+    		$('#is_recom').val(0);
+    	}
+    });
+	
+	form.on('select(swIds)',function(data){
+		$('#cid_val').val($('#job_keyid_select').val());
+	});
+  });
+ 
+function checkform(myform){
+	if (myform.title.value==""){ 
+		parent.layer.msg('请填写问答标题！', 2, 8);
+		myform.title.focus();
+		return (false);
+	}
+	if (myform.cid.value=="0"){ 
+		parent.layer.msg('请选择子类！', 2, 8);
+		myform.cid.focus();
+		return (false);
+	}
+}
+ 
+UE.getEditor('myEditor',{
+	toolbars:[['Source','|','Bold', 'italic', 'underline', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright','insertorderedlist', 'insertunorderedlist','emotion','simpleupload']],
+	wordCount:false,
+    elementPathEnabled:false,
+    initialFrameHeight:300
+});
+</script>
+</body>
+</html>

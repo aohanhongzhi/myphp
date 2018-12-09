@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div id="subboxdiv" style="width:100%;height:100%;display:none;position:absolute;"></div>
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">修改企业模板，可以自由设置企业模板“模板名称、路径、出售积分、模板缩略图和指定用户使用”功能 。</div>
+</div>
+</div>
+
+<div class="clear"></div>
+
+  <div class="tag_box mt10">
+
+	<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+    <form action="index.php?m=admin_tpl&c=comptplsave" method="post" class="layui-form" enctype="multipart/form-data" target="supportiframe">
+    <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+    <table width="100%" class="table_form">
+    <tr>
+              <td colspan="2" bgcolor="#f0f6fb"><div class="admin_bold">企业模板</div></td>
+            </tr>
+    	<tr class="admin_table_trbg">
+            <th width="140">模板名称：</th>
+            <td><input class="input-text" type="text" name="name" id="sy_qqappid" value="{yun:}$row.name{/yun}" size="30" maxlength="255"/><span class="admin_web_tip">如：经典红色</span></td>
+        </tr>
+        <tr>
+          <th width="140">状态：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-inline">
+                <input lay-skin="switch" name="status_switch" lay-filter="status" lay-text="开启|关闭"
+                 {yun:}if $row.status=="1"{/yun} checked {yun:}/if{/yun}
+                 type="checkbox"/>
+                <input type="hidden" name="status" id="status" value="{yun:}$row.status{/yun}"/>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="admin_table_trbg">
+            <th width="140">模板路径：</th>
+            <td><input class="input-text" type="text" name="url" id="sy_qqappid" value="{yun:}$row.url{/yun}" size="30" maxlength="255" {yun:}if $row.url{/yun}readonly{yun:}/if{/yun}/><span class="admin_web_tip">如：default。注意：企业模板放在app/template/company下面，不存在系统将自动建立</span></td>
+        </tr> 
+        <tr >
+            <th width="140">{yun:}$config.integral_pricename{/yun}：</th>
+            <td><input class="input-text" type="text" name="price" id="sy_qqappid" value="{yun:}$row.price{/yun}" size="30" maxlength="255"/><span class="admin_web_tip">如：100，0或空为免费</span></td>
+        </tr>
+        <tr class="admin_table_trbg">
+            <th width="140">缩略图：</th>
+            <td>
+			<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'pic',imgid: 'imgcomtpl'}">上传图片</button>
+			<input type="hidden" id="layupload_type" value="2"/>
+			<input type="hidden" id="upload_path" value="company"/>
+			<input type="hidden" name="pic" value="{yun:}$row.pic{/yun}"/>
+			<img id="imgcomtpl" src="../{yun:}$row.pic{/yun}" style="max-width:350px;_width:350px;" {yun:}if !$row.pic{/yun}class="none"{yun:}/if{/yun}>
+
+			</td>
+        </tr>
+        <tr>
+            <th width="140">针对用户：</th>
+            <td><input class="input-text" type="text" name="service_uid" id="service_uid" value="{yun:}$row.service_uid{/yun}" size="30" maxlength="255"/><span class="admin_web_tip">可以直接填写用户ID，多个以（半角逗号,）隔开</span></td>
+        </tr>
+        <tr class="admin_table_trbg">
+            <th style="border-bottom:none;">&nbsp;</th>
+          <td align="left" style="border-bottom:none;"> 
+            <input type="hidden" value="{yun:}$row.id{/yun}" name="id">
+            <input class="admin_button" id="qqconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;
+            <input class="admin_button" type="reset" value="重置" /></td>
+        </tr>
+
+    </table>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+var weburl = '{yun:}$config.sy_weburl{/yun}';
+  layui.use(['form'], function(){
+    var form = layui.form,
+      $ = layui.$;
+
+    form.on('switch(status)', function(data){
+      var v = this.checked ? 1 : 0;
+      $("#status").val(v);
+    });
+  });
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+</body>
+</html>

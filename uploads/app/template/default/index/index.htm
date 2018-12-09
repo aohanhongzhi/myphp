@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>{yun:}$title{/yun}</title>
+        <meta name="keywords" content="{yun:}$keywords{/yun}" />
+        <meta name="description" content="{yun:}$description{/yun}" />
+        <link href="{yun:}$style{/yun}/style/index.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> {yun:}if $ishtml{/yun}
+        <script src="{yun:}url m=ajax c=wjump{/yun}" language="javascript"></script>
+        {yun:}/if{/yun}
+    </head>
+
+    <body style="background:#f5f5f5">
+        {yun:}include file="$tplstyle/header.htm"{/yun}
+        <div class="w1000">
+            <div class="index_banner none" id="js_ads_banner_top">
+                {yun:}adlist classid=73 limit=1 item=adlist_73{/yun} {yun:}$adlist_73.html{/yun} {yun:}/adlist{/yun}
+            </div>
+            <div class="index_banner" id="js_ads_banner_top_slide">
+                {yun:}adlist classid=72 limit=1 item=adlist_72{/yun} {yun:}$adlist_72.html{/yun} {yun:}/adlist{/yun}
+            </div>
+            <div class="hp_kk fl">
+                <div class="hp_login fl">
+                    <div class="hp_login_tit"><i class="hp_login_tit_icon"></i>会员登录</div>
+                    <div class="hp_login_hy"> <i class="hp_login_hy_icon fl"></i>
+                        <input class="hp_login_hy_but fl" type="text" id="username" name="username" placeholder="邮箱/手机号/用户名" />
+                    </div>
+                    <div class="hp_login_hy"> <i class="hp_login_mm_icon fl"></i>
+                        <input class="hp_login_mm_but fl" type="password" id="password" name="password" placeholder="请输入密码" />
+                    </div>
+                    <div class="hp_login_lg">
+                        <input class="hp_login_lg_but" type="submit" value="登录" onclick="check_login('{yun:}url m=login c=loginsave{/yun}');" />
+                    </div>
+                    <div class="hp_login_rg">
+                        <a href="{yun:}url m=register{/yun}">注册账号</a>
+                    </div>
+                </div>
+
+                <div class="hp_t_cont">
+                    <div class="hp_banner fl" id="ban">
+                        <div class="layui-carousel" id="test1" lay-filter="test1">
+                            <div carousel-item=""> {yun:}adlist classid=3 item="lunbo" key=key{/yun}
+                                <div>{yun:}$lunbo.html{/yun}</div>
+                                {yun:}/adlist{/yun} </div>
+                        </div>
+                    </div>
+
+                    <div class="hp_hotjob fl">
+                        <div class="hp_hotjob_b">
+                            {yun:}key limit=28 recom=1 type=3 item=keylist{/yun}
+                            <a href="{yun:}listurl type=keyword v=$keylist.key_title{/yun}" class="jos_tag_a" title="{yun:}$keylist.key_title{/yun}">{yun:}$keylist.key_name{/yun}</a> {yun:}/key{/yun}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hp_zp fr">
+                    <div class="wantedjob">
+
+                        <div class="wantedjob_tit"><span class="wantedjob_tit_s">紧急招聘</span>
+                            <a href="{yun:}listurl type=tp v=1{/yun}" target="_blank" class="wantedjob_titmore">更多>></a>
+                        </div>
+                        <div class="wantedjob_cont">
+                            <ul class="wantedjob_cont_list">
+                                {yun:}joblist namelen=30 comlen=30 urgent='1' limit=12 item=urgent_list name=urgent_list1{/yun}
+                                <li>
+                                    <div class="wantedjob_cont_list_b">
+                                        <div class="wantedjob_name"> <i class="wantedjob_icon"></i>
+                                            <a href="{yun:}$urgent_list.job_url{/yun}" target="_blank">{yun:}$urgent_list.name{/yun}</a> <img src="{yun:}$style{/yun}/images/jobjp.png" alt="{yun:}$urgent_list.com_name{/yun}"></div>
+                                        <div class="wantedjob_info"><i class="hp_urg_job_ct_r">{yun:}if $urgent_list.job_salary!='面议'{/yun}￥{yun:}/if{/yun}{yun:}$urgent_list.job_salary{/yun}</i> {yun:}$urgent_list.job_exp{/yun}经验<i class="index_job_line">|</i>{yun:}$urgent_list.job_edu{/yun}学历</div>
+                                        <div class="wantedjob_comname">
+                                            <a class="" href="{yun:}$urgent_list.com_url{/yun}" target="_blank">{yun:}$urgent_list.com_name{/yun}</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                {yun:}/joblist{/yun}
+
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="hp_web_cont">
+                        <div class="hp_web">
+                            <div class="hp_web_top">网站公告
+                                <a href="{yun:}url m=announcement{/yun}" class="g_more">更多>></a>
+                            </div>
+                            <div class="hp_web_ct">
+                                <ul>
+                                    {yun:}announcement limit=2 item=announcementlist t_len=20{/yun}
+                                    <li>
+                                        <a href="{yun:}$announcementlist.url{/yun}">{yun:}$announcementlist.title_n{/yun}</a>
+                                    </li>
+                                    {yun:}/announcement{/yun}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 名企-->
+            <div class="yun_new_index_box" style="padding-bottom:0px;">
+                <div class="yun_new_index_tit fl">
+                    <i class="yun_new_index_tit_line"></i>
+                    <i class="yun_new_index_tit_lefticon"></i>
+                    <div class="yun_new_index_tit_left">名企招聘</div>
+
+                    <a href="{yun:}url m=company rec=1{/yun}" target="_blank" class="yun_new_index_titmore">查看更多>></a>
+                </div>
+
+                <section>
+                    <div class="yunFamousenterprises fl">
+                        <div class="yunFamousenterprises_box fl">
+                            <div class="Famous_recruitment_cont">
+                                <div class="index_left15560">
+                                    <div id="mainids">
+                                        {yun:}hotjob item=hotjoblist limit=18{/yun}
+                                        <div class="tlogo">
+                                            <ul>
+                                                <li onmouseover="showDiv2(this)" onmouseout="showDiv2(this)">
+                                                    <a href="{yun:}$hotjoblist.url{/yun}" target="_blank" class="tlogo_p_a"><img width="100" height="100" border="1" class="on lazy" src="{yun:}formatpicurl path=$hotjoblist.hot_pic type=comlogo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);" alt="{yun:}$hotjoblist.username{/yun}" /></a>
+                                                    <div class="yunFamousenterprises_comname">{yun:}$hotjoblist.username{/yun}</div>
+                                                    <div class="yunFamousenterprises_comname_bg"></div>
+                                                    <div class="show">
+                                                        <div class="area">{yun:}$hotjoblist.job{/yun}</div>
+                                                    </div>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        {yun:}/hotjob{/yun} </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+             
+            <div class="hp_urg_job_l fl">
+                <div class="hp_urg_job_l_1250 fl">
+                    {yun:}adlist classid=13 limit=5 item=adlist_13{/yun} {yun:}$adlist_13.html{/yun} {yun:}/adlist{/yun} {yun:}adlist classid=14 limit=6 item=adlist_14{/yun} {yun:}$adlist_14.html{/yun} {yun:}/adlist{/yun} {yun:}adlist classid=15 limit=16 item=adlist_15{/yun} {yun:}$adlist_15.html{/yun} {yun:}/adlist{/yun} </div>
+            </div>
+
+            <div class="yun_new_index_box">
+                <div class="yun_new_index_tit fl">
+                    <i class="yun_new_index_tit_line"></i>
+                    <i class="yun_new_index_tit_lefticon"></i>
+                    <div class="yun_new_index_tit_left">推荐职位</div>
+
+                    <a href="{yun:}listurl type=tp v=2{/yun}" target="_blank" class="yun_new_index_titmore">查看更多>></a>
+
+                </div>
+
+                <div class="index_newjob fl">
+                    <ul>
+                        {yun:}joblist namelen=12 comlen=18 rec='1' limit=12 item=rec_list name=rec_list1{/yun}
+                        <li>
+                            <div class="index_newjob_name">
+                                <a href="{yun:}$rec_list.job_url{/yun}">{yun:}$rec_list.name_n{/yun}</a>
+                            </div>
+                            <div class="index_newjob_time">
+                                {yun:}if $rec_list.time=='昨天'||$rec_list.redtime=='1'{/yun} <span style="color:red;">{yun:}$rec_list.time{/yun}</span> {yun:}else{/yun} {yun:}$rec_list.time{/yun} {yun:}/if{/yun}更新
+
+                            </div>
+                            <div class="index_newjob_info">
+                                <span class="index_newjob_info_xz">{yun:}if $rec_list.job_salary!='面议'{/yun}￥{yun:}/if{/yun}{yun:}$rec_list.job_salary{/yun}</span><span class="index_job_line">|</span>{yun:}$rec_list.job_city_two|mb_substr:0:4:"utf-8"{/yun} {yun:}$rec_list.job_city_three|mb_substr:0:4:"utf-8"{/yun}<span class="index_job_line">|</span>{yun:}$rec_list.job_exp{/yun}经验<span class="index_job_line">|</span>{yun:}$rec_list.job_edu{/yun}学历
+                            </div>
+                            <div class="index_newjob_com">
+                                <div class="index_newjob_comlogo"><img src="{yun:}$rec_list.logo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);" width="48" height="48" /></div>
+                                <div class="index_newjob_comname">
+                                    <a href="{yun:}$rec_list.com_url{/yun}">{yun:}$rec_list.com_n{/yun}</a> {yun:}if $rec_list.ratlogo && $rec_list.ratlogo!="0"{/yun}<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$rec_list.ratlogo{/yun}" title="{yun:}$rec_list.ratname{/yun}" width="16" height="16" />{yun:}/if{/yun} {yun:}if $rec_list.yyzz_status==1{/yun}<img src="{yun:}$style{/yun}/images/disc_icon10.png" title="认证企业" />{yun:}/if{/yun}
+                                </div>
+                                <div class="index_newjob_cominfo">{yun:}$rec_list.hy_n{/yun}</div>
+                            </div>
+
+                        </li>
+                        {yun:}/joblist{/yun}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="yun_new_index_box">
+                <div class="yun_new_index_tit fl">
+                    <i class="yun_new_index_tit_line"></i>
+                    <i class="yun_new_index_tit_lefticon"></i>
+                    <div class="yun_new_index_tit_left">最新职位</div>
+
+                    <a href="{yun:}url m=job c=search{/yun}" target="_blank" class="yun_new_index_titmore">查看更多>></a>
+
+                </div>
+
+                <div class="index_newjob fl">
+                    <ul>
+                        {yun:}joblist namelen=30 comlen=18 limit=12 item=job_list name=job_list1{/yun}
+                        <li>
+                            <div class="index_newjob_name">
+                                <a href="{yun:}$job_list.job_url{/yun}">{yun:}$job_list.name_n{/yun}</a>
+                            </div>
+                            <div class="index_newjob_time"> {yun:}if $job_list.time=='昨天'||$job_list.redtime=='1'{/yun} <span style="color:red;">{yun:}$job_list.time{/yun}</span> {yun:}else{/yun} {yun:}$job_list.time{/yun} {yun:}/if{/yun}更新 </div>
+                            <div class="index_newjob_info"> <span class="index_newjob_info_xz">{yun:}if $job_list.job_salary!='面议'{/yun}￥{yun:}/if{/yun}{yun:}$job_list.job_salary{/yun}</span><span class="index_job_line">|</span>{yun:}$job_list.job_city_two|mb_substr:0:4:"utf-8"{/yun} {yun:}$job_list.job_city_three|mb_substr:0:4:"utf-8"{/yun}<span class="index_job_line">|</span>{yun:}$job_list.job_exp{/yun}经验<span class="index_job_line">|</span>{yun:}$job_list.job_edu{/yun}学历 </div>
+                            <div class="index_newjob_com">
+                                <div class="index_newjob_comlogo"><img src="{yun:}$job_list.logo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);" width="48" height="48" /></div>
+                                <div class="index_newjob_comname">
+                                    <a href="{yun:}$job_list.com_url{/yun}">{yun:}$job_list.com_n{/yun}</a> {yun:}if $job_list.ratlogo!="" && $job_list.ratlogo!="0"{/yun}<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$job_list.ratlogo{/yun}" title="{yun:}$job_list.ratname{/yun}" width="16" height="16" />{yun:}/if{/yun} {yun:}if $job_list.yyzz_status==1{/yun}<img src="{yun:}$style{/yun}/images/disc_icon10.png" title="认证企业" />{yun:}/if{/yun} </div>
+                                <div class="index_newjob_cominfo">{yun:}$job_list.hy_n{/yun}</div>
+                            </div>
+                        </li>
+                        {yun:}/joblist{/yun}
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="yun_new_index_box">
+                <div class="yun_new_index_tit fl">
+                    <i class="yun_new_index_tit_line"></i>
+                    <i class="yun_new_index_tit_lefticon"></i>
+                    <div class="yun_new_index_tit_left">人才推荐</div>
+
+                    <a href="{yun:}url m=resume c=search {/yun}" target="_blank" class="yun_new_index_titmore">查看更多>></a>
+
+                </div>
+
+                <div class="hp_people fl">
+                    <ul>
+                        {yun:}userlist item=ulist post_len=10 limit=10 key=key name=userlist1{/yun}
+                        <li>
+                            <div class="hp_people_box">
+                                <div class="hp_people_box_rt fl">
+                                    <a href="{yun:}url m=resume  c=show id='`$ulist.id`'{/yun}" target="_blank"><img width="80" height="80" src="{yun:}$ulist.photo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);" /></a>
+                                </div>
+                                <div class="hp_people_box_ft fl">
+                                    <div class="hp_people_box_ft_nm">
+                                        <a href="{yun:}url m=resume  c=show id='`$ulist.id`'{/yun}" target="_blank">{yun:}$ulist.username_n|mb_substr:0:10:"utf-8"{/yun}</a>
+                                    </div>
+                                    <div class="hp_people_box_ft_v">{yun:}$ulist.exp_n{/yun}经验<i class="index_job_line">|</i>{yun:}$ulist.edu_n{/yun}学历</div>
+                                    <div class="hp_people_box_ft_y">{yun:}$ulist.job_post_n{/yun}</div>
+                                </div>
+                            </div>
+                        </li>
+                        {yun:}/userlist{/yun}
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="yun_new_index_box">
+                <div class="yun_new_index_tit fl">
+                    <i class="yun_new_index_tit_line"></i>
+                    <i class="yun_new_index_tit_lefticon"></i>
+                    <div class="yun_new_index_tit_left">职场资讯</div>
+
+                    <a href="{yun:}url m=article{/yun}" target="_blank" class="yun_new_index_titmore">查看更多>></a>
+
+                </div>
+
+                <div class="index_news_box">
+                    <div class="index_news_left">
+                        <div class="index_news_tip">
+                            <div class="index_news_tip_tit">专业职场资讯</div>
+                            <div class="">排忧艰难，带你就业带你飞</div>
+                            <i class="index_news_tip_icon"></i>
+                        </div>
+                        <div class="index_news_list">
+                            <ul>
+                                {yun:}article item=alist t_len=18 limit=7 key=key name=newlist1{/yun}
+                                <li>
+                                    <a href="{yun:}$alist.url{/yun}" class="hp_news_list_cr" target="_blank">{yun:}$alist.title{/yun}</a>
+                                </li>
+                                {yun:}/article{/yun}
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="index_news_list_imgnews ">
+                        <div class="index_news_list_imgnews_cont ">
+                            {yun:}article pic=1 t_len=20 limit=4 item=plist key=pkey{/yun} {yun:}if $pkey==0 || $pkey==1{/yun}
+                            <div class="hp_news_t fl">
+                                <dl>
+                                    <dt><a href="{yun:}$plist.url{/yun}"><img style="width:430px;height:260px;" src="{yun:}$config.sy_weburl{/yun}/{yun:}$plist.newsphoto{/yun}" alt="{yun:}$plist.title{/yun}"/></a></dt>
+                                    <dd>
+                                        <a href="{yun:}$plist.url{/yun}">{yun:}$plist.title{/yun}</a>
+                                    </dd>
+                                </dl>
+                                {yun:}else{/yun} {yun:}if $pkey==2{/yun}
+                                <div class="hp_news_w fl">
+                                    {yun:}/if{/yun}
+                                    <div class="hp_news_w_p fl">
+                                        <div class="hp_news_p_img fl">
+                                            <a href="{yun:}$plist.url{/yun}"><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$plist.newsphoto{/yun}" width="160" height="120" alt="{yun:}$plist.title{/yun}" /></a>
+                                        </div>
+                                        <div class="hp_news_p_wr fl">
+                                            <div class="hp_news_p_wr_tit">
+                                                <a href="{yun:}$plist.url{/yun}">{yun:}$plist.title{/yun}</a>
+                                            </div>
+                                            <div class="hp_news_p_ct">{yun:}$plist.description{/yun}</div>
+                                        </div>
+                                    </div>
+                                    {yun:}/if{/yun} {yun:}if $pkey!=2{/yun}
+                                </div>
+                                {yun:}/if{/yun} {yun:}/article{/yun}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="yun_new_index_box">
+                    <div class="yun_new_index_tit fl">
+                        <i class="yun_new_index_tit_line"></i>
+                        <i class="yun_new_index_tit_lefticon"></i>
+                        <div class="yun_new_index_tit_left">友情链接</div>
+                        {yun:}if $config.sy_linksq==1{/yun}
+
+                        <a href="{yun:}url m=link{/yun}" class="yun_new_index_titmore">申请链接</a>
+
+                        {yun:}/if{/yun}
+
+                    </div>
+
+                    <div class="hp_link fl">
+
+                        <div class="hp_link_banner">
+                            <ul class="hp_link_banner_img">
+                                {yun:}link type=2 tem_type=2 item=linklist{/yun}
+                                <li>
+                                    <a href="{yun:}$linklist.link_url{/yun}" target="_blank"><img src="{yun:}$linklist.pic{/yun}" alt="{yun:}$linklist.link_name{/yun}" /></a>
+                                </li>
+                                {yun:}/link{/yun}
+                            </ul>
+                            <div class="hp_link_banner_wr"> {yun:}link type=1 tem_type=2 item=linklist2{/yun}
+                                <a href="{yun:}$linklist2.link_url{/yun}" target="_blank">{yun:}$linklist2.link_name{/yun}</a> {yun:}/link{/yun} </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {yun:}if $config.sy_footer_fix=='1'{/yun}
+            <div class="tip_bottom">
+                <div class="tip_bottom_cont">
+                    <div class="tip_bottom_bg"></div>
+                    <div class="tip_bottom_cont_c">
+                        <div class="tip_bottom_main">
+                            <div class="tip_bottom_icon png"></div>
+                            <div class="tip_bottom_left">
+                                <a href="javascript:void(0);" onclick="$('.tip_bottom').hide();" class="tip_bottom_close png"></a>
+                                <div class="tip_bottom_ewm">
+                                    <div class="tip_bottom_ewm_bg"><i class="tip_bottom_ewm_p_icon"></i><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_qcode{/yun}" width="90" height="90"></div>
+                                    <div class="tip_bottom_ewm_p">手机也能找工作</div>
+                                </div>
+                                <span class="tip_bottom_logo">
+        <h2><span class="tip_bottom_fast"><span class="tip_bottom_time">30秒</span> 填写简历</span>，好工作轻松搞定！</h2>
+                                </span>
+                                <div class="tip_bottom_num "><span>0</span>公司</div>
+                                <div class="tip_bottom_num "><span>0</span>职位</div>
+                                {yun:}if !$uid{/yun}
+                                <div class="tip_bottom_member">
+                                    <a href="{yun:}url m=login{/yun}" class="tip_bottom_login">登录</a>
+                                    <a href="{yun:}url m=register{/yun}" class="tip_bottom_reg">快速注册<i class="tip_bottom_reg_icon"></i></a>
+                                </div>
+                                {yun:}/if{/yun}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {yun:}/if{/yun}
+
+            <div id="bg"></div>
+            {yun:}include file="$tplstyle/backtop.htm"{/yun}
+            <div id='footer_ad'> {yun:}adlist classid=10 item=footer_ad{/yun}
+                <div class="footer_ban" id="">
+                    <div class="baner_footer" id='bottom_ad_fl'> <span class="ban_close" onclick="colse_bottom()">关闭</span> {yun:}$footer_ad.html{/yun} </div>
+                    <input type="hidden" value='1' id='bottom_ad_is_show' />
+                </div>
+                {yun:}/adlist{/yun} {yun:}adlist classid=11 key=key item=left_ad{/yun}
+                <div class="duilian {yun:}if $key=='0'{/yun}duilian_left{yun:}else{/yun}duilian_right{yun:}/if{/yun}">
+                    <div class="duilian_con">{yun:}$left_ad.html{/yun}</div>
+                    <div class="close_container">
+                        <div class="btn_close"></div>
+                    </div>
+                </div>
+                {yun:}/adlist{/yun} </div>
+            <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+            <script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+            <script src="{yun:}$style{/yun}/js/index.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+            <script src="{yun:}$style{/yun}/js/reg_ajax.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+            <script src="{yun:}$config.sy_weburl{/yun}/js/slides.jquery.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+            <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+            <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+            <script type="text/javascript">
+                layui.use(['carousel'], function() {
+                    var carousel = layui.carousel;
+                    carousel.render({
+                        elem: '#test1',
+                        width: '590px',
+                        height: '270px'
+                    });
+                });
+                //顶部伸展广告
+                if($("#js_ads_banner_top_slide").length) { //判断当前广告是否展开，如果没有，则执行下面代码
+                    var $slidebannertop = $("#js_ads_banner_top_slide"),
+                        $bannertop = $("#js_ads_banner_top");
+                    setTimeout(function() {
+                        $bannertop.slideUp(1000);
+                        $slidebannertop.slideDown(1000);
+                    }, 1500); //1500毫秒(1.5秒)后，小广告收回，大广告伸开，执行时间都是1秒(1000毫秒)
+                    setTimeout(function() {
+                        $slidebannertop.slideUp(1000, function() {
+                            $bannertop.slideDown(1000);
+                        });
+                    }, 2000); //2.0秒(2000毫秒)之后，大广告收回，小广告展开。
+                }
+                $(document).ready(function() {
+                    //首页登录框以及登录后显示各会员中心内容
+                    var loginIndex = '{yun:}url m=ajax c=DefaultLoginIndex{/yun}';
+                    $.post(loginIndex, {
+                        rand: Math.random()
+                    }, function(data) {
+                        $(".hp_login").html(data);
+                    });
+                    $(".index_new_job li").hover(function() {
+                        var aid = $(this).attr("aid");
+                        $("#joblist" + aid).addClass("index_new_job_hover");
+                    }, function() {
+                        var aid = $(this).attr("aid");
+                        $("#joblist" + aid).removeClass("index_new_job_hover");
+                    })
+                    $(".menu_box").hover(function() {
+                        var aid = $(this).attr("aid");
+                        var ftop = Number($(this).offset().top);
+                        var sheight = Number($("#jobclass_" + aid).height());
+                        if(aid == '0') {
+                            $("#jobclass_" + aid).css("top", "0px");
+                        } else if(sheight > ftop) {
+                            $("#jobclass_" + aid).css("top", "0px");
+                        } else if(ftop > sheight && Number(sheight) < 250) {
+                            var isIE6 = !window.XMLHttpRequest;
+                            if(isIE6) {
+                                var top = Number(ftop) - Number(99);
+                            } else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/9./i) == "9.") {
+                                var top = Number(ftop) - Number(94);
+                            } else {
+                                var top = Number(ftop) - Number(94);
+                            }
+                            $("#jobclass_" + aid).css("top", top + "px");
+                        } else if(Number(sheight) > 250) {
+                            var top = Number(ftop) - Number(320);
+                            $("#jobclass_" + aid).css("top", top + "px");
+                        }
+                        $("#jobclass" + aid).addClass("current");
+                        $("#jobclass_" + aid).attr("class", "menu_sub db");
+                    }, function() {
+                        var aid = $(this).attr("aid");
+                        $("#jobclass" + aid).removeClass("current");
+                        $("#jobclass_" + aid).attr("class", "menu_sub dn");
+                    })
+                    $(".select_wrap").hover(function() {
+                        $(".select_wrap_list").show();
+                    }, function() {
+                        $(".select_wrap_list").hide();
+                    })
+                });
+            </script>
+            {yun:}if $config.sy_footer_fix=='1'{/yun}
+            <script>
+                $(document).ready(function() {
+                    $.get('{yun:}url m=ajax c=footertj{/yun}', {
+                        rand: Math.random()
+                    }, function(data) {
+                        $(".tip_bottom_left").html(data);
+                    })
+                })
+            </script>
+            {yun:}/if{/yun}
+            <!--下面为调用网站主题-->
+            {yun:}webspecial{/yun} {yun:}include file="$tplstyle/footer.htm"{/yun}

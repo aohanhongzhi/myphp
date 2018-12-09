@@ -1,0 +1,174 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+    
+       <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">我的职位</span> <i class="member_right_h1_icon user_bg"></i></div>
+   
+    <div class="job_list_tit"> <ul class=""><li {yun:}if $smarty.get.c=='msg'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=msg">面试通知</a>{yun:}if $msgnum{/yun}<i class="left_sidebar_leftmune_icon">{yun:}$msgnum{/yun}</i>{yun:}/if{/yun}</li>
+      <li {yun:}if $smarty.get.c=='job'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=job">申请的职位</a></li>
+      <li {yun:}if $smarty.get.c=='favorite'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=favorite">职位收藏</a></li>
+      <li {yun:}if $smarty.get.c=='look_job'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=look_job">浏览的职位 </a></li>
+	  </ul>
+      </div>
+        <div class="clear"></div>
+     <div  class="resume_Prompt_box">
+<div  class="resume_Prompt"><i class="resume_Prompt_icon"></i>您已申请 <span style="color:red;">{yun:}$total{/yun}</span> 条职位,请耐心等待企业回复！</div></div>
+      <div class="clear"></div>
+
+ <div class="resume_box_list">
+
+
+       <div class="job_td_list_box">
+     <div class="job_td_list mt10">
+      投递反馈： 
+      <a href="index.php?c=job" class="{yun:}if !$smarty.get.browse{/yun}job_td_list_cur{yun:}else{/yun}job_td_list_a{yun:}/if{/yun}">不限</a>
+      {yun:}foreach item=v from=$StateList key=key{/yun}
+     <a href="index.php?c=job&browse={yun:}$key{/yun}" class="{yun:}if $smarty.get.browse==$key{/yun}job_td_list_cur{yun:}else{/yun}job_td_list_a{yun:}/if{/yun}">{yun:}$v{/yun}</a>
+        {yun:}/foreach{/yun}
+        </div>
+      <div class="job_td_list job_td_list_mt">
+      投递时间：
+       <a href="index.php?c=job" class="{yun:}if !$smarty.get.datetime{/yun}job_td_list_cur{yun:}else{/yun}job_td_list_a{yun:}/if{/yun}">不限</a>
+       {yun:}foreach item=v from=$search_list key=key{/yun}
+      <a href="index.php?c=job&datetime={yun:}$key{/yun}"  class="{yun:}if $smarty.get.datetime==$key{/yun}job_td_list_cur{yun:}else{/yun}job_td_list_a{yun:}/if{/yun}">{yun:}$v{/yun}</a>
+        {yun:}/foreach{/yun}
+      </div>
+        </div>
+       <div class="clear"></div>
+       
+      <div id="gms_showclew"></div>
+      <form action="index.php" method="get" target="supportiframe" id='myform'>
+      <input type="hidden" name="c" value="job" />
+      <input type="hidden" name="act" value="del" />
+      {yun:}if !empty($rows){/yun}
+
+      <div class="interview_application_tit mt40"> 
+	 
+      <div class="interview_application_span interview_application_jobname">申请的职位</div> 
+      <div class="interview_application_span interview_application_jobzt">职位状态</div>
+      <div class="interview_application_span interview_application_tdfk">投递反馈</div>
+	  <div class="interview_application_span interview_application_tdtime">投递时间</div>
+      <div class="interview_application_span interview_application_tdjlmc">投递简历名称</div>
+      
+      <div class="interview_application_span interview_application_cz">操作</div>
+      </div>
+      {yun:}/if{/yun}
+      {yun:}foreach item=job from=$rows{/yun}
+      <div class="interview_application_list">
+       
+
+       <div class="interview_application_span interview_application_jobname"> 
+
+
+	   {yun:}if $job.type==1{/yun} 
+	   
+     
+        <a href="{yun:}url m=job c=comapply id='`$job.job_id`'{/yun}" target="_blank" title="{yun:}$job.job_name{/yun}" class="interview_application_name">{yun:}$job.job_name{/yun}</a> 
+         
+      
+        {yun:}/if{/yun} 
+        
+      
+        
+         <div class="mt10">
+    
+        <a href="{yun:}url m=company c=show id='`$job.com_id`'{/yun}" target="_blank" title="{yun:}$job.com_name{/yun}"class="interview_application_comname">{yun:}$job.com_name{/yun} </a> 
+ 		</div>
+        
+        
+        
+        
+		</div>
+        <div class="interview_application_span interview_application_jobzt mt20">
+         {yun:}if $job.id{/yun} 
+
+            {yun:}if $job.status==0{/yun} 
+            <div class="interview_zph">招聘中</div>
+            {yun:}else{/yun}
+            <div class=" interview_yxj">已下架</div>
+            {yun:}/if{/yun}
+         {yun:}else{/yun}
+        	<div class=" {yun:}if $job.status>0{/yun}statuscolor{yun:}/if{/yun}">已删除</div>
+         {yun:}/if{/yun}
+</div>
+        <div class="interview_application_span interview_application_tdfk mt20">
+       {yun:}if $job.is_browse==4{/yun}
+       <span class="interview_application_bfh"><i class="interview_application_bfh_icon"></i>条件不符</span>
+		 {yun:}elseif $job.is_browse==5{/yun}
+       <span class="interview_application_bfh"><i class="interview_application_bfh_icon"></i>无法联系</span>
+		{yun:}elseif $job.is_browse==1{/yun}
+        <span class="interview_application_whf">尚未回复</span>
+		{yun:}elseif $job.is_browse==2{/yun}
+        <span class="interview_application_yck">企业已查看</span>
+		{yun:}elseif $job.is_browse==3{/yun}
+		<span class="interview_application_dtz">...等待通知</span>
+		{yun:}elseif $job.is_browse==0{/yun}
+        <span class="interview_application_yq"><i class="interview_application_yq_icon"></i>邀请面试</span>
+        {yun:}/if{/yun}
+		</div>
+  
+    <div class="interview_application_span interview_application_tdtime mt20">{yun:}$job.datetime|date_format:'%Y-%m-%d'{/yun}</div>
+	 <div class="interview_application_span interview_application_tdjlmc mt20">{yun:}$job.resume_name{/yun}&nbsp;</div>
+
+      <div class="interview_application_span interview_application_cz mt20"> 
+      <!--批量取消-->
+      
+      {yun:}if $job.quxiao=='1'{/yun}
+      <span class="List_dete" style="color:#999;">已取消申请</span><br/>
+      <a href="javascript:void(0)" onclick="layer_del('确定要删除？','index.php?c=job&act=del&id={yun:}$job.id{/yun}');" class="List_dete cblue" >删除</a>
+      {yun:}else{/yun}
+        {yun:}if $job.body!=''{/yun} <span class="List_dete" style="color:#999;">已取消申请</span><br/>
+        {yun:}/if{/yun}
+        {yun:}if $job.is_browse=='1'&&$job.body==''{/yun} <a href="javascript:void(0)" onclick="canceljob({yun:}$job.id{/yun});" class="List_dete cblue" >取消申请</a> {yun:}else{/yun} <a href="javascript:void(0)" onclick="layer_del('确定要删除？','index.php?c=job&act=del&id={yun:}$job.id{/yun}');" class="List_dete cblue" >删除</a> {yun:}/if{/yun} 
+        {yun:}/if{/yun}  
+       
+        </span> </div>
+</div>
+
+      <div class="clear"></div>
+      {yun:}foreachelse{/yun}
+      <div class="msg_no">
+      <p>亲爱的用户，您还没有申请过职位，想要获得更多工作机会</p>
+  <p>立即搜索您感兴趣的职位并申请吧！</p>
+<a href="{yun:}url m=job{/yun}" target="_blank"class="msg_no_sq uesr_submit">立即搜索我感兴趣的职位>></a>
+</div>
+      {yun:}/foreach{/yun}
+       </div>
+      {yun:}if $rows{/yun}
+  <div class="diggg" style="margin-top:10px; float:right">{yun:}$pagenav{/yun}</div>  
+     {yun:}/if{/yun}
+    </form>
+    
+  </div>
+</div>
+<div style="padding:10px;display:none;" id='blackdiv'>
+  <div class="Blacklist_box">
+    <form action="index.php?c=job&act=qs" target="supportiframe" method="post" class="layui-form">
+      <input type="hidden" value="" name="id" id="qsid">
+       <div class="qxsq_box"> 
+        <div class="Blacklist_box_qx" style="padding:10px 0; ">选择合适的取消原因</div>
+        <select name="body" style="width:160px;">
+          <option value="已经找到工作">已经找到工作</option>
+          <option value="想休息一段时间">想休息一段时间</option>
+          <option value="生病了">生病了</option>
+          <option value="看错信息了">看错信息了</option>
+          <option value="很长时间没有查看">很长时间没有查看</option>
+          <option value="其它原因">其它原因</option>
+        </select>
+      </div>
+      <div class="qxsq_box_bth" style="padding:10px 0; ">
+        <input type="submit" value="确定" class="layui-btn layui-btn-normal" style="width:264px;">
+      </div>
+    </form>
+  </div>
+  <div class="clear"></div>
+</div>
+<script type="text/javascript">
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+});
+</script>
+{yun:}include file="$userstyle/footer.htm"{/yun}

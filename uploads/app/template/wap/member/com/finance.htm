@@ -1,0 +1,31 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun} 
+<div class="yun_m_service">
+	<div class="">我的积分</div>
+	<div class="yun_m_service_money">{yun:}$statis.integral{/yun}</div>
+	
+	<div class="yun_m_service_money_cz">
+		<a href="index.php?c=pay" class="yun_m_service_money_cz_a yun_m_service_money_cz_a_c">充值</a>
+		<a href="index.php?c=paylog" class="yun_m_service_money_cz_a">明细</a>
+	</div>
+</div>
+
+<div class="yun_m_service_we">
+	<div class="yun_m_service_we_hi">尊敬的企业用户：</div>
+	
+	<div class="">您当前是：<span class="yun_m_service_we_jb">{yun:}$statis.rating_name{/yun}</span></div>
+
+	<a class="yun_m_service_we_kt" href="index.php?c={yun:}if $config.com_vip_type==2||$config.com_vip_type==0{/yun}rating{yun:}else{/yun}time{yun:}/if{/yun}">开通服务</a>
+	
+</div>
+
+<ul class="yun_m_service_nav mt15">
+ 
+	<li><a href="index.php?c=com"><i class="yun_m_service_nav_icon yun_m_service_nav_icon_my"></i>我的服务<span class="yunset_list_tip"></span></a></li>
+	<li><a href="index.php?c=integral&type=1"><i class="yun_m_service_nav_icon yun_m_service_nav_icon_jf"></i>积分管理<span class="yunset_list_tip">做任务赚积分</span></a></li>
+  	 
+</ul>
+
+
+
+
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

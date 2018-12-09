@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站店铺招聘详情。</div>
+</div>
+</div>
+
+  <div class="infoboxp_top mt10" style="border-bottom:none;">
+    <h6>招聘详情</h6>
+  </div>
+  <div class="main_tag" >
+    <div class="tag_box">
+      <table width="100%" class="table_form" style="background:#fff; font-size:14px;">  
+      <tr class="admin_table_trbg">
+			<th width="120">(店面)名称：</th>
+			<td><div class="yun_admin_divh">{yun:}$show.companyname{/yun}</div></td></tr>     
+        <tr >
+          <th>职位名称：</th>
+          <td><div class="yun_admin_divh">{yun:}$show.title{/yun}</div></td>
+        </tr>
+         {yun:}if $show.pic{/yun}
+        <tr >
+			<th>店铺形象：</th>
+			<td> <img src="{yun:}$config.sy_weburl{/yun}/{yun:}$show.pic{/yun}" width="145" height="35"></td>
+		</tr>
+		 {yun:}/if{/yun}
+		 <tr>
+       <th>工 &nbsp;&nbsp;&nbsp;资：</th>
+       <td><div class="yun_admin_divh">{yun:}$show.salary{/yun}</div></td>
+       </tr>
+        <tr >
+          <th>具体要求：</th>
+          <td><div style="min-height:34px; line-height:34px;">{yun:}$show.require{/yun} </div></td>
+        </tr>
+       
+        <tr class="admin_table_trbg">
+          <th>有效时间：</th>
+          <td><div class="yun_admin_divh">{yun:}$show.edate|date_format:"%Y-%m-%d"{/yun}</div> </td>
+        </tr>
+        
+        <tr class="admin_table_trbg">
+          <th>联系电话：</th>
+          <td><div class="yun_admin_divh">{yun:}$show.phone{/yun} </div></td>
+        </tr>
+        <tr>
+          <th>联 系 人：</th>
+          <td><div class="yun_admin_divh">{yun:}$show.linkman{/yun}</div> </td>
+        </tr>
+      
+        <tr>
+          <th width="120">时　　间：</th>
+          <td><div class="yun_admin_divh">{yun:}$show.ctime|date_format:"%Y-%m-%d"{/yun}</div></td>
+        </tr>
+       <tr>
+       <th>工作地点：</th>
+       <td><div class="yun_admin_divh">{yun:}$show.address{/yun}</div></td>
+       </tr>
+        <tr class="admin_table_trbg">
+          <th width="120">状　　态：</th>
+          <td><div class="yun_admin_divh">{yun:}if $show.status=="1"{/yun}<font color="blue">已审核</font>{yun:}else{/yun}<font color="red">未审核</font>{yun:}/if{/yun}</div></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

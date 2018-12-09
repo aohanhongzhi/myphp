@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">工具箱类别：按企业HR人力资源类别进行分类，如考勤、请假和行政等分类。多参考国内知名网站进行设置。</div>
+</div>
+</div>
+<div class="clear"></div>
+<div class="tag_box mt10">  
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+<form name="myform" target="supportiframe" action="index.php?m=hrclass&c=add" method="post"  class="layui-form" encType="multipart/form-data"  onSubmit="return checkform();">
+<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+<table width="100%" class="table_form" style="background:#fff;">
+ <tr class="admin_table_trbg">
+          <th colspan="4" bgcolor="#f0f6fb"><span class="admin_bold">{yun:}if $row.name{/yun}修改{yun:}else{/yun}添加{yun:}/if{/yun}工具箱类别</span></th>
+    </tr>
+	 <tr>
+		<th width="120">类别名称：</th>
+		<td>
+		
+		<div class="layui-form-item">
+	        <div class="layui-input-block">
+	          <input type="text" name="name" id="name"  lay-verify="required" placeholder="请输入类别名称" value="{yun:}$row.name{/yun}" size="40" style="width:227px;" autocomplete="off" class="layui-input input-text">
+	        </div>
+	      </div>  
+		
+		</td>
+	</tr>
+	<tr class="admin_table_trbg">
+		<th width="120">类别简介：</th>
+		<td>
+		
+		<div class="layui-form-item">
+		  <div class="layui-input-block">
+			<textarea name="content" cols="55" rows="3" placeholder="请输入类别简介"   lay-verify="required" class="layui-input input-text"  style="display:inline;width:442px;padding-left:10px;" autocomplete="off">{yun:}$row.content{/yun}</textarea>
+		  </div>
+		</div>
+		
+		</td>
+	</tr>
+	<tr>
+		<th width="120">缩 略 图：</th>
+		<td><input name="pic" id="pic" type="file" size="40"  class="input-text"/></td>
+	</tr>
+    {yun:}if $row.pic{/yun}
+    <tr>
+        <th width="120">图片预览：</th>
+        <td><img src="../{yun:}$row.pic{/yun}" width="150" height="80" /></td>
+    </tr>
+    {yun:}/if{/yun}
+	<tr class="admin_table_trbg">
+		<td align="center" colspan="2">
+        {yun:}if is_array($row){/yun}
+        <input type="hidden" name="id" id="id" value="{yun:}$row.id{/yun}" />
+        <input class="layui-btn layui-btn-normal" type="submit" name="submit" value="&nbsp;修 改&nbsp;" />
+        {yun:}else{/yun}
+        <input class="layui-btn layui-btn-normal" type="submit" name="submit" value="&nbsp;添 加&nbsp;" />
+        {yun:}/if{/yun}
+		<input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+	</tr>
+</table>
+</form>
+</div></div>
+<style>
+.layui-form-item {
+    margin-bottom: 0px;
+    clear: both;
+}
+</style>
+<script language="javascript">
+  layui.use(['layer', 'form','element'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+	,element = layui.element
+    ,$ = layui.$;
+
+  });
+function checkform()
+{
+	if($("#name").val()==""){
+		parent.layer.msg('请填写类别名称！', 2, 8); return false;
+	}
+	if($("#content").val()==""){
+		parent.layer.msg('请填写类别简介！', 2,8); return false;
+	}
+	if(document.getElementById("id"))
+	{
+		return true;
+	}else{
+		if($("#pic").val()==""){
+			layer.msg('图片不能为空！', 2, 8); return false;
+		}
+	}
+}
+</script>
+</body>
+</html>

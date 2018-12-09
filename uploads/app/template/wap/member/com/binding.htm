@@ -1,0 +1,73 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+
+<ul class="bingding_box">
+    <li>
+    	
+        <div class="bingding_box_iconbg {yun:}if $member.wxid!=''{/yun}bingding_yx_g{yun:}/if{/yun}"><i class="bingding_box_iconwx"></i></div>
+        <div class="bingding_box_name">微信绑定</div>
+        {yun:}if $member.wxopenid!="" || $member.wxid!=''{/yun}
+	        <div class="bingding_box_p">你已绑定微信，下次你可以直接使用微信快捷登录</div>
+        	<a href="javascript:void(0)" onclick="layer_del('确定要取消绑定？','index.php?c=binding&type=wxid')" class="bingding_box_bth_jc">解除绑定</a>
+        {yun:}else{/yun}
+        	
+        	{yun:}if $config.wx_rz=='0'{/yun}
+        		<a href="javascript:void(0)" onclick="layermsg('对不起，微信绑定已关闭！');return false;" class="bingding_box_bth">立即绑定</a>
+        		
+        	{yun:}else{/yun}
+	
+	       	 <a href="{yun:}url m=wap c=wxconnect  login=1{/yun}" class="bingding_box_bth">立即绑定</a>
+	
+	        {yun:}/if{/yun}
+	        
+			<div class="bingding_box_p">绑定微信，下次你可以直接使用微信快捷登录</div>
+		
+		{yun:}/if{/yun}
+ 	        
+    </li>
+
+    <li>
+        <div class="bingding_box_iconbg {yun:}if $member.qqid!=''{/yun}bingding_yx_qq{yun:}/if{/yun}"><i class="bingding_box_iconqq"></i></div>
+        <div class="bingding_box_name">QQ绑定</div>
+
+        {yun:}if $member.qqid!=""{/yun}
+        	<div class="bingding_box_p">你已绑定QQ号，下次你可以直接使用QQ快捷登录</div>
+        	<a href="javascript:void(0)" onclick="layer_del('确定要取消绑定？','index.php?c=binding&type=qqid')" class="bingding_box_bth_jc">解除绑定</a>
+        {yun:}else{/yun} 
+        
+	        {yun:}if $config.sy_qqlogin!='1'{/yun}
+	
+	        <a href="javascript:void(0)" onclick="layermsg('对不起，QQ绑定已关闭！');return false;" class="bingding_box_bth">立即绑定</a>
+	
+	        {yun:}else{/yun}
+	
+	       	 <a href="{yun:}url m=qqconnect  login=1{/yun}" class="bingding_box_bth">立即绑定</a>
+	
+	        {yun:}/if{/yun}
+	        
+        	<div class="bingding_box_p">绑定QQ，下次你可以直接使用QQ号快捷登录</div>
+
+        {yun:}/if{/yun}
+    </li>
+
+    <li>
+        <div class="bingding_box_iconbg {yun:}if $member.sinaid!=''{/yun}bingding_yx_xl{yun:}/if{/yun}"><i class="bingding_box_iconxl"></i></div>
+        <div class="bingding_box_name">新浪微博绑定</div>
+        {yun:}if $member.sinaid!=""{/yun}
+        	<div class="bingding_box_p">绑定新浪微博，，下次你可以直接使用新浪微博快捷登录</div>
+        	<a href="javascript:void(0)" onclick="layer_del('确定要取消绑定？','index.php?c=binding&type=sinaid')" class="bingding_box_bth_jc">解除绑定</a>
+        {yun:}else{/yun} 
+        
+        {yun:}if $config.sy_sinalogin!='1'{/yun}
+        <a href="javascript:void(0)" onclick="layermsg('对不起，新浪绑定已关闭！');return false;" class="bingding_box_bth">立即绑定</a>
+        {yun:}else{/yun}
+        <a href="{yun:}url m=wap c=sinaconnect login=1{/yun}" class="bingding_box_bth">立即绑定</a>
+        {yun:}/if{/yun}
+        <div class="bingding_box_p">绑定新浪微博，下次你可以直接使用新浪微博快捷登录</div>
+
+        {yun:}/if{/yun}
+
+    </li>
+
+</ul>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun}

@@ -1,0 +1,17 @@
+ 
+
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/mui/css/mui.previewimage.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.zoom.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.previewimage.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+    $(function() {
+        //企业详情页
+        $(".muipreview").find('img').each(function() {
+            $(this).attr('data-preview-src', '');
+            $(this).attr('data-preview-group', '1');
+        });
+		mui.previewImage();
+      
+    })
+</script>

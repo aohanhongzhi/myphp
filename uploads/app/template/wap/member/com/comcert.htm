@@ -1,0 +1,65 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script type="text/javascript">
+    function check_company_cert() {
+        if($.trim($("#name").val()) == '') {
+            layermsg('企业全称不能为空！');
+            return false;
+        }
+        if($.trim($("#pic").val()) == '' && $("#previewimg")[0].src == '') {
+            layermsg('请上传营业执照！');
+            return false;
+        }
+        return true;
+    }
+</script>
+{yun:}if $company.yyzz_status==1{/yun}
+<div class="yun_com_msg">当前营业执照已认证</div>
+{yun:}else{/yun} {yun:}if !empty($cert.check){/yun} {yun:}if $cert.status==2{/yun}
+<div class="yun_com_msg">审核未通过，{yun:}if $cert.statusbody{/yun}原因：{yun:}$cert.statusbody{/yun},{yun:}/if {/yun}请重新上传，如有疑问可拨打客服服务热线：{yun:}$config.sy_freewebtel{/yun}</div>
+{yun:}else{/yun}
+<div class="yun_com_msg">营业执照已上传等待管理员审核，请耐心等待，如需快速审核可拨打客服服务热线：{yun:}$config.sy_freewebtel{/yun}</div>
+{yun:}/if{/yun} {yun:}else{/yun}
+<div class="yun_com_msg">未认证，当前未上传营业执照</div>
+{yun:}/if{/yun} {yun:}/if{/yun}
+
+<form method="post" action="" onsubmit="return check_company_cert();">
+    <ul class="yunset_password mt15">
+        <li>
+            <span class="yunset_password_mname">企业全称</span>
+            <input type="text" name="name" id="name" value="{yun:}$company.name{/yun}" class="yunset_text">
+        </li>
+    </ul>
+	
+    <div class="yunset_identity_box">
+        <div class="yunset_identity" style="height:270px;">
+            <div align="center" class="yunset_identity_pic_img" id="previewshow" {yun:}if !$cert.check{/yun}style="display: none;" {yun:}/if{/yun}>
+
+                <img src="{yun:}$cert.check{/yun}"  id="previewimg" />
+
+            </div>
+            <div class="yunset_identity_pic">
+
+                <input type="file" name="pic" id="pic" onchange="previewImage(this,'preview')" accept="image/*" class="yunset_identity_pic_file">
+				<input type='hidden' name='preview' value='' id='preview'>
+
+            </div>
+            <i class="yunset_identity_pic_tj"></i>
+            <div class="yunset_identity_tip" style="padding-top:10px;">上传营业执照</div>
+            <span class="yunset_identity_tip_a">选择上传图片</span>
+            <div class="yunset_identity_tip_c" style="padding-top:10px;">营业执照中的文字、图片、章印等需清晰可辨别，否则不能通过认证。 </div>
+
+        </div>
+    </div>
+    <div class="yunset_identity_msg"><i class="yunset_identity_msg_icon"></i>格式为 {yun:}$config.pic_type{/yun} 不得超过{yun:}$config.file_maxsize{/yun}M</div>
+
+    <div class="yunset_bth_box">
+        <input type="hidden" id="img" value="1">
+        <input type="submit" name="submit" value="{yun:}if !$cert.check{/yun}保存{yun:}else{/yun}更新/修改{yun:}/if{/yun}" class="yunset_bth">
+    </div>
+
+</form>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun}

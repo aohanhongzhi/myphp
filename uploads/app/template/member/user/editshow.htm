@@ -1,0 +1,67 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+       <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">我的作品</span> <i class="member_right_h1_icon user_bg"></i></div>
+              <div class="clear"></div>
+            <link href="{yun:}$user_style{/yun}/images/uploadify.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+            <script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/jquery.uploadify-3.1.min.js?v={yun:}$config.cachecode{/yun}"></script>
+            <div class='right_box'>
+                <div class='admincont_box'>
+                    <div class="index_photo_new fltL mt10">
+                        
+                        <form id="showform" name="myform" method="post" target="supportiframe" action="index.php?c=show&act=upshow" enctype="multipart/form-data">
+                            <input type="hidden" name="eid" value="{yun:}$smarty.get.eid{/yun}" />
+                            <input type="hidden" id="showid" name="id" value="{yun:}$id{/yun}" />
+                            <input type="hidden" name="uid" value="{yun:}$uid{/yun}" />
+                            <div id="imgparent" class="file_button_editpic"> <img id="imgicon" src=".{yun:}$picurl.picurl{/yun}" width="220" height="180"></div>
+                              <ul class="file_button_edit">
+                                <li>
+                                    <div class=tit>作品图片：</div>
+                                    <div class=textbox>
+									<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'picurl',imgid: 'imgicon',parentid: 'imgparent'}">上传图片</button>
+									<input type="hidden" id="layupload_type" value="2"/>
+									<input type="hidden" id="upload_path" value="show"/>
+									<input type="hidden" name="picurl" value="{yun:}$picurl.picurl{/yun}"/>
+										<em >最佳尺寸：155*110</em> 
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class=tit>标&nbsp;&nbsp;&nbsp;&nbsp;题：</div>
+                                    <div class=textbox>
+                                        <input class="file_button_edit_input" type="text" name="title" size="15" value="{yun:}$picurl.title{/yun}" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class=tit>排&nbsp;&nbsp;&nbsp;&nbsp;序：</div>
+                                    <div class=textbox>
+                                        <input class="file_button_edit_input" type="text" name="showsort" size="15" value="{yun:}$picurl.sort{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" />
+                                        <em style=" margin-left:10px;">数值越大越靠前</em>
+                                    </div>
+                                </li>
+                                <li>   <div class=tit>&nbsp;</div>
+                                 
+                                        <input class="file_bth" type="button" onclick="checkshow()" value="修改">
+                                     <input class="file_bth" type="button" onclick="history.back()"  style="background:#999;width:90px;" value="返回">
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<script language="javascript">
+    function checkshow() {
+        var title = $.trim($("input[name=title]").val());
+        if (title == '') {
+            layer.msg('标题不能为空！', 2, 8); return false;
+        }
+		$("#showform").submit();
+		layer.load('执行中，请稍候...',0);
+    }
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+{yun:}include file="$userstyle/footer.htm"{/yun}

@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script> var weburl = '{yun:}$config.sy_weburl{/yun}';</script>
+
+		<title>后台管理</title>
+		
+		<style>
+		* {margin: 0 ;padding: 0;}
+		body,div{ margin: 0 ;padding: 0;}
+
+		.layui-form-item {
+			margin-bottom: 0px;
+			clear: both;
+		}
+		</style>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp"> 
+			
+			<div class="admin_new_tip">
+				<a href="javascript:;" class="admin_new_tip_close"></a>
+				<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">管理员可以上传企业HR相关常用文档表格，提供用户下载使用！可以提升网站用户粘贴性。</div>
+				</div>
+			</div>
+
+			<div class="tag_box mt10">  
+				<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+				<form name="myform" target="supportiframe" action="index.php?m=hr&c=save" method="post" onSubmit="return cksubmit()" class="layui-form" enctype="multipart/form-data">
+					<table width="100%" class="table_form" style="background:#fff;">
+						<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+						<input class="input-text" name="yurl" type="hidden" value="{yun:}$row.url{/yun}"/> 
+						<input class="input-text" name="url" type="hidden" value="{yun:}$row.url{/yun}" id='url'/> 
+						
+						<tr class="admin_table_trbg">
+							<th colspan="4" bgcolor="#f0f6fb"><span class="admin_bold">添加文档</span></th>
+						</tr>
+						
+						<tr>
+							<th>文档名称：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+									  <input type="text" name="name" id="name"  lay-verify="required" placeholder="请输入文档名称" value="{yun:}$row.name{/yun}" style="width:250px;" autocomplete="off" class="layui-input input-text">
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th>文档类别：</th>
+							<td>
+								<div class="layui-input-inline">
+									<select name="cid">
+										{yun:}if $row.cid{/yun}
+											{yun:}foreach item=v from=$t_class{/yun}
+												{yun:}if $v.id eq $row.cid{/yun}
+													<option value="{yun:}$v.id{/yun}" selected>{yun:}$v.name{/yun}</option>
+												{yun:}else{/yun}
+													<option value="{yun:}$v.id{/yun}" >{yun:}$v.name{/yun}</option>
+												{yun:}/if{/yun}
+											{yun:}/foreach{/yun}
+										{yun:}else{/yun}
+											<option value="">请选择</option>
+										{yun:}/if{/yun}
+										
+										{yun:}if !$row.cid{/yun}
+											{yun:}foreach item=v from=$t_class{/yun}
+												<option value="{yun:}$v.id{/yun}">{yun:}$v.name{/yun}</option>
+											{yun:}/foreach{/yun}
+										{yun:}/if{/yun}
+									</select>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th>是否显示：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="hidden" name="is_show" id="is_show" value="{yun:}if $row.is_show{/yun}1{yun:}else{/yun}0{yun:}/if{/yun}"/>
+										<input type="checkbox" lay-skin="switch" lay-text="是|否" lay-filter="swiId" {yun:}if $row.is_show=="1"{/yun}checked{yun:}/if{/yun} />
+									</div>
+								</div> 
+							</td>
+						</tr>
+
+						<tr>
+							<th>上传文档：</th>
+							<td>
+								<span id="span_url" style="color:#444">{yun:}$row.url{/yun}</span>
+								<!-- <input type="button" class="layui-btn layui-btn-normal" id="insertfile" value="选择文档" /> -->
+ 								<button type="button" class="layui-btn layui-btn-normal" id="noupload">选择文件</button>
+								<input type="hidden" id="laynoupload" value="1"/> 
+								<input type="hidden" id="layfiletype" value="2"/>
+							</td>
+						</tr>
+
+						<tr>
+                        <th>&nbsp;</th>
+							<td align="left" >
+								{yun:}if is_array($row){/yun} 
+									<input type="hidden" name="id" value="{yun:}$row.id{/yun}">	
+									<input class="layui-btn layui-btn-normal" type="submit" name="submit" value="&nbsp;修 改&nbsp;" />
+								{yun:}else{/yun}
+									<input class="layui-btn layui-btn-normal" type="submit" name="submit" value="&nbsp;添 加&nbsp;" />
+								{yun:}/if{/yun}
+
+								<input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" />
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+ 
+
+		<script language="javascript">
+			layui.use(['layer', 'form','element'], function(){
+				var layer = layui.layer
+					,form = layui.form
+					,element = layui.element
+					,$ = layui.$;
+
+				form.on('switch(swiId)', function(data){
+					if(this.checked){
+						$('#is_show').val(1);
+					}else{
+						$('#is_show').val(0);
+					}
+				});
+			});
+		 
+			function cksubmit(){
+				var name=$.trim($("#name").val());
+ 				if(name==''){parent.layer.msg("文档名称不能为空！",2,8);return false;}
+
+
+ 			}
+		</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<script src="../js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="../js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="../js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="../js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<div id="wname"  style="display:none; width:400px; "> 
+	<div style="height: 260px;" class="job_box_div">  
+	   <div class="job_box_inp">
+		<table class="table_form "style="width:100%">
+			<tr><td>
+            <textarea name="position" id="copy_url" rows="3" cols="50" class="web_text_textarea" style="width:355px"></textarea>
+            </td></tr>
+            <tr class="ui_td_11">
+            <td  class="ui_content_wrap" colspan='2'><input class="layui-btn layui-btn-normal" type="button" name="add" value=" 复制代码 " /></td>
+          </tr>
+            <tr><td><span class="admin_web_tip">复制内容并添加到模板中</span></td></tr> 
+            <tr><td><span class="admin_web_tip">limit=5 为调用数量，可自行修改，如调用6条，为limit=6</span></td></tr>
+		</table> 
+	   </div>
+	</div>
+</div> 
+
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站所有的广告分类信息，可对广告分类进行修改，删除操作。</div>
+</div>
+</div>
+
+<div class="clear"></div>
+
+<div class="admin_new_search_box"> 
+ <a href="index.php?m=advertise&c=addclass"  class="admin_new_cz_tj" style="margin-left:0px;">+ 添加类别</a>
+  </div>
+<div class="clear"></div> 
+<div class="table-list">
+  <div class="admin_table_border">
+    <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form action="index.php" name="myform" method="get" target="supportiframe" id='myform'>
+    <input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+     <input name="m" value="advertise" type="hidden"/>
+      <input name="c" value="delclass" type="hidden"/>   
+      <table width="100%">
+        <thead>
+          <tr class="admin_table_top">
+          <th><label for="chkall">
+                <input type="checkbox" id='chkAll'  onclick='CheckAll(this.form)'/>
+              </label></th>
+            <th>编号</th>
+            <th align="left">分类名称</th>
+            <th>演示图片</th>
+            <th>排序</th>
+            <th>调用代码</th>
+			<th>设为购买</th>
+            <th width="120" >操作</th>
+          </tr>
+        </thead>
+        <tbody>
+        {yun:}foreach from=$ad_class_list key=key item=list{/yun}
+       <tr align="center"{yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$list.id{/yun}">
+          <td><input type="checkbox" value="{yun:}$list.id{/yun}"  name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+          <td><span>{yun:}$list.id{/yun}</span></td>
+          <td align="left"><span>{yun:}$list.class_name{/yun}</span></td>
+          <td class="ud"><div class="admin_table_w84">{yun:}if $list.hrefn{/yun}
+			<a href="javascript:void(0)" class="preview layui-btn layui-btn-small" url="{yun:}$list.hrefn{/yun}">点击查看</a>{yun:}else{/yun}无{yun:}/if{/yun}</div></td>
+          <td class="od">{yun:}$list.orders{/yun}</td>
+          <td class="ud"> 
+        	<a href="javascript:void(0);" onClick="copy_adclass('内部调用','{yun\:}adlist classid={yun:}$list.id{/yun} limit=5 item=adlist_{yun:}$list.id{/yun}{/yun}\r\n{yun\:}$adlist_{yun:}$list.id{/yun}.html{/yun}\r\n{yun\:}/adlist{/yun}')" class="admin_cz_sc">内部调用</a>
+        </td>
+		<td>
+		<div style="width:94px;">
+			{yun:}if $list.type==1{/yun}
+			<a href="javascript:void(0);" onClick="showadbuy('{yun:}$list.id{/yun}','index.php?m=advertise&c=adbuyshow');" class="admin_cz_sc">修改</a>/
+			<a href="javascript:void(0);" onClick="layer_del('确定要设置为不可购买？','index.php?m=advertise&c=delbuy&id={yun:}$list.id{/yun}');" class="admin_cz_sc">取消</a>
+			{yun:}else{/yun} 
+			<a href="javascript:void(0);" onClick="showadbuy('{yun:}$list.id{/yun}','index.php?m=advertise&c=adbuyshow');" class="admin_cz_sc">设为购买</a>
+			{yun:}/if{/yun}
+		</div>
+		</td>
+          <td><a href="index.php?m=advertise&c=addclass&id={yun:}$list.id{/yun}" class="admin_new_c_bth"> 修改</a> <a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=advertise&c=delclass&id={yun:}$list.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a></td>
+        </tr>
+        {yun:}/foreach{/yun}
+        <tr style="background:#f1f1f1;">
+          <td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+          <td colspan="2" ><label for="chkAll2">全选</label>
+             
+            <input class="admin_button"  type="button" name="delsub" value="删除所选" onClick="return really('del[]')"/></td>
+          <td colspan="10" class="digg">{yun:}$pagenav{/yun}</td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div> 
+<div id="adbuydiv" style="display:none"> 
+		<div class="common-form" style="width:610px;">
+		<form class="layui-form">
+			<table width="100%" class="table_form contentWrap">
+				<tr>
+					<th align="right"><div  style="width:80px;">类别名称：</div></td>
+					<td align="left"><div class="com_a_name" id="classname"></div></td>
+					
+					<th align="right" class="comp_hotjob_line"><div  style="width:80px;">排序：</div></td>
+						<td id="sort" align="left">	</td>
+				</tr>
+                <tr>
+				<th align="right">消费类型：</th>
+				<td> 
+					<div class="layui-form-item">
+					  <div class="layui-input-block">
+						 <div class="layui-input-inline">
+						   <input type="radio" value='1'  name="btype" id="btype_1" title="{yun:}$config.integral_pricename{/yun}" lay-filter="btype" checked>
+						   <input type="radio" value='2'  name="btype"  id="btype_2" title="金额" lay-filter="btype">
+						 </div>
+					   </div>
+					</div></td>
+					<th align="right" class="comp_hotjob_line">购买费用：</th>
+					<td  align="left"><input id="integral_buy" class="comy_time_text" style="width: 110px;" type="text" size="5" onKeyUp="value=this.value.replace(/\D+/g,'')" value=""  name="integral_buy">
+					 <span class="comp_text_span"> <span id="integral_buy_type">{yun:}$config.integral_pricename{/yun}</span>/月 </span></td>
+				</tr>
+				 <tr>
+					<th align="right">广告宽度：</td>
+					<td align="left" >
+						<input id="x" class="comy_time_text" style="width: 110px;" type="text"  value="" name="x">
+						<span class="comp_text_span"> px(像素) </span>
+					</td>
+					<th align="right">广告高度：</td>
+					<td align="left">
+						<input id="y" class="comy_time_text" style="width: 110px;" type="text"  value="" name="y">
+							<span class="comp_text_span"> px(像素) </span>
+					</td>
+				</tr>
+				<tr>
+					<th align="right">所在位置：</td>
+					<td id="logo" align="left"   colspan="4">
+						<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'href',imgid: 'imgicon'}">上传图片</button>
+						<input type="hidden" id="layupload_type" value="2"/>
+						<input type="hidden" id="upload_path" value="ad"/>
+						<input type="hidden" name="href" id="href" value=""/>
+						<img  id="imgicon" class="none" src='' width="100" height="50"/>
+					</td>
+				</tr>
+				<tr>
+					<th align="right">备注说明：</td>
+					<td align="left"  colspan="4">
+					   <textarea id="remark" name="remark" rows="5" class="comp_text_textarea"></textarea>
+					   <br/>
+					</td>
+				</tr>
+			<tr>
+			<td colspan="4" align="center">
+				<input type="hidden" id='id'  value=""/>		
+				<input type="hidden" id='type'  value="1"/>
+				<input type="hidden" id='class_name'  value=""/>
+				<input type="hidden" id='orders'  value=""/>
+				  <input class="layui-btn layui-btn-normal" type="button" name="add" value="&nbsp;提  交&nbsp;" onclick="save_adclass()"/>
+			</td>
+			
+			 </table>
+			 </form>
+		</div> 
+	</div> 
+<script>
+var weburl="{yun:}$config.sy_weburl{/yun}";
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+	form.on('radio(btype)', function(data){
+		if(data.value=='1'){
+			$('#integral_buy_type').html('{yun:}$config.integral_pricename{/yun}');
+		}else{
+			$('#integral_buy_type').html('元');
+		}
+		form.render();
+	});
+});
+  $(document).ready(function() {
+	$(".preview").click(function() {
+		var pic_url = $(this).attr('url');
+		layer.page(
+			"<img src=" + pic_url + " style='width:500px;height:500px; ' >",
+			'查看演示图片', ['500px', '500px'], 'auto', { maxmin: true}
+		);
+
+	});
+});
+function showadbuy(id,url){ 
+	var pytoken=$("#pytoken").val()
+	$.post(url,{id:id,pytoken:pytoken},function(data){
+		var data=eval('('+data+')');
+		$("#id").val(data.id);
+		$("#orders").val(data.orders);
+		$("#class_name").val(data.class_name);
+		
+		$("#sort").html(data.orders);
+		$("#classname").html(data.class_name);
+		if(data.btype==2){
+			$("#btype_"+data.btype).attr("checked","checked"); 
+			layui.form.render('radio');
+			$("#integral_buy_type").html('元');
+		}else{
+			$("#btype_1").attr("checked","checked"); 
+			layui.form.render('radio');
+			$("#integral_buy_type").html('{yun:}$config.integral_pricename{/yun}');
+		}
+		if(data.integral_buy){
+			$("#integral_buy").val(data.integral_buy);
+		}else{
+			$("#integral_buy").val('');
+		}
+		if(data.x){
+			$("#x").val(data.x);
+		}else{
+			$("#x").val('');
+		}
+		if(data.y){
+			$("#y").val(data.y);
+		}else{
+			$("#y").val('');
+		}
+		if(data.href){
+			$("#href").val(data.href);
+		}else{
+			$("#href").val('');
+		}
+		if(data.hrefn){
+			$("#imgicon").attr('src',data.hrefn);
+			$("#imgicon").removeClass('none');
+		}else{
+			$("#imgicon").attr('src','');
+			$("#imgicon").addClass('none');
+		}
+		if(data.remark){
+			$("#remark").val(data.remark);
+		}else{
+			$("#remark").val('');
+		}
+		$.layer({
+			type : 1,
+			title :'设为可购买广告类别', 
+			offset: [($(window).height() - 500)/2 + 'px', ''],
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area: ['610px','455px'],
+			page : {dom :"#adbuydiv"}
+		}); 
+	});
+}
+function save_adclass(){
+	var id=$("#id").val(); 
+	var class_name=$("#class_name").val(); 
+	var orders=$("#orders").val();
+	var pytoken=$("#pytoken").val();
+	var integral_buy=$("#integral_buy").val();
+	var type=$('#type').val();
+	var btype=$('input[name="btype"]:checked').val();
+	var href=$('#href').val();
+	var x=$("#x").val();
+	var y=$("#y").val();
+	var remark=$("#remark").val();
+	if($.trim(class_name)==''){
+		parent.layer.msg('广告类别名称不能为空！', 2,8);return false;
+	}
+	if(type!=1&&type!=2){
+		parent.layer.msg('请选择广告类型！', 2,8);return false;
+	}
+	if(type=='1'){
+		if(btype!=1&&btype!=2){
+			parent.layer.msg('请选择消费模式！', 2,8);return false;
+		}else{
+			if(btype=='1'&&integral_buy==''){
+				parent.layer.msg('请输入购买{yun:}$config.integral_pricename{/yun}！', 2,8);return false;
+			}else if(btype=='2'&&integral_buy==''){
+				parent.layer.msg('请输入购买金额！', 2,8);return false;
+			}
+		}
+		if(x==''){
+			parent.layer.msg('请填写广告宽度！', 2,8);return false;
+		}
+		if(y==''){
+			parent.layer.msg('请填写广告高度！', 2,8);return false;
+		}
+	}
+	loadlayer();
+	$.post("index.php?m=advertise&c=addclass",{class_name:class_name,orders:orders,integral_buy:integral_buy,type:type,btype:btype,href:href,x:x,y:y,remark:remark,id:id,pytoken:pytoken},function(msg){
+    parent.layer.closeAll('loading');
+ 		if(msg==1){
+			parent.layer.msg('提交成功！', 2,9,function(){location='index.php?m=advertise&c=class';});return false;
+		}else{
+			parent.layer.msg('提交失败！', 2,8,function(){location=location ;});return false;
+		}
+	});
+}
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+</body>
+</html>

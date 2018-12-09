@@ -1,0 +1,92 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<input name="uid" id="uid" value="{yun:}$smarty.get.uid{/yun}" type="hidden">
+<form name="myform" method="post" action="">
+    <div class="invite_box">
+        <div class="invite_box_c">
+            <div class="invite_box_user">
+                <div class="invite_box_userpic">
+                    <img src="{yun:}$usermsg.photo{/yun}" width="50" height="50"> 
+                </div>
+                <div class="invite_box_username">{yun:}$usermsg.name{/yun}</div>
+                <div class="invite_box_userwant">TA想要找
+                    <font color="#f00">
+                        {yun:}foreach from=$usermsg.jobname item=v key=key{/yun}{yun:}if $key> 0{/yun}、{yun:}/if{/yun}{yun:}$v{/yun}{yun:}/foreach{/yun}
+                    </font> 工作</div>
+            </div>
+            <div class="invite_box_about">
+                <div class="invite_box_list">
+                    <i class="invite_box_job_icon"></i>
+                    <span class="invite_box_list_name">面试职位</span>
+                    <div class="yun_newwap_text_box">
+                        <button id='interjobPicker' class="mui-btn mui-btn-block" type='button'>
+						{yun:}if $smarty.get.jobid{/yun}
+							{yun:}$job.name{/yun}
+						{yun:}else{/yun}
+							请选择面试职位
+						{yun:}/if{/yun}
+					</button>
+                        <input type="hidden" id="jobname" name="jobname" value="{yun:}$job.name{/yun}##{yun:}$job.id{/yun}">
+
+                    </div>
+                </div>
+                <div class="invite_box_list">
+                    <i class="invite_box_time_icon"></i>
+                    <span class="invite_box_list_name">面试时间</span>
+                     <div class="yun_newwap_text_box">
+                    <button id='intertimePicker' data-options='{"value":"{yun:}time()|date_format:"Y-m-d h:m"{/yun}","beginYear":{yun:}time()|date_format:"Y"{/yun}}' style="border:none">请选择面试时间</button>
+                    <input type="hidden" id="intertime" name="intertime" value="">
+                </div>
+            </div>  </div>
+            <div class="invite_box_dz"> <i class="invite_box_add_icon"></i><span class="invite_box_list_name">面试地址</span>   <div class="invite_box_dz_box">
+               
+                <input id='address' type="text" value='{yun:}$company.address{/yun}' class="job_invite_text" placeholder="请填写面试地址">
+            </div></div>
+         
+             <div class="invite_box_bc"> <i class="invite_box_sm_icon"></i>面试备注： ( 选填 ) </div>
+            <div class="invite_box_bc_box">
+                <textarea id="content" class="job_invite_textarea" placeholder="请输入面试备注 "></textarea>
+            </div>
+        </div>
+        <div class="invite_box_tel_box">
+            <div class="invite_box_tel">
+                <i class="invite_box_pop_icon"></i>
+                <span class="invite_box_list_name">联系人</span>
+                <input type="text" id='linkman' value='{yun:}$job.link_man{/yun}' class="job_invite_text" placeholder="请填写联系人"> </div>
+            <div class="invite_box_tel">
+                <i class="invite_box_tel_icon"></i>
+                <span class="invite_box_list_name">联系电话</span>
+                <input type="text" id='linktel' value='{yun:}$job.link_moblie{/yun}' class="job_invite_text" placeholder="请填写联系电话"> </div>
+
+            <div class="yun_newwap_bth mt10">
+                <input type="hidden" value="{yun:}$usermsg.id{/yun}" id="eid">
+                <input type="hidden" value="{yun:}$usermsg.uid{/yun}" id="uid">
+                <input type="hidden" id="username" value="{yun:}$usermsg.name{/yun}">
+                <button id="click_invite" type="button" class="mui-btn mui-btn-block mui-btn-primary">发布面试邀请</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script>
+    mui.init();
+    var interjobData = [];
+    '{yun:}foreach from=$joblist item=one{/yun}'
+    interjobData.push({
+        value: '{yun:}$one.name{/yun}##{yun:}$one.id{/yun}',
+        link_man: '{yun:}$one.link_man{/yun}',
+        link_moblie: '{yun:}$one.link_moblie{/yun}',
+        text: '{yun:}$one.name{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+</script>
+<script src="{yun:}$wap_style{/yun}/js/publicselect.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

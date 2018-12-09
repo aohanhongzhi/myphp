@@ -1,0 +1,61 @@
+
+<div class="search_select">
+	<div class="search_select_pdd" id="show_search">
+
+		{yun:}if $smarty.get.keyword!=""{/yun}
+			<a class="Search_jobs_c_a" href="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c untype='keyword'{/yun}">关键字：{yun:}$smarty.get.keyword{/yun}</a>
+		{yun:}/if{/yun}
+ 
+ 		{yun:}foreach item=rows key=key from=$search_list{/yun}
+       		{yun:}assign var="t" value=$rows.param{/yun}
+            {yun:}if $smarty.get.$t!==false && $smarty.get.$t!=''{/yun}
+            	{yun:}foreach item=rs key=k from=$rows.value{/yun}
+                	{yun:}if $smarty.get.$t == $k{/yun}
+                    	<a class="Search_jobs_c_a" href="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c untype=$t{/yun}">
+                        	{yun:}$rows.name{/yun}：{yun:}$rs{/yun}
+                    	</a>
+                    {yun:}/if{/yun}
+                {yun:}/foreach{/yun}
+            {yun:}/if{/yun} 
+		{yun:}/foreach{/yun}
+		
+ 	</div>
+</div>
+
+
+<div class="clear"></div>
+<div class="admin_screenlist_box">
+	{yun:}assign var="v" value=0{/yun}
+	
+	{yun:}foreach item=row key=key from=$search_list{/yun}
+	    {yun:}assign var="t" value=$row.param{/yun}
+	    {yun:}assign var="v" value=$v+1{/yun}
+	    
+	    <div class="admin_screenlist">
+	    	<span class="admin_screenlist_name">{yun:}$row.name{/yun}：</span>
+	    	<a href="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c untype=$t{/yun}" {yun:}if $smarty.get.$t!==true && $smarty.get.$t==''{/yun}class="admin_screenlist_cur"{yun:}/if{/yun}>全部</a>
+	        {yun:}foreach item=r key=k from=$row.value{/yun}
+	            <a href="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv=$k adt=$t untype=$t{/yun}" {yun:}if $smarty.get.$t!==false && $smarty.get.$t!='' && $smarty.get.$t == $k{/yun} class="admin_screenlist_cur"{yun:}/if{/yun}>{yun:}$r{/yun}</a> 
+	        {yun:}/foreach{/yun}   
+	    </div>
+	{yun:}/foreach{/yun}
+	
+	<div class="admin_screenlist_more"><a href="javascript:;" onclick="searchmore()">收起更多条件</a></div>
+</div>
+
+<script>
+function searchmore(){
+    var html=$(".admin_screenlist_box").toggle();
+}
+
+var sheight = document.getElementById("show_search").offsetHeight;
+
+if(sheight > 12){
+	$("#show_search").show();
+}else{
+	$("#show_search").hide();
+}
+
+ 
+</script>
+<div class="clear"></div>

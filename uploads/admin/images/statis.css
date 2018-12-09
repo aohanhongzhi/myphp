@@ -1,0 +1,85 @@
+.layui-form-item{
+  margin-top: 8px !important;
+  margin-bottom: 15px !important;
+}
+
+.sub-radio{
+  margin-left:100px;
+  border:1px dashed #c2c2c2;
+  display:inline-block
+}
+
+.layui-btn{
+  /*margin-left: 15px !important;*/
+}
+
+.layui-btn:hover{
+  background-color: #2fb90a !important;
+}
+
+.layui-form-label{
+  width: auto;
+  padding-left: 0px !important;
+}
+
+.layui-table{
+  margin-left: 25px;
+  width:95%;
+}
+
+.page-nav{
+  margin: 0px 0px 0px 25px;
+}
+
+/* 三个圆圈样式 begin */
+.com_pay_balance_data_q {
+  font-weight: bold;
+  padding-left:60px; position:relative
+}
+.com_pay_balance_data_q_icon{width:39px;height:40px; display:inline-block; position:absolute;left:0px;top:5px; background:url(../images/yun_comicon.png) no-repeat 0 0}
+.com_pay_balance_data_n {
+  font-size:20px;
+  color: #7d7fec;
+  height:30px;
+ 
+}
+.border_blue .com_pay_balance_data_q_icon{width:39px;height:39px; display:inline-block; position:absolute;left:0px;top:5px; background:url(../images/yun_comicon.png) no-repeat -39px 0}
+.color_blue{
+  color: #fe8302 !important;
+}
+
+.border_orange .com_pay_balance_data_q_icon{width:39px;height:39px; display:inline-block; position:absolute;left:0px;top:5px; background:url(../images/yun_comicon.png) no-repeat -77px 0}
+.color_orange{
+  color: #00a0e8 !important;
+}
+.com_pay_balance{
+  width: 250px;
+  margin-bottom: 5px;
+  display:inline-block
+}
+.com_pay{ padding-bottom:20px; margin-bottom:20px;
+  
+}
+/* 三个圆圈样式 end */
+.payments_nav{ padding:0px 0 10px 0;}
+.payments_com_pay{}
+.payments_com_pay_cont{ background:#fff;padding:30px 20px; position:relative}
+.admin_atatic_list_li li{ margin-top:15px;}
+.admin_atatic_list_rightbox{ position:relative}
+.admin_atatic_list_right{width:100%;}
+.layui-form_box{ padding-top:10px;}
+.com_pay_balance_qtbox{ padding:5px 0 0 0; background:#fff;border-bottom:1px solid #eee }
+.com_pay_balance_qtbox .layui-btn-normal{ background:#f8f8f8;color:#333; margin-left:10px;border-radius:none;}
+.com_pay_balance_qtbox .layui-btn-normal:hover{ background:#1E9FFF;color:#fff;}
+.com_pay_balance_qtbox  .layui-btn-warm{ background:#1E9FFF;color:#fff; margin-left:10px; font-weight:bold;border-radius:none;}
+.admin_atatic_list_right h3{width:100%; font-weight:bold;color:#333;}
+.admin_atatic_list_li li{width:32%; display:inline-block}
+.statis_list{ padding-top:20px;}
+.statis_list td,.statis_list th{padding:5px 3px;}
+.statis_list thead .admin_table_top{ background:#f9f9f9;}
+.statis_list thead th{ height:30px;  font-weight:normal;font-size:12px;    background: #f2f2f2;font-weight: bold;
+ border-bottom: 1px solid #eaeaea;color:#333}
+.statis_list thead  .admin_table_th_bg{ border-right:none}
+.statis_list tbody td,.statis_list .btn{border-bottom:1px solid #E6E6E6; padding-top:10px; padding-bottom:10px;white-space: normal; word-break: break-all;overflow:hidden;}
+.statis_list tbody  .crm_td_end{border:none;}
+.statis_list table tbody tr:hover{ background:#f5faff}

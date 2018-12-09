@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />  
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+function checkform(){
+	if($("#ad_name").val()==""){ 
+		parent.layer.msg('广告名称不能为空！', 2,8);
+		return false;
+	}
+	if($("#ad_time_start").val()==""){ 
+		parent.layer.msg('请填写广告生效时间！', 2,8);
+		return false;
+	}
+
+  if($("#ad_time_end").val()==""){ 
+    parent.layer.msg('请填写广告结束时间！', 2,8);
+    return false;
+  }
+
+	var item = $('input[name="ad_type"]:checked').val();
+	
+	if(!item){
+		 parent.layer.msg('请选择一种广告类型！', 2,8); return false;
+	}else{ 
+		if(item=="word"&&$("input[name=word_info]").val()==""){
+			parent.layer.msg('请填写文字信息！', 2,8); return false;
+		}
+	}
+  return true;
+}
+</script>
+<style>
+* {margin: 0 ;padding: 0;}
+body,div{ margin: 0 ;padding: 0;}
+</style>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">添加广告时，请正确选择分类和类型。广告分类由：“分站、主站”和广告形式（联盟广告、图片和flash）等个性化设置。</div>
+</div>
+</div>
+<div class="clear"></div>
+  <div class="tag_box mt10">
+
+  <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+  <form name="myform" target="supportiframe" action="{yun:}if is_array($info){/yun}index.php?m=advertise&c=modify_save{yun:}else{/yun}index.php?m=advertise&c=ad_saveadd{yun:}/if{/yun}" method="post" encType="multipart/form-data" onsubmit="return checkform();" class="layui-form">
+    <table width="100%" class="table_form">
+       <tr >  
+       <tbody>
+          <th bgcolor="#f0f6fb" colspan="2" ><span class="admin_bold">{yun:}if is_array($info){/yun}更新广告{yun:}else{/yun}添加广告{yun:}/if{/yun}</span></th>
+            </tbody>
+            </tr >
+      <tr >
+        <th width="200">广告名称：</th>
+        <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input class="input-text" id="ad_name" value="{yun:}$info.ad_name{/yun}" name="ad_name" size="30">
+                   <input type="checkbox" name="target" value="2" {yun:}if $info.target!=1{/yun}checked{yun:}/if{/yun} title="新窗口打开">
+                 </div>
+               </div>
+            </div>
+        </td>
+      </tr>
+     <tr class="admin_table_trbg">
+        <th width="200">使用范围：</th>
+        <td><input type="button" value="{yun:}if $info.did{/yun}{yun:}$Dname[$info.did]{/yun}{yun:}else{/yun}总站{yun:}/if{/yun}" class="city_news_but" onClick="add_site('{yun:}$info.did{/yun}','{yun:}$Dname[$info.did]{/yun}');">
+        <input type="hidden" id="did" value="{yun:}$info.did{/yun}" name="did"></td>
+      </tr> 
+     	<tr>
+        <th width="200">广告所属分类：</th>
+        <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="class_id" lay-filter="" id="class_id_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$class item=v{/yun}
+                      <option value="{yun:}$v.id{/yun}" {yun:}if $info.class_id==$v.id{/yun}selected{yun:}/if{/yun}>{yun:}$v.class_name{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div>
+        </td>
+      </tr> 
+	  <tr class="admin_table_trbg">
+        <th width="200">广告是否启用：</th>
+        <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input name='is_open' value='1' type='radio' checked  title="启用">
+                   <input name='is_open' value='0' {yun:}if '0'==$info.is_open{/yun}checked{yun:}/if{/yun} type='radio'  title="关闭">
+                 </div>
+               </div>
+            </div>
+		</td>
+      </tr>
+	  <tr>
+        <th width="200">排序：</th>
+        <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input class="input-text" type="text" id="sort" value="{yun:}$info.sort{/yun}" name="sort" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                 </div>
+                 <div class="layui-form-mid layui-word-aux">越大越在前</div>
+               </div>
+            </div></td>
+      </tr>
+      <tr class="admin_table_trbg">
+        <th width="200">广告有效期：</th>
+        <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input class="layui-input input-text" type="text" id="ad_time_start" size="30" value="{yun:}$info.time_start{/yun}" name="ad_time_start" placeholder="生效时间" style="width:100px;"/>
+                 </div>
+                 <div class="layui-input-inline">
+                   <input class="layui-input input-text" type="text" id="ad_time_end" size="30" value="{yun:}$info.time_end{/yun}" name="ad_time_end" placeholder="结束时间" style="width:100px;"/>
+                 </div>
+               </div>
+            </div>
+          </td>
+      </tr>
+		<tr>
+			<th width="200">备注：</th>
+			<td><textarea cols="50" rows="3" name="remark"  class="admin_comdit_textarea">{yun:}$info.remark{/yun}</textarea></td>
+		</tr>
+     	<tr>
+        <th width="200">广告类型：</th>
+        <td colspan="2">
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <input type="radio" id="word_ad" name="ad_type" value="word" {yun:}if $info.ad_type=="word"{/yun}checked{yun:}/if{/yun} title="文字广告">
+                 <input value="pic" type="radio" id="pic_ad" name="ad_type" {yun:}if $info.ad_type=="pic"{/yun}checked{yun:}/if{/yun} title="图片广告">
+                 <input type="radio" value="flash" id="flash_ad" name="ad_type" {yun:}if $info.ad_type=="flash"{/yun}checked{yun:}/if{/yun} title="FLASH广告">
+                 <input type="radio" value="lianmeng" id="lianmeng_ad" name="ad_type" {yun:}if $info.ad_type=="lianmeng"{/yun}checked{yun:}/if{/yun} title="联盟广告">
+               </div>
+            </div>
+          </td>
+      </tr>
+      <tr> 
+      <td class="admin_table_trbg" colspan="2" style="padding:0; background:none">
+      <table width="100%" id="word" style="display:none">
+    	<tr class="admin_table_trbg">
+           <th width="200" >文字信息：</th>
+        <td ><input class='input-text' id="word_info" name='word_info' value='{yun:}$info.word_info{/yun}'></td>
+      </tr>
+      <tr>
+        <th>文字链接：</th>
+        <td><input class='input-text' id="word_url" name='word_url' value='{yun:}$info.word_url{/yun}'><span class="admin_web_tip">外部链接请加上“http://”</span></td>
+      </tr>
+      </table>
+	   </td>
+      </tr>
+	  <tr>
+      <td colspan="2" style="padding:0; background:none">
+      <table id="pic" style="display:none;" width="100%">
+      <tr class="admin_table_trbg">
+        <th width="200" >图片地址：</th>
+        <td  id='typeid'>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <input class='input-text' type='text' id='upload_url' name='pic_url' value='{yun:}$info.pic_url{/yun}'>
+				 <div id="pic_div" class="yun_file_box_gg" style="display:none;">
+				 <button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'ad_url',imgid: 'imgicon',parentid:'imgparent'}">上传图片</button>
+				<input type="hidden" id="layupload_type" value="2"/>
+				<input type="hidden" id="upload_path" value="pimg"/>
+				<input type="hidden" id='upload_pic_url' name="" value="{yun:}$info.pic_url{/yun}"/>
+				</div>
+				 
+                 <input id='upload' checked type='radio' name='upload' title="远程地址" value="upload">
+                 <input id='upload_pic' type='radio' name='upload' title="本地上传" value="upload_pic">
+               </div>
+            </div>
+          </td>
+      </tr>
+	  <tr class="none" id="imgparent">
+        <th width="200">图片：</th>
+        <td><img id="imgicon" src="" width="200"></td>
+      </tr>
+      <tr>
+        <th width="200">图片链接：</th>
+        <td><input class='input-text' id="pic_src" name='pic_src' value='{yun:}$info.pic_src{/yun}' ><span class="admin_web_tip">外部链接请加上“http://”</span></td>
+      </tr>
+      <tr class="admin_table_trbg">
+        <th width="200">图片描述：</th>
+        <td><input class='input-text' id="pic_content" name='pic_content' value='{yun:}$info.pic_content{/yun}' ><span class="admin_web_tip">例如：公司名称或图片介绍，可留空</span></td>
+      </tr>
+      <tr>
+        <th width="200">图片宽度：</th>
+        <td><input class='input-text' id="pic_width" size='8'onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" name='pic_width' value='{yun:}$info.pic_width{/yun}' style="width:90px;"> px(像素) </td>
+      </tr>
+      <tr>
+        <th width="200">图片高度：</th>
+        <td><input class='input-text' id="pic_height" size='8' onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" name='pic_height' value='{yun:}$info.pic_height{/yun}' style="width:90px;"> px(像素)</td>
+      </tr>
+       </table>
+	   <table id="flash" style="display:none;" width="100%">
+		   <tr class="admin_table_trbg">
+			<th width="200">FLASH地址：</th>
+			<td id='flashid'>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <input class='input-text' id="flash_url"  name='flash_url' value='{yun:}$info.flash_url{/yun}'>
+				 <div id="flash_div" class="yun_file_box" style="display:none;">
+				上传falsh
+				<input  type="file" size="45" id='upload_flash_url' name='flash_url' class="yun_file_bth" >
+				</div>
+                 <input type='radio' id='flash' checked name='flash' title="远程地址" value="flash">
+                 <input type='radio' id='upload_flash' name='flash' title="本地上传" value="upload_flash">
+               </div>
+            </div>
+             </td>
+		  </tr>
+		  <tr>
+			  <th >FLASH宽度：</th>
+			<td><input class='input-text' id="flash_width" name='flash_width' value='{yun:}$info.flash_width{/yun}'> px(像素)
+            </td>
+      </tr>
+      		  <tr>
+			  <th >FLASH高度：</th>
+			<td><input class='input-text' id="flash_height" name='flash_height' value='{yun:}$info.flash_height{/yun}'> px(像素)</td> 
+      </tr>
+      </table>
+      <table id="lianmeng" style="display:none;" width="100%">
+		   <tr class="admin_table_trbg">
+			<th width="200">联盟广告代码：</th>
+			<td id='lianmengid'>
+            <textarea class="admin_comdit_textarea" cols="50" rows="3" id="lianmeng_url"  name='lianmeng_url'></textarea>
+             </td>
+		  </tr>
+      </table>
+      </td>
+      </tr>
+      {yun:}if is_array($info){/yun}
+      <input type="hidden" name="id" value="{yun:}$info.id{/yun}">
+      <input type="hidden" name="lasturl" value="{yun:}$lasturl{/yun}">
+      {yun:}/if{/yun}
+      <tr class="admin_table_trbg">
+        <td align="center" colspan="2">
+        <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+        <input class="layui-btn layui-btn-normal" type="submit" name="submit" value="&nbsp;提  交&nbsp;" />
+        <input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+      </tr>
+    </table>
+  </form>
+</div></div>
+{yun:}include file="$adminstyle/checkdomain.htm"{/yun}
+<script>
+
+layui.use(['layer', 'form','laydate'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,laydate = layui.laydate
+    ,$ = layui.$;
+
+	laydate.render({
+		elem: '#ad_time_start'
+		// ,range:'~'
+	});
+
+  laydate.render({
+    elem: '#ad_time_end'
+    // ,range:'~'
+  });
+
+	$("input[name='ad_type']").each(function(){
+		$(this).next().click(function(){
+			var type = $(this).prev().val();  
+			if(type=="word"){
+				$("#word").show();
+				$("#pic").hide();
+				$("#flash").hide();
+				$("#lianmeng").hide();
+			}else if(type=="pic"){
+				$("#word").hide();
+				$("#pic").show();
+				$("#flash").hide();
+				$("#lianmeng").hide();
+			}else if(type=="flash"){
+				$("#word").hide();
+				$("#pic").hide();
+				$("#flash").show();
+				$("#lianmeng").hide();
+			}else if(type=="lianmeng"){
+				$("#word").hide();
+				$("#pic").hide();
+				$("#flash").hide();
+				$("#lianmeng").show();
+			}
+		});
+	});
+	$("input[name='upload']").each(function(){
+		$(this).next().click(function(){
+			var type = $(this).prev().val();  
+			if(type=="upload"){
+				$("input[name=upload]").removeAttr('checked');
+				$("input[name=pic_url]").removeAttr('name');
+				$("#upload").attr('checked');
+				$("#upload_url").attr('name','ad_url');
+				$("#pic_div").hide();
+				$("#upload_url").show();
+			}else if(type=="upload_pic"){
+				$("input[name=upload]").removeAttr('checked');
+				$("input[name=pic_url]").removeAttr('name');
+				$("#upload_pic").attr('checked');
+				$("#upload_pic_url").attr('name','ad_url');
+				$("#pic_div").show();
+				$("#upload_url").hide();
+			}
+		});
+	});
+	$("input[name='flash']").each(function(){
+		$(this).next().click(function(){
+			var type = $(this).prev().val();  
+			if(type=="flash"){
+				$("input[name=flash]").removeAttr('checked');
+				$("input[name=flash_url]").removeAttr('name');
+				$("#flash").attr('checked');
+				$("#flash_url").attr('name','flash_url');
+				$("#flash_div").hide();
+				$("#flash_url").show();
+			}else if(type=="upload_flash"){
+				$("input[name=flash]").removeAttr('checked');
+				$("input[name=flash_url]").removeAttr('name');
+				$("#upload_flash").attr('checked');
+				$("#upload_flash_url").attr('name','flash_url');
+				$("#flash_div").show();
+				$("#flash_url").hide();
+			}
+		});
+	});
+	$(function(){
+		if('{yun:}$info.ad_type{/yun}'){
+			$("#{yun:}$info.ad_type{/yun}").show();
+		}
+	});
+});
+var weburl = '{yun:}$config.sy_weburl{/yun}';
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+</body>
+</html>

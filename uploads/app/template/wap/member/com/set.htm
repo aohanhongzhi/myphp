@@ -1,0 +1,93 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<!--账号设置-->
+<a href="index.php?c=info" class="yunset_box_cominfo">
+    <img src="{yun:}$config.sy_weburl{/yun}/{yun:}$company.logo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);">
+    <div class="">{yun:}$username{/yun}</div>
+    <div class="yunset_box_info">完善企业基本资料</div>
+</a>
+
+<ul class="yunset mt15">
+    <li>
+        <a href="index.php?c=comcert">
+            营业执照认证 {yun:}if $company.yyzz_status==1{/yun}
+            <span class="yunset_tip">已认证</span> {yun:}else{/yun} {yun:}if !empty($cert){/yun} {yun:}if $cert.status==2{/yun}
+            <span class="yunset_tip">审核未通过</span> {yun:}else{/yun}
+            <span class="yunset_tip">已上传等待审核</span> {yun:}/if{/yun} {yun:}else{/yun}
+            <span class="yunset_tip">未认证</span> {yun:}/if{/yun} {yun:}/if{/yun}
+        </a>
+    </li>
+</ul>
+<ul class="yunset mt15">
+    <li class="yunset_yx">
+        <a href="index.php?c=bindingbox&type=moblie">
+            <span class="yunset_list_maxheight">手机</span>
+            <span class="yunset_tip">
+            <div class="yunset_yx_name">
+				{yun:}if $company.moblie_status==1{/yun}
+				（已绑定）
+				{yun:}else{/yun}
+				（未绑定）
+				{yun:}/if{/yun}
+				{yun:}$company.linktel{/yun}
+                </div>
+                手机用于登录和找回密码请谨慎填写
+			</span>
+        </a>
+    </li>
+
+    <li class="yunset_yx">
+        <a href="index.php?c=bindingbox&type=email">
+            <span class="yunset_list_maxheight">邮箱</span>
+            <span class="yunset_tip ">
+				<div class="yunset_yx_name">
+					{yun:}if $company.email_status==1{/yun}
+					（已绑定）
+					{yun:}else{/yun}
+					（未验证）
+					{yun:}/if{/yun}
+					{yun:}$company.linkmail{/yun}
+				</div>
+				邮箱用于登录和找回密码请谨慎填写
+			</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="index.php?c=binding">社交账号绑定</a>
+    </li>
+</ul>
+
+<ul class="yunset mt15">
+    <li>
+        <a href="index.php?c=map">企业设置地图
+        	{yun:}if $company.x!='' && $company.y!=''{/yun}
+            	<span class="yunset_tip">已设置</span> 
+            {yun:}/if{/yun}  
+        </a>
+    </li>
+    <li>
+        <a href="index.php?c=show">上传企业环境</a>
+    </li>
+</ul>
+
+<ul class="yunset mt15">
+    <li>
+        <a href="index.php?c=password">密码设置</a>
+    </li>
+    {yun:}if $setname{/yun}
+    <li>
+        <a href="index.php?c=setname">用户名修改
+        <div class="yunset_tip ">您有一次修改账户名的机会</div></a>
+    </li>
+    {yun:}/if{/yun}
+
+    <li>
+        <a href="{yun:}url m=wap c='advice'{/yun}">意见反馈</a>
+    </li>
+</ul>
+
+<div class="yunset_logout mt15">
+    <a href="javascript:;" onclick="islogout('{yun:}url m=wap c=loginout{/yun}','确认退出吗？');">退出登录</a>
+</div>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun}

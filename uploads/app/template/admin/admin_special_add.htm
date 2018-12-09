@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script> var weburl = '{yun:}$config.sy_weburl{/yun}';</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">添加专题：主要为了满足运营者运营需求，运营者可以举办行业或个性化招聘主题招聘活动。</div>
+</div>
+</div>
+<div class="clear"></div>
+
+
+  <div class="tag_box mt10"> 
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+<form id="spform" class="layui-form" name="myform" target="supportiframe" action="index.php?m=special&c=save" method="post" encType="multipart/form-data">
+	<table width="100%" class="table_form" style="background:#fff;">
+     <tr class="admin_table_trbg">
+          <th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">添加专题招聘</span></th>
+    </tr>
+    	<tr >
+			<th width="150">专题名称：</th>
+			<td><input class="input-text" type="text" id="title" name="title" size="40" value="{yun:}$row.title{/yun}"/></td>
+		</tr>
+         	<tr class="admin_table_trbg" >
+			<th>企业报名上限：</th>
+			<td><input class="input-text" type="text" name="limit" value="{yun:}$row.limit{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" /><span class="admin_web_tip">例：最多可有多少家企业报名</span></td>
+		</tr>
+        <tr >
+			<th>企业等级：</th>
+            {yun:}if is_array($qy_rows){/yun}
+            <td>
+			 <div class="layui-form-item">
+		        <div class="layui-input-block">
+		          {yun:}foreach item=v from=$qy_rows{/yun}
+		          <input name="rating[]" title="{yun:}$v.name{/yun}" value="{yun:}$v.id{/yun}" {yun:}if in_array($v.id,$row.rating){/yun} checked="checked" {yun:}/if{/yun} type="checkbox">
+                   {yun:}/foreach{/yun}
+		        </div>
+		      </div>
+            </td>
+            {yun:}else{/yun}
+              <td>
+                暂无等级，<a href="index.php?m=userconfig&c=comclass" style="color:red;">添加会员等级</a>
+                <input type="hidden" name="rating" value="0">
+                </td>
+            {yun:}/if{/yun}
+		</tr>
+        <tr class="admin_table_trbg">
+			<th>专题模板：</th>
+			<td>
+           		   <div class="layui-form-item">
+						 <div class="layui-input-block">
+							<div class="layui-input-inline">
+								<select name="tpl" lay-filter="" id="tpl">
+								<option value=''>请选择</option>
+								 {yun:}foreach from=$file item=ratlist{/yun}
+									<option  value="{yun:}$ratlist{/yun}"
+									 {yun:}if $row.tpl==$ratlist{/yun}
+									  selected
+										  {yun:}/if{/yun}
+										  > {yun:}$ratlist{/yun}
+										</option>
+									  {yun:}/foreach{/yun}
+									</select>
+								  </div>
+								</div>
+						  </div>
+            
+            
+ 			<!--<div class="yun_admin_select_box zindex100">
+            {yun:}if $row.tpl{/yun}
+                {yun:}foreach from = $file key=key item=ratlist{/yun}
+                    {yun:}if $ratlist==$row.tpl{/yun}
+                    <input type="button" value="{yun:}$ratlist{/yun}" class="yun_admin_select_box_text" id="tpl_name" onClick="select_click('tpl');">
+                    <input name="tpl" type="hidden" id="tpl_val" value="{yun:}$ratlist{/yun}">
+                    {yun:}/if{/yun}
+                {yun:}/foreach{/yun}
+            {yun:}else{/yun}
+                <input type="button" value="请选择" class="yun_admin_select_box_text" id="tpl_name" onClick="select_click('tpl');">
+                <input name="tpl" type="hidden" id="tpl_val" value="">
+            {yun:}/if{/yun}
+            
+            <div class="yun_admin_select_box_list_box dn" id="tpl_select">     
+                {yun:}foreach from = $file key=key item=ratlist{/yun}
+                <div class="yun_admin_select_box_list">
+                    <a href="javascript:;" onClick="select_new('tpl','{yun:}$ratlist{/yun}','{yun:}$ratlist{/yun}')">{yun:}$ratlist{/yun}</a>
+                </div>                    
+                {yun:}/foreach{/yun}
+            </div>
+        </div>-->
+		
+            </td>
+		</tr>
+        <tr >
+			<th>是否启用：</th>
+			<td>
+         <div class="iradio_flat_height">
+               <!-- <input type="radio" name="display" value="1" id="display_1" {yun:}if $row.display=="1"||$row.display==""{/yun}checked{yun:}/if{/yun}>
+                <span class="iradio_flat_left"><label for="display_1">开启</label>&nbsp;&nbsp;</span>
+                <input type="radio" name="display" value="0" id="display_0" {yun:}if $row.display=="0"{/yun}checked{yun:}/if{/yun}>
+                <span class="iradio_flat_left"><label for="display_0">关闭</label>&nbsp;&nbsp;</span>
+                 </div>-->
+				 	<div class="layui-form-item">
+					<div class="layui-input-block">
+					<input type="radio" name="display" value="1" title="开启" {yun:}if $row.display=='1'||$row.display==""{/yun}checked{yun:}/if{/yun}>
+					<input type="radio" name="display" value="0" title="关闭" {yun:}if $row.display=='0'{/yun}checked{yun:}/if{/yun}>
+					</div>
+					</div>
+			</td>
+		</tr>
+        <tr class="admin_table_trbg">
+			<th>允许企业报名：</th>
+			<td>
+            <!--<div class="iradio_flat_height">
+             <input type="radio" name="com_bm" value="1" id="com_bm_1" {yun:}if $row.com_bm=="1"||$row.com_bm==""{/yun}checked{yun:}/if{/yun}>
+          <span class="iradio_flat_left"><label for="com_bm_1">开启</label>&nbsp;&nbsp;</span>
+          <input type="radio" name="com_bm" value="0" id="com_bm_0" {yun:}if $row.com_bm=="0"{/yun}checked{yun:}/if{/yun}>
+          <span class="iradio_flat_left"><label for="com_bm_0">关闭</label>&nbsp;&nbsp;</span>
+          </div>-->
+		   	<div class="layui-form-item">
+					<div class="layui-input-block">
+					<input type="radio" name="com_bm" value="1" title="开启" {yun:}if $row.com_bm=='1'||$row.com_bm==""{/yun}checked{yun:}/if{/yun}>
+					<input type="radio" name="com_bm" value="0" title="关闭" {yun:}if $row.com_bm=='0'{/yun}checked{yun:}/if{/yun}>
+					</div>
+					</div>
+          
+            </td>
+		</tr>
+        <tr >
+			<th>扣除{yun:}$config.integral_pricename{/yun}：</th>
+			<td>
+             <input class="input-text" type="text" id="php_url" name="integral"  value="{yun:}$row.integral{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+            </td>
+		</tr>
+        	<tr  class="admin_table_trbg">
+		<th width="120">报名结束时间：</th>
+		<td>
+        <input id="etime" class="input-text" type="text" readonly size="20" value="{yun:}$row.etime|date_format:'%Y-%m-%d'{/yun}" name="etime">
+        </td>
+	</tr>
+	<tr class="admin_table_trbg" >
+			<th>排序：</th>
+			<td><input class="input-text" type="text" name="sort" value="{yun:}$row.sort{/yun}"/><span class="admin_web_tip">越小越在前!</span></td>
+		</tr>
+     <tr >
+          <th>缩 略 图：</th>
+          <td>
+			<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'pic',imgid: 'imgpic',parentid: 'picdiv'}">上传图片</button>
+			<input type="hidden" id="layupload_type" value="2"/>
+			<input type="hidden" id="upload_path" value="special"/>
+			<input type="hidden" name="pic" id='pic' value="{yun:}$row.pic{/yun}"/>
+		  </td>
+        </tr>
+		<tr id="picdiv" class="admin_table_trbg {yun:}if !$row.pic{/yun}none{yun:}/if{/yun}">
+          <th>缩略图预览：</th>
+          <td><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$row.pic{/yun}" style="width:420px;height:155px;" id="imgpic"></td>
+        </tr>
+		<tr >
+          <th>背 景 图：</th>
+          <td>
+			<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'background',imgid: 'imgbackground',parentid: 'backgrounddiv'}">上传图片</button>
+			<input type="hidden" name="background" id='background' value="{yun:}$row.background{/yun}"/>
+		  </td>
+        </tr>
+		<tr id="backgrounddiv" class="admin_table_trbg {yun:}if !$row.background{/yun}none{yun:}/if{/yun}">
+          <th>背景图预览：</th>
+          <td><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$row.background{/yun}" style="max-height:288px;max-width:288px;" id="imgbackground"></td>
+        </tr>
+		<tr class="admin_table_trbg">
+		  <th>专题介绍：</th>
+		  <td>
+ 		  <script id="myEditor" name="intro" type="text/plain" style="width:400px;height:150px;">{yun:}$row.intro{/yun}</script>
+		  </td>
+		</tr> 
+		<tr >
+			<td align="center" colspan="2">
+            <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+			{yun:}if is_array($row){/yun}
+        	<input type="hidden" name="id" size="40" value="{yun:}$row.id{/yun}"/>
+        	<input class="layui-btn layui-btn-normal" type="button" onclick="checkform()" value="&nbsp;更 新&nbsp;"  />
+        	{yun:}else{/yun}
+    		<input class="layui-btn layui-btn-normal" type="button" onclick="checkform()" value="&nbsp;添 加&nbsp;"  />
+     		{yun:}/if{/yun}
+     		<input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" />
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript">
+  layui.use(['layer', 'form','laydate'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,laydate = layui.laydate
+    ,$ = layui.$;
+	laydate.render({
+		elem: '#etime'
+	});
+  });
+	function checkform(myform){
+		if ($("#title").val()=="")  { 
+		  parent.layer.msg('请填写专题名称！', 2,8);return false;
+		}
+		if ($("#tpl").val()=="")  { 
+		  parent.layer.msg('请选择专题模板！', 2,8);return false;
+		}
+		if ($("#pic").val()=="")  { 
+		  parent.layer.msg('请选择缩略图！', 2,8);return false;
+		}
+		if ($("#background").val()=="")  { 
+		  parent.layer.msg('请选择背景图！', 2,8);return false;
+		}
+		$("#spform").submit();
+	}
+
+var ue = UE.getEditor('myEditor',{
+		toolbars:[['justifyleft', 'justifycenter', 'justifyright','insertorderedlist', 'insertunorderedlist', 'subscript', 'superscript', '|','Bold', 'italic', 'underline', 'strikethrough','removeformat']],
+		wordCount:false,
+		elementPathEnabled:false,
+		initialFrameHeight:150
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<div class="login_body">
+<section class="list">
+<article>
+	
+	
+	<div class="lg_bd">
+		<div class="lg_bd_z">{yun:}$smarty.cookies.username{/yun}，您好！</div>
+		<div class="lg_bd_r">欢迎来到<i>{yun:}$config.sy_webname{/yun}</i>，您是首次登录，请先选择您合适的会员身份</div>
+  </div>
+	
+        	
+  <div class=" ">
+    <div class="login_body_cont">
+
+     
+       
+	 <input type="button" id="sublogin" onclick="settype('{yun:}url m=wap c=login a=setutype usertype=1{/yun}');" value="求职者" class="inputSubmit"/>
+		 </div>
+
+		  <div class="login_body_cont">
+	 <input type="button" id="sublogin" onclick="settype('{yun:}url m=wap c=login a=setutype usertype=2{/yun}');" value="招聘企业" class="inputSubmit"/>
+
+   
+	</div>
+
+	
+		  
+	
+
+
+</article>
+</section>
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/geetest/gt.js"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/geetest/mobile.js" type="text/javascript"></script>
+<script>
+function settype(url){
+
+	location.href = url; 
+}
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

@@ -1,0 +1,383 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/umeditor/themes/default/css/umeditor.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<div id="app" class="mui-views">
+	<div class="mui-view">
+		<div class="mui-pages"></div>
+	</div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+	<!--页面主内容区开始-->
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="yunset_list">
+					<li class="yunset_list_text"><span class="yunset_list_name">职位名称</span>
+						<span class="yunset_list_commentary"> 
+							<input type="text" name="name" id='name' value="{yun:}$row.name{/yun}" placeholder="请填写职位名称" class="">
+							<input type="hidden" name="id" id='id' value="{yun:}$row.id{/yun}"  class="">
+			            </span>
+					</li>
+					<li class="yunset_list_select"><span class="yunset_list_name">工作类型</span>
+						<span class="yunset_list_commentary">
+							<button id='typePicker' class="mui-btn mui-btn-block" type='button' data-type="{yun:}$row.type{/yun}">{yun:}if $row.type{/yun}{yun:}$partclass_name[$row.type]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+			                <input type="hidden" id="type" name="type" value="{yun:}$row.type{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_text"><span class="yunset_list_name">招聘人数</span>
+						<span class="yunset_list_commentary"> 
+							<input type="text" name="number" id='number' value="{yun:}$row.number{/yun}" placeholder="招聘人数" class="" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+			            </span>
+					</li>
+					<li>
+						<a href="#timehtml" id="worktimeeditor"><span class="yunset_list_name">兼职时间</span><span class="yunset_list_commentary yunset_list_js" id="worktimeshow">{yun:}if $row.worktime{/yun}上、中、晚时段{yun:}else{/yun}请填写{yun:}/if{/yun}</span></a>
+					</li>
+					<input type="hidden" id="worktime" name="worktime" value="{yun:}$row.work{/yun}">
+				</ul>
+				<ul class="yunset_list">
+					<li>
+						<a href="#datehtml" id="descriptioneditor"><span class="yunset_list_name">有&nbsp;&nbsp;效&nbsp;&nbsp;期</span><span class="yunset_list_commentary yunset_list_js" id="descriptionshow">{yun:}if $row.sdate&&!$row.edate{/yun}长期招聘{yun:}else if $row.sdate&&$row.edate{/yun}短期招聘{yun:}else{/yun}请填写{yun:}/if{/yun}</span></a>
+					</li>
+					<textarea style="display:none" id="descriptiontext" name="description"></textarea>
+				</ul>
+				<ul class="yunset_list">
+					<li class="yunset_list_select"><span class="yunset_list_name">性别要求</span>
+						<span class="yunset_list_commentary">
+							<button id='sexPicker' class="mui-btn mui-btn-block" type='button' data-sex="{yun:}$row.sex{/yun}">{yun:}if $row.sex==1{/yun}{yun:}$arr_data1{/yun}{yun:}else if $row.sex==2{/yun}{yun:}$arr_data1{/yun}{yun:}else if $row.sex==3{/yun}{yun:}$arr_data1{/yun}{yun:}else{/yun}不限{yun:}/if{/yun}</button>
+			                <input type="hidden" id="sex" name="sex" value="{yun:}$row.sex{/yun}">
+						</span>
+					</li>
+					<li>
+						<a href="#salaryhtml" id="salary_typeeditor"><span class="yunset_list_name">兼职薪水</span><span class="yunset_list_commentary yunset_list_js" id="salary_typeshow">{yun:}if $row.salary&&$row.salary_type{/yun}{yun:}$row.salary{/yun}{yun:}$partclass_name[$row.salary_type]{/yun}{yun:}else{/yun}请填写{yun:}/if{/yun}</span></a>
+					</li>
+					<textarea style="display:none" id="salary_typetext" name="salary_type">{yun:}$row.salary_type{/yun}</textarea>
+					<li class="yunset_list_select"><span class="yunset_list_name">结算周期</span>
+						<span class="yunset_list_commentary">
+							<button id='billing_cycleComPicker' class="mui-btn mui-btn-block" type='button' data-billing_cycle="{yun:}$row.billing_cycle{/yun}">{yun:}if $row.billing_cycle{/yun}{yun:}$partclass_name[$row.billing_cycle]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+			                <input type="hidden" id="billing_cycle" name="billing_cycle" value="{yun:}$row.billing_cycle{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_select"><span class="yunset_list_name">工作区域</span>
+						<span class="yunset_list_commentary">
+						<button id='cityPicker' class="mui-btn mui-btn-block" type='button' data-provinceid="{yun:}$row.provinceid{/yun}" data-cityid="{yun:}$row.cityid{/yun}" data-three_cityid="{yun:}$row.three_cityid{/yun}">{yun:}if $row.provinceid{/yun}{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.three_cityid]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+						<input type="hidden" id="provinceid" name="provinceid" value="{yun:}$row.provinceid{/yun}">
+						<input type="hidden" id="cityid" name="cityid" value="{yun:}$row.cityid{/yun}">
+						<input type="hidden" id="three_cityid" name="three_cityid" value="{yun:}$row.three_cityid{/yun}">
+					</span>
+					</li>
+					<li class="yunset_list_text"><span class="yunset_list_name">详细地址</span>
+						<span class="yunset_list_commentary"> 
+							<input type="text" name="address" id='address' value="{yun:}$row.address{/yun}" onblur="localsearch('全国');" placeholder="详细地址" class="">
+			            </span>
+					</li>
+					<li class="yunset_list_text">
+						<a href="#maphtml"><span class="yunset_list_name">设置地图</span><span class="yunset_list_commentary yunset_list_js" id="mapshow">{yun:}if $row.x&&$row.y{/yun}已设置{yun:}else{/yun}请设置{yun:}/if{/yun}</span></a>
+					</li>
+					<li>
+						<a href="#contenthtml"><span class="yunset_list_name">兼职内容</span><span class="yunset_list_commentary yunset_list_js" id="contentshow">{yun:}if $row.content{/yun}{yun:}$row.content_t{/yun}{yun:}else{/yun}请填写{yun:}/if{/yun}</span></a>
+					</li>
+					<textarea style="display:none" id="contenttext" name="content">{yun:}$row.content{/yun}</textarea>
+					<li class="yunset_list_text"><span class="yunset_list_name">联&nbsp;&nbsp;系&nbsp;&nbsp;人</span>
+						<span class="yunset_list_commentary"> 
+							<input type="text" name="linkman" id='linkman' value="{yun:}if $row.linkman{/yun}{yun:}$row.linkman{/yun}{yun:}else{/yun}{yun:}$company.linkman{/yun}{yun:}/if{/yun}" placeholder="联系人" class="">
+			            </span>
+					</li>
+					<li class="yunset_list_text"><span class="yunset_list_name">联系手机</span>
+						<span class="yunset_list_commentary"> 
+							<input type="text" name="linktel" id='linktel' value="{yun:}if $row.linktel{/yun}{yun:}$row.linktel{/yun}{yun:}else{/yun}{yun:}$company.linktel{/yun}{yun:}/if{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="联系手机" class="">
+			            </span>
+					</li>
+				</ul>
+				<div class="yunset_bth_box"> <button id="submit" type="submit" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+					<!--<input type="submit" name="submit" value="保 存" class="yunset_bth">--></div>
+
+			</div>
+
+		</div>
+	</div>
+	<!--页面主内容区结束-->
+</div>
+<div id="datehtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member">
+				<ul class="yunset_list  ">
+					<li class="yunset_list_select"><span class="yunset_list_name">招聘方式</span>
+						<span class="yunset_list_commentary">
+							<button id='timetypePicker' class="mui-btn mui-btn-block" type='button' data-timetype="{yun:}$row.edate{/yun}">{yun:}if !$row.edate{/yun}长期招聘{yun:}else{/yun}短期招聘{yun:}/if{/yun}</button>
+			                <input type="hidden" id="timetype" name="timetype" value="{yun:}if !$row.edate{/yun}0{yun:}else{/yun}1{yun:}/if{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_select"><span class="yunset_list_name">兼职开始日期</span>
+						<span class="yunset_list_commentary">
+							<button id='sdatePicker' data-options='{"type":"date","value":"{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m-%d'{/yun}{yun:}/if{/yun}","beginYear":2010,"endYear":{yun:}time()|date_format:"Y"+10{/yun}}' class="mui-btn mui-btn-block" type='button'>{yun:}if $row.sdate{/yun}{yun:}$row.sdate|date_format:'%Y-%m-%d'{/yun}{yun:}else{/yun}兼职开始日期{yun:}/if{/yun}</button>
+			                <input type="hidden" id="sdate" name="sdate" value="{yun:}$row.sdate|date_format:'%Y-%m-%d'{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_select" id="eline" {yun:}if !$row.edate{/yun}style="display:none" {yun:}/if{/yun}><span class="yunset_list_name">兼职结束日期</span>
+						<span class="yunset_list_commentary">
+							<button id='edatePicker' data-options='{"type":"date","value":"{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m-%d'{/yun}{yun:}/if{/yun}","beginYear":2010,"endYear":{yun:}time()|date_format:"Y"+10{/yun}}' class="mui-btn mui-btn-block" type='button'>{yun:}if $row.edate{/yun}{yun:}$row.edate|date_format:'%Y-%m-%d'{/yun}{yun:}else{/yun}兼职结束日期{yun:}/if{/yun}</button>
+			                <input type="hidden" id="edate" name="edate" value="{yun:}$row.edate|date_format:'%Y-%m-%d'{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_select" id="dline" {yun:}if !$row.edate{/yun}style="display:none" {yun:}/if{/yun}><span class="yunset_list_name">报名截止</span>
+						<span class="yunset_list_commentary">
+							<button id='deadComPicker' data-options='{"type":"date","value":"{yun:}if $row.deadline{/yun}{yun:}$row.deadline|date_format:'%Y-%m-%d'{/yun}{yun:}/if{/yun}","beginYear":2010,"endYear":{yun:}time()|date_format:"Y"+10{/yun}}' class="mui-btn mui-btn-block" type='button'>{yun:}if $row.deadline{/yun}{yun:}$row.deadline|date_format:'%Y-%m-%d'{/yun}{yun:}else{/yun}报名截止{yun:}/if{/yun}</button>
+			                <input type="hidden" id="deadline" name="deadline" value="{yun:}$row.deadline|date_format:'%Y-%m-%d'{/yun}">
+						</span>
+					</li>
+				</ul>
+				<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="salaryhtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member">
+				<ul class="yunset_list  ">
+					<li class="yunset_list_text"><span class="yunset_list_name">兼职薪水</span>
+						<input type="number" id="salary" name="salary" value="{yun:}$row.salary{/yun}" placeholder="请填写薪资">
+					</li>
+					<li class="yunset_list_select"><span class="yunset_list_name">类型</span>
+						<span class="yunset_list_commentary">
+							<button id='salary_typeComPicker' class="mui-btn mui-btn-block salary_typename" type='button' data-salary_type="{yun:}$row.salary_type{/yun}">{yun:}if $row.salary_type{/yun}{yun:}$partclass_name[$row.salary_type]{/yun}{yun:}else{/yun}类型{yun:}/if{/yun}</button>
+			                <input type="hidden" id="salary_type" name="salary_type" value="{yun:}$row.salary_type{/yun}">
+						</span>
+					</li>
+				</ul>
+				<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="contenthtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="yun_wap_info_brief">
+					<div class="yun_wap_info_brief_c">
+						<div class="yun_wap_addresume_box_nexttit"> 兼职内容 </div>
+						<textarea class="textAreaMsg tip contenttext" id="content" name="content" placeholder="请输入兼职内容描述500字以内">{yun:}$row.content{/yun}</textarea></div>
+					<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="timehtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member">
+				<div class="yun_wap_addresume_box_group">
+					<div class="yun_wap_addresume_box_nexttit"> 兼职时间 <span class="resume-cont_wate_bj">*</span> </div>
+					<table class="tjob_timetable" cellpadding="1" cellspacing="1" style="margin-top:0px;">
+						<tr>
+							<th>&nbsp;</th>
+							<th>周一</th>
+							<th>周二</th>
+							<th>周三</th>
+							<th>周四</th>
+							<th>周五</th>
+							<th>周六</th>
+							<th>周日</th>
+						</tr>
+						<tr>
+							<th>上午</th>
+							{yun:}foreach from=$morning item=v{/yun}
+							<td><input data-mark='isneed' name='jz' type="checkbox" data-id="{yun:}$v{/yun}" class="lang" {yun:}if in_array($v,$row.worktime){/yun}checked="checked" {yun:}/if{/yun} value='{yun:}$v{/yun}' /></td>
+							{yun:}/foreach{/yun}
+						</tr>
+						<tr>
+							<th>下午</th>
+							{yun:}foreach from=$noon item=v{/yun}
+							<td><input data-mark='isneed' name='jz' type="checkbox" data-id="{yun:}$v{/yun}" class="lang" {yun:}if in_array($v,$row.worktime){/yun}checked="checked" {yun:}/if{/yun} value='{yun:}$v{/yun}' /></td>
+							{yun:}/foreach{/yun}
+						</tr>
+						<tr>
+							<th>晚上</th>
+							{yun:}foreach from=$afternoon item=v{/yun}
+							<td><input data-mark='isneed' name='jz' type="checkbox" data-id="{yun:}$v{/yun}" class="lang" {yun:}if in_array($v,$row.worktime){/yun}checked="checked" {yun:}/if{/yun} value='{yun:}$v{/yun}' /></td>
+							{yun:}/foreach{/yun}
+						</tr>
+						<tr>
+							<td colspan="8"> <input id='upAllSelect' type="checkbox" class="com_Release_job_qx_check">全选</td>
+						</tr>
+					</table>
+					<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="maphtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div id="map_container" style="width:100%;height:280px; left:0;"></div>
+	            <input name="x" id="map_x" type="hidden" value="{yun:}$row.x{/yun}">
+			    <input name="y" id="map_y" type="hidden" value="{yun:}$row.y{/yun}">
+	            <a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	weburl = "{yun:}$config.sy_weburl{/yun}";
+</script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.min.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script type="text/javascript" src="{yun:}$config.mapurl{/yun}"></script>
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/map.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript">
+	$(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+	var typeData = [];
+	'{yun:}foreach from=$partdata.part_type key=j item=v{/yun}'
+	typeData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}{yun:}$partclass_name[$v]{/yun}{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+	var sexData = [];
+	'{yun:}foreach from=$arr_data.sex key=j item=v{/yun}'
+	sexData.push({
+		value: '{yun:}$j{/yun}',
+		text: '{yun:}$v{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+	var salary_typeData = [];
+	'{yun:}foreach from=$partdata.part_salary_type key=j item=v{/yun}'
+	salary_typeData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$partclass_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+	var billing_cycleData = [];
+	'{yun:}foreach from=$partdata.part_billing_cycle key=j item=v{/yun}'
+	billing_cycleData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$partclass_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+	var timetypeData = [{
+		value: 0,
+		text: '长期招聘'
+	}, {
+		value: 1,
+		text: '短期招聘'
+	}];
+
+	function change() {
+		if($("#timetype").val() == '1') {
+			$("#dline").show();
+			$("#eline").show();
+		} else {
+			$("#eline").hide();
+			$("#dline").hide();
+		}
+	}
+	$(function() {
+		$('#upAllSelect').click(function() {
+			ischecked = $(this).attr('checked');
+			allcheck = $('input[data-mark="isneed"]');
+			if(ischecked == 'checked') {
+				allcheck.each(function(i) {
+					$(this).attr('checked', true);
+				});
+			} else {
+				allcheck.each(function(i) {
+					$(this).attr('checked', false);
+				});
+			}
+		});
+	});
+	var address = document.getElementById('address');
+	var map = new BMap.Map("map_container");
+	map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+	{yun:}if $city_name[$row.cityid]{/yun}
+		var searchcity = '{yun:}$city_name[$row.cityid]{/yun}';
+	{yun:}else{/yun}
+		var searchcity ='全国';
+	{yun:}/if{/yun}
+	var local;
+
+	function getLocalResult() {
+		var address = document.getElementById('address').value;
+		var points = local.getResults();
+		if(points.getPoi(0)){
+			var lngLat = points.getPoi(0).point;
+			setLocation('map_container', lngLat.lng, lngLat.lat, "map_x", "map_y");
+			document.getElementById("map_x").value = lngLat.lng;
+			document.getElementById("map_y").value = lngLat.lat;
+		}else{
+			layermsg('该地址未搜索到，请正确输入详细地址！', 2);
+			return false;
+		}
+	}
+
+	function localsearch(city) {
+		if(document.getElementById('address').value == "") {
+			layermsg('请输入详细地址！', 2);
+			return false;
+		}
+		local = new BMap.LocalSearch(city, {
+			renderOptions: {
+				map: map,
+				panel: "r-result",
+				autoViewport: true,
+				selectFirstResult: false
+			},
+			onSearchComplete: getLocalResult
+		});
+		local.search(document.getElementById('address').value);
+	}
+
+	function setLocation(id, x, y, xid, yid) {
+		var rating, map_control_type, map_control_anchor;
+		if(!x && !y) {
+			x = '116.404';
+			y = '39.915';
+		}
+		var point = new BMap.Point(x, y);
+		var marker = new BMap.Marker(point);
+		var opts = {
+			type: BMAP_NAVIGATION_CONTROL_LARGE
+		}
+		map.enableScrollWheelZoom(true);
+		map.addControl(new BMap.NavigationControl(opts));
+		map.centerAndZoom(point, 15);
+		map.addOverlay(marker);
+		map.addEventListener("click", function(e) {
+			var info = new BMap.InfoWindow('', {
+				width: 260
+			});
+			var projection = this.getMapType().getProjection();
+			var lngLat = e.point;
+			document.getElementById(xid).value = lngLat.lng;
+			document.getElementById(yid).value = lngLat.lat;
+			map.clearOverlays();
+			var point = new BMap.Point(lngLat.lng, lngLat.lat);
+			var marker = new BMap.Marker(point);
+			map.addOverlay(marker);
+			document.getElementById('mapshow').innerText = '已设置';
+		});
+	}
+</script>
+<script src="{yun:}$wap_style{/yun}/js/partadd.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

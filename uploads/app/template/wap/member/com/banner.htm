@@ -1,0 +1,46 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script type="text/javascript">
+   
+	
+    function check_company_banner() {
+
+        if($.trim($("#pic").val()) == '' && $("#previewimg")[0].src == '') {
+            layermsg('请上传企业横幅！');
+            return false;
+        }
+
+        layer_load('执行中，请稍候...', 0);
+        return true;
+    }
+</script>
+<form method="post" action="" onsubmit="return check_company_banner();">
+     <div class="yunset_identity_box">
+        <div class="yunset_identity">
+            <div align="center" class="yunset_identity_pic_img" id="previewshow" {yun:}if !$banner.pic{/yun}style="display: none;" {yun:}/if{/yun}>
+				
+                <img src="{yun:}$banner.pic{/yun}" id="previewimg" />
+
+				
+            </div>
+			
+            <div class="yunset_identity_pic">
+                <input type="file" name="pic" id="pic" onchange="previewImage(this,'preview')" accept="image/*" class="yunset_identity_pic_file">
+				<input type='hidden' name='preview' value='' id='preview'>
+            </div>
+            <i class="yunset_identity_pic_tj"></i>
+            <div class="yunset_identity_tip">上传企业横幅</div>
+                  <span class="yunset_identity_tip_a">选择上传图片</span>
+        </div>
+    </div>
+   
+    <div class="yunset_identity_msg"><i class="yunset_identity_msg_icon"></i>格式为 {yun:}$config.pic_type{/yun}不得超过{yun:}$config.file_maxsize{/yun}M</div>
+
+    <div class="yunset_bth_box">
+        <input type="hidden" id="img" value="1">
+        <input type="submit" name="submit" value="{yun:}if !$banner.pic{/yun}保存{yun:}else{/yun}更新/修改{yun:}/if{/yun}" class="yunset_bth">
+    </div>
+
+</form>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

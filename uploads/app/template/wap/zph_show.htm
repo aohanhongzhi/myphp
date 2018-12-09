@@ -1,0 +1,109 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<style>
+table[align="center"] { margin: 0 auto; }
+table,table tr th, table tr td { border:1px solid #666; }
+</style>
+<section>
+
+    <div class="zph_bg_pd  " style="border-radius:0px;">
+        <div class="zph_bg_name">
+            <h2>
+         
+        {yun:}$Info.title{/yun}
+        {yun:}if $Info.stime<'0'&&$Info.etime>'0'{/yun}
+        <!--   <div class="zph_yd">招聘会已开始</div>-->
+        {yun:}elseif $Info.stime>'0'{/yun}
+        <div class=" zph_yd">火热预定中！</div>
+         {yun:}/if{/yun}
+        </h2></div>
+        <div class="zph_tim_name">招聘会时间：</div>
+        <div class="job_fair_state_show_time">{yun:}$Info.starttime{/yun} 至 {yun:}$Info.endtime{/yun}</div>
+        <div class="zph_tel_box">
+            <div class="zph_tel"><span class="zph_tel_name">服务<br>热线</span>{yun:}$Info.phone{/yun}</div>
+        </div>
+    </div>
+
+</section>
+
+<div class="job_fair_state_show_bth">
+    {yun:}if $Info.stime lt '0'|| $Info.etime lt '0'{/yun}
+    <a class="job_fair_state_show_bth_yd_no">停止预订</a>
+    {yun:}else{/yun} {yun:}if $usertype==2{/yun}
+    <a href="{yun:}url m=wap c=zph a=reserve id='`$Info.id`'{/yun}" class="job_fair_state_show_bth_comyd">在线预订</a>
+    {yun:}else{/yun} {yun:}if $uid{/yun}
+    <a href="javascript:void(0);" onclick="layermsg('只有企业用户才能预定')" class="job_fair_state_show_bth_comyd">在线预订</a>
+    {yun:}else{/yun}
+    <a href="{yun:}url m=wap c=login {/yun}" class="job_fair_state_show_bth_comyd">在线预订</a>
+    {yun:}/if{/yun} {yun:}/if{/yun} {yun:}/if{/yun}
+    <a href="{yun:}url m=wap c=zph a=com id=$Info.id{/yun}" class="job_fair_state_show_bth_lookcom">查看参会企业</a>
+</div>
+<div class="zph_bg">
+    <section>
+        <div class="zph_bg_pd mt15">
+            <div class="wap_title"><span class="">基本信息</span></div>
+            <ul class="zph_show_list">
+                <li><i class="zph_show_list_icon zph_show_list_icon_zb"></i>{yun:}$Info.organizers{/yun}</li>
+                <li><i class="zph_show_list_icon zph_show_list_icon_hc"></i>{yun:}$Info.address{/yun}</li>
+                <li><i class="zph_show_list_icon zph_show_list_icon_dh"></i>{yun:}$Info.phone{/yun}</li>
+                <li><i class="zph_show_list_icon zph_show_list_icon_user"></i>{yun:}$Info.user{/yun}</li>
+                <li><i class="zph_show_list_icon zph_show_list_icon_bus"></i>{yun:}$Info.traffic{/yun}</li>
+            </ul>
+        </div>
+    </section>
+
+    {yun:}if $Info.body{/yun}
+    <section>
+        <div class="zph_bg_pd mt15 ">
+            <div class="wap_title"><span class="">招聘会介绍</span></div>
+            {yun:}$Info.body{/yun}
+        </div>
+    </section>
+    {yun:}/if{/yun} 
+    {yun:}if $Info.media{/yun}
+    <section>
+        <div class="zph_bg_pd mt15 ">
+            <div class="wap_title"><span class="">媒体宣传</span></div>
+            {yun:}$Info.media{/yun} 
+        </div>
+    </section>
+    {yun:}/if{/yun} 
+    {yun:}if $Info.packages{/yun}
+    <section>
+        <div class="zph_bg_pd mt15 ">
+            <div class="wap_title"><span class="">超值服务套餐</span></div>
+            {yun:}$Info.packages{/yun}
+        </div>
+    </section>
+    {yun:}/if{/yun} 
+    {yun:}if $Info.booth{/yun}
+    <section>
+        <div class="zph_bg_pd mt15 ">
+            <div class="wap_title"><span class="">展位设置方案</span></div>
+            {yun:}$Info.booth{/yun}
+        </div>
+    </section>
+    {yun:}/if{/yun} 
+    {yun:}if $Info.participate{/yun}
+    <section>
+        <div class="zph_bg_pd mt15">
+            <div class="wap_title"><span class="">参与办法</span></div>
+            {yun:}$Info.participate{/yun}</div>
+    </section>
+    {yun:}/if{/yun}
+</div>
+
+<style>
+    .user_contnet_box {
+        width: 100%;
+        overflow: hidden
+    }
+    
+    .user_contnet_box img {
+        max-width: 100%;
+    }
+</style>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

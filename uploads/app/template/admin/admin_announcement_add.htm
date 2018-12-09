@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">添加公告主要满足运营者发布网站公告需求，针对网站大记事或优惠活动都是可以通过公告形式发布！让用户了解到网站动态！</div>
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="tag_box mt10">  
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+<form name="myform" target="supportiframe" action="index.php?m=admin_announcement&c=save" method="post" encType="multipart/form-data"  onSubmit="return checkform(this);">
+	<table width="100%" class="table_form" style="background:#fff;">
+     <tr class="admin_table_trbg">
+          <th colspan="4" bgcolor="#f0f6fb"><span class="admin_bold">添加公告</span></th>
+    </tr>
+		<tr >
+			<th width="200">公告标题：</th>
+			<td>
+			
+			
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+				  <input type="text" name="title" id="title"  lay-verify="required" placeholder="请输入公告标题" value="{yun:}$info.title{/yun}" size="40" style="width:227px;" autocomplete="off" class="layui-input input-text">
+				</div>
+			</div>
+			
+			</td>
+		</tr>
+     	<tr>
+        <th>使用范围：</th>
+        <td><input type="button" value="{yun:}if $info.did{/yun}{yun:}$Dname[$info.did]{/yun}{yun:}else{/yun}总站{yun:}/if{/yun}" class="city_news_but" onClick="add_site('{yun:}$info.did{/yun}','{yun:}$Dname[$info.did]{/yun}');">
+        <input type="hidden" id="did" value="{yun:}$info.did{/yun}" name="did">
+        </td>
+      </tr> 
+	   	<tr class="admin_table_trbg" >
+			<th>关 键 词：</th>
+			<td>
+			 <div class="layui-form-item">
+				<div class="layui-input-block">
+				  <input type="text" name="keyword" id="keyword"  lay-verify="required" placeholder="请输入关键词" value="{yun:}$info.keyword{/yun}" size="50" style="display:inline;width:227px;" autocomplete="off" class="layui-input input-text"> (多关键字，请用，隔开，请不要为空)
+				</div>
+			</div>
+			</td>
+		</tr>
+    		<tr >
+			<th>描　　述：</th>
+			<td>
+			<div class="layui-form-item">
+			  <div class="layui-input-block">
+			 	<textarea name="description" cols="55" rows="3" placeholder="请输入描述"   lay-verify="required" class="layui-input input-text"  style="display:inline;width:452px;padding-left:10px;" autocomplete="off">{yun:}$info.description{/yun}</textarea>
+			  </div>
+			</div>
+			</td>
+		</tr>
+    	   	<tr class="admin_table_trbg" >
+			<th>公告内容： </th>
+			<td>
+ 			<script id="myEditor" name="content" type="text/plain" style="width:700px;height:300px;">{yun:}$info.content{/yun}</script>
+			</td>
+		</tr>
+
+		<tr>
+		  <th>&nbsp;</th>
+			<td align="left" >
+            <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+			{yun:}if $info.id{/yun}
+        	<input type="hidden" name="id" size="40" value="{yun:}$info.id{/yun}"/>
+            <input type="hidden" name="lasturl" value="{yun:}$lasturl{/yun}">
+        	<input class="layui-btn layui-btn-normal" type="submit" name="update" value="&nbsp;更 新&nbsp;"  />
+        	{yun:}else{/yun}
+    		<input class="layui-btn layui-btn-normal" type="submit" name="add" value="&nbsp;添 加&nbsp;"  />
+     		{yun:}/if{/yun}
+     		<input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" />
+			</td>
+		</tr>
+        
+	</table>
+	
+</form>
+</div>
+</div>
+{yun:}include file="$adminstyle/checkdomain.htm"{/yun}
+<style>
+.layui-form-item {
+    margin-bottom: 0px;
+    clear: both;
+}
+</style>
+<script language="javascript">
+  layui.use(['layer', 'form','element'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+	,element = layui.element
+    ,$ = layui.$;
+  });
+ 
+function checkform(myform)
+{
+  if (myform.title.value=="") 
+  { 
+	  parent.layer.msg('请填写公告标题！', 2,8);
+      myform.title.focus();
+      return (false);
+  }
+
+  if (myform.keyword.value=="") 
+  { 
+	   parent.layer.msg('请填写公告关键字！', 2,8);
+      myform.keyword.focus();
+      return (false);
+  } 
+    if (myform.description.value=="") 
+  { 
+	  parent.layer.msg('请填写公告描述！', 2,8);
+      myform.description.focus();
+      return (false);
+  }
+}
+ </script>
+<script>
+UE.getEditor('myEditor',{
+	toolbars:[['Source','|','Bold', 'italic', 'underline', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright','insertorderedlist', 'insertunorderedlist','emotion','simpleupload','attachment']],
+	wordCount:false,
+    elementPathEnabled:false,
+    initialFrameHeight:300
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+    <div class="admin_mainbody">
+        {yun:}include file="$comstyle/left.htm"{/yun}
+        <div class=right_box>
+            <div class=admincont_box>
+                <div class="yun_com_tit"><span class="yun_com_tit_s">职位管理</span></div>
+                <div class="job_list_tit">
+                    <ul class="">
+                        <li {yun:}if $smarty.get.w=="1" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=job&w=1">招聘中的职位<span class="job_list_tit_n">{yun:}if $w1>0{/yun}({yun:}$w1{/yun}){yun:}/if{/yun}</span></a>
+                        </li>
+
+                        <li {yun:}if $smarty.get.w=="0" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=job&w=0">待审核职位<span class="job_list_tit_n">{yun:}if $w0>0{/yun}({yun:}$w0{/yun}){yun:}/if{/yun}</span></a>
+                        </li>
+
+                        <li {yun:}if $smarty.get.w=="3" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=job&w=3">未通过职位<span class="job_list_tit_n">{yun:}if $w3>0{/yun}({yun:}$w3{/yun}){yun:}/if{/yun}</span></a>
+                        </li>
+
+                        <li {yun:}if $smarty.get.w=="4" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=job&w=4">已下架职位<span class="job_list_tit_n">{yun:}if $w4>0{/yun}({yun:}$w4{/yun}){yun:}/if{/yun}</span></a>
+                        </li>
+
+                        <li {yun:}if $smarty.get.w=="5" {/yun} class="job_list_tit_cur" {yun:}/if{/yun}>
+                            <a href="index.php?c=job&w=5">所有职位<span class="job_list_tit_n">{yun:}if $w5>0{/yun}({yun:}$w5{/yun}){yun:}/if{/yun}</span></a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="com_body">
+
+                    <div class="clear"></div>
+
+                    <div class="com_Release_job mt20">
+                        <table class="com_table">
+                            {yun:}if !empty($rows){/yun}
+                            <tr>
+                                <th width="20">&nbsp;</th>
+                                <th>职位名称</th>
+                                <th>收到简历</th>
+                                <th>浏览量 </th>
+                                <th>{yun:}if $smarty.get.w==4{/yun}招聘状态{yun:}else{/yun}审核状态 {yun:}/if{/yun}</th>
+                                <th>更新时间</th>
+                                <th width="160">操作</th>
+                            </tr>
+                            {yun:}/if{/yun}
+
+                            <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                            <form action="index.php?c=job&act=opera" target="supportiframe" method="post" id='myform'>
+                                {yun:}foreach item=job from=$rows{/yun}
+                                <tr>
+                                    <td><input type="checkbox" name="checkboxid[]" value="{yun:}$job.id{/yun}" class="com_Release_job_check"></td>
+                                    <td align="left">
+                                        <a href="{yun:}url m=job c=comapply id='`$job.id`'{/yun}" class="com_Release_name">{yun:}$job.name{/yun}</a>
+                                    </td>
+                                    <td align="center">
+                                        <a href="index.php?c=hr&jobid={yun:}$job.id{/yun}">{yun:}$job.jobnum{/yun}份</a>
+                                    </td>
+                                    <td align="center"> {yun:}$job.jobhits{/yun} </td>
+
+                                    {yun:}if $smarty.get.w==4{/yun}
+
+                                    <td align="center">
+                                        {yun:}if $job.status=="1"{/yun} <span class="com_m_job_lis_zt" style="padding:0px 0px">已下架</span>{yun:}/if{/yun}
+                                    </td>
+
+                                    {yun:}else{/yun}
+                                    <td align="center">
+                                        {yun:}if $job.state=="0"{/yun} <span class="n_verify">等待审核</span>{yun:}/if{/yun} 
+										{yun:}if $job.state=="1"{/yun} <span class="">已审核</span>{yun:}/if{/yun} 
+										{yun:}if $job.state=="3"{/yun}
+											<span class="y_verify_wtg">
+												未通过<i class="y_verify_wtg_icon"></i>
+												{yun:}if $job.statusbody{/yun}
+													<div class="y_verify_wtg_yuany">说明：{yun:}$job.statusbody{/yun}</div>
+												{yun:}/if{/yun}
+											</span> 
+										{yun:}/if{/yun}
+                                    </td>
+                                    {yun:}/if{/yun}
+                                    <td align="center">{yun:}$job.lastupdate|date_format:'%Y-%m-%d'{/yun} </td>
+
+                                    <td align="center">
+                                        {yun:}if $job.status=="1"{/yun} {yun:}if $statis.vip_etime
+                                        < time(){/yun} <a href="javascript:void('0');" onclick="ShowToast();" class="com_bth cblue">上架</a>
+                                            {yun:}else{/yun}
+                                            <a href="javascript:onstatus('{yun:}$job.id{/yun}','2');" class="com_bth cblue">上架</a>
+                                            {yun:}/if{/yun} {yun:}/if{/yun}
+                                            <a href="index.php?c=jobadd&act=edit&id={yun:}$job.id{/yun}" class="com_bth cblue" class="cblue">修改</a>
+                                            <a href="javascript:void(0)" onclick="layer_del('确定要删除该职位？','index.php?c=job&act=opera&del={yun:}$job.id{/yun}');" class="com_bth cblue">删除</a>
+                                    </td>
+                                </tr>
+                                {yun:}foreachelse{/yun}
+                                <tr>
+                                    <td colspan="8" class="table_end">
+                                        <div class="msg_no">
+                                            <p>亲爱的用户，目前您还没有相关职位</p>
+                                            <a href="javascript:;" onclick="jobadd_url('{yun:}$addjobnum{/yun}','{yun:}$config.integral_job{/yun}','','{yun:}$config.com_integral_online{/yun}','{yun:}$config.integral_proportion{/yun}');" class="com_msg_no_bth com_submit">点击添加职位</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {yun:}/foreach{/yun} {yun:}if !empty($rows){/yun}
+                                <tr>
+                                    <td colspan="8" class="table_end">
+                                        <div class="com_Release_job_bot">
+                                            <span class="com_Release_job_qx">
+													<input id='checkAll' type="checkbox" onclick='m_checkAll(this.form)'class="com_Release_job_qx_check">全选
+												</span> {yun:}if $smarty.get.w=='4'{/yun}
+												{yun:}if $statis.vip_etime < time(){/yun}
+                                            		<input class="c_btn_02 c_btn_02_w110" type="button" value="一键上架招聘" onclick="ShowToast();"> 
+                                            	{yun:}else{/yun}
+                                            		<input class="c_btn_02 c_btn_02_w110" type="button" value="一键上架招聘" onclick="return allonstatusopen('checkboxid[]');"> 
+                                            	{yun:}/if{/yun}
+                                            {yun:}/if{/yun}
+
+                                            <input class="c_btn_02 c_btn_02_w110" type="button" value="批量删除职位" onclick="return really('checkboxid[]');">
+                                        </div>
+                                        <div class="diggg">{yun:}$pagenav{/yun}</div>
+                                    </td>
+                                </tr>
+                                {yun:}/if{/yun}
+                            </form>
+                        </table>
+
+                        <div class="clear"></div>
+                        <div class="clear"></div>
+
+                        <div class="wxts_box wxts_box_mt30">
+                            <div class="wxts">温馨提示：</div>
+                            1、如贵公司要快速招聘人才，建议成为我们的会员，获取更多的展示机会，以帮助您快速找到满意的人才。 <br> 2、请贵公司保证职位信息的真实性、合法性，并及时更新职位信息，如被举报或投诉，确认发布的信息违反相关规定后，本站将会关闭贵公司的招聘服务，敬请谅解！
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function allonstatusopen() { //批量上架
+            var allid = [];
+            var i = 0;
+            $('input[name="checkboxid[]"]:checked').each(function() {
+                allid.push($(this).val());
+                i++;
+            });
+            if(allid.length == 0) {
+                layer.msg("请选择要上架的职位！", 2, 8);
+                return false;
+            } else {
+                onstatus(allid, 2);
+            }
+        }
+
+        function onstatus(id, status) { //上架下架设置
+            $.post("index.php?c=job&act=opera", {
+                id: id,
+                status: status
+            }, function(data) {
+                if(data == 1) {
+                    layer.msg('设置成功！', 2, 9, function() {
+                        window.location.reload();
+                    });
+                    return false;
+                } else {
+                    layer.msg('设置失败！', 2, 8);
+                }
+            })
+        }
+
+        function ShowToast() {
+        	var msg = '很抱歉，您的会员已到期，暂不能上架，请先升级会员等级！';
+            
+            var msglayer = layer.open({
+                type: 1,
+                title: '职位招聘',
+                closeBtn: 1,
+                border: [10, 0.3, '#000', true],
+                area: ['550px', 'auto'],
+                content: $("#tcmsg")
+            });
+			$("#msg_show").html(msg);
+            $("#btn_value").html('<a href="index.php?c=right">确定</a>');
+        } 
+    </script>
+    {yun:}include file="$comstyle/footer.htm"{/yun}

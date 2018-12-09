@@ -1,0 +1,192 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<style>
+    .header_h {
+        display: none;
+    }
+</style>
+<div class="yun_usermember_topbg">
+    <span class="yun_com_member_index_set"><a class="yun_com_member_index_set_icon" href="index.php?c=set"></a></span>
+    <a class="yun_user_membersysnews" href="index.php?c=sysnews"><i class="yun_com_membersysnews_n" id="sysmsgnum"></i></a>
+</div>
+<div class="yun_usermember_info">
+    <div class="yun_usermember_info_box">
+        <div class="yun_usermember_info_box_c">
+            <div class="yun_usermember_info_cont">
+                <div class="yun_usermember_qd">
+                    {yun:}if $signstate==1 {/yun}
+                    <span class="yun_usermember_qdbth">已签到</span> {yun:}else{/yun}
+                    <a href="javascript:void(0);" onClick="sign();"><span class="yun_usermember_qdbth">签到</span></a>
+                    {yun:}/if{/yun}
+                </div>
+                <div class="yun_usermember_info_photo">
+                    <a href="index.php?c=photo">
+                        {yun:}if $user.sex==1{/yun}
+                        <img src="{yun:}$config.sy_weburl{/yun}/{yun:}$user.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);"> {yun:}else{/yun}
+                        <img src="{yun:}$config.sy_weburl{/yun}/{yun:}$user.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_iconv{/yun}',2);"> {yun:}/if{/yun}
+                    </a>
+                </div>
+
+                <a href="index.php?c=set">
+                    <div class="yun_usermember_info_name">{yun:}$username{/yun}</div>
+                </a>
+                <div class="yun_usermember_info_rz">
+
+                    {yun:}if $user.moblie_status=="1"{/yun}
+                    <a href="index.php?c=bindingbox&type=moblie"><span class="yun_usermember_info_rz_s yun_usermember_info_rz_s_cur"><i class="rz_icon rz_iconsj"></i>已认证</span></a>
+                    {yun:}else{/yun}
+                    <a href="index.php?c=bindingbox&type=moblie"><span class="yun_usermember_info_rz_s "><i class="rz_icon rz_iconsj"></i>未认证</span></a>
+                    {yun:}/if{/yun} {yun:}if $user.email_status=="1"{/yun}
+                    <a href="index.php?c=bindingbox&type=email"> <span class="yun_usermember_info_rz_s yun_usermember_info_rz_s_cur"><i class="rz_icon rz_iconyx"></i>已绑定</span></a>
+                    {yun:}else{/yun}
+                    <a href="index.php?c=bindingbox&type=email"><span class="yun_usermember_info_rz_s "><i class="rz_icon rz_iconyx"></i>未绑定</span></a>
+                    {yun:}/if{/yun} {yun:}if $user.idcard_status=="1"{/yun}
+                    <a href="index.php?c=idcard"> <span class="yun_usermember_info_rz_s yun_usermember_info_rz_s_cur"><i class="rz_icon rz_iconsm"></i>已实名</span></a>
+                    {yun:}else{/yun}
+                    <a href="index.php?c=idcard"> <span class="yun_usermember_info_rz_s "><i class="rz_icon rz_iconsm"></i>未实名</span></a>
+                    {yun:}/if{/yun}
+
+                </div>
+
+            </div>
+            <ul class="yun_usermember_tj">
+                <li>
+                    <a href="index.php?c=invite&back=1">
+                        <span class="yun_usermember_tj_n" id="yqnum"></span> <i class="yun_usermember_tj_n_new" id="wkyqnum"></i> 面试通知
+                    </a>
+                </li>
+                <li>
+                    <a href="index.php?c=sq&back=1"><span class="yun_usermember_tj_n" id="sq_jobnum"></span>申请记录</a>
+                </li>
+                <li>
+                    <a href="index.php?c=collect&back=1"><span class="yun_usermember_tj_n" id="fav_jobnum"></span>收藏记录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<ul class="yun_usermember_nav">
+    <li>
+        <a href="index.php?c=resume&eid={yun:}$user.def_job{/yun}"><i class="yun_usermember_nav_icon"></i>简历管理</a>
+    </li>
+     <li>
+            <a href="index.php?c=info"><i class="yun_usermember_nav_icon yun_usermember_nav_iconinfo"></i>基本资料<span class="yun_mnav_tip">完善基本资料</span></a>
+        </li>
+</ul>
+<ul class="yun_usermember_nav">
+    <li>
+        <a href="index.php?c=jobcolumn"><i class="yun_usermember_nav_icon yun_usermember_nav_iconjob"></i>职位管理</a>
+    </li>
+    <li>
+        <a href="index.php?c=collect"><i class="yun_usermember_nav_icon yun_usermember_nav_iconsc"></i>收藏&关注</a>
+    </li>
+    <li>
+        <a href="index.php?c=partapply"><i class="yun_usermember_nav_icon yun_usermember_nav_iconjz"></i>兼职管理</a>
+    </li>
+     
+</ul>
+
+<ul class="yun_usermember_nav">
+	{yun:}if $config.sy_ask_web==1{/yun}
+    <li>
+        <a href="{yun:}url m=wap c=ask{/yun}"><i class="yun_usermember_nav_icon yun_usermember_nav_iconask"></i>职场问答</a>
+    </li>
+    {yun:}/if{/yun}
+</ul>
+
+<ul class="yun_usermember_nav">
+    <li>
+        <a href="index.php?c=finance"><i class="yun_usermember_nav_icon yun_usermember_nav_iconcw"></i>财务管理</a>
+    </li>
+</ul>
+
+<ul class="yun_usermember_nav" style="padding-bottom:20px;">
+    <li>
+        <a href="index.php?c=set"><i class="yun_usermember_nav_icon yun_usermember_nav_iconzh"></i>账户设置</a>
+    </li>
+</ul>
+
+<!--编辑基本信息引导匡-->
+<div id="yingdaoone" style="width:100%;height:100%; background:rgba(51,51,51,0.6); position:fixed;left:0px;top:0px; z-index:100000;{yun:}if $user.name!=" "{/yun}display:none;{yun:}/if{/yun}">
+    <div style="width:100%; position:absolute;left:0px;top:140px;">
+        <div style="padding:20px;">
+            <div class="index_yd_box">
+                <div class="index_yd_box_h1">亲，你还没有填写基本信息</div>
+                <div class="user_resume_index_tip_p">
+                    <a href="index.php?c=info" class="user_resume_index_tip_sub">编辑</a>
+                </div>
+                <div class="user_resume_index_tip_p2">
+                    <a href="javascript:Close_yd('yingdaoone');" class="user_resume_index_tip_p2_a">下次再说</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{yun:}if $user.name==''{/yun}
+<!--创建简历引导匡-->
+<div id="yingdaofour" style="width:100%;height:100%; background:rgba(51,51,51,0.6); position:fixed;left:0px;top:0px; z-index:100000;{yun:}if $expect.integrity{/yun}display:none;{yun:}/if{/yun}">
+
+    <div class="resume_refresh_box">
+        <div class="resume_refresh_box_c">
+            <div class="resume_refresh">温馨提示：</div>
+            <div class="resume_refresh_p1">你没有创建简历，无法申请职位</div>
+            <div class="resume_refresh_p2"> 为了更快的找到满意工作~</div>
+
+            <div class="resume_refresh_bth">
+                {yun:}if $user.idcard_status!=1 && $config.user_enforce_identitycert==1{/yun} 
+                <a href="javascript:void(0)" onclick="fidcard()" class="resume_refresh_bth_a">创建简历</a>
+				{yun:}else{/yun}
+				<a href="index.php?c=addresume" class="resume_refresh_bth_a">创建简历</a>
+				{yun:}/if{/yun}
+            </div>
+            <a href="javascript:Close_yd('yingdaofour');" class="resume_refresh_bth_qx"></a>
+
+        </div>
+    </div>
+</div>
+
+{yun:}/if{/yun} 
+
+ 
+{yun:}if $expect.integrity && $expect.lastupdate< $time && $smarty.cookies.exprefresh!=1 && $config[ 'resume_sx']==2{/yun} <!--刷新简历引导匡-->
+    <div id="yingdaotwo" style="width:100%;height:100%; background:rgba(0,0,0,0.6); position:fixed;left:0px;top:0px; z-index:100000;{yun:}if $user.name!=" " && $expect.lastupdate > $time {/yun}display:none;{yun:}/if{/yun}">
+        <div class="resume_refresh_box">
+            <div class="resume_refresh_box_c">
+                <div class="resume_refresh">温馨提示：</div>
+                <div class="resume_refresh_p1">不让简历石沉大海，每天坚持刷新简历</div>
+                <div class="resume_refresh_p2"> 让企业在第一时间找到你~</div>
+
+                <div class="resume_refresh_bth">
+                    <a id="refresh" class="resume_refresh_bth_a">立即刷新</a>
+                </div>
+                <a href="javascript:Close_yd('yingdaotwo');" class="resume_refresh_bth_qx"></a>
+
+            </div>
+        </div>
+    </div>
+    {yun:}/if{/yun}
+    <script language="javascript" type="text/javascript">
+        function Close_yd(id) {
+            $("#" + id).hide();
+        }
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+        //简历刷新
+        if(document.getElementById("refresh")) {
+            document.getElementById("refresh").addEventListener('tap', function() {
+                $.get(wapurl + "member/index.php?c=resumeset&update={yun:}$expect.id{/yun}", function(data) {
+                    layermsg(data ? '刷新成功！' : '刷新失败！', 2, function() {
+                        mui.openWindow({
+                            url: wapurl + "member/",
+                        });
+                    });
+                });
+            });
+        }
+		function fidcard(){
+			layermsg('请先完成身份认证！', 2, function() {
+				location.href = 'index.php?c=idcard';
+			});
+		}
+    </script>
+    {yun:}include file="$wapstyle/footer.htm"{/yun}

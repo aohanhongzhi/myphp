@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta http-equiv="Cache-Control" content="no-cache" />
+        <title>{yun:}$config.sy_webname{/yun} - 手机人才网</title>
+        <meta http-equiv="keywords" content="人才招聘,网络招聘,wap" />
+        <meta http-equiv="description" content="人才招聘网wap网站" />
+        <meta content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+        <meta name="MobileOptimized" content="240" />
+        <meta http-equiv="Expires" content="0" />
+        <meta http-equiv="Cache-Control" content="no-cache" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="format-detection" content="telephone=no,email=no" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/yun_wap_member.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+        <script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+        <script type="text/javascript">
+            function checkIdcard(num) {
+                //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
+                var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+                if(reg.test(num) === false) {
+                    return false;
+                }
+            }
+
+            function check_form_post() {
+                var img = $.trim($("#pic").val());
+                if(img == "") {
+                    layermsg('请上传图片');
+                    return false;
+                }
+                {yun:}if $type == 2 {/yun}
+                    var idcard = $.trim($('#idcard').val());
+                    if(idcard == '') {
+                        layermsg('请填写证件号码');
+                        return false;
+                    }
+                    if(checkIdcard($.trim(idcard)) == false) {
+                        layermsg('请填写正确证件号码！');
+                        return false;
+                    } 
+                {yun:}/if{/yun}
+            
+                layermsg('上传中..', 5);
+                return true;
+            }
+
+            function wapreturnmsg() {
+                layer.closeAll();
+                var iHtml = $("#ifr").contents().find("body").html();
+                console.log(iHtml);
+                if(iHtml) {
+                    iHtml = eval('(' + iHtml + ')');
+                    if(iHtml.status == 1) {
+                        layermsg('上传成功！');
+                        $("#submit").val('上传成功！');
+                    } else if(iHtml.msg) {
+                        layermsg(iHtml.msg);
+                    } else {
+                        layermsg('上传失败！');
+                    }
+                }
+
+            }
+        </script>
+    </head>
+
+    <body>
+        <header>
+            <div class="header_bg">
+                <a class="hd-lbtn" href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:history.back();{yun:}/if{/yun}"><i class="header_top_l iconfont"></i></a>
+                <div class="header_h1">手机上传</div>
+            </div>
+        </header>
+        <div class="main_member_body">
+
+            <style type="text/css">
+                .submit-ok {
+                    color: #fff;
+                    background-color: #5cb85c;
+                }
+            </style>
+
+            <iframe id="ifr" name="ifr" onload="wapreturnmsg('ifr');" style="display: none;"></iframe>
+            <form method="post" target="ifr" action="index.php?c=upload&a=uploadimg_save&token={yun:}$token{/yun}" onsubmit="return check_form_post();">
+
+                {yun:}if $type == 2{/yun}
+                <ul class="yunset_password mt15">
+                    <li><span class="yunset_password_mname">证件号码</span> <input type="text" name="idcard" id="idcard" value="" class="yunset_text"></li>
+                </ul>
+                {yun:}/if{/yun}
+
+                <div class="yunset_identity_box">
+                    <div class="yunset_identity">
+                        <div align="center" class="yunset_identity_pic_img" id="previewshow" style="display: none;">
+                            <img src="{yun:}$config.sy_weburl{/yun}{yun:}$resume.idcard_pic{/yun}" id="previewimg" />
+                        </div>
+                        <div class="yunset_identity_pic">
+                            <i class="yunset_identity_pic_tj"></i>
+                            <input type="file" name="pic" id="pic" onchange="previewImage(this,'preview')" accept="image/*" class="yunset_identity_pic_file">
+                            <input type='hidden' name='preview' value='' id='preview'>
+                        </div>
+
+                        <div class="yunset_identity_tip">上传图片</div>
+                        <div class="yunset_identity_tip_c">（ 文字清晰，四角齐全 )</div>
+
+                    </div>
+
+                </div>
+                <div class="yunset_identity_msg"><i class="yunset_identity_msg_icon"></i>格式为 {yun:}$config.pic_type{/yun}不得超过{yun:}$config.file_maxsize{/yun}M</div>
+
+                <div class="yunset_bth_box">
+                    <input type="submit" name="submit" id="submit" value="保存" class="yunset_bth">
+                </div>
+
+            </form>
+            {yun:}include file="$wapstyle/footer.htm"{/yun}

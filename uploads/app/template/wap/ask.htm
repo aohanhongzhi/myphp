@@ -1,0 +1,172 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<style>
+    .header_h {
+        display: none
+    }
+</style>
+<!--搜索-->
+<div class="ask_header_bg">
+    <div class="ask_search_box">
+
+        <a {yun:}if $uid{/yun} href="{yun:}url m=wap c=ask a=addquestion {/yun}" {yun:}else{/yun}href="javascript:void(0)" onclick="pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}')" {yun:}/if{/yun} class="ask_search_box_tw">
+        	<span class="ask_search_box_tw_c">提问</span></a>
+        <div class="ask_search_ct">
+            <form name="myform" method="get" action="index.php">
+                <input type="hidden" name="c" value="ask" />
+                <input type="hidden" name="a" value="list" />
+                <input type="text" value="{yun:}$smarty.get.keyword{/yun}" name="keyword" id="keyword" class="ask_search_text" placeholder="搜一搜感兴趣的问题">
+                <i class="ask_btn_icon"><input type="submit" value="" class="ask_search_bth"></i>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="askindex_banner">
+    <div class="swiper_banner" style="height:80px">
+        <div class="swiper-container" id="imgswiper">
+            <div class="swiper-wrapper">
+                {yun:}adlist classid=69 item="lunbo" key=key{/yun}
+                <div class="swiper-slide">
+                    <a href="{yun:}$lunbo.src{/yun}"><img src="{yun:}$lunbo.pic{/yun}" width='100%' /></a>
+                </div>
+                {yun:}/adlist{/yun}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clear"></div>
+
+<div class="ask_top_nav_icon" onclick="$('.ask_top_nav').toggle();">
+
+    <div class="ask_top_nav" style="display:none;">
+        <div class="ask_top_nav_list">
+            <a href="{yun:}url m=wap c='ask'{/yun}" class="ask_top_nav_iconhome">问答首页</a>
+            <a {yun:}if $uid{/yun} href="{yun:}url m=wap c=ask a=myquestion uid=$uid{/yun}" {yun:}else{/yun}href="javascript:void(0)" onclick="pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}')" {yun:}/if{/yun} class="ask_top_nav_iconzy">我的主页</a>
+            <a href="{yun:}url m=wap c=ask a=hotweek {/yun}" class="ask_top_nav_iconhot">一周热点</a>
+            <a href="{yun:}url m=wap c=ask a=topic {/yun}" class="ask_top_nav_iconht">职场话题</a>
+            <a {yun:}if $uid{/yun} href="{yun:}url m=wap c=ask a=addquestion{/yun}" {yun:}else{/yun}href="javascript:void(0)" onclick="pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}')" {yun:}/if{/yun} class="ask_top_nav_icontw">我要提问</a>
+        </div>
+    </div>
+
+</div>
+ 
+<ul class="ask_indexnav mt10">
+    <li>
+        <a href="{yun:}url m=wap c=ask a=topic {/yun}">职场话题</a>
+    </li>
+    <li>
+        <a href="{yun:}url m=wap c=ask a=hotweek {/yun}">一周热点</a>
+    </li>
+    <li>
+        <a {yun:}if $uid{/yun} href="{yun:}url m=wap c=ask a=myquestion uid=$uid{/yun}" {yun:}else{/yun}href="javascript:void(0)" onclick="pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}')" {yun:}/if{/yun}>我的主页</a>
+    </li>
+
+</ul>
+
+<!--msg-->
+<div class="ask_msg mt10">
+    <ul class="ask_msg_up">
+        {yun:}qcache limit=4 son=1 item=qindex{/yun}
+        <li>
+            <a href="{yun:}url m=wap c=ask a=topic pid='`$qindex.id`'{/yun}">
+                <img src="{yun:}$config.sy_weburl{/yun}/{yun:}$qindex.pic{/yun}" />
+                <h3>{yun:}$qindex.name{/yun}</h3>
+            </a>
+        </li>
+        {yun:}/qcache{/yun}
+        <li>
+            <a href="{yun:}url m=wap c=ask a=topic {/yun}">
+                <span class="ask_msg_more"></span>
+                <h3>更多</h3>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="clear"></div>
+<!--nav-->
+
+<div class="ask_jxtit mt10"><span class="ask_jxtit_name">精选问答</span></div>
+
+<ul class="ask_jx">
+    {yun:}qlist is_recom=1 name=list t_len=30 limit=5 item=rlist{/yun}
+
+    <li style="padding:0px;">
+        <div class="home_indexquestion">
+            <div class="ask_jx_name">
+                <a href="{yun:}url m=wap c=ask a=content id='`$rlist.id`'{/yun}">{yun:}$rlist.title{/yun}</a>
+            </div>
+            <div class="ask_jx_info"><span class="ask_jx_data ask_jx_data_hd">{yun:}$rlist.answer_num{/yun} 回答</span><span class="ask_jx_data ask_jx_data_yl">{yun:}$rlist.visit{/yun} 阅读</span><span class="ask_jx_data ask_jx_data_gz">{yun:}$rlist.atnnum{/yun} 关注</span></div>
+
+            <div class="ask_jx_info_img"><img src="{yun:}$rlist.pic{/yun}" width="20" height="20">
+                <a href="{yun:}url m=wap c=ask a=myquestion uid='`$rlist.uid`'{/yun}" class="ask_jx_username">{yun:}$rlist.nickname|mb_substr:0:25:'utf-8'{/yun}</a> <span class="ask_jx_time">{yun:}$rlist.add_time|date_format:"%Y-%m-%d"{/yun}</span></div>
+        </div>
+
+    </li>
+    {yun:}/qlist{/yun}
+</ul>
+
+<div class="clear"></div>
+<div class="index_newbox" style="float:left;width:100%; background:none">
+    <div class="ask_jxtit" style="background:none"><span class="ask_jxtit_name">达人推荐</span></div>
+    <div class="ask_box_list_c">
+        <ul class="ask_box_list">
+            {yun:}foreach from=$recom item=rlist key=k{/yun}
+            <li>
+                <a href="{yun:}url m=wap c=ask a=myquestion uid='`$rlist.uid`'{/yun}">
+                    <div class="ask_box">
+                        <i class="ask_box_px ask_box_px1">{yun:}$k+1{/yun}</i>
+                        <div class="dr_user_pic"><img src="{yun:}$rlist.pic{/yun}"></div>
+                        <div class="ask_comname">{yun:}$rlist.nickname{/yun}</div>
+                        <div class="dr_user_p"><span class="mq_comjob_n">{yun:}$rlist.num{/yun}</span> 回答</div>
+                    </div>
+            </li>
+            </a>
+            {yun:}/foreach{/yun}
+        </ul>
+
+    </div>
+
+</div>
+<div class="clear"></div>
+<div class="ask_ct" id="fontshow">
+    <div class="ask_jxtit"><span class="ask_jxtit_name">最新问题</span></div>
+
+    <ul class="ask_new">
+        {yun:}qlist item=list name=list keyword='auto.keyword' ispage=1 t_len=40 limit=10{/yun}
+        <li>
+            <a href="{yun:}url m=wap c=ask a=content id='`$list.id`'{/yun}">{yun:}$list.title{/yun}</a>
+            <span class="ask_new_n">{yun:}$list.answer_num{/yun}个回答</span>
+
+        </li>
+
+        {yun:}qlistelse{/yun}
+        <div class="wap_notip">暂无问题</div>
+        {yun:}/qlist{/yun}
+        <div class="ask_new_more">
+            <a href="{yun:}url m=wap c=ask a=list{/yun}" class="">查看更多</a>
+        </div>
+    </ul>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/swiper/swiper.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$wap_style{/yun}/js/swiper/swiper.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript">
+    $(function() {
+        var myimgswiper = new Swiper('#imgswiper', {
+            direction: 'horizontal',
+            autoplay: true,
+            loop: true
+        });
+    });
+    marquee_l("2000", ".ask_box_list");
+	if($('.askindex_banner a').length<=0){
+		$('.askindex_banner').hide();
+	}
+</script>
+<div class="ask_tw">
+    <a {yun:}if $uid{/yun} href="{yun:}url m=wap c=ask a=addquestion {/yun}" {yun:}else{/yun}href="javascript:void(0)" onclick="pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}')" {yun:}/if{/yun} class=""><span class="ask_tw_p">提问</span></a>
+</div>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

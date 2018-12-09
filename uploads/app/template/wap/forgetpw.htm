@@ -1,0 +1,129 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<div class="password_box">
+
+	<div class="passport-progress">
+		<ul>
+			<li id="path1" class="currents"><span>1</span>填写账号</li>
+			<li id="path2" class="currents_er"><span>2</span>设置新密码<em></em></li>
+			<li id="path3" class="currents_er"><span>3</span>完成<em></em></li>
+		</ul>
+	</div>
+
+	<div class="account">
+		<div id="backpicker" class="account_td1">
+			<div id="sendtypePicker" class="input_295_34 select_input">
+				<span id="pickerText" class="J_listitme_text">通过手机找回密码</span>
+                <i class="searchOptions_icon  "></i>
+				<input type="hidden" id="sendtype" name="sendtype" value="moblie">
+			</div>
+		</div>
+		<div id="moblieshow" class="J_listitme_group">
+			<div class="selecttip">系统将发送验证码短信到您的手机上，请注意查收</div>
+			<div class="J_validate_group">
+				<div class="account_td1">
+					<input class="input_295_34" name="moblie" id="moblie" type="text" placeholder="请输入手机号">
+				</div>
+				<div class="account_td1">
+					<div class="code">
+						<input name="moblie_vcode" id="moblie_vcode" type="text" class="input_295_35" placeholder="请输入短信验证码">
+						<button class="btn_yellow J_hoverbut" id="send_msg_tip" onclick="send_msg()">获取验证码</button>
+					</div>
+				</div>
+				<div class="reset_btnbox">
+					<input type="submit" onclick="forgetPwNext()" value="下一步" class="reset_xia">
+				</div>
+			</div>
+		</div>
+
+		<div id="emailshow" class="J_listitme_group" style="display: none;">
+			<div class="selecttip">系统将发送验证码发到您的邮箱中，请注意查收</div>
+			<div class="J_validate_group">
+				<div class="account_td1">
+					<input class="input_295_34" name="email" id="email" type="text" placeholder="请输入邮箱账户">
+				</div>
+				<div class="account_td1">
+					<div class="code">
+						<input name="email_vcode" id="email_vcode" type="text" class="input_295_35" placeholder="请输入邮箱验证码">
+						<button class="btn_yellow J_hoverbut" id="send_email_tip" onclick="send_email()">获取验证码</button>
+					</div>
+				</div>
+				<div class="reset_btnbox">
+					<input type="submit" onclick="forgetPwNext()" value="下一步" class="reset_xia">
+				</div>
+			</div>
+		</div>
+
+		<div id="shensushow" class="J_listitme_group" style="display: none;">
+			<div class="selecttip">信息提交后 , 客服人员会电话回访 , 确认身份！</div>
+			<div class="J_validate_group">
+				<div class="reset">
+					<input class="reset_chong_zhi" type="text" name="username" id="username" autocomplete="off" maxlength="20" placeholder="请输入用户名" value="">
+					<input class="reset_chong_zhi" type="text" name="linkman" id="linkman" autocomplete="off" maxlength="20" placeholder="请输入联系人" value="">
+					<input class="reset_chong_zhi" type="text" name="linkphone" id="linkphone" autocomplete="off" maxlength="20" placeholder="请输入联系电话" value="">
+					<input class="reset_chong_zhi" type="text" name="linkemail" id="linkemail" autocomplete="off" placeholder="请输入联系邮箱" value="">
+				</div>
+			</div>
+			<div class="reset_btnbox_xia">
+				<input type="submit" onclick="checklink()" value="下一步" class="reset_xia">
+			</div>
+		</div>
+		<!--重置密码-->
+		<div id="resetpw" class="J_listitme_group" style="display:none;">
+			<div class="J_validate_group">
+				<div class="reset">
+					<input class="input_295_34" name="password" id="password" type="password" placeholder="请设置新密码">
+					<input class="input_295_34" name="passwordconfirm" id="passwordconfirm" type="password" placeholder="请确认新密码">
+				</div>
+				<div class="reset_btnbox">
+					<input type="hidden" id="username" value="">
+					<input type="hidden" id="fuid" value="">
+
+					<input type="hidden" id="fmobile" value="">
+					<input type="hidden" id="femail" value="">
+					<input type="hidden" id="fcode" value="">
+
+					<input type="submit" onclick="editpw()" value="提交修改" class="reset_xia">
+				</div>
+			</div>
+		</div>
+		
+		<div id="succeed" class="password_cont" style="display:none;" width:100%;margin:0 auto;">
+			<div class="password_cont_success " style="width:100%;">
+				<div class="password_cont_success_p" style="padding-left:0;width:100%;text-align:center;">恭喜您！密码重置成功！</div>
+				<div class="password_contm-row" style="margin-left:0;width:100%;text-align:center;">
+					<a href="{yun:}url m=wap c=login{/yun}" style="margin:0 auto;width:280px;" class="password_input_btn">立即登录</a>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="password_cont none" id="finish">
+         <div class="password_icon"></div>
+
+        <div class="password_succ">提交成功！</div>
+			<div class="password_cgd">请耐心等待，稍后客服人员会联系您！</div>
+		</div>
+		</div>
+		<div class="password_tip">
+			<div class="password_tip_t">温馨提示：</div>
+			<div>如手机号码已丢失且未绑定邮箱</div>
+			<div>请拨打全国统一服务热线</div>
+			<div class="password_tip_tel">{yun:}$config.sy_freewebtel{/yun} </div>
+			<div class="password_tip_tel_link">
+				<a href="tel:{yun:}$config.sy_freewebtel{/yun}"><i class="password_tip_tel_link_tel"></i>拨打</a>
+			</div>
+
+		</div>
+	</div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/forgetpw.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/geetest/gt.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/geetest/mobile.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

@@ -1,0 +1,124 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<section class="wap_member">
+	<div class="wap_member_comp_h1"><span>职位咨询</span></div>
+
+	<div id="app" class="mui-views">
+		<div class="mui-view">
+			<div class="mui-pages"></div>
+		</div>
+	</div>
+	<!--页面主结构结束-->
+	<!--单页面开始-->
+	<div id="main" class="mui-page">
+		<!--页面主内容区开始-->
+		<div class="mui-page-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+
+					{yun:}if !empty($rows){/yun} {yun:}foreach from=$rows item=v{/yun}
+
+					<div id="muirowlist" class="com_member_hr">
+
+						<div class="com_member_hr_name">
+							<a href="{yun:}url m=wap c=resume a=show id=$v.did{/yun}" class="wap_member_com_name  com_member_hr_cblue">{yun:}$v.username{/yun}</a>
+						</div>
+
+						<div class="com_member_user_box">
+							<div class="com_member_hr_tj">
+								<div class="com_member_hr_p1">
+									<div class="com_member_hr_p1"><span class="member_c9">咨询职位：</span>{yun:}$v.job_name{/yun}</div>
+									<div class="com_member_hr_p1"><span class="member_c9">咨询内容：</span>{yun:}$v.content{/yun}</div>
+									{yun:}if $v.reply{/yun}
+									<div class="com_member_hr_p1"><span class="member_c9">回复内容：</span>{yun:}$v.reply{/yun}</div>
+									{yun:}/if{/yun}
+								</div>
+							</div>
+
+							<div class="com_member_hr_p1">
+								<span class="member_c9">咨询日期：{yun:}$v.datetime|date_format:"%Y-%m-%d %H:%M"{/yun} </span>
+							</div>
+
+							<div class="com_member_hr_cz">
+								<em class="user_size">
+							{yun:}if $v.reply==""{/yun}		
+							<a href="#replyhtml" data-id="{yun:}$v.id{/yun}" class="yun_member_hr_bth reply">回复</a>	
+							{yun:}/if{/yun}
+							<a href="javascript:void(0)" onclick="layer_del('确定要删除？','index.php?c=delmsg&id={yun:}$v.id{/yun}')" class="yun_member_hr_bth">删除</a>
+						</em>
+							</div>
+						</div>
+					</div>
+					{yun:}/foreach{/yun} {yun:}else{/yun}
+
+					<div class="wap_member_no">
+						没有咨询记录
+					</div>
+
+					{yun:}/if{/yun}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="pages"> {yun:}$pagenav{/yun}</div>
+<!--页面主内容区结束-->
+<div id="replyhtml" class="mui-page">
+	<form method="post" action="index.php?c=msg" onsubmit=" return checkReply()">
+		<div class="mui-page-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<div class="yun_wap_info_brief">
+						<div class="yun_wap_info_brief_c">
+							<div class="yun_wap_info_brief_tit"> 咨询回复 </div>
+							<textarea class="textAreaMsg tip contenttext" name="reply" id="reply" placeholder="请输入回复内容"></textarea></div>
+						<div class="yunset_bth_box">
+							<input class="reinputText2" type="submit" name="submit" value="回复">
+							<input type="hidden" id="id" name="id">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script language="javascript">
+	mui.init();
+	var viewApi = mui('#app').view({
+		defaultPage: '#main'
+	});
+	//初始化单页的区域滚动
+	mui('.mui-scroll-wrapper').scroll();
+	var view = viewApi.view;
+	(function($) {
+		//处理view的后退与webview后退
+		var oldBack = $.back;
+		$.back = function() {
+			if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+				viewApi.back();
+			} else { //执行webview后退
+				oldBack();
+			}
+		};
+	})(mui);
+	$(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+	mui('.reply').each(function(i, arr) {
+		arr.addEventListener('tap', function(e) {
+			document.getElementById('id').value = e.target.dataset.id;
+		}, false)
+	}, false);
+
+	function checkReply() {
+		var reply = $.trim($('#reply').val());
+		if(reply == "") {
+			layermsg("请填写回复内容！");
+			return false;
+		}
+	}
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

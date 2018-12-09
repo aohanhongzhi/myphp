@@ -1,0 +1,202 @@
+{yun:}include file="$userstyle/header.htm"{/yun} 
+<div class="yun_w1200">
+{yun:}include file="$userstyle/left.htm"{/yun}
+<div class="yun_m_rightbox fltR mt20 re">
+<script>
+var integralclass=[];
+'{yun:}foreach from=$integralclass_index item=v key=k{/yun}'
+	integralclass.push({
+		id : '{yun:}$v{/yun}',
+		integral : '{yun:}$integralclass_name[$v]{/yun}',
+		discount : '{yun:}$integralclass_discount[$v]{/yun}'
+	}) 
+'{yun:}/foreach{/yun}'
+$(document).ready(function(){
+	"{yun:}if $nopayorder{/yun}"
+		$.layer({
+            type: 1,
+            title: '付款提醒',
+            closeBtn: [0, true],
+            border: [10, 0.3, '#000', true],
+            area: ['320px', '220px'],
+            page: { dom: '#remind_order' }
+        });
+	"{yun:}/if{/yun}"
+	var proportion='{yun:}$config.integral_proportion{/yun}';
+	if($.trim($("#integral").val())){
+		var integral=$.trim($("#integral").val());
+		var integralid=$.trim($("#integralid").val());
+		
+		var discount=$.trim($("#integralid").attr('data-discount'));
+		$("#integralid").val(integralid);
+		$("#integralid").attr('data-discount',parseInt(discount));
+		if(parseInt(discount)>0){
+			var price=integral/proportion*parseInt(discount)/100;
+		}else{
+			var price=integral/proportion;
+		}
+		price=Math.floor(price * 100) / 100;
+		$("#user_vip_price").val(price);
+		$("#payintegral").html(price);
+	}
+	$(".payment_list_text").click(function() {
+		var val=$(this).attr('data-integral');
+		var valid=$(this).attr('data-id');
+		var discount=$(this).attr('data-discount');
+		$(".payment_list_text").removeClass('payment_list_cur');
+		$(this).addClass('payment_list_cur');
+		$("#autointegral").val('');
+        $("#integral").val(val);
+		$("#integralid").val(valid);
+		$("#integralid").attr('data-discount',parseInt(discount));
+		if(parseInt(discount)>0){
+			var price=val/proportion*parseInt(discount)/100;
+		}else{
+			var price=val/proportion;
+		}
+		price=Math.floor(price * 100) / 100;
+		$("#user_vip_price").val(price);
+		$(".payintegral").html(price);
+    });
+	$("#autointegral").keyup(function(e) {
+		if($(this).val()){
+			var integralval=$(this).val();
+			var discountarr=[];
+			for(var i in integralclass) {
+				if(parseInt(integralval)>=parseInt(integralclass[i]['integral'])){
+					discountarr.push({
+					'discount':integralclass[i]['discount'],
+					'id':integralclass[i]['id']
+					});
+				}
+			}
+			if(discountarr.length>0){
+				var discount=discountarr[discountarr.length-1].discount;
+				$("#integralid").val(discountarr[discountarr.length-1].id);
+			}else{
+				var discount=0;
+				$("#integralid").val('');
+			}
+			$("#integralid").attr('data-discount',parseInt(discount));
+			$(".payment_list_text").removeClass('payment_list_cur');
+			$("#integral").val(integralval);
+			if(parseInt(discount)>0){
+				var price=integralval/proportion*parseInt(discount)/100;
+			}else{
+				var price=integralval/proportion;
+			}
+			price=Math.floor(price * 100) / 100;
+			$("#user_vip_price").val(price);
+			$("#payintegral").html(price);
+		}else{
+			$("#integral").val('0');
+			$("#user_vip_price").val('0');
+			$("#payintegral").html('0');
+		}
+	});
+});
+function userautointegral(){
+	var proportion='{yun:}$config.integral_proportion{/yun}';
+	var integral=parseInt($("#autointegral").val());
+	if(integral){
+		var min_recharge='{yun:}$config.integral_min_recharge{/yun}';
+		if(min_recharge>0&&integral<min_recharge){
+			integral=min_recharge;
+			$("#autointegral").val(integral);
+			$("#integral").val(integral);
+		}else{
+			$("#autointegral").val(integral);
+			$("#integral").val(integral);
+		}
+		var integralval=integral;
+		var discountarr=[];
+		for(var i in integralclass) {
+			if(integralval>=parseInt(integralclass[i]['integral'])){
+				discountarr.push({
+				'discount':integralclass[i]['discount'],
+				'id':integralclass[i]['id']
+				});
+			}
+		}
+		if(discountarr.length>0){
+			var discount=discountarr[discountarr.length-1].discount;
+			$("#integralid").val(discountarr[discountarr.length-1].id);
+		}else{
+			var discount=0;
+			$("#integralid").val('');
+		}
+		$("#integralid").attr('data-discount',parseInt(discount));
+		if(parseInt(discount)){
+			var price=integral/proportion*parseInt(discount)/100;
+		}else{
+			var price=integral/proportion;
+		}
+		price=Math.floor(price * 100) / 100;
+		$("#user_vip_price").val(price);
+		$("#payintegral").html(price);
+		$(".payment_list_text").removeClass('payment_list_cur');
+	}
+}
+function pay_form(){
+	var integral=$("#integral").val();
+	if(Number(integral)<1){
+		layer.msg('请填正确填写充值{yun:}$config.integral_pricename{/yun}！', 2, 8);return false;  
+	}
+}
+</script>
+   <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">账户充值</span> <i class="member_right_h1_icon user_bg"></i></div>
+   <div class="resume_Prompt_box"><div  class="resume_Prompt"><i class="resume_Prompt_icon"></i>当前{yun:}$config.integral_pricename{/yun}兑换比为1元={yun:}$config.integral_proportion{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}{yun:}if $config.integral_min_recharge>0{/yun}，单次最低充值{yun:}$config.integral_min_recharge{/yun}{yun:}$config.integral_pricename{/yun}。{yun:}/if{/yun}</div></div>
+	<div id="gms_showclew"></div>
+	<div class="resume_box_list"><div class="clear"></div>
+  	<div id="">
+    <form name="alipayment" target="supportiframe" action="index.php?c=pay&act=dingdan" method="post" onsubmit="return pay_form();">
+    <input type="hidden" id="integral" name="integral" value="{yun:}$integralclass_name[$integralclass_index[0]]{/yun}" />
+	<input type="hidden" id="integralid" name="integralid" data-discount="{yun:}$integralclass_discount[$integralclass_index[0]]{/yun}" value="{yun:}$integralclass_index[0]{/yun}" />
+    <div class="payment_list"><div class="payment_list_s mt10">充值数量：</div>
+	<div class="payment_list_r">
+	{yun:}foreach from=$integralclass_index item=v key=k{/yun}
+	<span class="payment_list_text {yun:}if $k==0{/yun}payment_list_cur{yun:}/if{/yun}" data-id="{yun:}$v{/yun}" data-integral="{yun:}$integralclass_name[$v]{/yun}" data-discount="{yun:}$integralclass_discount[$v]{/yun}">
+	 <div class="payment_list_text_n"><i class="payment_list_text_icon"></i>{yun:}$integralclass_name[$v]{/yun}<em class="payment_list_text_dw">{yun:}$config.integral_pricename{/yun}</em></div>
+	 {yun:}if $integralclass_discount[$v]{/yun}
+	 <em class="payment_list_text_zk">{yun:}$integralclass_discount[$v]{/yun}折</em>
+	 {yun:}/if{/yun}
+	 </span>
+	{yun:}/foreach{/yun}
+	
+	<div class="payment_list_zdy"><input type="text"  onBlur="userautointegral()" id="autointegral" class="payment_list_input"placeholder="自定义" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength='6'/>{yun:}$config.integral_pricename{/yun}
+	</div>
+	</div>
+	 <div class="payment_list"><div class="payment_list_s mt10">支付金额：</div><div class="payment_list_r"><span class="payintegral"  id="payintegral">0</span>元
+     	<input type="hidden" name="price" size="10"  id="user_vip_price"></div></div>
+	 <div class="payment_list"><div class="payment_list_s">支付备注：</div><div class="payment_list_r"><textarea name="remark" id="remark" cols="40" class="payment_list_textarea"></textarea></div></div>
+	 <div class="payment_list"><div class="payment_list_s">&nbsp;</div><div class="payment_list_r">
+	 	<input type="submit" name="submit" class="payment_list_other" value="提交订单">
+	 </div></div>
+    </div>
+    </form>
+    <div class="wxts_box">
+    <div class="wxts">温馨提示：</div>
+    1. 银行付款界面尽量使用ie浏览器<br>
+    2. 过程中请勿按浏览器“后退”键<br>
+    3. 提交支付后，将转入银行的网站，请根据页面提示操作<br>
+    4. 如果提交后在银行页面打不开，可以尝试过3分钟后再刷新页面,清理IE缓存,卸载3721或google工具条,换个浏览器或换个上网环境 
+    </div>
+</div>
+</div>
+</div>
+ 
+ 
+<div id="remind_order" style="display:none; width:320px;">
+   <div class="pay_tip_box" >
+            <div class="pay_tip_top" >
+            <div class="pay_tip_box_ts">温馨提示</div>
+            您有 <font color="#FF3300">{yun:}$nopayorder{/yun}</font> 个订单未付款，是否继续充值！</div>
+             <div class="">
+                   <a class="pay_tip_box_bth" href="index.php?c=paylist" >去付款</a>
+                <a class="pay_tip_box_bth_jx" href="javascript:void(0);" onclick="layer.closeAll()">继续充值</a>
+           
+    </div>
+</div>         
+
+</div>
+{yun:}include file="$userstyle/footer.htm"{/yun}

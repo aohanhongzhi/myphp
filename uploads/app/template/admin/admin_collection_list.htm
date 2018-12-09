@@ -1,0 +1,872 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></SCRIPT>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+body, div {
+	margin: 0;
+	padding: 0;
+}
+</style>
+</head>
+<script>
+var weburl="{yun:}$config.sy_weburl{/yun}";
+</script>
+<body class="body_ifm">
+<div class="infoboxp" style="position:relative;">  <div class="main_tag" >
+  <div class="tabs_info">
+
+  
+   
+      <ul>
+        <li class="on">采集设置</li>
+        <li>新闻设置</li>
+        <li>职位设置</li>
+        <li>公司设置</li>
+        <li>个人设置</li>
+        <li>简历设置</li>
+        <li>帐号设置</li>
+        <li>兼职设置</li>
+      </ul>
+    </div>
+  <div class="admin_new_tip">
+  <a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list"><b>提示：</b>采集前务必设置自己的接口密码，以免被其他人利用。</div>
+<div class="admin_new_tip_list"><b>注意：</b>这里所设置的参数，只作为没有值的情况下使用，若采集软件有值传输，会优先使用传输值。</div>
+</div>
+</div>
+<div class="clear"></div>
+<div style="height:10px;"></div>
+  <div id="subboxdiv" style="width:100%;height:100%;display:none;position:absolute; z-index:10000"></div>
+
+    <div class="clear"></div>
+    <div class="tag_box">
+      <div>
+        <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+        <form action="index.php?m=collection&c=save" method="post" enctype= "multipart/form-data" target="supportiframe" class="layui-form">
+          <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+          <table width="99%" class="table_form">
+            <tr class="admin_table_trbg">
+              <th width="200" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+              <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+            </tr>
+            <tr>
+              <th width="200">采集状态：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input type="radio" name="locoy_online" value="1" id="online_1" {yun:}if $locoyinfo.locoy_online=="1"{/yun}checked{yun:}/if{/yun} title="开启" >
+                   <input type="radio" name="locoy_online" value="2" id="online_2" {yun:}if $locoyinfo.locoy_online=="2"{/yun}checked{yun:}/if{/yun} title="关闭" >
+                 </div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">接口密码：</th>
+              <td><input type="text" class="input-text" name="locoy_key" id='locoy_key' value="{yun:}$locoyinfo.locoy_key{/yun}">
+                <span class="admin_web_tip">如：123qwe123</span></td>
+            </tr>
+            <tr>
+              <th width="200">匹配精准度：</th>
+              <td><input type="text" class="input-text" name="locoy_rate" id='locoy_rate' value="{yun:}$locoyinfo.locoy_rate{/yun}">
+                <span class="admin_web_tip">如：60</span></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <td colspan="2" align="center"><input class="layui-btn layui-btn-normal" id="config" type="submit" name="config" value="提交">
+                &nbsp;&nbsp;
+                <input class="layui-btn layui-btn-normal" type="reset" value="重置"/></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="hiddendiv">
+        <form action="index.php?m=collection&c=save" method="post" target="supportiframe" class="layui-form">
+          <table width="100%" class="table_form">
+            <tr class="admin_table_trbg">
+              <th width="200" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+              <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+            </tr>
+            <tr>
+              <th width="200">自动提动关键字：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input type="radio" name="locoy_keyword" value="1" id="key_1" {yun:}if $locoyinfo.locoy_keyword=="1"{/yun}checked{yun:}/if{/yun} title="是" >
+                   <input type="radio" name="locoy_keyword" value="2" id="key_2" {yun:}if $locoyinfo.locoy_keyword=="2"{/yun}checked{yun:}/if{/yun} title="否" >
+                 </div>
+                 <div class="layui-form-mid layui-word-aux">注：只有在没有参数传输的才起作用</div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">浏览数随机范围：</th>
+              <td><input type="text" class="input-text tips_class" id='locoy_rand' name="locoy_rand"  value="{yun:}$locoyinfo.locoy_rand{/yun}">
+                <span class="admin_web_tip">如：0-100，默认为0</span></td>
+            </tr>
+            <tr>
+              <th width="200">排序随机范围：</th>
+              <td><input type="text" class="input-text tips_class" name="locoy_sort" id='locoy_sort' value="{yun:}$locoyinfo.locoy_sort{/yun}">
+                <span class="admin_web_tip">如：0-100，默认为0</span></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <td colspan="2" align="center"><input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+                <input class="layui-btn layui-btn-normal" id="otherconfig" type="submit" name="otherconfig" value="提交" />
+                &nbsp;&nbsp;
+                <input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="hiddendiv">
+        <form action="index.php?m=collection&c=save" method="post" target="supportiframe" class="layui-form">
+          <table width="100%" class="table_form">
+            <tr class="admin_table_trbg">
+              <th width="200" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+              <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+            </tr>
+            <tr>
+              <th width="200">职位状态：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input type="radio" name="locoy_job_status" value="1" id="key_1" {yun:}if $locoyinfo.locoy_job_status=="1"{/yun}checked{yun:}/if{/yun} title="已通过" >
+                   <input type="radio" name="locoy_job_status" value="0" id="key_2" {yun:}if $locoyinfo.locoy_online!="1"{/yun}checked{yun:}/if{/yun} title="未审核" >
+                 </div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">职位发布日期：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                  <input id="ad_start" class="input-text" type="text" readonly size="20" value="{yun:}$locoyinfo.locoy_job_sdate{/yun}" name="locoy_job_sdate">
+                 </div>
+                 
+               </div>
+            </div></td>
+            </tr>
+            <tr>
+              <th width="200">从事行业无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_hy" lay-filter="" id="locoy_job_hy_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$industry_index item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_hy==$v{/yun}selected{yun:}/if{/yun}>{yun:}$industry_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">职位类别无法匹配为：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_job1" lay-filter="jobclass" id="locoy_job_job1_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$job_index item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_job1==$v{/yun}selected{yun:}/if{/yun}>{yun:}$job_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+                 <div class="layui-input-inline">
+                   <select name="locoy_job1_son" lay-filter="jobclass" id="locoy_job1_son_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$job_type[$locoyinfo.locoy_job_job1] item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job1_son==$v{/yun}selected{yun:}/if{/yun}>{yun:}$job_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_post" lay-filter="" id="locoy_job_post_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$job_type[$locoyinfo.locoy_job1_son] item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_post==$v{/yun}selected{yun:}/if{/yun}>{yun:}$job_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr>
+              <th width="200">地区无法匹配为：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_province" lay-filter="citys" id="locoy_job_province_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$city_index item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_province==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_city" lay-filter="citys" id="locoy_job_city_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$city_type[$locoyinfo.locoy_job_province] item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_city==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_three" lay-filter="" id="locoy_job_three_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$city_type[$locoyinfo.locoy_job_city] item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_three==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">招聘人数无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_com_number" lay-filter="" id="locoy_com_number_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$comdata.job_number item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_com_number==$v{/yun}selected{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr>
+              <th width="200">薪水待遇无法匹配为：</th>
+              <td>
+              	<input type="text" class="input-text tips_class" id='locoy_minsalary' name="locoy_minsalary"  value="{yun:}$locoyinfo.locoy_minsalary{/yun}">
+              	<span> - </span>
+              	<input type="text" class="input-text tips_class" id='locoy_maxsalary' name="locoy_maxsalary"  value="{yun:}$locoyinfo.locoy_maxsalary{/yun}">
+              </td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">工作经验无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_exp" lay-filter="" id="locoy_job_exp_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$comdata.job_exp item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_exp==$v{/yun}selected{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr>
+              <th width="200">到岗时间无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_report" lay-filter="" id="locoy_job_report_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$comdata.job_report item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_report==$v{/yun}selected{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">年龄要求无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_age" lay-filter="" id="locoy_job_age_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$comdata.job_age item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_age==$v{/yun}selected{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+           
+            <tr class="admin_table_trbg">
+              <th width="200">性别无法匹配为：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_sexs" lay-filter="" id="locoy_job_sexs_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach item=v key=j from=$arr_data.sex{/yun}
+                      <option value="{yun:}$j{/yun}" {yun:}if $locoyinfo.locoy_job_sexs==$j{/yun}selected{yun:}/if{/yun}>{yun:}$v{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr>
+              <th width="200">教育程度无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_edu" lay-filter="" id="locoy_job_edu_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$comdata.job_edu item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_edu==$v{/yun}selected{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">婚姻状况无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_marriage" lay-filter="" id="locoy_job_marriage_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$comdata.job_marriage item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_marriage==$v{/yun}selected{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr>
+              <td colspan="2" align="center"><input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+                <input class="layui-btn layui-btn-normal" id="codeconfig" type="submit" name="codeconfig" value="提交" />
+                &nbsp;&nbsp;
+                <input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="hiddendiv">
+        <form action="index.php?m=collection&c=save" method="post" enctype= "multipart/form-data" target="supportiframe" class="layui-form">
+          <table width="100%" class="table_form">
+            <tr class="admin_table_trbg">
+              <th width="200" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+              <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+            </tr>
+            <tr>
+              <th width="200">从事行业无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_com_hy" lay-filter="" id="locoy_com_hy_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$industry_index item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_com_hy==$v{/yun}selected{yun:}/if{/yun}>{yun:}$industry_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">企业性质无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_pr" lay-filter="" id="locoy_job_pr_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$comdata.job_pr item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_pr==$v{/yun}selected{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr>
+              <th width="200">企业地址无法匹配为：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_com_province" lay-filter="citys" id="locoy_com_province_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$city_index item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_com_province==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+                 <div class="layui-input-inline">
+                   <select name="locoy_com_city" lay-filter="citys" id="locoy_com_city_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$city_type[$locoyinfo.locoy_com_province] item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_com_city==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">企业规模无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_job_mun" lay-filter="" id="locoy_job_mun_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$comdata.job_mun item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_job_mun==$v{/yun}selected{yun:}/if{/yun}>{yun:}$comclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr>
+              <th width="200">注册资金无值为：</th>
+              <td><input type="text" class="input-text" name="locoy_com_money"  value="{yun:}$locoyinfo.locoy_com_money{/yun}">
+                万元 <span class="admin_web_tip">如：0-10000，默认为0</span></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <td colspan="2" align="center"><input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+                <input class="layui-btn layui-btn-normal"  type="submit" name="waterconfig" value="提交" />
+                &nbsp;&nbsp;
+                <input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="hiddendiv">
+        <form action="index.php?m=collection&c=save" method="post" target="supportiframe" class="layui-form">
+          <table width="100%" class="table_form">
+            <tr class="admin_table_trbg">
+              <th width="200" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+              <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+            </tr>
+            <tr>
+              <th width="200">性别无法匹配为：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_user_sexs" lay-filter="" id="locoy_user_sexs_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach item=v key=j from=$arr_data.sex{/yun}
+                      <option value="{yun:}$j{/yun}" {yun:}if $locoyinfo.locoy_user_sexs==$j{/yun}selected{yun:}/if{/yun}>{yun:}$v{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div>
+              </td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">婚姻无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_user_marriage" lay-filter="" id="locoy_user_marriage_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$userdata.user_marriage item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_user_marriage==$v{/yun}selected{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr>
+              <th width="200">教育程度无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_user_edu" lay-filter="" id="locoy_user_edu_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$userdata.user_edu item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_user_edu==$v{/yun}selected{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">工作经验无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_user_exp" lay-filter="" id="locoy_user_exp_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$userdata.user_word item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_user_exp==$v{/yun}selected{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr>
+              <th width="200">民族无法匹配为：</th>
+              <td><input type="text" class="input-text" name="locoy_user_nationality" id='locoy_user_nationality' value="{yun:}$locoyinfo.locoy_user_nationality{/yun}">
+                <span class="admin_web_tip">如：汉族</span></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <td colspan="2" align="center"><input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+                <input class="layui-btn layui-btn-normal" id="mapconfig" type="submit" name="userconfig" value="提交" />
+                &nbsp;&nbsp;
+                <input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="hiddendiv">
+        <form action="index.php?m=collection&c=save" method="post" target="supportiframe" class="layui-form">
+          <table width="100%" class="table_form">
+            <tr class="admin_table_trbg">
+              <th width="200" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+              <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+            </tr>
+            <tr>
+              <th>期望从事行业无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_resume_hy" lay-filter="" id="locoy_resume_hy_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$industry_index item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_resume_hy==$v{/yun}selected{yun:}/if{/yun}>{yun:}$industry_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="180">期望从事职位无法匹配为：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_resume_job1" lay-filter="jobclass" id="locoy_resume_job1_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$job_index item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_resume_job1==$v{/yun}selected{yun:}/if{/yun}>{yun:}$job_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+                 <div class="layui-input-inline">
+                   <select name="locoy_resume_son" lay-filter="jobclass" id="locoy_resume_son_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$job_type[$locoyinfo.locoy_resume_job1] item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_resume_son==$v{/yun}selected{yun:}/if{/yun}>{yun:}$job_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+                 <div class="layui-input-inline">
+                   <select name="locoy_resume_post" lay-filter="" id="locoy_resume_post_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$job_type[$locoyinfo.locoy_resume_son] item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_resume_post==$v{/yun}selected{yun:}/if{/yun}>{yun:}$job_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr>
+              <th width="180">期望工作地点无法匹配为：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_resume_province" lay-filter="citys" id="locoy_resume_province_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$city_index item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_resume_province==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+                 <div class="layui-input-inline">
+                   <select name="locoy_resume_city" lay-filter="citys" id="locoy_resume_city_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$city_type[$locoyinfo.locoy_resume_province] item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_resume_city==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+                 <div class="layui-input-inline">
+                   <select name="locoy_resume_three" lay-filter="" id="locoy_resume_three_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$city_type[$locoyinfo.locoy_resume_city] item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_resume_three==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th>期望月薪无法匹配为：</th>
+              <td>
+              	<input type="text" class="input-text tips_class" id='locoy_user_minsalary' name="locoy_user_minsalary"  value="{yun:}$locoyinfo.locoy_user_minsalary{/yun}">
+              	<span> - </span>
+              	<input type="text" class="input-text tips_class" id='locoy_user_maxsalary' name="locoy_user_maxsalary"  value="{yun:}$locoyinfo.locoy_user_maxsalary{/yun}">
+              </td>
+            </tr>
+            <tr>
+              <th>到岗时间无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_user_report" lay-filter="" id="locoy_user_report_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$userdata.user_report item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_user_report==$v{/yun}selected{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">浏览数随机范围：</th>
+              <td><input type="text" class="input-text tips_class" id='locoy_resume_rand' name="locoy_resume_rand"  value="{yun:}$locoyinfo.locoy_resume_rand{/yun}">
+                <span class="admin_web_tip">如：0-100，默认为0</span></td>
+            </tr>
+            <tr>
+              <td colspan="2" align="center"><input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+                <input class="layui-btn layui-btn-normal" id="mapconfig" type="submit" name="resumeconfig" value="提交" />
+                &nbsp;&nbsp;
+                <input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="hiddendiv">
+        <form action="index.php?m=collection&c=save" method="post" target="supportiframe" class="layui-form">
+          <table width="100%" class="table_form">
+            <tr class="admin_table_trbg">
+              <th bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+              <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+            </tr>
+            <tr>
+              <th width="200">生成用户名长度：</th>
+              <td><input type="text" class="input-text" name="locoy_length" id='locoy_length' value="{yun:}$locoyinfo.locoy_length{/yun}">
+                <span class="admin_web_tip">如：8</span></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th>生成用户名前缀：</th>
+              <td><input type="text" class="input-text" name="locoy_name" id='locoy_name' value="{yun:}$locoyinfo.locoy_name{/yun}">
+                <span class="admin_web_tip">如：user  加随机字符</span></td>
+            </tr>
+            <tr>
+              <th>生成指定密码：</th>
+              <td><input type="text" class="input-text"  name="locoy_pwd" id='locoy_pwd' value="{yun:}$locoyinfo.locoy_pwd{/yun}">
+                <span class="admin_web_tip">如：123456</span></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th>用户状态：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input type="radio" name="locoy_user_status" value="1" id="user_1" {yun:}if $locoyinfo.locoy_user_status=="1"{/yun}checked{yun:}/if{/yun} title="已审核" >
+                   <input type="radio" name="locoy_user_status" value="2" id="user_2" {yun:}if $locoyinfo.locoy_user_status=="2"{/yun}checked{yun:}/if{/yun} title="未审核" >
+                 </div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr>
+              <th>企业会员等级：</th>
+              {yun:}if is_array($qy_rows){/yun}
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   {yun:}foreach item=row from=$qy_rows{/yun}
+                   <input type="radio" name="locoy_rating" value="{yun:}$row.id{/yun}" id="rating_{yun:}$row.id{/yun}" {yun:}if $locoyinfo.locoy_rating==$row.id{/yun}checked{yun:}/if{/yun} title="{yun:}$row.name{/yun}" >
+                   {yun:}/foreach{/yun}
+                 </div>
+               </div>
+            </div>
+                </td>
+              {yun:}else{/yun}
+              <td> 暂无等级，<a href="index.php?m=userconfig&c=comclass" style="color:red;">添加会员等级</a>
+                <input type="hidden" name="locoy_rating" value="0"></td>
+              {yun:}/if{/yun} </tr>
+            <tr class="admin_table_trbg">
+              <td colspan="2" align="center"><input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+                <input class="layui-btn layui-btn-normal" id="mapconfig" type="submit" name="mapconfig" value="提交" />
+                &nbsp;&nbsp;
+                <input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="hiddendiv">
+        <form action="index.php?m=collection&c=save" method="post" target="supportiframe" class="layui-form">
+          <table width="100%" class="table_form">
+            <tr class="admin_table_trbg">
+              <th bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+              <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+            </tr>
+            <tr>
+              <th width="200">职位状态：</th>
+              <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input type="radio" name="locoy_partjob_status" value="1" id="key_1" {yun:}if $locoyinfo.locoy_partjob_status=="1"{/yun}checked{yun:}/if{/yun} title="已通过" >
+                   <input type="radio" name="locoy_partjob_status" value="0" id="key_2" {yun:}if $locoyinfo.locoy_partjob_status!="1"{/yun}checked{yun:}/if{/yun} title="未审核" >
+                 </div>
+               </div>
+            </div>
+                </td>
+            </tr>
+            <tr>
+              <th>工作类型无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_part_type" lay-filter="" id="locoy_part_type_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$partdata.part_type item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_part_type==$v{/yun}selected{yun:}/if{/yun}>{yun:}$partclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="180">薪水无法匹配为：</th>
+              <td><input type="text" class="input-text tips_class" id='locoy_part_salary' name="locoy_part_salary"  value="{yun:}$locoyinfo.locoy_part_salary{/yun}">
+                元/天 <span class="admin_web_tip">如：15</span></td>
+            </tr>
+            <tr>
+              <th width="180">结算周期无法匹配为：</th>
+              <td><div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="locoy_part_billing" lay-filter="" id="locoy_part_billing_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$partdata.part_billing_cycle item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $locoyinfo.locoy_part_billing==$v{/yun}selected{yun:}/if{/yun}>{yun:}$partclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div></td>
+            </tr>
+            <tr class="admin_table_trbg">
+              <th width="200">浏览数随机范围：</th>
+              <td><input type="text" class="input-text tips_class" id='locoy_part_hits' name="locoy_part_hits"  value="{yun:}$locoyinfo.locoy_part_hits{/yun}">
+                <span class="admin_web_tip">如：0-100，默认为0</span></td>
+            </tr>
+            <tr>
+              <td colspan="2" align="center"><input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+                <input class="layui-btn layui-btn-normal" id="partconfig" type="submit" name="partconfig" value="提交" />
+                &nbsp;&nbsp;
+                <input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  var $switchtag = $("div.main_tag ul li");
+  $switchtag.click(function(){
+      $(this).addClass("on").siblings().removeClass("on");
+      var index = $switchtag.index(this);
+      $("div.tag_box > div").eq(index).show().siblings().hide();
+  });
+        
+layui.use(['layer', 'form','laydate'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,laydate = layui.laydate
+    ,$ = layui.$;
+	laydate.render({
+		elem: '#ad_start'
+	});
+	laydate.render({
+		elem: '#ad_end'
+	});
+	form.on('select(jobclass)', function(data){
+		$.post(weburl+"/index.php?m=ajax&c=ajax_job",{str:data.value},function(htm){
+			if(data.elem.name=='locoy_job_job1'){
+				$("#locoy_job1_son_val").html(htm);
+				$("#locoy_job_post_val").html("<option value=''>请选择</option>");
+			}else if(data.elem.name=='locoy_job1_son'){
+				$("#locoy_job_post_val").html(htm);
+			}else if(data.elem.name=='locoy_resume_job1'){
+				$("#locoy_resume_son_val").html(htm);
+				$("#locoy_resume_post_val").html("<option value=''>请选择</option>");
+			}else if(data.elem.name=='locoy_resume_son'){
+				$("#locoy_resume_post_val").html(htm);
+			}
+			form.render('select');
+		});
+	});
+	form.on('select(citys)', function(data){
+		$.post(weburl+"/index.php?m=ajax&c=ajax",{str:data.value},function(htm){
+			if(data.elem.name=='locoy_job_province'){
+				$("#locoy_job_city_val").html(htm);
+				$("#locoy_job_three_val").html("<option value=''>请选择</option>");
+			}else if(data.elem.name=='locoy_job_city'){
+				$("#locoy_job_three_val").html(htm);
+			}else if(data.elem.name=='locoy_resume_province'){
+				$("#locoy_resume_city_val").html(htm);
+				$("#locoy_resume_three_val").html("<option value=''>请选择</option>");
+			}else if(data.elem.name=='locoy_resume_city'){
+				$("#locoy_resume_three_val").html(htm);
+			}else if(data.elem.name=='locoy_com_province'){
+				$("#locoy_com_city_val").html(htm);
+			}else if(data.elem.name=='locoy_com_city'){
+				$("#locoy_com_three_val").html(htm);
+			}
+			form.render('select');
+		});
+	});
+}); 
+</script> 
+</body>
+</html>

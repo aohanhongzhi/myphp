@@ -1,0 +1,326 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/wap_tck.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/css/cmc.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<div id="app" class="mui-views">
+	<div class="mui-view">
+		<div class="mui-pages"></div>
+	</div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+	<!--页面主内容区开始-->
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="yunset_list mt15">
+					<li class="yunset_list_text"><span class="yunset_list_name">期望岗位</span > <span class="yunset_list_commentary"><input type="text" name="name" id="name"  value="{yun:}$row.name{/yun}" placeholder="请输入期望岗位"></span></li>
+					<li>
+						<a href="#jobclasshtml"><span class="yunset_list_name">工作职能</span ><span class="yunset_list_commentary yunset_list_js" id="jobnameshow">{yun:}$job_classname|mb_substr:0:16:'utf-8'{/yun}</span></a>
+						<input type="hidden" name="job_classid" id="job_classid" value="{yun:}$row.job_classid{/yun}" />
+					</li>
+				</ul>
+				<ul class="yunset_list mt15">
+					<li><span class="yunset_list_name">从事行业</span >
+						<span class="yunset_list_commentary">
+						<button id='hyPicker' class="mui-btn mui-btn-block" type='button' data-hy="{yun:}$row.hy{/yun}">{yun:}if $industry_name[$row.hy]{/yun}{yun:}$industry_name[$row.hy]{/yun}{yun:}else{/yun}请选择从事行业{yun:}/if{/yun}</button>
+						<input type="hidden" id="hy" name="hy" value="{yun:}$row.hy{/yun}">
+						</span>
+					</li>
+					<li>
+						<a href="#cityclasshtml"><span class="yunset_list_name">期望城市</span ><span class="yunset_list_commentary yunset_list_js" id="citynameshow">{yun:}$city_classname|mb_substr:0:16:'utf-8'{/yun}</span></a>
+						<input type="hidden" name="city_classid" id="city_classid" value="{yun:}$row.city_classid{/yun}" />
+					</li>
+					<!--li><span class="yunset_list_name">期望城市</span > <span class="yunset_list_commentary">
+				<button id='cityPicker' class="mui-btn mui-btn-block" type='button' data-provinceid="{yun:}$row.provinceid{/yun}" data-cityid="{yun:}$row.cityid{/yun}" data-three_cityid="{yun:}$row.three_cityid{/yun}">{yun:}if $row.provinceid{/yun}{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.three_cityid]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+				<input type="hidden" id="provinceid" name="provinceid" value="{yun:}$row.provinceid{/yun}">
+				<input type="hidden" id="cityid" name="cityid" value="{yun:}$row.cityid{/yun}">
+				<input type="hidden" id="three_cityid" name="three_cityid" value="{yun:}$row.three_cityid{/yun}">
+				</span></li-->
+					<li>
+						<a href="#salaryhtml"><span class="yunset_list_name">期望薪资</span > <span class="yunset_list_commentary" id="salaryshow">{yun:}$row.minsalary{/yun}{yun:}if $row.maxsalary{/yun}-{yun:}$row.maxsalary{/yun}元/月{yun:}else{/yun}元以上/月{yun:}/if{/yun}</span></a>
+					</li>
+				</ul>
+
+				<ul class="yunset_list mt15">
+					<li><span class="yunset_list_name">工作性质</span ><span class="yunset_list_commentary">
+				<button id='typePicker' class="mui-btn mui-btn-block" type='button' data-type="{yun:}$row.type{/yun}">{yun:}if $userclass_name[$row.type]{/yun}{yun:}$userclass_name[$row.type]{/yun}{yun:}else{/yun}请选择工作性质{yun:}/if{/yun}</button>
+				<input type="hidden" id="type" name="type" value="{yun:}$row.type{/yun}">
+				</span></li>
+					<li><span class="yunset_list_name">到岗时间</span ><span class="yunset_list_commentary">
+				<button id='reportPicker' class="mui-btn mui-btn-block" type='button' data-report="{yun:}$row.report{/yun}">{yun:}if $userclass_name[$row.report]{/yun}{yun:}$userclass_name[$row.report]{/yun}{yun:}else{/yun}请选择到岗时间{yun:}/if{/yun}</button>
+				<input type="hidden" id="report" name="report" value="{yun:}$row.report{/yun}">
+				</span></li>
+					<li><span class="yunset_list_name">求职状态</span ><span class="yunset_list_commentary">
+				<button id='jobstatusPicker' class="mui-btn mui-btn-block" type='button' data-jobstatus="{yun:}$row.jobstatus{/yun}">{yun:}if $userclass_name[$row.jobstatus]{/yun}{yun:}$userclass_name[$row.jobstatus]{/yun}{yun:}else{/yun}请选择求职状态{yun:}/if{/yun}</button>
+				<input type="hidden" id="jobstatus" name="jobstatus" value="{yun:}$row.jobstatus{/yun}">
+				</span></li>
+				</ul>
+				<div class="yunset_bth_box">
+					<input type="hidden" id="eid" value="{yun:}$row.id{/yun}" />
+					<button id="submit" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--页面主内容区结束-->
+</div>
+<!-- 职位-->
+<div id="jobclasshtml" class="mui-page">
+	<div class="mui-page-content">
+		<div style="height:570px;">
+			<div class="grade_tit">选择工作职能 (可多选)</div>
+			<div class="grade-eject grade-w-roll">
+				<ul class="grade-w" id="jobone">
+					{yun:}foreach from=$job_index item=v{/yun}
+					<li data-id="{yun:}$v{/yun}">{yun:}$job_name[$v]{/yun}</li>
+					{yun:}/foreach{/yun}
+				</ul>
+				<ul class="grade-t" id="jobtwo">
+				{yun:}foreach from=$job_type key=key item=v{/yun}
+					{yun:}if in_array($key,$job_index){/yun}
+						{yun:}foreach from=$v item=vv{/yun}
+						<li class="jobtwo job{yun:}$key{/yun} none" data-id="{yun:}$vv{/yun}">{yun:}$job_name[$vv]{/yun}</li>
+						{yun:}/foreach{/yun}	
+					{yun:}/if{/yun}
+				{yun:}/foreach{/yun}
+				</ul>
+				<ul class="grade-s" id="jobthree">
+				{yun:}foreach from=$job_type key=key item=v{/yun}
+					{yun:}if in_array($key,$job_index){/yun}
+						{yun:}foreach from=$v item=vv{/yun}
+						<li id="jobtwo{yun:}$vv{/yun}" class="jobthree job{yun:}$vv{/yun} none"><div class="mui-input-row mui-checkbox"><label>全部</label><input type="checkbox" value="{yun:}$vv{/yun}" id="jobcheckAll{yun:}$vv{/yun}" class="checkAll"/></div></li>
+						{yun:}/foreach{/yun}	
+					{yun:}/if{/yun}
+				{yun:}/foreach{/yun}
+				{yun:}foreach from=$job_type key=key item=v{/yun}
+					{yun:}if !in_array($key,$job_index){/yun}
+						{yun:}foreach from=$v item=vv{/yun}
+						<li class="jobthree job{yun:}$key{/yun} none"><div class="mui-input-row mui-checkbox"><label>{yun:}$job_name[$vv]{/yun}</label><input class="jobthreebox jobcheck{yun:}$key{/yun}" id="jobthree{yun:}$vv{/yun}" value="{yun:}$vv{/yun}" type="checkbox"/></div></li>
+						{yun:}/foreach{/yun}	
+					{yun:}/if{/yun}
+				{yun:}/foreach{/yun}
+				</ul>
+			</div>
+			<div class="grade_chlose_box">
+				<div class="grade_chlose_box_c">
+					<span class="grade_chlose_box_c_name">已选</span>
+					<div class="mui-slider">
+						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="background:#fff;height:20px;">
+							<div id="jobchoosed" class="mui-scroll" style="background:#fff;height:20px;">
+								{yun:}foreach from=$job_classid item=v{/yun}
+								<a class="grade_chlose_box_a" data-id="{yun:}$v{/yun}">{yun:}$job_name[$v]{/yun}</a>
+								{yun:}/foreach{/yun}
+							</div>
+						</div>
+					</div>
+				</div>
+				<a class="grade_chlose_bth mui-action-back">确定 <span id="jobpencent" class="{yun:}if !$job_classid{/yun}none{yun:}/if{/yun}">{yun:}count($job_classid){/yun}/5</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 城市多选-->
+<div id="cityclasshtml" class="mui-page">
+	<div class="mui-page-content">
+		<div style="height:570px;">
+			<div class="grade_tit">选择城市(可多选)</div>
+			<div class="grade-eject grade-w-roll">
+				<ul class="grade-w" id="cityone">
+					{yun:}foreach from=$city_index item=v{/yun}
+					<li data-id="{yun:}$v{/yun}">{yun:}$city_name[$v]{/yun}</li>
+					{yun:}/foreach{/yun}
+				</ul>
+				<ul class="grade-t" id="citytwo">
+				{yun:}foreach from=$city_type key=key item=v{/yun}
+					{yun:}if in_array($key,$city_index){/yun}
+						{yun:}foreach from=$v item=vv{/yun}
+						<li class="citytwo city{yun:}$key{/yun} none" data-id="{yun:}$vv{/yun}">{yun:}$city_name[$vv]{/yun}</li>
+						{yun:}/foreach{/yun}	
+					{yun:}/if{/yun}
+				{yun:}/foreach{/yun}
+				</ul>
+				<ul class="grade-s" id="citythree">
+				{yun:}foreach from=$city_type key=key item=v{/yun}
+					{yun:}if in_array($key,$city_index){/yun}
+						{yun:}foreach from=$v item=vv{/yun}
+						<li id="citytwo{yun:}$vv{/yun}" class="citythree city{yun:}$vv{/yun} none"><div class="mui-input-row mui-checkbox"><label>全部</label><input type="checkbox" value="{yun:}$vv{/yun}" id="citycheckAll{yun:}$vv{/yun}" class="checkAll"/></div></li>
+						{yun:}/foreach{/yun}	
+					{yun:}/if{/yun}
+				{yun:}/foreach{/yun}
+				{yun:}foreach from=$city_type key=key item=v{/yun}
+					{yun:}if !in_array($key,$city_index){/yun}
+						{yun:}foreach from=$v item=vv{/yun}
+						<li class="citythree city{yun:}$key{/yun} none"><div class="mui-input-row mui-checkbox"><label>{yun:}$city_name[$vv]{/yun}</label><input class="citythreebox citycheck{yun:}$key{/yun}" id="citythree{yun:}$vv{/yun}" value="{yun:}$vv{/yun}" type="checkbox"/></div></li>
+						{yun:}/foreach{/yun}	
+					{yun:}/if{/yun}
+				{yun:}/foreach{/yun}
+				</ul>
+			</div>
+			<div class="grade_chlose_box">
+				<div class="grade_chlose_box_c">
+					<span class="grade_chlose_box_c_name">已选</span>
+					<div class="mui-slider">
+						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="background:#fff;height:20px;">
+							<div id="citychoosed" class="mui-scroll" style="background:#fff;height:20px;">
+								{yun:}foreach from=$city_classid item=v{/yun}
+								<a class="grade_chlose_box_a" data-id="{yun:}$v{/yun}">{yun:}$city_name[$v]{/yun}</a>
+								{yun:}/foreach{/yun}
+							</div>
+						</div>
+					</div>
+				</div>
+				<a class="grade_chlose_bth mui-action-back">确定<span id="citypencent" class="{yun:}if !$city_classid{/yun}none{yun:}/if{/yun}">{yun:}count($city_classid){/yun}/5</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="salaryhtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member">
+				<ul class="yunset_list">
+					<li class="yunset_list_text"><span class="yunset_list_name">最低薪资</span>
+						<div class="yunset_list_xzbox">
+							<input type="number" id="minsalary" value="{yun:}$row.minsalary{/yun}" placeholder="请填写最低薪资" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+							<span class="yunset_list_xz">元/月</span>
+						</div>
+					</li>
+					<li class="yunset_list_text"><span class="yunset_list_name">最高薪资<font color="#999">(选填)</font></span>
+						<div class="yunset_list_xzbox">
+							<input type="number" id="maxsalary" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.maxsalary{/yun}" placeholder="请填写最高薪资">
+
+							<span class="yunset_list_xz">元/月</span> </div>
+					</li>
+				</ul>
+				<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/resume.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script language="javascript">
+	var hyData = [];
+	'{yun:}foreach from=$industry_index item=v{/yun}'
+	hyData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$industry_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+	var typeData = [];
+	'{yun:}foreach from=$userdata.user_type item=v{/yun}'
+	typeData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$userclass_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+	var reportData = [];
+	'{yun:}foreach from=$userdata.user_report item=v{/yun}'
+	reportData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$userclass_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+	var jobstatusData = [];
+	'{yun:}foreach from=$userdata.user_jobstatus item=v{/yun}'
+	jobstatusData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$userclass_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+
+	var jobclass = '{yun:}$row.job_classid{/yun}';
+	var jobclassname = '{yun:}$job_classname{/yun}';
+	var jobclassidData = [];
+	'{yun:}foreach from=$job_classid item=v{/yun}'
+	jobclassidData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$job_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}';
+	var cityclass = '{yun:}$row.city_classid{/yun}';
+	var cityclassname = '{yun:}$city_classname{/yun}';
+	var cityclassidData = [];
+	'{yun:}foreach from=$city_classid item=v{/yun}'
+	cityclassidData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$city_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}';
+	mui.init();
+	var viewApi = mui('#app').view({
+		defaultPage: '#main'
+	});
+	
+	var view = viewApi.view;
+	(function($) {
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll({
+			scrollY: true, //是否竖向滚动
+			scrollX: false, //是否横向滚动
+			startX: 0, //初始化时滚动至x
+			startY: 0, //初始化时滚动至y
+			indicators: false, //是否显示滚动条
+			deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+			// bounce: true //是否启用回弹
+		});
+		//处理view的后退与webview后退
+		var oldBack = $.back;
+		$.back = function() {
+			if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+				viewApi.back();
+			} else { //执行webview后退
+				oldBack();
+			}
+		};
+	})(mui);
+	
+	view.addEventListener('pageBeforeBack', function(e) {
+		var salaryshow = '';
+		var minsalary = parseInt(document.getElementById('minsalary').value);
+		var maxsalary = parseInt(document.getElementById('maxsalary').value);
+		if(minsalary) {
+			salaryshow = minsalary;
+			if(maxsalary) {
+				salaryshow += '-' + maxsalary +'元/月';
+			} else {
+				salaryshow += '元以上/月';
+			}
+		}
+		if(parseInt(maxsalary)>0 && parseInt(maxsalary) < parseInt(minsalary)) {
+			document.getElementById('minsalary').value = '';
+			document.getElementById('maxsalary').value = '';
+			document.getElementById('salaryshow').innerText = '';
+			return mui.toast('最低薪资不能比最高薪资高，请重新填写');
+		}
+		document.getElementById('salaryshow').innerText = salaryshow;
+	});
+	(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+		var submit = document.getElementById('submit');
+		submit.addEventListener('tap', saveexpect, false)
+
+	})();
+	var jn = [];
+	'{yun:}foreach from=$job_name key=key item=v{/yun}';
+	jn['{yun:}$key{/yun}']='{yun:}$v{/yun}';
+	'{yun:}/foreach{/yun}';
+	var cn = [];
+	'{yun:}foreach from=$city_name key=key item=v{/yun}';
+	cn['{yun:}$key{/yun}']='{yun:}$v{/yun}';
+	'{yun:}/foreach{/yun}';
+</script>
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/cmc.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

@@ -1,0 +1,132 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+<div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+  <link href="{yun:}$comstyle{/yun}/images/index_style.css?v={yun:}$config.cachecode{/yun}" type=text/css rel=stylesheet>
+  <div class=right_box>
+    <div class=admincont_box>
+      <div class="com_tit">
+       <span class="com_tit_span">兼职报名</span>
+      </div>
+      <div class="com_body">
+      <div class="admin_new_tip ">
+            <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+            <div class="admin_new_tip_list_cont">
+              <div class="admin_new_tip_list"> 对于求职者来说即使是被拒绝，也胜过毫无音讯的等待 </div>
+               {yun:}if $rows{/yun}
+          <div class="admin_new_tip_list"> 共有（{yun:}$total{/yun}）人报名贵公司发布的兼职 </div>
+          {yun:}/if{/yun}
+          
+            </div>
+          </div>
+          
+     
+        <div class=admin_textbox_04>
+          <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+          <div class="hr_tip_box">
+          <div class="hr_subMetx">
+			<span class="hr_subMetx_span fltL">招聘职位：</span>
+			<div class="text_seclet text_seclet_cur2 re">
+                <input id="qypr" class="SpFormLBut text_seclet_w250" type="button" onclick="search_show('job_qypr');" {yun:}if $jobname{/yun}value="{yun:}$jobname{/yun}"{yun:}else{/yun}value="全部职位"{yun:}/if{/yun}>
+                <div id="job_qypr" class="cus-sel-opt-panel" style="display: none;">
+                  	<ul class="Search_Condition_box_list">
+
+                    	<li><a href="index.php?c=partapply&status={yun:}$smarty.get.status{/yun}">全部职位</a></li>
+
+                  		{yun:}foreach from=$JobList item=one{/yun}
+                        <li> <a href="index.php?c=partapply&jobid={yun:}$one.id{/yun}&status={yun:}$smarty.get.status{/yun}">{yun:}$one.name{/yun}</a> </li>
+						{yun:}/foreach{/yun}
+
+					</ul>
+                </div>
+              </div>
+			</div>
+            <div class="hr_subMetx"> <span class="hr_subMetx_span fltL">简历状态：</span>
+               <a href="index.php?c=partapply&jobid={yun:}$smarty.get.jobid{/yun}" class="hr_subMetx_a {yun:}if $smarty.get.status==''{/yun}hr_subMetx_cur{yun:}/if{/yun}">不限</a>
+                {yun:}foreach from=$StateList item=one{/yun}
+                <a {yun:}if $smarty.get.status==$one.id{/yun}class="hr_subMetx_cur"{yun:}/if{/yun} href="index.php?c=partapply&jobid={yun:}$smarty.get.jobid{/yun}&status={yun:}$one.id{/yun}">{yun:}$one.name{/yun}</a>
+                {yun:}/foreach{/yun}
+            </div>
+			     
+		  </div>
+          <div class="clear"></div>
+          <form action="{yun:}$now_url{/yun}&act=del" target="supportiframe" method="post" id='myform'> 
+              <div class="clear"></div>
+                   <table class="com_table mt20">
+                {yun:}if $rows{/yun}
+               <tr> 
+                <th>&nbsp;</th> 
+                 <th>兼职名称</th> 
+                 <th>姓名</th> 
+                 <th>手机号码</th> 
+                <th>性别</th> 
+                <th>学历</th> 
+                <th>申请时间</th> 
+                  <th>标记状态</th> 
+                <th>操作</th> 
+                </tr>
+              
+                {yun:}foreach item=v from=$rows{/yun}
+              <tr> 
+              <td>
+           <input type="checkbox" name="delid[]" value="{yun:}$v.id{/yun}">
+                  </td>
+                   <td><a href="{yun:}url m=part c=show id='`$v.jobid`'{/yun}" target="_blank" class="uesr_name_a">{yun:}$v.jobname{/yun}</a></td> 
+                  <td align="center">{yun:}$v.name{/yun}&nbsp;</td>
+                   
+                   <td align="center">{yun:}$v.telphone{/yun} &nbsp;</td> 
+                   <td align="center">{yun:}$v.sex{/yun}&nbsp;</td> 
+				   <td align="center">{yun:}$v.edu{/yun}&nbsp;</td> 
+                   <td align="center">{yun:}$v.ctime|date_format:'%Y-%m-%d'{/yun} &nbsp;</td> 
+                  <td align="center">  
+                    <span class="com_mem_hr_list_bj {yun:}if $v.status=='1'{/yun}com_mem_hr_list_bj_cur com_mem_hr_list_red{yun:}/if{/yun}" name='{yun:}$v.id{/yun}' status='1'>  <i class="com_mem_hr_list_icon"></i>未查看<i class="com_mem_hr_no_icon"></i></span>
+                    <span class="com_mem_hr_list_bj {yun:}if $v.status=='2'{/yun}com_mem_hr_list_bj_cur{yun:}/if{/yun}" name='{yun:}$v.id{/yun}' status='2'>  <i class="com_mem_hr_list_icon"></i>已查看</span>     
+				   <span class="com_mem_hr_list_bj {yun:}if $v.status=='3'{/yun}com_mem_hr_list_bj_cur{yun:}/if{/yun}" name='{yun:}$v.id{/yun}' status='3'>  <i class="com_mem_hr_list_icon"></i>已联系  </span>    
+            </td>  <td align="center">
+       <a href="javascript:void(0)" onclick="layer_del('确定删除该条信息？', 'index.php?c=partapply&act=del&del={yun:}$v.id{/yun}'); " class="com_bth cblue">删除</a>
+             </td>
+               
+              </tr>
+              
+        
+                {yun:}/foreach{/yun}
+                 <tr>
+                <td colspan="8" class="table_end">
+                <div class="com_Release_job_bot"> <span class="com_Release_job_qx">
+                  <input id='checkAll'  type="checkbox" onclick='m_checkAll(this.form)' class="com_Release_job_qx_check">全选</span>
+                  <INPUT class="c_btn_02" type="button" name="subdel" value="批量删除" onclick="return really('delid[]');">
+                </div>
+                </td>
+                </tr>
+                {yun:}else{/yun}
+                 <tr>
+                <td colspan="8" class="table_end">
+                <div class="msg_no">您还没有兼职报名信息</div>
+                </td>
+                </tr>
+                {yun:}/if{/yun} 
+             <tr>
+                <td colspan="8" class="table_end">
+            <div class="diggg mt10 fltR">{yun:}$pagenav{/yun}</div>
+             </td>
+                </tr>
+          </form>
+          </table>
+		
+		</div>
+        </div>
+      </div>
+    </div>
+  </div> 
+  </div> 
+<script>
+$(document).ready(function(){
+	$(".com_mem_hr_list_bj").click(function(){
+		var status=$(this).attr('status');
+		var id=$(this).attr('name');
+		$.post("index.php?c=partapply&act=status",{id:id,status:status},function(data){
+			location.reload();
+		});
+	});
+});
+</script>
+{yun:}include file="$comstyle/footer.htm"{/yun}

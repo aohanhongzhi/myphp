@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<title>{yun:}$title{/yun}</title>
+		<meta http-equiv="keywords" content="{yun:}$keywords{/yun},wap" />
+		<meta http-equiv="description" content="{yun:}$description{/yun}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width" initial-scale="1" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta name="format-detection" content="telephone=no,email=no" />
+		<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width" />
+		<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/mui/css/mui.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/job.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<script>
+			weburl = "{yun:}$config.sy_weburl{/yun}";
+		</script>
+	</head>
+
+	<body>
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar"></div>
+				<div class="mui-pages"></div>
+			</div>
+		</div>
+		<!--单页面开始-->
+		<div id="main" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<div class="body_wap">
+					<header class="header_h">
+						<div class="header_fixed">
+							<div class="header">
+								<div class="header_bg  {yun:}if $tplmoblie.color{/yun}bg{yun:}$tplmoblie.color{/yun}{yun:}/if{/yun}">
+									<a class="hd-lbtn {yun:}if !$backurl{/yun}mui-action-back{yun:}/if{/yun}" href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:history.back();{yun:}/if{/yun}"><i class="header_top_l"></i></a>
+									<div class="header_h1">
+										{yun:}if $topplaceholder{/yun}
+										<div class="header_fx_search">
+											<a href="#searchhtml">
+												<div class="formFiled">
+													<input type="text" value="{yun:}$smarty.get.keyword{/yun}" name="keyword" class="input_search searchnew" placeholder="{yun:}$topplaceholder{/yun}">
+												</div>
+											</a>
+										</div>
+										{yun:}else{/yun}
+										<div class="header_p_z"> {yun:}$headertitle{/yun}</div>
+										{yun:}/if{/yun}
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</header>
+				</div>
+			</div>
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<section>
+							<div class="searchOptions clearfix">
+								<ul class="searchOptions_list">
+									{yun:}if $config.three_cityid&&$config.sy_web_site=='1'{/yun}
+									<li class="Substation popup" data-pop="Substation">
+										<a href="javascript:void(0);" class="searchOptions_list_a">
+											<span class="job_ov">{yun:}$city_name[$config.three_cityid]{/yun}</span>
+											<i class="searchOptions_icon"></i>
+										</a>
+									</li>
+									{yun:}else if $config.cityid&&$config.sy_web_site=='1'{/yun}
+									<li class="Substation popup" data-pop="Substation">
+										<a href="javascript:void(0);" class="searchOptions_list_a">
+											<span class="job_ov">{yun:}$city_name[$config.cityid]{/yun}</span>
+											<i class="searchOptions_icon"></i>
+										</a>
+									</li>
+									{yun:}else{/yun}
+									<li class="grade popup" data-pop="grade">
+										<a href="javascript:void(0);" class="searchOptions_list_a">
+											<span class="job_ov">
+											{yun:}if $city_name[$smarty.get.cityid] || $city_name[$smarty.get.provinceid]{/yun}
+												{yun:}$city_name[$smarty.get.cityid]{/yun}{yun:}$city_name[$smarty.get.provinceid]{/yun}
+											{yun:}elseif $city_name[$smarty.get.three_cityid]{/yun}
+												{yun:}$city_name[$smarty.get.three_cityid]{/yun}
+											{yun:}else{/yun}
+												区域
+											{yun:}/if{/yun}
+										</span>
+											<i class="searchOptions_icon"></i>
+										</a>
+									</li>
+									{yun:}/if{/yun}
+
+									<li class="Category popup" data-pop="Category">
+										<a href="javascript:void(0);" class="searchOptions_list_a">
+											<span class="job_ov">{yun:}if $jobname{/yun}{yun:}$jobname{/yun}{yun:}else{/yun}职能{yun:}/if{/yun}</span>
+											<i class="searchOptions_icon"></i>
+										</a>
+									</li>
+									<li class="Sort popup" data-pop="Sort">
+										<a href="javascript:void(0);" class="searchOptions_list_a">
+											<span class="job_ov">{yun:}if $comclass_name[$smarty.get.exp]{/yun}{yun:}$comclass_name[$smarty.get.exp]{/yun}{yun:}else{/yun}经验{yun:}/if{/yun}</span>
+											<i class="searchOptions_icon  "></i>
+										</a>
+									</li>
+									<li class="Gengduoj popup" data-pop="Gengduoj" style="border:none">
+										<a href="javascript:void(0);" class="searchOptions_list_a">更多<i class="searchOptions_icon"></i></a>
+									</li>
+									<input type="hidden" id="searchurl" value="{yun:}$searchurl{/yun}" />
+									<input type="hidden" id="waptype" value="1" />
+								</ul>
+							</div>
+						</section>
+						<div class="clear"></div>
+						<section id="muijob">
+							<div class="warp_content clear">
+								<div class="job_list_content">
+									<!-----竞价置顶---------->
+								{yun:}if $config.joblist_top==1{/yun} 
+									{yun:}if $total>0{/yun} 
+									{yun:}joblist namelen=10 jobin='auto.jobin' comlen=30 report='auto.report' hy='auto.hy' job1='auto.job1' job1_son='auto.job1_son' job_post='auto.job_post' jobids='auto.jobids' pr='auto.pr' mun='auto.mun' provinceid='auto.provinceid' cityid='auto.cityid' three_cityid='auto.three_cityid' type='auto.type' edu='auto.edu' exp='auto.exp' sex='auto.sex' minsalary='auto.minsalary' maxsalary='auto.maxsalary' keyword='auto.keyword' cert='auto.cert' urgent='auto.urgent' bid=1 uptime='auto.uptime' key=key item=zd_listall name=zdlist1{/yun}
+
+									<div class="job_list_box"> {yun:}if $zd_listall.rec=='1' &&$zd_listall.rec_time gt time(){/yun}
+										<i class="yun_wap_tj">推荐</i> {yun:}/if{/yun}
+										<a href="{yun:}url m=wap c=job a=view id=$zd_listall.id{/yun}">
+											<div class="yunwap_jobname">
+												<h3>{yun:}$zd_listall.name_n{/yun} {yun:}if $zd_listall.urgent_time>time(){/yun}<i class="yun_wap_jp">急招</i>{yun:}/if{/yun}    </h3><span class="yunwap_jobtime" style="color:#f00">置顶</span>
+											</div>
+											<div class="yunwap_job_info"><span class="yunwap_job_info_s yunwap_job_city">{yun:}$zd_listall.job_city_one{/yun}-{yun:}$zd_listall.job_city_two{/yun}</span> {yun:}if $zd_listall.job_exp{/yun} <span class="yunwap_job_info_s yunwap_job_xl">{yun:}$zd_listall.job_exp{/yun}经验</span>{yun:}/if{/yun} {yun:}if $zd_listall.job_edu{/yun} <span class="yunwap_job_info_s yunwap_job_jy">{yun:}$zd_listall.job_edu{/yun}学历</span>{yun:}/if{/yun}
+											</div>
+											<div class="yunwap_jobxz">￥{yun:}$zd_listall.job_salary{/yun} <span class="yunwap_job_sq">申请</span></div>
+										</a>
+										<div class="yunwap_jobcom">
+											<a href="{yun:}url m=wap c=company a=show id=$zd_listall.uid{/yun}">
+												<div class="yunwap_jobcomlogo"><img src="{yun:}$zd_listall.logo{/yun}" width="40" height="40"></div>
+
+												<div class="yunwap_jobcom_name">
+													{yun:}$zd_listall.com_name|strip_tags|mb_substr:0:20:'utf-8'{/yun} {yun:}if $zd_listall.ratlogo!="" && $zd_listall.ratlogo!="0"{/yun}
+													<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$zd_listall.ratlogo{/yun}" style="vertical-align:middle" width="12" height="12" /> {yun:}/if{/yun} {yun:}if $zd_listall.yyzz_status=='1'{/yun}
+													<i class="job_qy_rz_icon"></i> {yun:}/if{/yun}
+												</div>
+												{yun:}if $zd_listall.welfarename{/yun}
+												<div class="">
+													{yun:}foreach from=$zd_listall.welfarename item=waflist{/yun}
+													<span class="yunwap_jobfl">{yun:}$waflist{/yun}</span> 
+													{yun:}/foreach{/yun}
+												</div>
+												{yun:}else{/yun}
+												<div class="yunwap_jobcom_info">{yun:}$zd_listall.pr_n{/yun}<span class="yunwap_jobcom_info_line">|</span>{yun:}$zd_listall.mun_n{/yun}<span class="yunwap_jobcom_info_line">|</span>{yun:}$zd_listall.hy_n{/yun}</div>
+												{yun:}/if{/yun}
+											</a>
+										</div>
+									</div>
+
+									{yun:}/joblist{/yun} 
+									{yun:}/if{/yun} 
+								{yun:}else{/yun} 
+									{yun:}if $total>0{/yun} 
+									{yun:}joblist namelen=10 comlen=30  jobin='auto.jobin' report='auto.report' hy='auto.hy' job1='auto.job1' job1_son='auto.job1_son' job_post='auto.job_post' jobids='auto.jobids' pr='auto.pr' mun='auto.mun' provinceid='auto.provinceid' cityid='auto.cityid' three_cityid='auto.three_cityid' type='auto.type' edu='auto.edu' exp='auto.exp' sex='auto.sex' minsalary='auto.minsalary' maxsalary='auto.maxsalary' keyword='auto.keyword' cert='auto.cert' urgent='auto.urgent' bid=1 uptime='auto.uptime' key=key limit=5 item=zd_list name=zdlist1{/yun}
+
+									<div class="job_list_box">
+										{yun:}if $zd_list.rec=='1' &&$zd_list.rec_time gt time(){/yun}<i class="yun_wap_tj">推荐</i> {yun:}/if{/yun}
+										<a href="{yun:}url m=wap c=job a=view id=$zd_list.id{/yun}">
+											<div class="yunwap_jobname">
+												<h3>{yun:}$zd_list.name_n{/yun} {yun:}if $zd_list.urgent_time>time(){/yun}<i class="yun_wap_jp">急招</i>{yun:}/if{/yun}    </h3><span class="yunwap_jobtime" style="color:#f00">置顶</span>
+											</div>
+											<div class="yunwap_job_info"><span class="yunwap_job_info_s yunwap_job_city">{yun:}$zd_list.job_city_one{/yun}-{yun:}$zd_list.job_city_two{/yun}</span> {yun:}if $zd_list.job_exp{/yun} <span class="yunwap_job_info_s yunwap_job_xl">{yun:}$zd_list.job_exp{/yun}经验</span>{yun:}/if{/yun} {yun:}if $zd_list.job_edu{/yun} <span class="yunwap_job_info_s yunwap_job_jy">{yun:}$zd_list.job_edu{/yun}学历</span>{yun:}/if{/yun}
+											</div>
+											<div class="yunwap_jobxz">￥{yun:}$zd_list.job_salary{/yun} <span class="yunwap_job_sq">申请</span></div>
+										</a>
+										<div class="yunwap_jobcom">
+											<a href="{yun:}url m=wap c=company a=show id=$zd_list.uid{/yun}">
+												<div class="yunwap_jobcomlogo"><img src="{yun:}$zd_list.logo{/yun}" width="40" height="40"></div>
+												<div class="yunwap_jobcom_name">
+													{yun:}$zd_list.com_name|strip_tags|mb_substr:0:20:'utf-8'{/yun} {yun:}if $zd_list.ratlogo!="" && $zd_list.ratlogo!="0"{/yun}
+													<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$zd_list.ratlogo{/yun}" style="vertical-align:middle" width="12" height="12" /> {yun:}/if{/yun} {yun:}if $zd_list.yyzz_status=='1'{/yun}
+													<i class="job_qy_rz_icon"></i> {yun:}/if{/yun}
+												</div>
+												{yun:}if $zd_list.welfarename{/yun}
+												<div class="">
+													{yun:}foreach from=$zd_list.welfarename item=waflist{/yun}
+													<span class="yunwap_jobfl">{yun:}$waflist{/yun}</span> {yun:}/foreach{/yun}
+												</div>
+												{yun:}else{/yun}
+
+												<div class="yunwap_jobcom_info">{yun:}$zd_list.pr_n{/yun}<span class="yunwap_jobcom_info_line">|</span>{yun:}$zd_list.mun_n{/yun}<span class="yunwap_jobcom_info_line">|</span>{yun:}$zd_list.hy_n{/yun}</div>
+												{yun:}/if{/yun}
+											</a>
+										</div>
+									</div>
+									{yun:}/joblist{/yun}
+									{yun:}/if{/yun} 
+								{yun:}/if{/yun}
+									<!-----竞价置顶end---------->
+									{yun:}joblist noids=1 namelen=10 comlen=15 ispage=1 jobin='auto.jobin' hy='auto.hy' pr='auto.pr' mun='auto.mun' provinceid='auto.provinceid' three_cityid='auto.three_cityid' cityid='auto.cityid' type='auto.type' edu='auto.edu' exp='auto.exp' sex='auto.sex' minsalary='auto.minsalary' maxsalary='auto.maxsalary' keyword='auto.keyword' rec='auto.rec' urgent='auto.urgent' limit=20 item=job_list islt=4{/yun}
+
+									<div class="job_list_box">{yun:}if $job_list.rec=='1' &&$job_list.rec_time gt time(){/yun}
+										<i class="yun_wap_tj">推荐</i> {yun:}/if{/yun}
+										<a href="{yun:}url m=wap c=job a=view id=$job_list.id{/yun}">
+											<div class="yunwap_jobname">
+												<h3>{yun:}$job_list.name_n{/yun} {yun:}if $job_list.urgent_time>time(){/yun}<i class="yun_wap_jp">急招</i>{yun:}/if{/yun}</h3><span class="yunwap_jobtime"> {yun:}if $job_list.time=='今天' || $job_list.time=='昨天'||$job_list.redtime=='1'{/yun}
+										          {yun:}$job_list.time{/yun}
+										          {yun:}else{/yun}
+										          {yun:}$job_list.time{/yun}
+										          {yun:}/if{/yun}</span>
+											</div>
+											<div class="yunwap_job_info"><span class="yunwap_job_info_s yunwap_job_city">{yun:}$job_list.job_city_one{/yun}-{yun:}$job_list.job_city_two{/yun}</span> {yun:}if $job_list.job_edu{/yun}<span class="yunwap_job_info_s yunwap_job_xl">{yun:}$job_list.job_edu{/yun}学历</span>{yun:}/if{/yun} {yun:}if $job_list.job_exp{/yun}<span class="yunwap_job_info_s yunwap_job_jy">{yun:}$job_list.job_exp{/yun}经验</span>{yun:}/if{/yun}
+											</div>
+											<div class="yunwap_jobxz">￥{yun:}$job_list.job_salary{/yun} <span class="yunwap_job_sq">申请</span></div>
+										</a>
+										<div class="yunwap_jobcom">
+											<a href="{yun:}url m=wap c=company a=show id=$job_list.uid{/yun}">
+												<div class="yunwap_jobcomlogo"><img src="{yun:}$job_list.logo{/yun}" width="40" height="40"></div>
+												<div class="yunwap_jobcom_name">{yun:}$job_list.com_name|strip_tags|mb_substr:0:20:'utf-8'{/yun} {yun:}if $job_list.ratlogo!="" && $job_list.ratlogo!="0"{/yun}
+													<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$job_list.ratlogo{/yun}" style="vertical-align:middle" width="12" height="12" /> {yun:}/if{/yun} {yun:}if $job_list.yyzz_status=='1'{/yun}
+													<i class="job_qy_rz_icon"></i> {yun:}/if{/yun}
+												</div>
+												{yun:}if $job_list.welfarename{/yun}
+												<div class="yunwap_jobfl_box">
+													{yun:}foreach from=$job_list.welfarename item=waflist{/yun}
+													<span class="yunwap_jobfl">{yun:}$waflist{/yun}</span>{yun:}/foreach{/yun}</div>
+												{yun:}else{/yun}
+												<div class="yunwap_jobcom_info">{yun:}$job_list.pr_n{/yun}<span class="yunwap_jobcom_info_line">|</span>{yun:}$job_list.mun_n{/yun}<span class="yunwap_jobcom_info_line">|</span>{yun:}$job_list.hy_n{/yun}</div>
+												{yun:}/if{/yun}
+											</a>
+										</div>
+									</div>
+
+									{yun:}/joblist{/yun} 
+									{yun:}if $total<=0{/yun} 
+										{yun:}if $smarty.get.keyword!="" {/yun}
+										<div class="wap_member_nosearch">
+										<div class="wap_member_no_tip"> 很抱歉,这个星球找不到呢！</div>
+										<div class="wap_member_no_tip_other">换个条件试试呗~</div>
+										<div>
+											<a class="wap_mb_no_sr" href="{yun:}url m=wap c='job'{/yun}">重新搜索</a>
+										</div>
+										</div>
+										{yun:}else{/yun}
+										<div class="wap_member_nosearch">
+											<div class="wap_member_no_tip"> 很抱歉,这个星球没有职位呢！</div>
+										</div>
+										{yun:}/if{/yun} 
+									{yun:}else{/yun}
+										<div class="pages" style="padding-bottom:20px">{yun:}$pagenav{/yun}</div>
+									{yun:}/if{/yun}
+								</div>
+							</div>
+						</section>
+
+					{yun:}if $total<=0 && !$smarty.get.rec{/yun} 
+					<section id="muirecjob">
+						<div class="mq_tit">
+							<span class="mq_tit_name">为你推荐</span>
+						</div>
+						{yun:}joblist namelen=15 comlen=19 rec=1 limit=40 item=blist{/yun}
+
+						<div class="job_list_box">{yun:}if $blist.rec=='1' &&$blist.rec_time gt time(){/yun}
+							<i class="yun_wap_tj">推荐</i> {yun:}/if{/yun}
+							<div class="yunwap_jobname">
+								<h3><a href="{yun:}url m=wap c=job a=view id=$blist.id{/yun}">{yun:}$blist.name_n{/yun} {yun:}if $blist.urgent_time>time(){/yun}<i class="yun_wap_jp">急招</i>{yun:}/if{/yun}</a></h3><span class="yunwap_jobtime">{yun:}if $job_list.time=='今天' || $job_list.time=='昨天'||$job_list.redtime=='1'{/yun}
+						          {yun:}$job_list.time{/yun}
+						          {yun:}else{/yun}
+						          {yun:}$job_list.time{/yun}
+						          {yun:}/if{/yun}
+						          </span>
+							</div>
+							<div class="yunwap_job_info"><span class="yunwap_job_info_s yunwap_job_city">{yun:}$blist.job_city_two{/yun} {yun:}$blist.job_city_three{/yun}</span>
+								<span class="yunwap_job_info_s yunwap_job_xl">{yun:}$blist.job_edu{/yun}学历</span>
+								<span class="yunwap_job_info_s yunwap_job_jy">{yun:}$blist.job_exp{/yun}经验</span>
+							</div>
+							<div class="yunwap_jobxz">{yun:}if $blist.job_salary!='面议'{/yun}￥{yun:}/if{/yun}{yun:}$blist.job_salary{/yun}
+								<a href="{yun:}url m=wap c=job a=view id=$blist.id{/yun}" class="yunwap_job_sq">申请</a>
+							</div>
+							<div class="yunwap_jobcom">
+								<div class="yunwap_jobcomlogo"><img src="{yun:}$blist.logo{/yun}" width="40" height="40"></div>
+								<div class="yunwap_jobcom_name">
+									<a href="{yun:}url m=wap c=company a=show id=$blist.uid{/yun}">{yun:}$blist.com_name|strip_tags|mb_substr:0:20:'utf-8'{/yun} {yun:}if $blist.ratlogo!="" && $blist.ratlogo!="0"{/yun}
+										<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$blist.ratlogo{/yun}" style="vertical-align:middle" width="12" height="12" /> {yun:}/if{/yun} {yun:}if $blist.yyzz_status=='1'{/yun}
+										<i class="job_qy_rz_icon"></i> {yun:}/if{/yun}
+									</a>
+								</div>
+								{yun:}if $blist.welfarename{/yun}
+								<div class="yunwap_jobfl_box">
+									{yun:}foreach from=$blist.welfarename item=waflist{/yun}
+									<span class="yunwap_jobfl">{yun:}$waflist{/yun}</span>{yun:}/foreach{/yun}</div>
+								{yun:}else{/yun}
+								<div class="yunwap_jobcom_info">{yun:}$blist.pr_n{/yun}<span class="yunwap_jobcom_info_line">|</span>{yun:}$blist.mun_n{/yun}<span class="yunwap_jobcom_info_line">|</span>{yun:}$blist.hy_n{/yun}</div>
+								{yun:}/if{/yun}
+							</div>
+						</div>
+						{yun:}/joblist{/yun}
+					</section>
+					{yun:}/if{/yun}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--单页面结束-->
+	
+
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/search.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/demo.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/demo.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+	<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script>
+		mui.init();
+		var viewApi = mui('#app').view({
+			defaultPage: '#main'
+		});
+		var view = viewApi.view;
+		(function($) {
+			//初始化单页的区域滚动
+			$('.mui-scroll-wrapper').scroll({
+				indicators: false, //是否显示滚动条
+				bounce: true //是否启用回弹
+			});
+			//处理view的后退与webview后退
+			var oldBack = $.back;
+			$.back = function() {
+				if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+					viewApi.back();
+				} else { //执行webview后退
+					oldBack();
+				}
+			};
+		})(mui);
+		$(document).ready(function() {
+			$("#search").val();
+			$(".searchOptions_list li a").removeClass("search_h1_box_cur_list");
+			if(document.getElementById('muijob')){
+				document.getElementById('muijob').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+			}
+			if(document.getElementById('muirecjob')){
+				document.getElementById('muirecjob').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+			}
+		})
+		$(".searchnew").on('tap', function() {
+			$('body').removeAttr('style');
+			$('.popshow').removeClass('grade-w-roll');
+			$('.popshow').removeAttr('style');
+			$('.popshow').removeClass('popshow');
+		})
+	</script>
+	{yun:}include file="$wapstyle/publictwo.htm"{/yun}
+	{yun:}include file="$wapstyle/search.htm"{/yun}
+	{yun:}include file="$wapstyle/footer.htm"{/yun}

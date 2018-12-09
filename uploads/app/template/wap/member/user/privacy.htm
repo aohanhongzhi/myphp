@@ -1,0 +1,110 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+
+<div class="mui-content">
+    <ul class="mui-table-view mui-table-view-radio">
+        <li class="mui-table-view-cell {yun:}if $resume.status==1{/yun}mui-selected{yun:}/if{/yun}" value="1">
+            <a class="mui-navigate-right">简历公开 <span class="privacy_list_p">我正在找工作，希望企业关注我的简历</span></a>
+        </li>
+        <li class="mui-table-view-cell {yun:}if $resume.status==2{/yun}mui-selected{yun:}/if{/yun}" value="2">
+            <a class="mui-navigate-right">简历保密 <span class="privacy_list_p">没找工作，企业不能搜索到您的简历</span></a>
+        </li>
+    </ul>
+    <div class="mui-content-padded">
+        <p>提示：设置为公开时,企业才能搜索到默认简历</p>
+    </div>
+</div>
+<style>
+    .mui-table-view-radio .mui-table-view-cell.mui-selected .mui-navigate-right:after {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        position: absolute;
+        right: 20px;
+        background: url({yun:}$wap_style{/yun}/images/yun_m_zq.png) no-repeat;
+        background-size: 100%;
+        content: ''
+    }
+</style>
+
+<ul class="privacy_list mt15">
+    <li class="privacy_list_af">
+        <a href="index.php?c=blacklist">屏蔽企业 <span class="privacy_list_hmd">我不希望某些企业搜索到我的简历</span></a>
+    </li>
+</ul>
+<script>
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    var info = document.getElementById("info");
+    document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
+        $.get(wapurl + "member/index.php?c=up&status=" + e.detail.el.value, function(data) {});
+
+    });
+
+    function addblack() {
+        blacklist = $("#blacklist").html();
+        $("#blacklist").html('');
+        $(".Blacklist_box>form>ul").html("");
+        $("#name").val('');
+        layer.open({
+            type: 1,
+            title: '搜索企业',
+            btn: ['确定', '取消'],
+            no: function() {
+                location.reload();
+            },
+            yes: function() {
+                ckaddblack();
+            },
+            shadeClose: false,
+            border: [10, 0.3, '#000', true],
+            area: ['300px', '320px'],
+            content: blacklist
+        });
+    }
+
+    function searchcom() {
+        var name = $.trim($("#name").val());
+        if(name == '') {
+            layermsg('请输入搜索的公司名称！', 2, 8);
+            return false;
+        } else {
+            var i = layer.open({
+                type: 2,
+                content: '执行中，请稍候...'
+            });
+            $.post(wapurl + "member/index.php?c=searchcom", {
+                name: name
+            }, function(data) {
+                layer.close(i);
+                $(".Blacklist_box>form>ul").html(data);
+            });
+        }
+    }
+
+    function ckaddblack() {
+        var chk_value = [];
+        $('input[name="buid[]"]:checked').each(function() {
+            chk_value.push($(this).val());
+        });
+        if(chk_value.length == 0) {
+            layermsg("请选择要屏蔽的公司！", 2, 8, function() {
+                addblack()
+            });
+            return false;
+        } else {
+            layer_load('执行中，请稍候...');
+            layer.closeAll();
+            $.post(wapurl + "/member/index.php?c=save", {
+                buid: chk_value
+            }, function(data) {
+                var data = eval('(' + data + ')');
+                layermsg(data.msg, 2, function() {
+                    location.reload();
+                });
+                return false;
+            });
+        }
+    }
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

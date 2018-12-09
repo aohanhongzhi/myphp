@@ -1,0 +1,30 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<div class="evaluate_box">
+
+<!--列表-->
+{yun:}if $rows{/yun}
+{yun:}foreach from=$rows item=v{/yun}
+<div class="evaluate_list">
+ <a href="{yun:}url m=wap c=evaluate a=show id=$v.id{/yun}">
+<div class="evaluate_pic">  <img src="{yun:}$config.sy_weburl{/yun}/{yun:}$v.pic{/yun}"  onerror="showImgDelay(this,'{yun:}$style{/yun}/images/nopic.gif',2);" width="90"/></div>
+<div class="evaluate_name">{yun:}$v.name{/yun}</div>
+<div class="evaluate_p">{yun:}$v.description{/yun}</div>
+<div class="evaluate_cs">{yun:}$v.visits{/yun}人访问过<span class="evaluate_p_bth">开始测试 ></span></div>
+
+</a>
+</div>
+
+{yun:}/foreach{/yun}
+ <div class="pages">{yun:}$pagenav{/yun}</div>
+{yun:}else{/yun}
+<div class="wap_member_nosearch">
+	<div class="wap_member_no_tip"> 很抱歉,这个星球没有测评试卷呢！</div>
+</div>
+{yun:}/if{/yun}
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

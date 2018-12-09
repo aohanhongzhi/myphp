@@ -1,0 +1,118 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<div class="evaluate_show">
+<div class="evaluate_name">{yun:}$info.name{/yun}</div>
+<div class="evaluate_pall">{yun:}$info.description{/yun}</div>
+</div>
+<div class="evaluate_show_cont">
+ {yun:}if $questions{/yun}
+<form  name="gradeform" id="gradeform" action="{yun:}url m=wap c=evaluate a=grade{/yun}" method="post" onsubmit="return check_evaluate(this);">
+<ul class="evaluate_show_tm">
+ {yun:}foreach from=$questions item=item key=lkey{/yun}
+<li class="question" id="question{yun:}$lkey+1{/yun}" {yun:}if $lkey gt 0{/yun}style="display:none"{yun:}/if{/yun}  tid='{yun:}$item.id{/yun}'>
+<div class="cp_ti_canj">
+<div class="evaluate_show_h1">{yun:}$lkey+1{/yun}.{yun:}$item.question{/yun}</div>
+{yun:}foreach from=$item.option item=option key=k{/yun}
+<div class="evaluate_show_chlose"><input type="radio" did='{yun:}$item.id{/yun}' name="q{yun:}$item.id{/yun}" value="{yun:}$k{/yun}" class="none"/>{yun:}$item.letters[$k]{/yun}.{yun:}$option{/yun}<i class="evaluate_show_chlose_icon"></i></div>
+{yun:}/foreach{/yun}
+</div>
+</li>
+{yun:}/foreach{/yun} 
+</ul>
+
+<div class="evaluate_show_bthbox">
+<div class="evaluate_show_bthcont">
+{yun:}if $questions|@count>1{/yun}
+
+<a  href="javascript:void(0)" onclick="nextquestion('1')" id="upq" class="evaluate_show_bthcont_a none">上一题</a>
+<a href="javascript:void(0)" onclick="nextquestion('2')" id="nextq"class="evaluate_show_bthcont_a evaluate_show_bthcont_a_next">下一题</a>
+{yun:}/if{/yun}
+<span class=" {yun:}if $questions|@count>1{/yun}none{yun:}/if{/yun}" id="submitpaper">
+<input id="submitexam" type="submit" style="background: #35b104;color: #fff;border: none;padding: 0px 40px;height:37px;" name="submitexam" value="提交" >
+<input type="hidden" name="examid" value="{yun:}$info.id{/yun}" />
+
+</span>
+</div>
+<div class="evaluate_show_bthcont_n"><span id="qnum">1</span>/{yun:}$questions|@count{/yun} 题</div>
+<input type="hidden" id="questionid" value="1">
+<input type="hidden" id="allnum" value="{yun:}$questions|@count{/yun}">
+ </div>
+  </form>
+  {yun:}else{/yun}
+  <div class="wap_member_nosearch">
+	<div class="wap_member_no_tip"> 这个星球还没有测试题目哦<br>去看看其他测试吧！</div>
+</div>
+  {yun:}/if{/yun}
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+$(document).ready(function () {
+	/*点击选项，更改class*/
+	$(".evaluate_show_chlose").click(function(){ 
+		$(this).parent().children().find('i').removeClass("evaluate_show_chlose_icon_cur");
+		$(this).parent().children().find("input[type='radio']").removeAttr("checked");
+		if($(this).children("input[type='radio']").attr("checked") == undefined ){
+			$(this).children("input[type='radio']").attr("checked","checked")
+			$(this).find('i').addClass("evaluate_show_chlose_icon_cur");
+		}
+	});  
+});
+function check_evaluate(target_form){
+	var error=0;	
+	$(".question").each(function(){
+		var tid=$(this).attr("tid"); 
+		var val=$("input:radio[name='q"+tid+"']:checked").val();
+		if(isNaN(val)){
+			error+=1;
+			layermsg("必须全部答完才能交卷！");return false;
+		} 
+	});
+	if(error=='0'){
+		post2ajax(target_form);return false;
+	}
+}
+function nextquestion(type){
+	var qid=$("#questionid").val();
+	var allnum=$("#allnum").val();
+	if(type==2){
+		var checkid=$("#question"+qid+" input:radio:checked").val();
+		if(!checkid){
+			layermsg("请选择！");return false;
+		}
+		if(parseInt(allnum)>parseInt(qid)){
+			var qids=parseInt(qid)+1;
+			$("#questionid").val(qids);
+			$("#qnum").html(qids);
+			$(".question").hide();
+			$("#question"+qids).show();
+			if(parseInt(allnum)==parseInt(qids)){
+				$("#submitpaper").removeClass('none');
+				$("#nextq").addClass('none');
+			}else{
+				$("#nextq").removeClass('none');
+			}
+			$("#upq").removeClass('none');
+		}
+	}else{
+		var qids=parseInt(qid)-1;
+		if(qids>0){
+			$("#questionid").val(qids);
+			$("#qnum").html(qids);
+			$(".question").hide();
+			$("#question"+qids).show();
+			if(parseInt(allnum)!=parseInt(qids)){
+				$("#submitpaper").addClass('none');
+				$("#nextq").removeClass('none');
+			}else{
+				$("#nextq").addClass('none');
+			}
+			if(qids==1){
+				$("#upq").addClass('none');
+			}
+		}
+	}
+}
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

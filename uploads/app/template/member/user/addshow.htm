@@ -1,0 +1,43 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<script>
+var tplPath='{yun:}$config.sy_weburl{/yun}/';
+var serverPath='index.php?c=show&act=save';
+var returnUrl='index.php?c=show&eid={yun:}$smarty.get.eid{/yun}';
+var fileNumLimit=50;
+</script>
+<link rel="stylesheet" type="text/css" href="{yun:}$config.sy_weburl{/yun}/js/webuploader/webuploader.css?v={yun:}$config.cachecode{/yun}" />
+<link rel="stylesheet" type="text/css" href="{yun:}$config.sy_weburl{/yun}/js/webuploader/style.css?v={yun:}$config.cachecode{/yun}" />
+<script charset="utf-8" src="{yun:}$config.sy_weburl{/yun}/js/webuploader/webuploader.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script charset="utf-8" src="{yun:}$config.sy_weburl{/yun}/js/webuploader/upload.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+    
+ <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">上传我的作品</span> <i class="member_right_h1_icon user_bg"></i></div>
+ <div class="clear"></div>
+ 
+        <div class='uppright_box'>
+            <div id="uploader">
+				<div class="queueList">
+					<div id="dndArea" class="placeholder">
+						<div id="filePicker"></div>
+						<p>或将照片拖到这里</p>
+					</div>
+				</div>
+				<div class="statusBar" style="display:none;">
+					<div class="progress">
+						<span class="text">0%</span>
+						<span class="percentage"></span>
+					</div>
+					<div class="info"></div>
+					<div class="btns">
+						<div id="filePicker2"></div>
+						<div class="uploadBtn">开始上传</div>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" id="usershowid" value="{yun:}$smarty.get.eid{/yun}">
+        </div>
+    </div>
+</div>
+{yun:}include file="$userstyle/footer.htm"{/yun}

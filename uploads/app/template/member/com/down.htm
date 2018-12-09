@@ -1,0 +1,248 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+	<div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+		
+		<div class=right_box>
+			
+			<div class=admincont_box>
+				
+				<div class="com_tit"><span class="com_tit_span">我的简历</span></div>
+				<div class="job_list_tit">
+					<ul class="">
+						<li {yun:}if $smarty.get.c=="hr"{/yun} class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=hr">应聘简历</a></li>
+						<li {yun:}if $smarty.get.c=="down"{/yun} class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=down">已下载简历</a></li>
+						<li {yun:}if $smarty.get.c=="talent_pool"{/yun} class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=talent_pool">收藏简历</a></li>
+						<li {yun:}if $smarty.get.c=="look_resume"{/yun} class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=look_resume">浏览简历</a></li>
+						<li {yun:}if $smarty.get.c=="record"{/yun} class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=record">网站推荐简历</a></li>
+					</ul>
+				</div>
+				
+				<div class="clear"></div>
+				
+				<div class="com_body">
+					<div class="joblist_search">
+						<form action="index.php" method="get">
+							<div class="joblist_search_box">
+								<input name="c" type="hidden" value="down">
+								<input name="keyword" type="text" class="joblist_search_box_text" placeholder="请输入简历关键字" value="{yun:}$smarty.get.keyword{/yun}">
+								<input name="" type="submit" class="joblist_search_bth" value=" ">
+							</div>
+						</form>
+					</div>
+					
+					<div class="clear"></div>
+					<div class=admin_textbox_04>
+						<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+						<form action="{yun:}$now_url{/yun}&act=del" target="supportiframe" method="post" id='myform'>
+							<table class="com_table mt20" id="job_checkbokid">
+								{yun:}if !empty($rows){/yun}
+									<tr>
+										<th width="20">&nbsp;</th>
+										<th>姓名</th>
+										<th>求职意向</th>
+										<th>工作经验 </th>
+										<th>期望薪资</th>
+										<th>下载时间</th>
+										<th>邀请面试</th>
+										<th >操作</th>
+									</tr>
+									{yun:}foreach  from=$rows  item=v{/yun}
+									<tr>
+										<td>
+											<input type="checkbox" name="delid[]" value="{yun:}$v.id{/yun}"  class="com_Release_job_qx_check" style="margin-top:2px;">
+										</td>
+										<td>
+											<a href="{yun:}url m=resume c=show id='`$v.eid`'{/yun}"  target=_blank class="com_Release_name" >
+												{yun:}$v.name{/yun}
+											</a> 
+											 
+										</td>
+										<td align="center"><span class="yxjob_name">{yun:}$v.jobname{/yun}</span></td>
+										<td align="center">{yun:}$v.exp{/yun}&nbsp;</td>
+										<td align="center">
+											{yun:}if $v.minsalary && $v.maxsalary{/yun}
+												￥{yun:}$v.minsalary{/yun}-{yun:}$v.maxsalary{/yun}
+											{yun:}else if $v.minsalary{/yun}
+												￥{yun:}$v.minsalary{/yun}以上
+											{yun:}else{/yun}
+												面议
+											{yun:}/if{/yun}&nbsp;
+										</td>
+										<td align="center">{yun:}$v.downtime|date_format:'%Y-%m-%d'{/yun}&nbsp;</td>
+										 <td align="center">
+											{yun:}if $v.userid_msg==1{/yun} 
+												<font color="#aaa">已经邀请</font> 
+											{yun:}else{/yun} 
+												<a href="javascript:;" uid="{yun:}$v.uid{/yun}" username="{yun:}$v.name{/yun}" id="b" class=" com_bth cblue sq_resume">
+													邀请面试
+												</a> 
+											{yun:}/if{/yun} 
+										</td>
+										<td align="center"> 
+												<a href="javascript:void(0);" class="com_bth cblue" onclick="report('{yun:}$v.eid{/yun}','{yun:}$v.uid{/yun}','{yun:}$v.name{/yun}')" class=" com_bth cblue">举报</a>
+											<a href="javascript:void(0);" class="com_bth cblue" onclick="remark('{yun:}$v.id{/yun}','{yun:}$v.remark{/yun}','{yun:}$v.name{/yun}');">备注</a>
+											
+											<a href="javascript:void(0)" onclick="layer_del('确定要删除？','{yun:}$now_url{/yun}&act=del&id={yun:}$v.id{/yun}')"  class=" com_bth cblue">删除</a> 
+										</td>
+									</tr>
+									{yun:}/foreach{/yun}
+									<tr>
+										<td colspan="8" class="table_end">
+											<div class="com_Release_job_bot"> 
+												<span class="com_Release_job_qx">
+													<input id='checkAll'  type="checkbox" onclick='m_checkAll(this.form)' class="com_Release_job_qx_check">全选
+												</span>
+												<input class="c_btn_02"  type="button" name="subdel" value="批量删除" onclick="return Delete('delid[]');">
+												<input class="c_btn_02"  type="button" name="subdel" value="批量导出" onclick="check_xls('delid[]');">
+											</div>
+											<div class="diggg">{yun:}$pagenav{/yun}</div>
+										</td>
+									</tr>
+ 								  
+								{yun:}elseif $smarty.get.keyword!="" {/yun}
+									<tr>
+										<td colspan="7" class="table_end">
+											<div class="msg_no">
+												<p>没有搜索到下载简历！</p>
+												<a href="{yun:}url m=resume{/yun}" class="com_msg_no_bth com_submit">我要主动找人才</a>
+											</div>
+										</td>
+									</tr>
+								{yun:}else{/yun}
+									<tr>
+										<td colspan="7" class="table_end">
+											<div class="msg_no">
+												<p>亲爱的用户，目前您还没有下载简历。</p>
+												<a href="{yun:}url m=resume{/yun}" class="com_msg_no_bth com_submit">我要主动找人才</a>
+											</div>
+										</td>
+									</tr>
+								{yun:}/if{/yun} 
+								  
+								{yun:}if !empty($rows){/yun}
+									<tr>
+										<td colspan="8" class="table_end">
+											<div class="wxts_box wxts_box_mt30">
+												<div class="wxts">温馨提示：</div>
+												您已下载（<span class="f60">{yun:}$total{/yun}</span>）份简历, <a href="{yun:}url m=resume{/yun}" class="fb_Com_xz"  target="_blank" style="text-align:center; line-height:25px;">找人才</a><br>
+											</div>
+										</td>
+									</tr>
+								{yun:}/if{/yun}
+							</table>
+							<div  class="clear"></div>
+						</form>
+						
+						<div class="clear"></div>
+						<div class="infoboxp22" id="infobox" style="display:none; ">
+							<div>
+								<form action="index.php?c=down&act=report" method="post" class="layui-form" id="formstatus" target="supportiframe">
+									<input name="r_uid" value="0" type="hidden">
+									<input name="eid" value="0" type="hidden">
+									<input name="r_name" value="0" type="hidden">
+									<div class="jb_infobox" >
+								
+                                <span class="jb_infochlose">
+                                    <input type="checkbox" name="reason[]" id="reason_1" lay-skin="primary" title="无人接听" value="无人接听"></span>
+                                    <span class="jb_infochlose"><input type="checkbox" name="reason[]" id="reason_2" lay-skin="primary" title="打广告" value="打广告"></span>
+                              <span class="jb_infochlose"> <input type="checkbox" name="reason[]" id="reason_3" lay-skin="primary" title="找到工作" value="找到工作"></span>
+                             <span class="jb_infochlose"><input type="checkbox" name="reason[]" id="reason_4" lay-skin="primary" title="信息不实" value="信息不实"></span>
+                              <span class="jb_infochlose"><input type="checkbox" name="reason[]" id="reason_5" lay-skin="primary" title="号码错误" value="号码错误"></span>
+                          <span class="jb_infochlose"><input type="checkbox" name="reason[]" id="reason_6" lay-skin="primary" title="骗子" value="骗子"></span>
+									</div>
+									<div class="jb_infochlose_bth">
+										<button type="submit" name='submit' value='1' class="submit_btn" style="margin-left:80px;">确认</button>
+										&nbsp;&nbsp;
+										<button type="button"  class="cancel_btn" onclick="layer.close($('#layindex').val())">取消</button>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="infoboxp22" id="remarkbox" style="display:none; ">
+							<div>
+								<form action="index.php?c=down&act=remark" method="post" id="formstatus" target="supportiframe">
+									<input name="remarkid" value="0" type="hidden">
+									<input name="rname" value="0" type="hidden">
+									<div class="jb_infobox"  >
+										<textarea id="remark" style="width:300px;margin:8px" name="remark" cols="30" rows="9" class="hr_textarea"></textarea>
+									</div>
+									<div class="jb_infobox"  style="width: 90%;">
+										<button type="submit" name='submit' value='1' class="com_pop_bth_qd" style="margin-left:80px;">确认</button>
+										&nbsp;&nbsp;
+										<button type="button" class="com_pop_bth_qx" onclick="layer.close($('#layindex').val())">取消</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+layui.use(['form'], function(){
+    var form = layui.form,
+		$ = layui.$;  
+});
+function Delete(name){
+	var chk_value =[];    
+	$('input[name="'+name+'"]:checked').each(function(){    
+		chk_value.push($(this).val());   
+	});   
+	if(chk_value.length==0){
+		layer.msg("请选择要删除的数据！",2,8);return false;
+	}else{
+		layer.confirm("确定删除吗？",function(){
+			$("#myform").attr("action","index.php?c=down&act=del");
+			setTimeout(function(){$('#myform').submit()},0); 
+		});
+	} 
+} 
+function check_xls(name){
+	var chk_value =[];    
+	$('input[name="'+name+'"]:checked').each(function(){    
+		chk_value.push($(this).val());   
+	});
+	if(chk_value.length==0){
+		layer.msg("请选择您要导出的数据！",2,8);return false;
+	}else{
+		var i = layer.confirm("确定导出吗？",function(){
+			$("#myform").attr("action","index.php?c=down&act=xls");
+			setTimeout(function(){$('#myform').submit()},0); 
+			layer.close(i);
+		});
+	} 
+}	
+function report(eid,uid,name){
+	$("input[name=eid]").val(eid);
+	$("input[name=r_uid]").val(uid);
+	$("input[name=r_name]").val(name); 
+	var layindex = $.layer({
+		type : 1,
+		title :'举报', 
+		closeBtn : [0 , true],
+		border : [10 , 0.3 , '#000', true],
+		area : ['360px','180px'],
+		page : {dom :"#infobox"}
+	});
+	$("#layindex").val(layindex);
+}
+function remark(id,remark,name){
+	$("input[name=remarkid]").val(id);
+	$("#remark").val(remark);
+	$("input[name=rname]").val(name); 
+	var layindex = $.layer({
+		type : 1,
+		title :'备注', 
+		closeBtn : [0 , true],
+		border : [10 , 0.3 , '#000', true],
+		area : ['320px','180px'],
+		page : {dom :"#remarkbox"}
+	});
+	$("#layindex").val(layindex);
+}
+</script> 
+{yun:}include file="$comstyle/yqms.htm"{/yun}
+{yun:}include file="$comstyle/footer.htm"{/yun}

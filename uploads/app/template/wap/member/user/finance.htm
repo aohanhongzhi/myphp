@@ -1,0 +1,54 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun} 
+<div class="yun_usermember_financebg"></div>
+	<div class="yun_usermember_financebox">
+		<div class="yun_usermember_financezm">
+			<div class="yun_usermember_financezm_box">
+				<div class="yun_usermember_financezm_box_c">
+					<div class="yun_usermember_financezm_mx yun_usermember_financezm_mx_line">
+						<div class="yun_usermember_financezm_p">可用积分</div>
+						<div class="yun_usermember_financezm_n">{yun:}$statis.integral{/yun}</div>
+					</div>
+				
+					<div class="yun_usermember_financezm_mx">
+						<div class="yun_usermember_financezm_p">已消费积分</div>
+						<div class="yun_usermember_financezm_n">{yun:}$statis.allprice{/yun}<a href="index.php?c=consume" class="yun_usermember_financezm_lookmx">查看消费明细</a></div>
+					</div>
+
+					<div class="yun_usermember_financezm_photo">
+						<a href="index.php?c=photo">
+							{yun:}if $resume.sex==1{/yun}
+								<img src="{yun:}$resume.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);">
+							{yun:}else{/yun}
+								<img src="{yun:}$resume.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_iconv{/yun}',2);">
+							{yun:}/if{/yun}
+						</a>
+					</div>
+				</div>
+				
+				<ul class="yun_usermember_finance_cz">
+					<li><a href="index.php?c=integral" class="yun_usermember_finance_cz_icon yun_usermember_finance_cz_rw">赚积分</a></li>
+					<li><a href="javascript:void(0);" id="shareClick" class="yun_usermember_finance_cz_icon yun_usermember_finance_cz_jf">邀请有礼</a></li>
+					<li><a href="index.php?c=reward_list&s=1"class="yun_usermember_finance_cz_icon yun_usermember_finance_cz_jl">兑换记录</a></li>
+				</ul>
+				
+			</div>
+		</div>
+		
+	 
+		
+		<div class="yun_usermember_finance_pay mt15"><a href="index.php?c=pay">充 值</a></div>
+ 		
+	</div>
+<script>
+var config = {
+		url:'{yun:}$reg_url{/yun}',
+		title:'邀请注册',
+		desc:'#推荐得{yun:}$config.integral_pricename{/yun}，好礼尽情拿#只要成功推荐1位朋友注册，就可以兑换到礼品了！只要推荐{yun:}$config.integral_pricename{/yun}够给力，更有新iPad、iPod、音响、耳机、背包、笔记本等数万件礼品可尽情兑换！给我点力吧！注册成功你也可以获得礼品兑换{yun:}$config.integral_pricename{/yun}哦，赶快来参加吧！',
+		img:'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+		img_title:'邀请注册',
+		from:'{yun:}$config.sy_webname{/yun}'
+	};
+</script>
+<!--微信分享专用---->
+<div style='margin:0 auto;width:0px;height:0px;overflow:hidden;'><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}"></div>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

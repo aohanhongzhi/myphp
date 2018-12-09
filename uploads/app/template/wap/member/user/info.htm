@@ -1,0 +1,440 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<link rel="stylesheet" type="text/css" href="{yun:}$wap_style{/yun}/js/webapppic/cropper.css?v={yun:}$config.cachecode{/yun}" />
+<script src="{yun:}$wap_style{/yun}/js/webapppic/cropper.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <ul class="yunset_list">
+                    <li>
+                        <a href="#photohtml" class="yunset_list_max">
+                            <span class="yunset_list_name">头像</span>
+                            <span class="yunset_list_tx ">
+								{yun:}if $resume.sex==1{/yun}
+									<img id="photopic" src="{yun:}$resume.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);">
+								{yun:}else{/yun}
+									<img id="photopic" src="{yun:}$resume.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_iconv{/yun}',2);">
+								{yun:}/if{/yun}
+							</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="yunset_list mt15">
+                    <li class="yunset_list_text"><span class="yunset_list_name">姓名</span ><span class="yunset_list_commentary"><input type="text" name="name" id="name"  value="{yun:}$resume.name{/yun}" placeholder="请输入姓名"></span></li>
+                </ul>
+                <ul class="yunset_list mt15">
+
+                    <li><span class="yunset_list_name">性别</span><span class="yunset_list_commentary">
+					<button id='sexPicker' class="mui-btn mui-btn-block" type='button' data-sex="{yun:}$resume.sex{/yun}">{yun:}if $resume.sex==1{/yun}{yun:}$arr_data1{/yun}{yun:}else if $resume.sex==2{/yun}{yun:}$arr_data1{/yun}{yun:}else{/yun}请选择性别{yun:}/if{/yun}</button>
+					<input type="hidden" id="sex" name="sex" value="{yun:}$resume.sex{/yun}">
+					</span></li>
+
+                    <li><span class="yunset_list_name">出生年月</span><span class="yunset_list_commentary">
+					<button id='birthdayUserPicker' data-options='{"type":"date","value":"{yun:}if $resume.birthday{/yun}{yun:}$resume.birthday{/yun}{yun:}else{/yun}1988-08-08{yun:}/if{/yun}","beginYear":1955,"endYear":2010}'  class="btn mui-btn mui-btn-block">{yun:}if $resume.birthday{/yun}{yun:}$resume.birthday{/yun}{yun:}else{/yun}1988-08-08{yun:}/if{/yun}</button>
+					<input type="hidden" id="birthday" name="birthday" value="{yun:}if $resume.birthday{/yun}{yun:}$resume.birthday{/yun}{yun:}else{/yun}1988-08-08{yun:}/if{/yun}">
+					</span></li>
+
+                    <li><span class="yunset_list_name">最高学历</span><span class="yunset_list_commentary">
+					<button id='eduPicker' class="mui-btn mui-btn-block" type='button' data-edu="{yun:}$resume.edu{/yun}">{yun:}if $resume.edu{/yun}{yun:}$userclass_name[$resume.edu]{/yun}{yun:}else{/yun}请选择最高学历{yun:}/if{/yun}</button>
+					<input type="hidden" id="edu" name="edu" value="{yun:}$resume.edu{/yun}">
+					</span></li>
+
+                    <li><span class="yunset_list_name">工作经验</span><span class="yunset_list_commentary">
+					<button id='expPicker' class="mui-btn mui-btn-block" type='button' data-exp="{yun:}$resume.exp{/yun}">{yun:}if $resume.exp{/yun}{yun:}$userclass_name[$resume.exp]{/yun}{yun:}else{/yun}请选择工作经验{yun:}/if{/yun}</button>
+					<input type="hidden" id="exp" name="exp" value="{yun:}$resume.exp{/yun}">
+					</span></li>
+
+                    <li class="yunset_list_text"><span class="yunset_list_name">现居住地</span><span class="yunset_list_commentary"><input type="text" name="living"  id="living"value="{yun:}$resume.living{/yun}" placeholder="请输入现居住地"></span></li>
+                </ul>
+                <ul class="yunset_list mt15">
+                    <li class="yunset_list_text"><span class="yunset_list_name">手机</span><span class="yunset_list_commentary">
+					{yun:}if $resume.moblie_status==1{/yun}
+					（已绑定）{yun:}$resume.telphone{/yun} 
+					<input type="hidden" id="telphone" value="{yun:}$resume.telphone{/yun}">
+					{yun:}else{/yun}
+					<input type="text" name="telphone" id="telphone" value="{yun:}$resume.telphone{/yun}" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" class=""placeholder="请填写手机号码" >
+					{yun:}/if{/yun} 
+					</span></li>
+                    <li class="yunset_list_text">
+                        <span class="yunset_list_name">邮箱</span>
+                        <span class="yunset_list_commentary ">
+					 {yun:}if $resume.email_status==1{/yun}
+					（已验证）{yun:}$resume.email{/yun}
+						<input type="hidden" id="email" value="{yun:}$resume.email{/yun}">
+					{yun:}else{/yun}
+						 <div class=""><input type="text" name="email" id="email" value="{yun:}$resume.email{/yun}" class="" placeholder="请填写联系邮箱" ></div>
+					{yun:}/if{/yun} 
+				
+					</span>
+                    </li>
+                </ul>
+
+                <div class="yunset_bth_box" style="background: transparent; border: none; padding:0px;">
+                    <a href="#addnexthtml" class="yun_wap_info_brief_tit_bc addnext">下一步</a>
+                </div>
+                <div style="height:30px;"></div>
+                <!--<div class="yunset_bth_box"> <button id="submit" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="addnexthtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+
+                <ul class="yunset_list">
+
+                    <li class="yunset_list_text"><span class="yunset_list_name" style="width:150px">详细地址<em class="yunset_xttip">（选填）</em></span>
+                        <div class="yunset_list_commentary"> <input type="text" name="address" id="address" value="{yun:}$resume.address{/yun}" placeholder="XXX省XXX市XXX区XXX街道" class=""></div>
+                    </li>
+
+                    <li class="yunset_list_text"><span class="yunset_list_name">身高<em class="yunset_xttip">（选填）</em></span > 
+                      	<span class="yunset_list_commentary" style="padding-right:20px;">
+                    		<input type="number" name="height" id="height"  value="{yun:}$resume.height{/yun}" placeholder="">
+                      	</span>
+                        <i style=" position:absolute;right:10px;top:0px; display:inline-block; line-height:44px;">CM</i>
+                    </li>
+
+                    <li class="yunset_list_text"><span class="yunset_list_name">体重<em class="yunset_xttip">（选填）</em></span > 
+                      	<span class="yunset_list_commentary" style="padding-right:20px;">
+                    		<input type="number" name="weight" id="weight"  value="{yun:}$resume.weight{/yun}" placeholder="">
+                      	</span>
+                        <i style=" position:absolute;right:10px;top:0px; display:inline-block; line-height:44px;">KG</i>
+                    </li>
+
+                    <li class="yunset_list_text"><span class="yunset_list_name">民族<em class="yunset_xttip">（选填）</em></span>
+                        <div class="yunset_list_commentary"> <input type="text" name="nationality" id="nationality" value="{yun:}$resume.nationality{/yun}" placeholder="例：汉" class=""></div>
+                    </li>
+
+                    <li><span class="yunset_list_name">婚姻<em class="yunset_xttip">（选填）</em></span><span class="yunset_list_commentary">
+					<button id='marriagePicker' class="mui-btn mui-btn-block" type='button' data-marriage="{yun:}$resume.marriage{/yun}">{yun:}if $resume.marriage{/yun}{yun:}$userclass_name[$resume.marriage]{/yun}{yun:}else{/yun}请选择婚姻状况{yun:}/if{/yun}</button>
+					<input type="hidden" id="marriage" name="marriage" value="{yun:}$resume.marriage{/yun}">
+					</span></li>
+
+                    <li class="yunset_list_text"><span class="yunset_list_name" style="width:150px">户籍所在地<em class="yunset_xttip">（选填）</em></span>
+                        <div class="yunset_list_commentary"> <input type="text" name="domicile" id="domicile" value="{yun:}$resume.domicile{/yun}" placeholder="例：江苏-宿迁" class=""></div>
+                    </li>
+
+                    <li class="yunset_list_text"><span class="yunset_list_name">QQ<em class="yunset_xttip">（选填）</em></span>
+                        <div class="yunset_list_commentary"> <input type="text" name="qq" id="qq" value="{yun:}$resume.qq{/yun}" class="" placeholder="请填写QQ号码"></div>
+                    </li>
+
+                    <li class="yunset_list_text">
+                        <span class="yunset_list_name" style="width:150px">个人二维码<em class="yunset_xttip">（选填）</em></span>
+                     	<span class="yunset_list_commentary" id="previewshow">
+                          	<img id="previewimg" src="{yun:}$resume.wxewm{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_ewm{/yun}',2);" style="border-radius:0px;width:20px;height:20px;">
+                       	</span>
+                        <div class="yunset_list_file"> 
+                        	<input type="file" id="pic" name="pic" onchange="previewImage(this,'preview')" accept="image/*"  />
+                        </div>
+                   		<input type='hidden' name='preview' value='' id='preview'>  
+                    </li>
+
+                    <li class="yunset_list_text"><span class="yunset_list_name" style="width:150px">个人主页/博客<em class="yunset_xttip">（选填）</em></span>
+                        <div class="yunset_list_commentary"> <input type="text" name="homepage" id="homepage" value="{yun:}$resume.homepage{/yun}" placeholder="请填写个人主页/博客" class=""></div>
+                    </li>
+                </ul>
+
+                <div class="yunset_bth_box" style="background: transparent; border: none;">
+                    <button id="submit" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+
+                    <a class="yun_wap_info_brief_tit_bc mui-action-back" style="background:#f8f8f8;border:1px solid #eee;color:#333">返回上一步</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="photohtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div id="showResult">
+                    <div id="changeAvatar" class="photo_i_box">
+                        <img src="{yun:}$resume.photo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);" width="120" height="120">
+                    </div>
+                    <div class="clear"></div>
+                    <div class="photo_xz">
+                        <input id="image" type="file" accept="image/*" />选择上传头像
+                    </div>
+                    <div class="yunset_identity_msg"><i class="yunset_identity_msg_icon"></i>选择上传头像点击提交按钮即可上传</div>
+                    <div class="photo_tj">
+                        <input type='hidden' name="txt" id="uimage" value="">
+                        <input name="submit" type="button" onclick="photo()" value="提交" class="yunset_bth" />
+                    </div>
+                </div>
+                <div id="showEdit" style="display: none;width:100%;height: 100%;position: absolute;top:0;left: 0;z-index: 9;">
+                    <div class="photo_cz_bth">
+                        <button class="mui-btn" data-mui-style="fab" id='cancleBtn'>取消</button>
+                       <button class="mui-btn" data-mui-style="fab" onclick="javascript:$('#readyimg').cropper('rotate',90)">旋转</button>
+                        <div class="photo_cz_bth_qd">
+                            <button class="mui-btn" data-mui-style="fab" data-mui-color="primary" id='confirmBtn'>确定</button>
+                        </div>
+                    </div>
+                    <div id="report"><img src="" alt="Picture" id="readyimg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    weburl = "{yun:}$config.sy_weburl{/yun}";
+    var formData = new FormData(),
+        newuploadpic;
+</script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/resume.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script language="javascript">
+    $(function() {
+
+        function toFixed2(num) {
+            return parseFloat(+num.toFixed(2));
+        }
+
+        $('#cancleBtn').on('click', function() {
+            $("#showEdit").fadeOut();
+            $('#showResult').fadeIn();
+        });
+
+        $('#confirmBtn').on('click', function() {
+            $("#showEdit").fadeOut();
+
+            var $image = $('#report > img');
+            var dataURL = $image.cropper("getCroppedCanvas");
+            var imgurl = dataURL.toDataURL("image/jpeg", 0.5);
+            $("#changeAvatar > img").attr("src", imgurl);
+            $("#uimage").val(imgurl);
+            $('#showResult').fadeIn();
+
+        });
+
+        function cutImg() {
+            $('#showResult').fadeOut();
+            $("#showEdit").fadeIn();
+        }
+        $('#image').on('change', function() {
+            cutImg();
+        });
+
+        /**头像裁剪*/
+        var $image = $('#report > img'),
+            options = {
+                modal: true,
+                autoCropArea: 0.5,
+                dragCrop: false,
+                movable: true,
+                resizable: false,
+                minContainerWidth: 400,
+                minContainerHeight: 400,
+                aspectRatio: 1 / 1,
+                crop: function(data) {
+
+                }
+            };
+
+        $image.on().cropper(options);
+
+        var $inputImage = $('#image'),
+            URL = window.URL || window.webkitURL,
+            blobURL;
+        if(URL) {
+            $inputImage.change(function() {
+                var files = this.files,
+                    file;
+
+                if(files && files.length) {
+                    file = files[0];
+
+                    if(/^image\/\w+$/.test(file.type)) {
+                        blobURL = URL.createObjectURL(file);
+
+                        $image.one('built.cropper', function() {
+                            URL.revokeObjectURL(blobURL); // Revoke when load complete
+                        }).cropper('reset', true).cropper('replace', blobURL);
+
+                        $inputImage.val('');
+                    } else {
+                        showMessage('请上传图片');
+                    }
+                }
+            });
+        } else {
+            $inputImage.parent().remove();
+        }
+        /***头像裁剪end***/
+    });
+    
+    var sexData = [];
+    '{yun:}foreach from=$arr_data.sex key=j item=v{/yun}'
+    sexData.push({
+        value: '{yun:}$j{/yun}',
+        text: '{yun:}$v{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var eduData = [];
+    '{yun:}foreach from=$userdata.user_edu key=j item=v{/yun}'
+    eduData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$userclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var marriageData = [];
+    '{yun:}foreach from=$userdata.user_marriage key=j item=v{/yun}'
+    marriageData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$userclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var expData = [];
+    '{yun:}foreach from=$userdata.user_word key=j item=v{/yun}'
+    expData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$userclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    mui.init();
+    var viewApi = mui('#app').view({
+        defaultPage: '#main'
+    });
+    
+    var view = viewApi.view;
+    (function($) {
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll({
+			scrollY: true, //是否竖向滚动
+			scrollX: false, //是否横向滚动
+			startX: 0, //初始化时滚动至x
+			startY: 0, //初始化时滚动至y
+			indicators: true, //是否显示滚动条
+			deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+			// bounce: true //是否启用回弹
+		});
+        //处理view的后退与webview后退
+        var oldBack = $.back;
+        $.back = function() {
+            if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                viewApi.back();
+            } else { //执行webview后退
+                oldBack();
+            }
+        };
+    })(mui);
+    (function() {
+		
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+		if(document.getElementById('addnexthtml')){
+			document.getElementById('addnexthtml').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+		
+        mui('.yunset_bth_box').on('tap', '.addnext', function() {
+            var name = document.getElementById('name').value,
+                sex = document.getElementById('sex').value,
+                birthday = document.getElementById('birthday').value,
+                edu = document.getElementById('edu').value,
+                exp = document.getElementById('exp').value,
+                living = document.getElementById('living').value,
+                telphone = document.getElementById('telphone').value,
+                email = document.getElementById('email').value;
+
+            if(name == '') {
+                mui.toast('请填写姓名！');
+                return false;
+            }
+            if(sex == '') {
+                mui.toast('请选择性别！');
+                return false;
+            }
+            if(birthday == '') {
+                mui.toast('请选择出生日期！');
+                return false;
+            }
+            if(edu == '') {
+                mui.toast('请选择最高学历！');
+                return false;
+            }
+            if(exp == '') {
+                mui.toast('请选择工作经验！');
+                return false;
+            }
+            if(living == '') {
+                mui.toast('请填写现居住地！');
+                return false;
+            }
+            if(telphone == '') {
+                mui.toast('请填写手机！');
+                return false;
+            } else if(!isjsMobile(telphone)) {
+                mui.toast('手机格式错误！');
+                return false;
+            }
+            var myreg = /^([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9\-]+@([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            if(email != "" && !myreg.test(email)) {
+                mui.toast('邮箱格式错误！');
+                return false;
+            }
+
+        })
+        var submitBtn = document.getElementById('submit')
+        if(submitBtn) {
+            submitBtn.addEventListener('tap', checkinfo, false)
+        }
+    })();
+
+    function photo() {
+        var uimage = $("#uimage").val();
+        if(uimage == '') {
+            layermsg('头像未改变，无需修改');
+            return false;
+        }
+        var regS = new RegExp("\\+", "gi");
+        uimage = uimage.replace(regS, "#");
+        $.ajax({
+            type: 'POST',
+            url: "index.php?c=photo",
+            cache: false,
+            dataType: 'json',
+            data: {
+                uimage: uimage,
+                submit: 1
+            },
+            success: function(msg) {
+
+                if(msg == '1') {
+                    var date = '操作成功！';
+                } else {
+                    var date = '操作失败！';
+                }
+                layermsg(date, 2, function() { /*location.reload();*/
+                    window.location.href = wapurl + "member/index.php?c=info";
+                });
+                return false;
+            }
+        });
+    }
+</script>
+<script src="{yun:}$wap_style{/yun}/js/publicselect.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

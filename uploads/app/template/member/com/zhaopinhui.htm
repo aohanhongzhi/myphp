@@ -1,0 +1,101 @@
+{yun:}include file="$comstyle/header.htm"{/yun} 
+<script>
+$(function(){
+	$(".statusbody").click(function(){
+		var id=$(this).attr("pid");
+		var bodys=$("#statusbody"+id).val();
+		$("#showbody").html(bodys);
+		$.layer({
+			type : 1,
+			title :'审核说明',
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area : ['380px','auto'],
+			page : {dom :"#infobox2"}
+		});
+	});
+
+});
+</script>
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+    <div class=right_box>
+      <div class=admincont_box>
+        <div class="com_tit"><span class="com_tit_span">招聘会记录</span></div>
+        <div class="com_body">
+          <div class="admin_new_tip">
+            <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+            <div class="admin_new_tip_list_cont">
+              <div class="admin_new_tip_list">我们将在24小时内审核你参会的职位，请耐心等待，如需快速审核，请拨打客服热线：{yun:}$config.sy_freewebtel{/yun}</div>
+            </div>
+          </div>
+          <div class="clear"></div>
+          <table class="com_table mt20">
+            <tr>
+              <th >招聘会名称</th>
+              <th>地点</th>
+              <th>时间</th>
+              <th>状态 </th>
+              <th width="200">操作</th>
+            </tr>
+            {yun:}foreach item=v from=$rows{/yun}
+            <tr>
+              <td ><a href="{yun:}url m=zph c=show id='`$v.zid`'{/yun}" class="cblue" target=_blank>{yun:}$v.title{/yun}</a></td>
+              <td align="center" >{yun:}$v.address{/yun}
+              <td align="center">{yun:}$v.ctime|date_format:'%Y-%m-%d'{/yun}
+              <td align="center">{yun:}if $v.status==1{/yun}<font color="green">已审核</font>{yun:}elseif $v.status==2{/yun}<span class="tip_no"><i class="tip_no_icon"></i>未通过</span>{yun:}else{/yun}<span class="tip_no"><i class="tip_no_icon"></i>未审核</span>{yun:}/if{/yun}  {yun:}if $v.status==2{/yun}<a href="javascript:;" class="wtg_ly cblue statusbody" pid="{yun:}$v.id{/yun}">说明</a> {yun:}/if{/yun}</td>
+              <td align="center" ><input type="hidden" id="statusbody{yun:}$v.id{/yun}" value="{yun:}$v.statusbody{/yun}" />
+               <a href="javascript:;"class="com_bth cblue zphstatus" pid="{yun:}$v.jobid{/yun}" zid="{yun:}$v.zid{/yun}">查看详情</a> <a href="javascript:void(0)" onclick="layer_del('确定要取消参会？', '{yun:}$now_url{/yun}&act=del&id={yun:}$v.id{/yun}');" class="com_bth cblue">取消</a></td>
+            </tr>
+            {yun:}foreachelse{/yun}
+            <tr>
+              <td colspan="8" class="table_end"><div class="com_msg_no">
+                  <p>亲爱的用户，目前您还没有参加的招聘会信息</p>
+                  <a class="com_msg_no_bth com_submit" href="{yun:}url m=zph{/yun}" target="_blank">查看招聘会信息</a> </div></td>
+            </tr>
+            {yun:}/foreach{/yun}
+            <tr>
+              <td colspan="8" class="table_end"><div class="diggg">{yun:}$pagenav{/yun}</div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="infobox" style="display:none;">
+  <table class="zph_tck_pd" style="width:380px;">
+    <tr>
+      <td  align="right"><div style="width:50px;">名称：</div></td>
+      <td id="title"></td>
+    </tr>
+    <tr>
+      <td align="right">时间：</td>
+      <td><span id='stime'></span>至<span id='etime'></span></td>
+    </tr>
+    <tr>
+      <td align="right">场地：</td>
+      <td id='sid'></td>
+    </tr>
+    <tr>
+      <td align="right">区位：</td>
+      <td id='cid'></td>
+    </tr>
+    <tr>
+      <td align="right">展位：</td>
+      <td id='bid'></td>
+    </tr>
+    <tr>
+      <td align="right">地点：</td>
+      <td id='address'></td>
+    </tr>
+    <tr>
+      <td align="right">职位：</td>
+      <td id='cname'></td>
+    </tr>
+  </table>
+</div>
+<div class="admin_Operating_sh" id="infobox2" style="padding:10px;width:350px; display:none;">
+  <div class="admin_Operating_text" style="padding:5px; height:auto;color:#C30; font-size:14px; line-height:23px;white-space: normal; word-break: break-all;" id="showbody"> </div>
+</div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

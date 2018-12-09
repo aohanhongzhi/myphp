@@ -1,0 +1,55 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<!--消息列表-->
+<div class="synews_box mt10">
+    {yun:}if $yqrows{/yun}
+    <a href="index.php?c=invite">
+        <i class="synews_box_icon"></i>
+        <div class="synews_box_h1">面试通知</div>
+        <div class="synews_box_p">{yun:}$yqrows.fname{/yun}邀请您面试 !</div>
+        <span class="synews_box_time">{yun:}$yqrows.datetime|date_format:"%Y-%m-%d %H:%M"{/yun}</span> {yun:}if $wkyqnum{/yun}<i class="synews_box_n">{yun:}$wkyqnum{/yun}</i>{yun:}/if {/yun}
+    </a>
+    {yun:}else{/yun}
+    <a href="index.php?c=invite">
+        <i class="synews_box_icon"></i>
+        <div class="synews_box_h1">面试通知</div>
+        <div class="synews_box_p">暂无公司邀请您面试 !</div>
+    </a>
+    {yun:}/if{/yun}
+</div>
+
+<div class="synews_box mt10">
+    {yun:}if $sxrows{/yun}
+    <a href="index.php?c=sxnews">
+        <i class="synews_box_icon synews_box_icon_sx"></i>
+        <div class="synews_box_h1">私信</div>
+        <div class="synews_box_p">{yun:}$sxrows.content{/yun}</div>
+        <span class="synews_box_time">{yun:}$sxrows.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</span> {yun:}if $sxrowsnum{/yun}<i class="synews_box_n">{yun:}$sxrowsnum{/yun}</i>{yun:}/if{/yun}
+    </a>
+    {yun:}else{/yun}
+    <a href="index.php?c=sxnews">
+        <i class="synews_box_icon synews_box_icon_sx"></i>
+        <div class="synews_box_h1">私信</div>
+        <div class="synews_box_p">暂无消息!</div>
+    </a>
+    {yun:}/if{/yun}
+</div>
+
+<div class="synews_box mt10">
+    {yun:}if $commsgnum{/yun}
+    <a href="index.php?c=commsg">
+        <i class="synews_box_icon synews_box_icon_pl"></i>
+        <div class="synews_box_h1">职位咨询</div>
+        <div class="synews_box_p">企业{yun:}$commsg.com_name{/yun}回复了你的咨询 !</div>
+        <span class="synews_box_time">{yun:}$commsg.reply_time|date_format:"%Y-%m-%d %H:%M"{/yun}</span> 
+        {yun:}if $commsgnum{/yun}<i class="synews_box_n"> {yun:}$commsgnum{/yun}</i>{yun:}/if{/yun}
+    </a>
+    {yun:}else{/yun}
+    <a href="index.php?c=commsg">
+        <i class="synews_box_icon synews_box_icon_pl"></i>
+        <div class="synews_box_h1">职位咨询</div>
+        <div class="synews_box_p">您还没有咨询信息 !</div>
+    </a>
+    {yun:}/if{/yun}
+</div>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun}

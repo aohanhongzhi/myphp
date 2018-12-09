@@ -1,0 +1,41 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+{yun:}include file="$wapstyle/nav.htm"{/yun} 
+
+<!--关注页面-->
+{yun:}foreach from=$rows item=qlist{/yun}
+<div class="home_question">
+  <div class="home_question_name"><a href="{yun:}url m=wap c=ask a=content id='`$qlist.id`'{/yun}">{yun:}$qlist.title{/yun}</a></div>
+  <div class="home_question_info">
+  {yun:}$qlist.add_time|date_format:"%Y-%m-%d %H:%M"{/yun}
+   <span class="home_question_info_s ask_jx_data_hd">{yun:}$qlist.answer_num{/yun}</span>
+   <span class="home_question_info_s ask_jx_data_yl">{yun:}$qlist.visit{/yun}</span>
+  <span class="home_question_info_s ask_jx_data_gz">{yun:}$qlist.atnnum{/yun}</span>
+  </div>
+
+ 
+    {yun:}if $uid==$myuid{/yun}
+    <div class="home_question_cz" ><a href="javascript:void(0)" onclick="layer_del('确定要取消关注？','{yun:}url m=wap c=ask a=attention id=$qlist.id{/yun}')" class="home_question_cz_qxgz">取消关注</a></div>
+    {yun:}/if{/yun} </div>
+
+{yun:}foreachelse{/yun}
+<div class="noresult">
+{yun:}if $uid==$myuid{/yun}
+您还没有关注任何问题，抓紧关注吧！
+<a href="{yun:}url m=wap c=ask{/yun}#answer"  class="wap_mb_no_sr" style="color:#fff;">我要关注</a>
+{yun:}else{/yun}
+他还没有关注的问题！
+{yun:}/if{/yun}<br/>
+<span>
+
+</span>
+
+</div>
+{yun:}/foreach{/yun} 
+<!--回答结束-->
+<div class="clear"></div>
+<div class="pages">{yun:}$pagenav{/yun}</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

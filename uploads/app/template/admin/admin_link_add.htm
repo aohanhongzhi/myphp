@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+function photo_change(id){
+  if(id==1){ 
+    $("#image1").show();
+    $("#image2").hide();
+	$("#imgparent").removeClass('none');
+  }
+  if(id==2){ 
+    $("#image1").hide();
+    $("#image2").show();
+	$("#imgparent").addClass('none');
+  }   
+}
+function checkform(myform){
+  if (myform.type.value==""){ 
+    parent.layer.msg('请选择链接类型！', 2, 8);
+    myform.type.focus();
+    return (false);
+  }
+  if (myform.title.value=="") { 
+    parent.layer.msg('请填写链接标题！', 2,8); 
+      return (false);
+  } 
+  if (myform.url.value=="") { 
+    parent.layer.msg('请填写链接地址！', 2, 8);  
+      return (false);
+  } 
+  if (myform.tem_type.value==""){ 
+    parent.layer.msg('请选择站点下使用范围！', 2, 8);
+    myform.tem_type.focus();
+    return (false);
+  }
+}
+</script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">添加链接时，请正确选择链接类型。</div>
+</div>
+</div>
+<div class="clear"></div>
+
+  <div class="tag_box mt10">
+    <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form name="myform" target="supportiframe" action="index.php?m=link&c=save" method="post"  encType="multipart/form-data"  onSubmit="return checkform(this);" class="layui-form">
+      <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+      <table width="100%" class="table_form" style="background:#fff;">
+      <tr>
+              <td colspan="2" bgcolor="#f0f6fb"><div class="admin_bold">添加链接</div></td>
+            </tr>
+        <tr>
+          <th width="120">链接类型：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-inline">
+                <select name="type" lay-filter="type">
+                  <option value="">请选择</option>
+                  <option value="1" 
+                    {yun:}if $info.link_type==1{/yun} selected{yun:}/if{/yun}
+                    >文字链接</option>
+                  <option value="2" 
+                    {yun:}if $info.link_type==2{/yun} selected{yun:}/if{/yun}
+                    >图片链接</option>
+                </select>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="admin_table_trbg" >
+          <th width="120">链接标题：</th>
+          <td><input class="input-text" type="text" name="title" size="40" value="{yun:}$info.link_name{/yun}" />
+            <span class="admin_web_tip">例：phpyun</span></td>
+        </tr>
+        <tr>
+          <th width="120">链接地址：</th>
+          <td><input class="input-text" type="text" name="url" size="30" value="{yun:}$info.link_url{/yun}" />
+            <span class="admin_web_tip">例：http://www.phpyun.com</span></td>
+        </tr>
+        <tr class="admin_table_trbg">
+          <th width="200">显示站点：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-inline">
+                <select name="did" lay-filter="did" lay-search>
+                  <option value="">请选择</option>
+                  {yun:}foreach from=$Dname key=key item=dlist{/yun}
+                  <option value="{yun:}$key{/yun}"
+                    {yun:}if $info.did == $key{/yun} selected{yun:}/if{/yun}
+                    >{yun:}$dlist{/yun}</option>
+                  {yun:}/foreach{/yun}
+                </select>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th width="120">站点下使用范围：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-inline">
+                <select name="tem_type" lay-filter="tem_type" lay-search>
+                  <option value="">请选择</option>
+                  <option value="1"
+                    {yun:}if $info.tem_type == 1{/yun} selected{yun:}/if{/yun}
+                    >全站使用</option>
+                  <option value="2"
+                    {yun:}if $info.tem_type == 2{/yun} selected{yun:}/if{/yun}
+                    >仅在首页使用</option>
+                 
+                </select>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr id="photo" {yun:}if $info.link_type neq 2{/yun}style="display:none;"{yun:}/if{/yun}>
+          <th width="120">缩 略 图：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-inline">
+                <input name="phototype" lay-filter="phototype" value="1" title="上传图片" 
+                 {yun:}if $info.img_type == '1'{/yun} checked {yun:}/if{/yun}
+                 type="radio"/>
+                <input name="phototype" lay-filter="phototype" value="2" title="远程图片" 
+                 {yun:}if $info.img_type == '2'{/yun} checked {yun:}/if{/yun}
+                 type="radio"/>
+              </div>
+            </div>
+            <div id="image1" {yun:}if $info.img_type!="1"{/yun}style="display:none"{yun:}/if{/yun}>
+				<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'uplocadpic',imgid: 'imgicon',parentid: 'imgparent'}">上传图片</button>
+				<input type="hidden" id="layupload_type" value="2"/>
+				<input type="hidden" id="upload_path" value="link"/>
+				<input type="hidden" name="uplocadpic" value="{yun:}$info.pic{/yun}"/>
+                <span class="admin_web_tip">尺寸：160*50px</span>
+            </div>
+            <div id="image2" {yun:}if $info.img_type!="2"{/yun}style="display:none"{yun:}/if{/yun}>
+              <input name="uplocadpic" type="text" size="40" value="{yun:}$info.pic{/yun}"  class="input-text"/>
+              <span class="admin_web_tip">例：http://www.hr135.com/yun.jpg</span>
+            </div>
+          </td>
+        </tr>
+        <tr class="pic {yun:}if $info.link_type == 1 || $info.img_type == 2{/yun}none{yun:}/if{/yun}" id="imgparent">
+          <th width="120">图片预览：</th>
+          <td><img id="imgicon" src="../{yun:}$info.pic{/yun}" width="160" height="50" /></td>
+        </tr>
+		{yun:}if $info.link_type eq 2{/yun}
+        {yun:}if $info.img_type eq 2{/yun}
+        <tr class="pic">
+          <th width="120">图片预览：</th>
+          <td><img src="{yun:}$info.pic{/yun}" width="160" height="50" /></td>
+        </tr>
+        {yun:}/if{/yun}
+        {yun:}/if{/yun}
+        <tr class="admin_table_trbg" >
+          <th width="120">排序：</th>
+          <td><input class="input-text" type="text" name="sorting" size="20" value="{yun:}$info.link_sorting{/yun}" />
+            <span class="admin_web_tip">例：大前小后</span></td>
+        </tr>
+        <tr>
+           <th>&nbsp;</th>
+			<td align="left" >{yun:}if is_array($info){/yun}
+            <input type="hidden" name="id" value="{yun:}$info.id{/yun}" />
+            <input type="hidden" name="lasturl" value="{yun:}$lasturl{/yun}">
+            <input class="admin_button" type="submit" name="link_update" value="&nbsp;修 改&nbsp;" />
+            {yun:}else{/yun}
+            <input class="admin_button" type="submit" name="link_add" value="&nbsp;添 加&nbsp;" />
+            {yun:}/if{/yun}
+            <input class="admin_button" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+<script type="text/javascript">
+  layui.use(['form'], function(){
+    var form = layui.form
+      ,$ = layui.$;
+
+    form.on('select(type)', function(data){
+      if(data.value == 1){
+        select_new('type','1','文字链接');
+      }
+      else if(data.value == 2){
+        select_new('type','2','图片链接');
+      }
+    });
+
+    form.on('radio(phototype)', function(data){
+      photo_change(data.value);
+    });
+
+  });
+</script>
+<script>var weburl = '{yun:}$config.sy_weburl{/yun}';</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+</body>
+</html>

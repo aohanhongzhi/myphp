@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+var weburl = '{yun:}$config.sy_weburl{/yun}';
+</script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="tabs_info">
+		<ul>
+			<li><a href="index.php?m=admin_userset">个人设置</a></li> 
+			<li class="curr"><a href="index.php?m=admin_userset&c=logo">头像设置</a></li> 
+ 			<li><a href="index.php?m=admin_userset&c=set">{yun:}$config.integral_pricename{/yun}设置</a></li> 
+ 			<li ><a href="index.php?m=admin_userset&c=userspend">消费设置</a></li> 
+		</ul>
+	</div>
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站个人头像设置管理</div>
+</div>
+</div>
+
+<div class="clear"></div>
+
+<div id="subboxdiv" style="width:100%;height:100%;display:none;position:absolute;"></div>
+ 
+
+<div class="main_tag mt10">
+<div class="tag_box"><div>
+	<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form class="layui-form" action="index.php?m=admin_userset&c=logo" method="post" enctype= "multipart/form-data" target="supportiframe">
+    <table width="100%" class="table_form">
+     <tr class="admin_table_trbg">
+       <th width="160" bgcolor="#f0f6fb"><span class="admin_bold">默认头像</span></th>
+          <td bgcolor="#f0f6fb"><span class="admin_bold">默认</span></td>
+    </tr> 
+	<tr>
+		<th width="150">默认男生头像：</th>
+		<td>
+		<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'sy_member_icon',imgid: 'imgicon'}">上传图片</button>
+		<input type="hidden" id="layupload_type" value="2"/>
+		<input type="hidden" id="upload_path" value="logo"/>
+		<input type="hidden" name="sy_member_icon" value="{yun:}$config.sy_member_icon{/yun}"/>
+        <img id="imgicon" src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}" width="60" height="60" {yun:}if !$config.sy_member_icon{/yun}class="none"{yun:}/if{/yun}>
+		</td>
+	</tr>
+    <tr>
+		<th width="150">默认女生头像：</th>
+		<td>
+		<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'sy_member_iconv',imgid: 'imgiconv'}">上传图片</button>
+		<input type="hidden" name="sy_member_iconv" value="{yun:}$config.sy_member_iconv{/yun}"/>
+        <img id="imgiconv" src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_iconv{/yun}" width="60" height="60" {yun:}if !$config.sy_member_iconv{/yun}class="none"{yun:}/if{/yun}>
+		</td>
+	</tr>
+	<tr>
+		<th width="150">默认职业技能和作品：</th>
+		<td>
+		<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'sy_member_skill',imgid: 'imgskill'}">上传图片</button>
+		<input type="hidden" name="sy_member_skill" value="{yun:}$config.sy_member_skill{/yun}"/>
+        <img id="imgskill" src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_skill{/yun}" width="60" height="60" {yun:}if !$config.sy_member_skill{/yun}class="none"{yun:}/if{/yun}>
+		</td>
+	</tr>
+	 <!--<tr>
+		<th width="150">默认问答头像：</th>
+		<td>
+		<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'sy_friend_icon',imgid: 'imgfriend'}">上传图片</button>
+		<input type="hidden" name="sy_friend_icon" value="{yun:}$config.sy_friend_icon{/yun}"/>
+        <img id="imgfriend" src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_friend_icon{/yun}" width="60" height="60" {yun:}if !$config.sy_friend_icon{/yun}class="none"{yun:}/if{/yun}>
+	   </td>
+	</tr>-->
+	<tr>
+	<th>&nbsp;</th>
+          <td align="left">
+		<input class="layui-btn layui-btn-normal admin_buttonpz"  type="submit" name="submit" value="提交" />&nbsp;&nbsp;
+		<input class="layui-btn layui-btn-normal admin_buttonpz" type="reset" value="重置" /></td>
+	</tr>
+    </table>
+	<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+    </form>
+</div>
+
+</div>
+</div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+<script>
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+  });
+</script>
+</body>
+</html>

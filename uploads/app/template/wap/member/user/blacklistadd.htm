@@ -1,0 +1,105 @@
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.min.css?v={yun:}$config.cachecode{/yun}" type="text/css">{yun:}include file="$wapstyle/member/header.htm"{/yun} 
+<div class="mui-content">
+	<div id='list' class="mui-indexed-list">
+    <div class="blacklistadd_search_box">
+		<div class="mui-indexed-list-search mui-input-row mui-search">
+		<div class="blacklistadd_search">	<input type="text" id="keyword" class="mui-input-clear mui-indexed-list-search-input" placeholder="请输入企业名称"></div>
+		</div> <div class="blacklistadd_search_but"><button type="button"  id="search">搜索</button></div>
+        </div>
+        <div class="blacklistadd_box">
+		<div class="mui-indexed-list-alert"></div>
+		<div class="mui-indexed-list-inner">
+			<ul class="mui-table-view" style="display:none" id="comullist">
+				<li  class='mui-table-view-cell mui-indexed-list-item mui-checkbox mui-left'><input type='checkbox' class='checkAll' />全选</li>
+			</ul>
+			<div id="nonelist"  class="blacklist_notip " style="display:none">暂未匹配到相关企业</div>
+			
+		</div>	</div>
+ <div class="blacklistadd_box_bth"><a id='done' class="mui-btn mui-btn-link mui-pull-right mui-btn-blue mui-disabled">完成</a></div>
+</div></div>
+<div class="clear"></div>
+<script type="text/javascript" charset="utf-8">
+mui.init();
+mui.ready(function() {
+	var list = document.getElementById('list');
+	var done = document.getElementById('done');
+	
+	done.addEventListener('tap', function() {
+		var checkboxArray = [].slice.call(list.querySelectorAll('input[name="comname"]'));
+		var checkedValues = [];
+		checkboxArray.forEach(function(box) {
+			if (box.checked) {
+				checkedValues.push(box.value);
+			}
+		});
+		if (checkedValues.length > 0) {
+			document.getElementById('done').innerHTML='加载中...';
+			$.post(wapurl+"/member/index.php?c=save",{buid:checkedValues},function(data){
+				var data=eval('('+data+')');
+				layermsg(data.msg, 2,function(){window.location.href = wapurl + "/member/index.php?c=blacklist"});return false; 
+			});
+		} else {
+			mui.alert('你没选择任何企业');
+		}
+	}, false);
+	mui('.mui-indexed-list-inner').on('change', 'input', function() {
+		var count = list.querySelectorAll('input[name="comname"]:checked').length;
+		var value = count ? "完成(" + count + ")" : "完成";
+		done.innerHTML = value;
+		if(count){
+			if (done.classList.contains("mui-disabled")) {
+				done.classList.remove("mui-disabled");
+			}
+		}else{
+			if(!done.classList.contains("mui-disabled")) {
+				done.classList.add("mui-disabled");
+			}
+		}
+	});
+});
+(function($) {
+	document.getElementById('search').addEventListener('tap', function() {
+		var keyword = document.getElementById('keyword').value;
+		$(".addcom").each(function(i,arr){
+			arr.remove();
+		},false)
+		if(keyword){
+			document.getElementById('done').innerHTML='加载中...';
+			$.post(wapurl+"member/index.php?c=searchcom",{name:keyword},function(data){
+				document.getElementById('done').innerHTML='完成';
+				if(data){
+					var oDiv = document.createElement('div');
+					oDiv.className = 'addcom';
+					oDiv.innerHTML = data;
+					document.getElementById('comullist').appendChild(oDiv);
+					
+					document.getElementById('comullist').style.display='';
+					document.getElementById('nonelist').style.display='none';
+				}else{
+					document.getElementById('comullist').style.display='none';
+					document.getElementById('nonelist').style.display='';
+				}
+			
+			})
+		}else{
+			document.getElementById('comullist').style.display='none';
+			document.getElementById('nonelist').style.display='none';
+		}
+	}, false);
+	$('.checkAll')[0].addEventListener('change',function() {
+		var listBox = $('.listCheckBox');
+			if(this.checked) {
+				listBox.each(function() {
+					var ele = this;
+					ele.checked=true;
+				})
+			}else{
+				listBox.each(function() {
+					var ele = this;
+					ele.checked=false;
+				})
+			}
+	}, false);
+})(mui);
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

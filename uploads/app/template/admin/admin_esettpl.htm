@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div id="subboxdiv" style="width:100%;height:100%;display:none;position:absolute;"></div>
+
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了{yun:}if $smarty.get.m=='emailconfig'{/yun}
+	邮件模板设置
+ {yun:}else{/yun} 
+ 短信模板设置
+  {yun:}/if{/yun} 。</div>
+</div>
+</div>
+
+
+<div class="tag_box mt10">
+{yun:}assign var=name value=$smarty.get.name{/yun}
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+<form action="" method="post" target="supportiframe">
+<table width="100%" class="table_form">
+ <tr>
+              <td colspan="2" bgcolor="#f0f6fb"><div class="admin_bold">{yun:}if $smarty.get.m=='emailconfig'{/yun}
+	邮件模板设置
+ {yun:}else{/yun} 
+短信模板设置
+  {yun:}/if{/yun} </div></td>
+            </tr>
+	<tr>
+		<th width="150" height="36">模板页面：</th>
+		<td>{yun:}$arr_tpl[$name].name{/yun}</td>
+	</tr>
+    <input type="hidden" name="name" value="{yun:}$name{/yun}"/>
+    {yun:}if $arr_tpl[$name].type=="email"{/yun}
+	<tr class="email">
+		<th width="150">标题：</th>
+		<td>
+        <input class="input-text" type="text" name="title" id="title" value="{yun:}$row.title{/yun}" size="60"/>
+        </td>
+	</tr>
+	<tr class="email">
+		<th width="150">内容：</th>
+		<td>
+ 			<script id="content" name="content" type="text/plain" style="width:700px; height:200px;"> {yun:}$row.content{/yun} </script>
+        </td>
+	</tr>
+    {yun:}else{/yun}
+    	<tr class="email">
+		<th width="150">内容：</th>
+		<td>
+ 			<script id="content" name="content" type="text/plain" rows="10" cols="80" style="width:700px; height:200px;"> {yun:}$row.content{/yun} </script>
+		</td>
+	</tr>
+    {yun:}/if{/yun}
+	<tr>
+	<th width="150" style="border-bottom:0px;">&nbsp;</th>
+		<td align="left"style="border-bottom:0px;"><input class="admin_button" id="mconfig" type="submit" name="config" value="提交" />&nbsp;&nbsp;<input class="admin_button" type="reset" value="重置" /></td>
+	</tr>
+</table>
+<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+</form>
+</div>
+
+<div class="tag_box mt10">
+<table width="100%" class="table_form">
+ <tr>
+              <td colspan="2" bgcolor="#f0f6fb"><div class="admin_bold">调用说明</div></td>
+            </tr>
+	{yun:}foreach from=$arr_tpl[$name] key=k item=v{/yun}
+{yun:}if $k!="name" && $k!="type"{/yun}<tr>
+		<th width="150" height="36">{yun:}$v{/yun}</th>
+		<td>代码：{yun:}$k{/yun}</td>
+	</tr>    {yun:}/if{/yun}
+{yun:}/foreach{/yun}
+</table>	
+</div>
+<script>
+(function($){                
+	 $('.getname').click(function(){
+		$('#title').insertAtCaret($(this).attr("name"));
+	 });
+	  $('.getname2').click(function(){
+		$('#contentddd').insertAtCaret($(this).attr("name"));
+	 });
+})($); 
+</script>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+{yun:}if $smarty.get.m=="emailconfig"{/yun}
+<script language="javascript">
+	var editor = UE.getEditor('content',{
+		toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|','link', 'unlink', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],wordCount:false,elementPathEnabled:false,initialFrameHeight:200
+	});
+</script>
+{yun:}/if{/yun}
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp" >
+  <div class="tabs_info">
+    <ul>
+   <li class=""> <a href="index.php?m=admin_uc" class="">整合UCenter</a></li>
+      <li class="curr"><a href="index.php?m=admin_uc&c=pw" class="">整合PHPWIND</a></li>
+    </ul>
+  </div>
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list"><b>提示：</b>如果整合失败导致后台无法进入或者出现前台用户混乱，请将根目录下/data/plus/config.php 打开找到 sy_pw_type&nbsp;将PW_UC置空,再登录后台关闭PW_UC</div>
+<div class="admin_new_tip_list"><b>教程：</b><b><a href='http://www.phpyun.com/bbs/thread-4210-1-1.html' target="_blank">点击查看</a></b></div>
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="tag_box mt10">
+
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+<form name="myform" action="index.php?m=admin_uc&c=pwsave" method="post" target="supportiframe" class="layui-form">
+	<table width="100%" class="table_form">
+    	
+      <tbody>
+  <tr class="admin_table_trbg">
+    <th width="160" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+    <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>   
+  </tr>     </tbody>
+    <tr>
+            <th width="220">开启：</th>
+            <td  >
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input type="radio" name="sy_pw_type" value="pw_center" id="RadioGroup1_12" {yun:}if $config.sy_uc_type=="pw_center"{/yun}checked{yun:}/if{/yun} title="开启">
+                   <input type="radio" name="sy_pw_type" value="" id="RadioGroup1_13" {yun:}if $config.sy_uc_type!="pw_center"{/yun}checked{yun:}/if{/yun} title="关闭">
+                 </div>
+               </div>
+            </div>
+            </td>
+        </tr>
+            <tr>
+            <th width="220">数据库地址 UC_DBHOST：</th>
+            <td><input type="text" name="UC_DBHOST" class="input-text" value="{yun:}$ucinfo.UC_DBHOST{/yun}"> <span class="admin_web_tip">如：localhost</span></td>
+            </tr>
+            <tr>
+            <th>数据库用户名 UC_DBUSER：</th>
+            <td><input type="text" class="input-text" name="UC_DBUSER" value="{yun:}$ucinfo.UC_DBUSER{/yun}"> <span class="admin_web_tip">PW数据库用户名</span></td>
+            </tr>
+            <tr>
+            <th>数据库密码 UC_DBPW：</th>
+            <td><input type="text" name="UC_DBPW" class="input-text" value="{yun:}$ucinfo.UC_DBPW{/yun}"> <span class="admin_web_tip">PW数据库密码</span></td>
+            </tr>
+            <tr>
+           <th>数据库名称 UC_DBNAME：</th>
+            <td><input type="text" class="input-text" name="UC_DBNAME" value="{yun:}$ucinfo.UC_DBNAME{/yun}"> <span class="admin_web_tip">如：phpwind</span></td>
+            </tr>
+            <tr>
+          <th>数据表前缀 UC_DBTABLEPRE：</th>
+            <td><input type="text" name="UC_DBTABLEPRE" class="input-text" value="{yun:}$ucinfo.UC_DBTABLEPRE{/yun}"> <span class="admin_web_tip">如：pw_</span></td>
+            </tr>
+            <tr>
+          <th>通信密钥 UC_KEY：</th>
+            <td><input type="text" class="input-text" name="UC_KEY" value="{yun:}$ucinfo.UC_KEY{/yun}"> <span class="admin_web_tip">如：phpyun123456</span></td>
+            </tr>
+            <tr>
+            <th>Phpwind地址 UC_API：</th>
+            <td><input type="text" class="input-text" name="UC_API" value="{yun:}$ucinfo.UC_API{/yun}"> <span class="admin_web_tip">如：http://localhost/phpwind</span></td>
+            </tr>
+            <tr>
+          <th>Phpwind编码：</th>
+            <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input type="radio" name="UC_CHARSET" value="utf8" id="RadioGroup1_12" {yun:}if $config.UC_CHARSET=="utf8"{/yun}checked{yun:}/if{/yun} title="utf8">
+                   <input type="radio" name="UC_CHARSET" value="gbk" id="RadioGroup1_13" {yun:}if $config.UC_CHARSET!="gbk"{/yun}checked{yun:}/if{/yun} title="gbk">
+                 </div>
+               </div>
+            </div>
+			</td>
+            </tr>
+            <tr>
+           <th>应用ID UC_APPID：</th>
+            <td><input type="text" class="input-text" name="UC_APPID" value="{yun:}$ucinfo.UC_APPID{/yun}"> <span class="admin_web_tip">如：7</span></td>
+            </tr>
+            <tr>
+           <th>UC APP UC_APP：</th>
+            <td><input type="text" class="input-text" name="UC_APP" value="{yun:}$ucinfo.UC_APP{/yun}"> <span class="admin_web_tip">如：20</span></td>
+            </tr>
+		<tr>
+			<td align="center" colspan="2">
+        	<input class="layui-btn layui-btn-normal" type="submit" name="submit" value="&nbsp;保存&nbsp;"  />    
+			</td>
+		</tr>
+	</table>
+	<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+</form>
+</div></div>
+<script> 
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+});
+</script>
+</body>
+</html>

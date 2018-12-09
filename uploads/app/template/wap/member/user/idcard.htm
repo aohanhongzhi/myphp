@@ -1,0 +1,71 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script type="text/javascript">
+    function checkidcard() {
+        var idcard = $("#idcard").val();
+        if(idcard == '') {
+            layermsg("请填写身份证号！");
+            return false;
+        }
+        var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if(reg.test(idcard) === false) {
+            layermsg("身份证号格式错误！");
+            return false;
+        }
+       if($.trim($("#preview").val()) == '' && $("#previewimg").attr('src') == '') {
+            layermsg("请上传证件照！");
+            return false;
+        }
+    }
+</script>
+<form id="resumeInfo" action="" method="post" onsubmit="return checkidcard();">
+
+    {yun:}if $resume.idcard_status==1{/yun}
+    <div class="yun_com_msg">身份证已审核通过~，如果修改需重新审核！</div>
+    {yun:}else{/yun} {yun:}if $resume.idcard_pic{/yun} {yun:}if $resume.idcard_status==2{/yun}
+    <div class="yun_com_msg">
+        {yun:}if $resume.statusbody{/yun}审核未通过;审核说明：{yun:}$resume.statusbody{/yun}，请重新上传，如有疑问可拨打客服服务热线：{yun:}$config.sy_freewebtel{/yun} {yun:}/if{/yun}
+    </div>
+    {yun:}else{/yun}
+    <div class="yun_com_msg">管理员审核中~，请耐心等待，如需快速审核可拨打客服服务热线：{yun:}$config.sy_freewebtel{/yun}</div>
+    {yun:}/if{/yun} {yun:}else{/yun}
+    <div class="yun_com_msg">未认证</div>
+    {yun:}/if{/yun} {yun:}/if{/yun}
+
+    <ul class="yunset_password mt15">
+        <li><span class="yunset_password_mname">您的姓名</span> <input type="text" name="name" value="{yun:}$resume.name{/yun}" class="yunset_text"></li>
+        <li><span class="yunset_password_mname">身份证号</span> <input type="text" name="idcard" id="idcard" value="{yun:}$resume.idcard{/yun}" class="yunset_text"></li>
+    </ul>
+
+    <div class="yunset_identity_box">
+        <div class="yunset_identity" style="height:240px">
+            <div align="center" class="yunset_identity_pic_img" id="previewshow" {yun:}if !$resume.idcard_pic{/yun}style="display: none;" {yun:}/if{/yun}>
+
+                <img src="{yun:}$resume.idcard_pic{/yun}" id="previewimg" />
+
+            </div>
+            <div class="yunset_identity_pic">
+
+                <i class="yunset_identity_pic_tj"></i>
+                <input type="file" name="pic" onchange="previewImage(this,'preview')" accept="image/*" class="yunset_identity_pic_file">
+                <input type='hidden' name='preview' value='' id='preview'>
+            </div>
+
+            <div class="yunset_identity_tip">上传本人的身份证人像页照片</div>
+              <span class="yunset_identity_tip_a">选择上传图片</span>
+            <div class="yunset_identity_tip_c" style="padding-top:10px;">（ 文字清晰，四角齐全 )</div>
+
+        </div>
+
+    </div>
+    <div class="yunset_identity_msg"><i class="yunset_identity_msg_icon"></i>格式为 {yun:}$config.pic_type{/yun}不得超过{yun:}$config.file_maxsize{/yun}M</div>
+
+    <div class="yunset_bth_box">
+        <input type="hidden" name="eid" id="eid" value="{yun:}$smarty.get.eid{/yun}">
+        <input type="submit" name="submit" value="保存" class="yunset_bth">
+    </div>
+
+</form>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun}

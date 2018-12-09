@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">根据节假日或重大节日设置首页主题模板，<a href="https://www.phpyun.com/bbs/forum.php?mod=forumdisplay&fid=3&filter=typeid&typeid=11" target="_blank" style="color:red;">点击下载主题模板</a>。 </div>
+</div>
+</div>
+<div class="clear"></div>
+
+
+
+<div class="tag_box mt10">
+
+	<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+    <form action="index.php?m=admin_tpl_index&c=save" method="post" class="layui-form" enctype="multipart/form-data" target="supportiframe">
+    <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+    <table width="100%" class="table_form">
+    <tr>
+              <td colspan="2" bgcolor="#f0f6fb"><div class="admin_bold">添加首页模板主题</div></td>
+            </tr>
+    	<tr class="admin_table_trbg">
+            <th width="160">主题名称：</th>
+            <td><input class="input-text" type="text" name="name" value="{yun:}$row.name{/yun}" size="30" maxlength="255"/><span class="admin_web_tip">如：墨画风格</span></td>
+        </tr>
+        
+        <tr class="admin_table_trbg">
+            <th width="160">顶部高度：</th>
+            <td><input class="input-text" type="text" name="height" value="{yun:}$row.height{/yun}" size="30" maxlength="255"/>px <span class="admin_web_tip">提示：不设置，将有部分图片无法显示</span></td>
+        </tr>
+        
+       <tr>
+          <th width="160">灰色：</th>
+          <td>
+           
+              <div class="layui-input-inline">
+                <input lay-skin="switch" name="se" lay-filter="se" lay-text="开启|关闭"
+                 {yun:}if $row.se=="1"{/yun} checked {yun:}/if{/yun}
+                 type="checkbox"/>
+                <input type="hidden" name="se" id="se" value="{yun:}$row.se{/yun}"/>
+              </div>
+          
+            <span class="admin_web_tip">提示：开启，网站首页变成黑白色</span>
+          </td>
+        </tr>
+        <tr>
+          <th width="160">状态：</th>
+          <td height="35">
+         
+              <div class="layui-input-inline">
+                <input lay-skin="switch" name="status_switch" lay-filter="status" lay-text="开启|关闭"
+                 {yun:}if $row.status=="1"{/yun} checked {yun:}/if{/yun}
+                 type="checkbox"/>
+                <input type="hidden" name="status" id="status" value="{yun:}$row.status{/yun}"/>
+             
+            </div>
+          </td>
+        </tr>
+        
+        <tr>
+        <th>展示时间：</th>
+        <td>
+       	 <div class="layui-input-inline">
+        <input type="text" name="time" id="time" lay-verify="date" value="{yun:}$row.time{/yun}" placeholder="yyyy-MM-dd ~ yyyy-MM-dd" autocomplete="off" class="layui-input" size="30">
+          </div>
+            </td>
+      </tr>
+        
+        <tr class="admin_table_trbg">
+            <th width="160">主题图片：</th>
+            <td>
+			<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'pic',imgid: 'imgicon'}">上传图片</button>
+			<input type="hidden" id="layupload_type" value="2"/>
+			<input type="hidden" id="upload_path" value="tplindex"/>
+			<input type="hidden" name="pic" value="{yun:}$row.pic{/yun}"/>
+			<img id="imgicon" src="../{yun:}$row.pic{/yun}" width="180" height="60" {yun:}if !$row.pic{/yun}class="none"{yun:}/if{/yun}>
+            </td>
+        </tr>
+
+        <tr class="admin_table_trbg">
+         <th style="border-bottom:none;">&nbsp;</th>
+          <td align="left" style="border-bottom:none;"> 
+            <input type="hidden" value="{yun:}$row.id{/yun}" name="id">
+            <input class="admin_button" id="qqconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;
+            <input class="admin_button" type="reset" value="重置" /></td>
+        </tr>
+
+    </table>
+    </form>
+</div>
+<script type="text/javascript">
+var weburl = '{yun:}$config.sy_weburl{/yun}';
+  layui.use(['form', 'laydate'], function(){
+    var form = layui.form,
+	    laydate = layui.laydate
+      $ = layui.$;
+	   //日期
+	  laydate.render({
+		elem: '#time',
+		range:'~'
+	  });
+	form.on('switch(se)', function(data){
+      var v = this.checked ? 1 : 0;
+      $("#se").val(v);
+    });
+    form.on('switch(status)', function(data){
+      var v = this.checked ? 1 : 0;
+      $("#status").val(v);
+    });
+  });
+  document.getElementById('onchange').onchange = function(){
+      document.getElementById('onchange').click();
+      document.getElementById('color').value = this.value;
+  };
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+</body>
+</html>

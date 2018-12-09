@@ -1,0 +1,336 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<style>
+    .layermbox {
+        z-index: 10000000000
+    }
+</style>
+{yun:}if $expect{/yun}
+<!--有简历的情况-->
+<div class="yun_usermember_have" style="display:;">
+    <div class="yun_usermember_financebg"></div>
+
+    <div class="yun_usermember_resume">
+        <div class="yun_usermember_resume_b">
+           
+            <div class="yun_usermember_resume_b_c">
+                <div class="yun_usermember_resumet">
+                    <div class="yun_usermember_resumename">{yun:}$expect.name{/yun}
+                        <span id="resumeUserPicker" class="yun_usermember_resumeqh" data-resume="{yun:}$expect.id{/yun}">切换简历</span> {yun:}if $expect.defaults=="1"{/yun}<span class="yun_usermember_resume_mr">默认</span> {yun:}/if{/yun}
+                    </div>
+                    <div class="yun_usermember_resumeintegrity">
+                        <span class="yun_usermember_resumeintegrity_name">完整度</span> {yun:}$expect.integrity{/yun}%
+                        <span class="rsm_schedule_b"> <i style=	"width:{yun:}$expect.integrity{/yun}%"></i></span>
+                    </div>
+                    <div class="yun_usermember_resume_zx">
+                        状态： {yun:}if $expect.r_status=='1'{/yun} 已审核{yun:}elseif $expect.r_status=='0'{/yun} 待审核{yun:}elseif $expect.r_status=='3'{/yun} 未通过审核 {yun:}/if{/yun}<span class="yun_usermember_resume_zx_n">{yun:}$expect.lastupdate|date_format:'%Y-%m-%d'{/yun} 更新</span><span class="yun_usermember_resume_zx_n">被浏览：{yun:}$expect.hits{/yun}</span>
+                    </div>
+                </div>
+                <div class="yun_usermember_resumeoperation">
+                    <ul>
+                        <li>
+                        	{yun:}if $expect.r_status=='1'{/yun}
+                            <a href="index.php?c=getserver&id={yun:}$expect.id{/yun}&server=1" class="yun_usermember_resumeoperation_dz">{yun:}if $expect.top==1 && $expect.topdatetime gt 0{/yun}已置顶 {yun:}else{/yun}置顶 {yun:}/if{/yun}</a>
+                            {yun:}else{/yun}
+                            <a href="javascript:void(0)" onclick="layermsg('您的简历尚未审核，无法置顶操作！');return false;" class="yun_usermember_resumeoperation_dz">置顶</a>
+                            {yun:}/if{/yun}
+                        </li>
+                        <li>
+                            <a id="refresh" data-id="{yun:}$expect.id{/yun}" class="yun_usermember_resumeoperation_sx">刷新 </a>
+                        </li>
+
+                        {yun:}if $expect.defaults=="1"{/yun}
+                        <li>
+                            <a class="yun_usermember_resumeoperation_mr">默认</a>
+                        </li>
+                        {yun:}else{/yun}
+                        <li>
+                            <a id='resumedefaults' data-id="{yun:}$expect.id{/yun}" class="yun_usermember_resumeoperation_ymr">默认</a>
+                        </li>
+                        {yun:}/if{/yun}
+                        <li>
+                            <a href="{yun:}url m=wap c=resume a=show id=$expect.id{/yun}" class="yun_usermember_resumeoperation_yl">预览</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <div class="yun_usermember_resumeset">
+                    <div class="yun_usermember_resumeset_box">
+                        <span></span>
+                        <div id="privacy" class="mui-switch mui-switch-mini {yun:}if $user.status!=2{/yun}mui-active{yun:}/if{/yun}">
+                            <div class="mui-switch-handle"></div>
+                        </div>
+                        <span id="showprivacy" class="yun_usermember_resumeset_box_s">简历{yun:}if $user.status==2{/yun}保密{yun:}else{/yun}公开{yun:}/if{/yun}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {yun:}if $expect.r_status=='1'{/yun}{yun:}elseif $expect.r_status=='0'{/yun}<div class="sh_tipbox"><div class="sh_tipbox_tit">简历审核中</div>您的简历正在审核中,暂时无法申请职位,如需快速审核，可拨打服务热线：{yun:}$config.sy_freewebtel{/yun}</div>{yun:}elseif $expect.r_status=='3'{/yun} <div class="sh_tipbox"><div class="sh_tipbox_tit">审核未通过</div>很遗憾！您的简历未通过审核,如需疑问，可拨打服务热线：{yun:}$config.sy_freewebtel{/yun}{yun:}if $expect.statusbody{/yun} 未通过原因：{yun:}$expect.statusbody{/yun}{yun:}/if{/yun}</div>{yun:}/if{/yun}
+    
+    {yun:}if $expect.doc{/yun}
+    <ul class="yun_usermember_resumebox">
+        <li>
+            <a href="index.php?c=addexpect&eid={yun:}$expect.id{/yun}">
+                <div class="yun_usermember_resumetit">
+                    <i class="yun_usermember_resumetit_icon yun_usermember_resumetit_icon_yx"></i>意向职位
+                    <i class="list_box_b">+35%</i></span>
+                    <span class="yun_usermember_resume_zt">修改</span>
+                </div>
+                <div class="yun_usermember_resume_yx">
+                    {yun:}if $expect.name{/yun}
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">期望岗位：</span>{yun:}$expect.name{/yun}</div>{yun:}/if{/yun} {yun:}if $cityname{/yun}
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">工作地点：</span>{yun:}$cityname{/yun}</div>{yun:}/if{/yun} {yun:}if $industry_name[$expect.hy]{/yun}
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">从事行业：</span>{yun:}$industry_name[$expect.hy]{/yun}</div>{yun:}/if{/yun} {yun:}if $expect.minsalary{/yun}
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">期望薪资：</span>{yun:}$expect.minsalary{/yun}-{yun:}$expect.maxsalary{/yun}</div>{yun:}/if{/yun} {yun:}if $userclass_name[$expect.report]{/yun}
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">到岗时间：</span>{yun:}$userclass_name[$expect.report]{/yun}</div>{yun:}/if{/yun} {yun:}if $userclass_name[$expect.type]{/yun}
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">工作性质：</span>{yun:}$userclass_name[$expect.type]{/yun}</div>{yun:}/if{/yun} {yun:}if $userclass_name[$expect.jobstatus]{/yun}
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">求职状态：</span>{yun:}$userclass_name[$expect.jobstatus]{/yun}</div>{yun:}/if{/yun} {yun:}if $jobname{/yun}
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">工作职能：</span>{yun:}$jobname{/yun}</div>{yun:}/if{/yun}
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="index.php?c=addresumeson&eid={yun:}$expect.id{/yun}&type=doc">
+                <div class="yun_usermember_resumetit"><i class="yun_usermember_resumetit_icon"></i>黏贴简历内容 {yun:}if $expect.doc{/yun}<i class="list_box_b">+45%</i>{yun:}else{/yun}<span class="yun_usermember_resumebl">+45%</span>{yun:}/if{/yun}<span class="yun_usermember_resume_zt">修改</span></div>
+                <div class="yun_usermember_resume_yx">
+                    {yun:}$doc.doc{/yun}
+                </div>
+            </a>
+        </li>
+    </ul>
+
+    {yun:}else{/yun}
+    <ul class="yun_usermember_resumebox">
+        <li>
+            <a href="index.php?c=info&eid={yun:}$expect.id{/yun}">
+                <div class="yun_usermember_resumetit"><i class="yun_usermember_resumetit_icon"></i>基本信息 <i class="list_box_b">+20%</i><span class="yun_usermember_resume_zt">修改</span></div>
+                <div class="yun_usermember_resumeinfo">
+                    <div class="yun_usermember_resumeinfo_photo">{yun:}if $user.sex==1{/yun}<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$user.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);">{yun:}else{/yun}<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$user.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_iconv{/yun}',2);">{yun:}/if{/yun}</div>
+                    <div class="yun_usermember_resumeinfo_pt"><span class="yun_usermember_resumeinfo_name">{yun:}$user.name{/yun}  </span>（ {yun:}$arr_data.sex[$user.sex]{/yun}{yun:}if $user.age{/yun}<span class="yun_usermember_resumeline">|</span>{yun:}$user.age{/yun}岁{yun:}/if{/yun}）</div>
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">工作经验：</span> {yun:}$userclass_name[$expect.exp]{/yun}</div>
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">最高学历：</span>{yun:}$userclass_name[$expect.edu]{/yun}</div>
+
+                    {yun:}if $user.height||$user.weight||$user.nationality||$userclass_name[$user.marriage]{/yun}
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">基本资料：</span> {yun:}if $user.height{/yun}{yun:}$user.height{/yun}cm{yun:}/if{/yun} {yun:}if $user.height&&$user.weight{/yun} / {yun:}/if{/yun} {yun:}if $user.weight{/yun}{yun:}$user.weight{/yun}kg{yun:}/if{/yun} {yun:}if ($user.height||$user.weight)&&$user.nationality{/yun}<span class="yun_usermember_resumeline">|</span>{yun:}/if{/yun} {yun:}$user.nationality{/yun} {yun:}if (($user.height||$user.weight)||$user.nationality)&&$userclass_name[$user.marriage]{/yun}<span class="yun_usermember_resumeline">|</span>{yun:}/if{/yun} {yun:}$userclass_name[$user.marriage]{/yun}
+                    </div>
+                    {yun:}/if{/yun}
+                    <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">现居住地：</span> 
+                    	{yun:}$user.living{/yun}
+                    </div>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="index.php?c=addexpect&eid={yun:}$expect.id{/yun}">
+                <div class="yun_usermember_resumetit"><i class="yun_usermember_resumetit_icon yun_usermember_resumetit_icon_yx"></i>意向职位 {yun:}if $resume.expect{/yun}<i class="list_box_b">+35%</i>{yun:}else{/yun}+35%{yun:}/if{/yun}
+                    <span class="yun_usermember_resume_zt"> {yun:}if $resume.expect{/yun}修改{yun:}else{/yun}未填写{yun:}/if{/yun} </span>
+                </div>
+                <div class="yun_usermember_resume_yx">
+                    <div class="yun_usermember_resume_yx">
+                        {yun:}if $expect.name{/yun}
+                        <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">期望岗位：</span>{yun:}$expect.name{/yun}</div>{yun:}/if{/yun} {yun:}if $cityname{/yun}
+                        <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">工作地点：</span>{yun:}$cityname{/yun}</div>{yun:}/if{/yun} {yun:}if $industry_name[$expect.hy]{/yun}
+                        <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">从事行业：</span>{yun:}$industry_name[$expect.hy]{/yun}</div>{yun:}/if{/yun} {yun:}if $expect.minsalary{/yun}
+                        <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">期望薪资：</span>{yun:}$expect.minsalary{/yun}{yun:}if $expect.maxsalary{/yun}-{yun:}$expect.maxsalary{/yun}元/月{yun:}else{/yun}元以上/月{yun:}/if{/yun}</div>{yun:}/if{/yun} {yun:}if $userclass_name[$expect.report]{/yun}
+                        <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">到岗时间：</span>{yun:}$userclass_name[$expect.report]{/yun}</div>{yun:}/if{/yun} {yun:}if $userclass_name[$expect.type]{/yun}
+                        <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">工作性质：</span>{yun:}$userclass_name[$expect.type]{/yun}</div>{yun:}/if{/yun} {yun:}if $userclass_name[$expect.jobstatus]{/yun}
+                        <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">求职状态：</span>{yun:}$userclass_name[$expect.jobstatus]{/yun}</div>{yun:}/if{/yun} {yun:}if $jobname{/yun}
+                        <div class="yun_usermember_resumeinfo_p"><span class="yun_usermember_resumeinfo_p_n">工作职能：</span>{yun:}$jobname{/yun}</div>{yun:}/if{/yun}
+                    </div>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="index.php?c=rinfo&eid={yun:}$expect.id{/yun}&type=work">
+                <div class="yun_usermember_resumetit"><i class="yun_usermember_resumetit_icon yun_usermember_resumetit_icon_gz"></i>工作经历 {yun:}if $resume.work{/yun}<i class="list_box_b">+10%</i>{yun:}else{/yun}+10%{yun:}/if{/yun} <span class="yun_usermember_resume_zt">{yun:}if $resume.work{/yun}修改{yun:}else{/yun}未填写{yun:}/if{/yun} </span>
+                </div>
+                {yun:}foreach from=$work item=workval{/yun}
+                <div class="yun_usermember_resumelist">
+                    <div class="">{yun:}$workval.sdate|date_format:'%Y.%m'{/yun}-{yun:}if $workval.edate!=0{/yun}{yun:}$workval.edate|date_format:'%Y.%m'{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}</div>
+                    <div class="yun_usermember_resumejobname">{yun:}$workval.title{/yun}</div>
+                    <div class="yun_usermember_resumecomname">{yun:}$workval.name{/yun}</div>
+                    <div class="">{yun:}$workval.content{/yun}</div>
+                </div>
+                {yun:}/foreach{/yun}
+            </a>
+        </li>
+        <li>
+            <a href="index.php?c=rinfo&eid={yun:}$expect.id{/yun}&type=edu">
+                <div class="yun_usermember_resumetit"><i class="yun_usermember_resumetit_icon yun_usermember_resumetit_icon_jy"></i>教育经历 {yun:}if $resume.edu{/yun}<i class="list_box_b">+10%</i>{yun:}else{/yun}+10%{yun:}/if{/yun} <span class="yun_usermember_resume_zt">
+			{yun:}if $resume.edu{/yun}修改{yun:}else{/yun}未填写{yun:}/if{/yun}</span></div>
+                {yun:}foreach from=$edu item=eduval{/yun}
+                <div class="yun_usermember_resumelist">
+                    <div class="">{yun:}$eduval.sdate|date_format:'%Y.%m'{/yun}-{yun:}$eduval.edate|date_format:'%Y.%m'{/yun}</div>
+                    <div class="yun_usermember_resumejobname">{yun:}$eduval.name{/yun}</div>
+                    {yun:}if $userclass_name[$eduval.education]{/yun}
+                    <div class="yun_usermember_resumecomname">{yun:}$userclass_name[$eduval.education]{/yun}学历</div>{yun:}/if{/yun} {yun:}if $eduval.specialty||$eduval.title{/yun}
+                    <div class="">{yun:}$eduval.specialty{/yun} {yun:}if $eduval.title{/yun}担任 {yun:}$eduval.title{/yun}{yun:}/if{/yun}</div>{yun:}/if{/yun}
+                </div>
+                {yun:}/foreach{/yun}
+            </a>
+        </li>
+        <li>
+            <a href="index.php?c=rinfo&eid={yun:}$expect.id{/yun}&type=project">
+                <div class="yun_usermember_resumetit"><i class="yun_usermember_resumetit_icon yun_usermember_resumetit_icon_xm"></i>项目经历{yun:}if $resume.project{/yun}<i class="list_box_b">+8%</i>{yun:}else{/yun}+8%{yun:}/if{/yun}</span><span class="yun_usermember_resume_zt">{yun:}if $resume.project{/yun}修改{yun:}else{/yun}未填写{yun:}/if{/yun}</span>
+                </div>
+                {yun:}foreach from=$project item=projectval{/yun}
+                <div class="yun_usermember_resumelist">
+                    <div class="">{yun:}$projectval.sdate|date_format:'%Y.%m'{/yun}-{yun:}if $projectval.edate!=0{/yun}{yun:}$projectval.edate|date_format:'%Y.%m'{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}</div>
+                    <div class="yun_usermember_resumejobname">{yun:}$projectval.name{/yun}</div>
+                    {yun:}if $projectval.title{/yun}
+                    <div class="yun_usermember_resumecomname">担任 {yun:}$projectval.title{/yun}</div>{yun:}/if{/yun}
+                    <div class="">{yun:}$projectval.content{/yun}</div>
+                </div>
+                {yun:}/foreach{/yun}
+            </a>
+        </li>
+        <li>
+            <a href="index.php?c=rinfo&eid={yun:}$expect.id{/yun}&type=training">
+                <div class="yun_usermember_resumetit"><i class="yun_usermember_resumetit_icon yun_usermember_resumetit_icon_px"></i>培训经历 {yun:}if $resume.training{/yun}<i class="list_box_b">+7%</i>{yun:}else{/yun}+7%{yun:}/if{/yun}<span class="yun_usermember_resume_zt">{yun:}if $resume.training{/yun}修改{yun:}else{/yun}未填写{yun:}/if{/yun}</span>
+                </div>
+                {yun:}foreach from=$training item=trainingval{/yun}
+                <div class="yun_usermember_resumelist">
+                    <div class="">{yun:}$trainingval.sdate|date_format:'%Y.%m'{/yun}-{yun:}if $trainingval.edate!=0{/yun}{yun:}$trainingval.edate|date_format:'%Y.%m'{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}</div>
+                    <div class="yun_usermember_resumejobname">{yun:}$trainingval.name{/yun}</div>
+                    <div class="yun_usermember_resumecomname">{yun:}$trainingval.title{/yun}</div>
+                    <div class="">{yun:}$trainingval.content{/yun}</div>
+                </div>
+                {yun:}/foreach{/yun}
+            </a>
+        </li>
+        <li>
+            <a href="index.php?c=rinfo&eid={yun:}$expect.id{/yun}&type=skill">
+                <div class="yun_usermember_resumetit">
+                    <i class="yun_usermember_resumetit_icon yun_usermember_resumetit_icon_jn"></i>
+                    职业技能 {yun:}if $skill{/yun}<i class="list_box_b">+10%</i>{yun:}else{/yun}+10%{yun:}/if{/yun}
+                    <span class="yun_usermember_resume_zt"> {yun:}if $skill{/yun}修改{yun:}else{/yun}未填写{yun:}/if{/yun} </span>
+                </div>
+                {yun:}foreach from=$skill item=skillval{/yun}
+                <div class="yun_usermember_resumelist">
+                    <div class="yun_usermember_resumejobname">{yun:}$skillval.name{/yun}</div>
+                    <div class="yun_usermember_resumecomname">掌握时间：{yun:}$skillval.longtime{/yun}年</div>
+                    {yun:}if $skillval.pic{/yun}
+                    <div class="">技能证书：<img src="{yun:}$skillval.pic{/yun}" style="max-width:50px; vertical-align:middle"></div>{yun:}/if{/yun}
+                </div>
+                {yun:}/foreach{/yun}
+            </a>
+        </li>
+        <li>
+            <a href="index.php?c=rinfo&eid={yun:}$expect.id{/yun}&type=other">
+                <div class="yun_usermember_resumetit"><i class="yun_usermember_resumetit_icon yun_usermember_resumetit_icon_qt"></i>其他信息 {yun:}if $resume.other{/yun}<i class="list_box_b"></i>{yun:}/if{/yun}
+                    <span class="yun_usermember_resume_zt">{yun:}if $resume.other{/yun}修改{yun:}else{/yun}未填写{yun:}/if{/yun} </span>
+                </div>
+                {yun:}foreach from=$other item=otherval{/yun}
+                <div class="yun_usermember_resumelist">
+                    <div class="yun_usermember_resumejobname">标题：{yun:}$otherval.name{/yun}</div>
+                    {yun:}if $otherval.content{/yun}<div class="">内容：{yun:}$otherval.content{/yun}</div>{yun:}/if{/yun}
+                </div>
+                {yun:}/foreach{/yun}
+            </a>
+        </li>
+        <li>
+            <a href="index.php?c=addresumeson&eid={yun:}$expect.id{/yun}&type=desc">
+                <div class="yun_usermember_resumetit">
+                    <i class="yun_usermember_resumetit_icon yun_usermember_resumetit_icon_pj"></i>自我评价 {yun:}if $user.description{/yun}<i class="list_box_b"></i>{yun:}/if{/yun}
+                    <span class="yun_usermember_resume_zt">{yun:}if $user.description{/yun} 修改{yun:}else{/yun}未填写{yun:}/if{/yun}</span>
+                </div>
+                <div class="yun_resume_pj_box">
+                    <div class="yun_resume_pj_box_nr">{yun:}$user.description{/yun}</div>
+
+                    {yun:}foreach from=$arrayTag key=key item=tv{/yun}
+                    <span class="yun_usermember_resumebq">{yun:}$tv{/yun}</span> {yun:}/foreach{/yun}
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="index.php?c=rinfo&eid={yun:}$expect.id{/yun}&type=show">
+                <div class="yun_usermember_resumetit"><i class="yun_usermember_resumetit_icon yun_usermember_resumetit_icon_al"></i>作品案例</div>
+                <div class="yun_usermember_resumelist">
+                    <div class="">PS：上传作品更受企业青睐，可提升5倍面试邀约率！上传作品案例</div>
+                </div>
+            </a>
+        </li>
+    </ul>
+    {yun:}/if{/yun}
+    <div class="yun_usermember_cj_new">
+	{yun:}if $maxnum>0 || $confignum==''{/yun}
+        {yun:}if $user.idcard_status!=1 && $config.user_enforce_identitycert==1{/yun} 
+		<a href="javascript:void(0)" onclick="fidcard()" class="yun_usermember_cj_new_bth">创建新简历</a>
+		{yun:}else{/yun}
+		<a href="index.php?c=addresume" class="yun_usermember_cj_new_bth">创建新简历</a>
+		{yun:}/if{/yun}
+	{yun:}else{/yun}
+        <a href="javascript:void(0)" onclick="layermsg('你的简历数已经达到系统设置的简历数了');return false;" class="yun_usermember_cj_new_bth">创建新简历</a>{yun:}/if{/yun}</div>
+</div>
+<!--有简历的情况 end-->
+{yun:}else{/yun}
+<!--无简历的情况-->
+<div class="wap_member_no">
+    你还没有创建简历，无法申请职位
+    <div>
+        {yun:}if $user.idcard_status!=1 && $config.user_enforce_identitycert==1{/yun} 
+		<a href="javascript:void(0)" onclick="fidcard()" class="wap_member_no_submit">创建简历</a>
+		{yun:}else{/yun}
+		<a href="index.php?c=addresume" class="wap_member_no_submit">创建简历</a>
+		{yun:}/if{/yun}
+    </div>
+
+</div>
+{yun:}/if{/yun}
+<!--无简历的情况 end-->
+<!--更多设置弹出层-->
+
+<div id="bg" style="display:none; z-index:100000000000"></div>
+
+<div id="bgset" class="yun_resume_setup" style="display:none">
+    {yun:}if $expect.r_status=='1'{/yun}
+   
+
+ 
+    <div class="yun_resume_setup_box">
+        <div class="yun_resume_setup_tit">自动匹配职位</div>
+        系统根据意向职位配适合的工作岗位！
+        <a href="index.php?c=likejob&id={yun:}$expect.id{/yun}" class="yun_resume_setup_bth">匹配</a>
+    </div>
+    {yun:}/if{/yun} 
+	{yun:}if $maxnum>0 || $confignum==''{/yun}
+		{yun:}if $user.idcard_status!=1 && $config.user_enforce_identitycert==1{/yun} 
+		<a href="javascript:void(0)" onclick="fidcard()" class="yun_resume_setup_cj">创建新简历</a>
+		{yun:}else{/yun}
+		<a href="index.php?c=addresume" class="yun_resume_setup_cj">创建新简历</a>
+		{yun:}/if{/yun}
+	{yun:}else{/yun}
+    <a href="javascript:void(0)" onclick="layermsg('你的简历数已经达到系统设置的简历数了');return false;" class="yun_resume_setup_cj">创建新简历</a>{yun:}/if{/yun}
+
+    
+        <a href="javascript:void(0)" onclick="layer_del('确定要删除？','index.php?c=resumeset&del={yun:}$expect.id{/yun}');"><div class="yun_resume_setup_sc">删除简历</div></a>
+    
+</div>
+ 
+
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+    var resumeData = [];
+    '{yun:}foreach item=v from=$rows{/yun}'
+    resumeData.push({
+        value: '{yun:}$v.id{/yun}',
+        text: '{yun:}$v.name{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+	function fidcard(){
+		layermsg('请先完成身份认证！', 2, function() {
+			location.href = 'index.php?c=idcard';
+		});
+	}
+</script>
+<script src="{yun:}$wap_style{/yun}/js/resume.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/publicselect.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

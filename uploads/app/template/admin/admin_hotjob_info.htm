@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<!--[if IE 6]>
+<script src="js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+  DD_belatedPNG.fix('#bg');
+</script>
+<![endif]-->
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title>后台管理</title>
+<style>
+.comy_time_text{
+	float: none !important;
+	width: 90px !important;
+}
+</style>
+</head>
+<body> 
+	<div id="houtai_div"> 
+		<div class="common-form" style="width:610px;">
+			<form name="myform" action="{yun:}if $source=='company'{/yun}index.php?m=admin_company&c=save{yun:}else{/yun}index.php?m=admin_hotjob&c=save{yun:}/if{/yun}" method="post" id="myform" enctype="multipart/form-data" onsubmit="return check_form();" target="supportiframe"> 
+		   <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+			<table width="100%" class="table_form contentWrap"> 
+				<tr>
+					<th align="right"><div  style="width:80px;">企业名称：</div></td>
+					<td id="comname" align="left">
+					<div class="com_a_name">{yun:}$hotjob.username{/yun}<input name="username" type="hidden" value="{yun:}$hotjob.username{/yun}"></div>
+					</td>
+				
+					<th align="right" class="comp_hotjob_line"><div  style="width:80px;">会员级别：</div></td>
+					<td id="ratname" align="left">
+						{yun:}$hotjob.rating{/yun}<input name="rating" type="hidden" value="{yun:}$hotjob.rating{/yun}">
+                        <input name="rating_id" type="hidden" value="{yun:}$hotjob.rating_id{/yun}">
+					</td>
+				</tr>
+                				<tr>
+                
+				
+                <th align="right">服务价格：</td>
+					<td align="left">
+					<input type="text" name="service_price" id="service_price" class="comp_text_w90" size="5" value="{yun:}$hotjob.service_price{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"><span class="comp_text_span">元</span>
+					</td>
+                    	<th align="right" class="comp_hotjob_line">显示排序：</td>
+					<td align="left">
+						<input class="comp_text_w90" id="sort" value="{yun:}$hotjob.sort{/yun}" name="sort" size="5"> <span class="comp_text_span">大前小后</span>
+					</td>
+				
+				</tr>
+				
+				  <tr>
+					<th align="right">名企时间：</td>
+					<td align="left" colspan="4">
+						<input id="time" class="comy_time_text" type="text" readonly value="{yun:}$hotjob.time_start|date_format:'%Y-%m-%d'{/yun}" name="time_start"/>
+						
+						<input type="text" name="time_end" id="time_end" class="comy_time_text"
+							readonly value="{yun:}$hotjob.time_end|date_format:'%Y-%m-%d'{/yun}"/>
+					</td>
+				</tr>
+				<tr>
+					<th align="right">企业展示LOGO：</td>
+					<td id="logo" align="left"   colspan="4">
+						<div class="com_in_logo">
+							{yun:}if $hotjob.hot_pic{/yun}<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$hotjob.hot_pic{/yun}"  width="60" height="60">{yun:}/if{/yun}
+						</div> 
+						 
+						<div class="com_hot_pic_text">
+							<input type="hidden" name="defpic" id="hot_pic" value="{yun:}if $hotjob.hot_pic{/yun}{yun:}$hotjob.hot_pic{/yun}{yun:}else{/yun}{yun:}$config.sy_unit_icon{/yun}{yun:}/if{/yun}" >
+							<button type="button" class="layui-btn layui-btn-normal" id="noupload">选择图片</button>
+							<input type="hidden" id="laynoupload" value="1"/>
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<th align="right">名企备注：</td>
+					<td id="beizhu1" name="beizhu1" align="left"  colspan="4">
+					   <textarea id="beizhu" name="beizhu" rows="5" class="comp_text_textarea">{yun:}$hotjob.beizhu{/yun}</textarea>
+					   <br/><span>200字以内</span>
+					</td>
+				</tr>
+			<tr>
+			<td colspan="4" align="center">
+				<input name="uid" id="com_uid" type="hidden" value="{yun:}$hotjob.uid{/yun}">
+				{yun:}if $hotjob.id{/yun}
+					 <input id="hotjob_id"  name="id" type="hidden" value="{yun:}$hotjob.id{/yun}">
+					<input class="admin_submit_new" name="hotup" type="submit" value="修改" id="dosubmit">  
+				{yun:}else{/yun}
+				  <input class="admin_submit_new" name="hotad" type="submit" value="提交" id="dosubmit">
+				{yun:}/if{/yun}
+			</td>
+			 </table>
+			 </form>
+		</div> 
+	</div>  
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>  
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<script src="js/show_pub.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script>  
+var weburl="{yun:}$config.sy_weburl{/yun}";
+layui.use(['laydate'], function(){
+	var laydate = layui.laydate
+	,$ = layui.$;
+
+	laydate.render({
+		elem: '#time'
+	});
+
+	laydate.render({
+		elem: '#time_end'
+	});
+});
+function check_form(){
+	var hot_pic=$("#hot_pic").val();//默认logo
+	var pic=$("input[name=file]").val();
+	var time = $("#time").val();
+	if(time==""){ 
+		parent.layer.msg('名企开始时间不能为空！', 2,8);
+		return false
+	}
+	
+	var time_end = $("#time_end").val();
+	if(time_end == ''){
+		parent.layer.msg('名企结束时间不能为空！', 2,8);
+		return false
+	}
+
+	if(hot_pic=="" && pic==""){
+		parent.layer.msg('企业展示LOGO不能为空！', 2, 8);
+		return false
+	}
+
+ 	var beizhu=$("#beizhu").val();
+	if(beizhu.length>200){
+		parent.layer.msg('不能超过200字以内', 2, 8);
+		return false
+	}
+}
+
+</script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+    <link href="{yun:}$comstyle{/yun}/images/uploadify.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/jquery.uploadify-3.1.min.js?v={yun:}$config.cachecode{/yun}"></script>
+    <div class='right_box'>
+      <div class='admincont_box'>
+             <div class="com_tit"><span class="com_tit_span">修改信息</span></div>
+        <div class=""> 
+          <div class="index_photo_new fltL mt10">
+            <div class="file_button" style="border:none">
+            
+			  <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+			   <form id="showform" name="myform" method="post" target="supportiframe"  action="index.php?c=show&act=upshow" enctype="multipart/form-data">
+                  <input type="hidden" id="showid" name="id" value="{yun:}$id{/yun}"/>
+                  <input type="hidden" name="uid" value="{yun:}$uid{/yun}"/>
+				  <input type="hidden" name="picurl" value="{yun:}$picurl.picurl{/yun}"/>
+               
+                  <div id="imgparent" class="com_hj_pic"> <img id="imgicon" src=".{yun:}$picurl.picurl{/yun}" width="220" height="180"> </div>
+                
+                  <ul class="com_hj_list">
+                  <li>
+                    <div class="com_hj_listname">环境图片：</div>
+                    <div class="com_hj_listr">
+						<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'picurl',imgid: 'imgicon',parentid: 'imgparent'}">上传图片</button>
+						<input type="hidden" id="layupload_type" value="2"/>
+						<input type="hidden" id="upload_path" value="show"/>
+						<input type="hidden" name="picurl" value="{yun:}$picurl.picurl{/yun}"/>
+					</div>
+                  </li>
+                  <li>
+                    <div class="com_hj_listname">标&nbsp;&nbsp;&nbsp;&nbsp;题：</div>
+                    <div class="com_hj_listr">
+                      <input class="file_button_edit_input" type="text" name="title" size="15" value="{yun:}$picurl.title{/yun}"/>
+                    </div>
+                  </li>
+                  <li>
+                   <div class="com_hj_listname">排&nbsp;&nbsp;&nbsp;&nbsp;序：</div>
+                    <div class="com_hj_listr">
+                      <input class="file_button_edit_input" type="text" name="showsort" size="15" value="{yun:}$picurl.sort{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                      <em style=" margin-left:10px;">数值越大越靠前</em> </div>
+                  </li>
+                  <li>  <div class="com_hj_listname">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                  <div class="com_hj_listr">
+                    <input class="btn_01" type="button" onclick="checkshow()" value="更新信息">
+                  </div></li>
+                  </ul>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+<script language="javascript">
+function checkshow(){
+	var title=$.trim($("input[name=title]").val());
+	if(title==''){
+	   layer.msg('标题不能为空！', 2, 8); return false;
+	}	
+	$("#showform").submit();
+	layer.load('执行中，请稍候...',0);
+}
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+{yun:}include file="$comstyle/footer.htm"{/yun}

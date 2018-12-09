@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">添加商品，网站运营者可以将周边产品或已合作商家把购买高频率商品以积分兑换形式放在网站！用户积分达到一定积分可以兑换！增强网站用户互动性！</div>
+</div>
+</div>
+<div class="clear"></div>
+<div class="tag_box mt10">
+    <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form id="rewardform" name="myform" action="index.php?m=reward&c=save" method="post" encType="multipart/form-data" target="supportiframe" class="layui-form">
+      <table width="100%" class="table_form" style="background:#fff;">
+       <tr>
+              <td colspan="2" bgcolor="#f0f6fb"><div class="admin_bold"> 添加商品</div></td>
+            </tr>
+        <tr>
+          <th width="200">商品名称：</th>
+          <td> 
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input class="layui-input input-text" type="text" name="name" size="40" value="{yun:}$info.name{/yun}"/>
+                 </div>
+               </div>
+            </div></td>
+        </tr>
+        <tr class="admin_table_trbg">
+          <th>商品类别：</th>          
+          <td> 
+            <!--<div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <select name="nid" lay-filter="" id="nid_val">
+                      <option value="">请选择</option>
+                      {yun:}foreach from=$redeem_index item=v{/yun}
+                        <option value="{yun:}$v{/yun}" {yun:}if $info.nid==$v{/yun}selected{yun:}/if{/yun}>{yun:}$redeem_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                 </div>
+               </div>
+            </div>-->
+			<div class="layui-form-item">
+			<div class="layui-input-inline">
+            <select name="nid" id="nid" lay-filter="nid">
+              <option value="">请选择</option>
+              {yun:}foreach from=$redeem_index item=v{/yun}
+              <option value="{yun:}$v{/yun}" {yun:}if $info.nid == $v{/yun} selected{yun:}/if{/yun}
+                >{yun:}$redeem_name[$v]{/yun}
+              </option>
+              {yun:}/foreach{/yun}
+            </select>
+          </div>
+          <div class="layui-input-inline">
+            <select name="tnid" lay-filter="tnid" id="tnid">
+              <option value="">请选择</option>
+              {yun:}foreach from=$redeem_type[$info.nid] key=j item=v{/yun}
+              <option value="{yun:}$v{/yun}" {yun:}if $info.tnid==$v{/yun} selected{yun:}/if{/yun}
+                >{yun:}$redeem_name[$v]{/yun}
+              </option>
+              {yun:}/foreach{/yun}
+            </select>
+          </div>
+        </div> 
+            </td>
+        </tr>
+        <tr>
+          <th>商品图片：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+					<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'pic',imgid: 'imgicon'}">上传图片</button>
+					<input type="hidden" id="layupload_type" value="2"/>
+					<input type="hidden" id="upload_path" value="reward"/>
+					<input type="hidden" name="pic" value="{yun:}$info.pic{/yun}"/>
+					<img id="imgicon" src="{yun:}$config.sy_weburl{/yun}/{yun:}$info.pic{/yun}" width="50" height="40" {yun:}if !$info.pic{/yun}class="none"{yun:}/if{/yun}>
+                 </div>
+               </div>
+            </div>
+			</td>
+        </tr>
+        <tr class="admin_table_trbg">
+          <th>兑换{yun:}$config.integral_pricename{/yun}：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input class="layui-input input-text" type="text" name="integral" size="20" value="{yun:}$info.integral{/yun}" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')"/>
+                 </div>
+               </div>
+            </div></td>
+        </tr>
+        <tr>
+          <th>限购数量：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input class="layui-input input-text" type="text" name="restriction" size="20" value="{yun:}$info.restriction{/yun}" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')"/>
+                 </div>
+                 <div class="layui-form-mid layui-word-aux">0为不限</div>
+               </div>
+            </div></td>
+        </tr>
+        <tr class="admin_table_trbg">
+          <th>库存数量：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input class="layui-input input-text" type="text" name="stock" size="20" value="{yun:}$info.stock{/yun}" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')"/>
+                 </div>
+               </div>
+            </div></td>
+        </tr>
+        <tr>
+          <th>简介内容： </th>
+          <td>
+ 		  <script id="myEditor" name="content" type="text/plain" style="width:700px;height:300px;">{yun:}$info.content{/yun}
+		  </script>
+		  </td>
+        </tr>
+        <tr class="admin_table_trbg">
+          <th>排序：</th>
+          <td>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input class="layui-input input-text" type="text" name="sort" size="20" value="{yun:}$info.sort{/yun}" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')"/>
+                 </div>
+                 <div class="layui-form-mid layui-word-aux">越小越在前</div>
+               </div>
+            </div></td>
+        </tr>
+        <tr >
+          <th>状态：</th>
+          <td> 
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                 <div class="layui-input-inline">
+                   <input type="radio" name="status" value="1" id="status_1" title="上架" {yun:}if $info.status==1{/yun}checked{yun:}/if{/yun}>
+                   <input type="radio" name="status" value="0" id="status_0" title="下架" {yun:}if $info.status==0{/yun}checked{yun:}/if{/yun}>
+                 </div>
+               </div>
+            </div>
+            </td>
+        </tr>
+        <tr class="admin_table_trbg" >
+          <td align="center" colspan="2"> 
+          	{yun:}if $info.id{/yun}
+            <input type="hidden" name="id" value="{yun:}$info.id{/yun}"/>
+            <input class="layui-btn layui-btn-normal" type="button" onclick="checkform()" value="&nbsp;更 新&nbsp;"  />
+            {yun:}else{/yun}
+            <input class="layui-btn layui-btn-normal" type="button" onclick="checkform()" value="&nbsp;添 加&nbsp;"  />
+            {yun:}/if{/yun}
+            <input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+        </tr>
+      </table>
+      <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+    </form>
+  </div>
+</div>
+<script>
+var weburl = '{yun:}$config.sy_weburl{/yun}';
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$
+	,url=weburl+"/index.php?m=ajax&c=get_redeem_option";
+	 form.on('select(nid)', function(data){
+      $.post(url,{tnid : data.value},function(html){
+        $("#tnid").html(html);
+        form.render();
+      });
+    });
+});
+function checkform(){
+	if ($("#name").val()==""){
+		parent.layer.msg('请填写商品名称！', 2, 8);return false;
+	}
+	if ($("#nid").val()==""){
+		parent.layer.msg('请填写商品类别！', 2, 8);return false;
+	}
+	if ($("#pic").val()==""){
+		parent.layer.msg('请上传商品图片！', 2, 8);return false;
+	}
+	if ($("#integral").val()==""){
+		parent.layer.msg('请填写兑换{yun:}$config.integral_pricename{/yun}！', 2, 8);return false;
+	}
+	if ($("#restriction").val()==""){
+		parent.layer.msg('请填写限购数量！', 2, 8);return false;
+	}
+	if ($("#stock").val()==""){
+		parent.layer.msg('请填写库存数量！', 2, 8);return false;
+	} 
+	$("#rewardform").submit();
+}
+UE.getEditor('myEditor',{
+	toolbars:[['Source', 'Bold', 'italic', 'underline', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright','insertorderedlist', 'insertunorderedlist','emotion','simpleupload']],
+	wordCount:false,
+    elementPathEnabled:false,
+    initialFrameHeight:180
+});
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+</body>
+</html>

@@ -1,0 +1,38 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+
+<div class="once_paylog_tip">您的未付款记录</div>
+<section class="main_member_cot_box">
+    <div class="wap_member_post_list">
+        {yun:}foreach item=log from=$rows{/yun}
+        <div class="once_paylog">
+            <div class="user_member_box">
+                <div class="once_paylog_p"><span class="member_c9">充值单号：</span>{yun:}$log.order_id{/yun}</div>
+                <div class="once_paylog_p"><span class="member_c9">订单类型：</span> 店铺招聘 </div>
+                <div class="once_paylog_p">
+                    <span class="member_c9">支付形式：</span> {yun:}if $log.order_type=='alipay'{/yun}支付宝支付{yun:}else{/yun}手动{yun:}/if{/yun}</div>
+                <div class="once_paylog_p"><span class="member_c9">充值金额：</span>{yun:}$log.order_price{/yun}</div>
+                <div class="once_paylog_p"><span class="member_c9">支付状态：</span>未付款</div>
+                <div class="once_paylog_p"><span class="member_c9">时间：</span>{yun:}$log.order_time|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</div>
+                {yun:}if $log.order_remark{/yun}
+                	<div class="once_paylog_p"><span class="member_c9">备注：</span>{yun:}$log.order_remark{/yun}</div>
+                {yun:}/if{/yun}
+             </div>
+            {yun:}if $log.order_state=='1' && $log.order_type!='bank'{/yun}
+            <div class="once_paylog_cz">
+                <a href="index.php?c=once&a=show&id={yun:}$log.once_id{/yun}&pay=1" class="yun_member_hr_bth">招聘信息</a>
+                <a href="index.php?c=once&a=pay&id={yun:}$log.once_id{/yun}" class="yun_member_hr_bth">去付款</a>
+                <a href="javascript:void(0)" onclick="layer_del('确定要取消该订单吗？','index.php?c=once&a=delpaylog&id={yun:}$log.id{/yun}')" class="yun_member_hr_bth">取消充值</a>
+            </div>{yun:}/if{/yun}
+        </div>
+        {yun:}foreachelse{/yun}
+        <div class="wap_member_no">暂无相关信息</div>
+        {yun:}/foreach{/yun}
+    </div>
+</section>
+<div class="pages"> {yun:}$pagenav{/yun}</div>
+
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

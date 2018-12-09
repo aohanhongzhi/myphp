@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<title>后台管理</title>
+<script>
+</script>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了缓存模块 。</div>
+</div>
+</div>
+<div class="mt10"></div>
+<div id="subboxdiv" style="width:100%;height:100%;display:none;position:absolute;"></div>
+<div class="infoboxp_top infoboxp_topIjf">
+    <span class="infoboxp_top_span">缓存模块设置</span>
+</div>
+<div class="main_tag">
+<div class="clear"></div>
+<div class="tag_box">
+<div>
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+<form name="myform" class="layui-form" target="supportiframe" action="index.php?m=config&c=savetplcache" method="post">
+<table width="100%" class="table_form">
+<tr>
+<td style="padding:0px;">
+<div class="tplcachle_list">
+<div class="tplcachle_name">首页</div>
+<div class="tplcachle_list_cz">
+
+
+
+
+<input type="radio" name="sy_index_cache" value="1" id="sy_index_cache1" {yun:}if $cache_config.sy_index_cache=="1"{/yun}checked{yun:}/if{/yun} title='开启'>
+			  
+			  <input type="radio" name="sy_index_cache" value="2" id="sy_index_cache2" {yun:}if $cache_config.sy_index_cache=="2"{/yun}checked{yun:}/if{/yun} title='关闭'>
+			  
+       </div>       
+</div>
+
+
+{yun:}foreach from=$newModel key=key item=mconfig{/yun}
+<div class="tplcachle_list">
+<div class="tplcachle_name">{yun:}$mconfig.value{/yun}</div>
+<div class="tplcachle_list_cz">
+  <input type="radio" name="sy_{yun:}$key{/yun}_cache" value="1" id="sy_{yun:}$key{/yun}_cache1" {yun:}if $mconfig.cache=="1"{/yun}checked{yun:}/if{/yun}  title='开启'>
+
+ <input type="radio" name="sy_{yun:}$key{/yun}_cache" value="2" id="sy_{yun:}$key{/yun}_cache2" {yun:}if $mconfig.cache=="2"{/yun}checked{yun:}/if{/yun}  title='关闭'>
+       </div>       
+</div>
+	{yun:}/foreach{/yun}
+	
+
+
+
+
+
+    <input type="hidden" value="company"  name="sy_companydir">
+   <div class="tplcachle_list_chongz">
+		<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+        <input class="admin_button"  type="submit" name="config" value="保存" />&nbsp;&nbsp;
+        <input class="admin_button" type="reset" value="重置" /></div>
+
+ </td>
+ </tr>
+</table>
+</form>
+</div>
+</div>
+</div>
+</div>
+<script>
+ layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+
+    
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/yun_wap_member.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<div id="app" class="mui-views">
+	<div class="mui-view">
+		<div class="mui-pages"></div>
+	</div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+	<!--页面主内容区开始-->
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="yun_newwap_box mt15">
+					<li class="yun_newwap_text"><span class="yun_newwap_text_name">姓名</span ><span class="yun_newwap_text_box">
+						<input type="text" name="username" id="username"  value="{yun:}$row.username{/yun}" placeholder="请输入姓名">
+						<input type="hidden" name="id" id="id"  value="{yun:}$row.id{/yun}">
+					</span></li>
+				</ul>
+				<ul class="yun_newwap_box mt15">
+					<li><span class="yun_newwap_text_name">性别</span><span class="yun_newwap_text_box">
+					<button id='sexPicker' class="mui-btn mui-btn-block" type='button' placeholder="请选择性别" data-sex="{yun:}$row.sex{/yun}">{yun:}if $row.sex==1{/yun}男{yun:}elseif $row.sex==2{/yun}女{yun:}else{/yun}请选择性别{yun:}/if{/yun}</button>
+					<input type="hidden" id="sex" name="sex" value="{yun:}$row.sex{/yun}">
+					</span></li>
+					<li><span class="yun_newwap_text_name">工作年限</span><span class="yun_newwap_text_box">
+					<button id='expPicker' class="mui-btn mui-btn-block" type='button' placeholder="请选择"  data-exp="{yun:}$row.exp{/yun}">{yun:}if $row.exp{/yun}{yun:}$userclass_name[$row.exp]{/yun}{yun:}else{/yun}请选择工作年限{yun:}/if{/yun}</button>
+					<input type="hidden" id="exp" name="exp" value="{yun:}$row.exp{/yun}">
+					</span></li>
+					<li><span class="yun_newwap_text_name">自我介绍</span>
+					<div class="yun_newwap_text_js"><a href="#productionhtml" id="contenteditor" class=""><span id="productionshow">{yun:}if $row.production{/yun}{yun:}$row.production{/yun}{yun:}else{/yun}请填写自我介绍{yun:}/if{/yun}</span></a></div>
+					<textarea style="display:none" id="contenttext">{yun:}$row.production{/yun}</textarea>
+					</li>
+				</ul>
+				<ul class="yun_newwap_box mt15">
+					<li class="yun_newwap_text"><span class="yun_newwap_text_name">理想工作</span><span class="yun_newwap_text_box">
+						<input type="text" name="job"  id="job" value="{yun:}$row.job{/yun}" placeholder="填写工作名称，如：服装厂操作工">
+					</span></li>
+					<li class="yun_newwap_text"><span class="yun_newwap_text_name">联系手机</span><span class="yun_newwap_text_box">
+					<input type="text" name="mobile" id="mobile" value="{yun:}$row.mobile{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="" placeholder="请填写手机号码" >
+					</span></li>
+					<div class="yun_newwap_box_ts">提示：密码可用于刷新/修改/删除此信息</div>
+					{yun:}if $row.id==''{/yun} 
+					<li class="yun_newwap_text"><span class="yun_newwap_text_name">设置密码</span><span class="yun_newwap_text_box">
+					<input type="password" name="password" id="password" value="" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" class=" "placeholder="请输入密码" >
+					</span></li>
+					{yun:}else{/yun}
+					<li class="yun_newwap_text"><span class="yun_newwap_text_name">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span><span class="yun_newwap_text_box">
+					<input type="text" name="password" id="password" value="" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" class=" "placeholder="请输入密码">
+					</span></li>
+					{yun:}/if{/yun}
+					{yun:}if strpos($config.code_web,"店铺招聘")!==false{/yun}
+					{yun:}if $config.code_kind==3{/yun}
+					<li class="yun_newwap_text"><span class="yun_newwap_text_name">安全验证</span><span class="yun_newwap_text_box">
+						<div id="mask"></div>
+						<div id="popup-captcha-mobile" data-id='subreg' data-type='click'></div>
+						<input type='hidden' id="popup-submit"></span></li>
+					{yun:}else{/yun}
+					<li class="yun_newwap_text"><span class="yun_newwap_text_name">验证码</span><div class="yun_newwap_yz">
+			            <input type="text" name="checkcode" id="checkcode"  class="reinputText reinputText_w100" placeholder="请输入图片验证码">
+			            <div class="yun_newwap_yz_img">
+			            <img id="vcode_img" class="authcode" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php" onclick="checkCode('vcode_img');"/>
+			            </div>
+					</div></li>
+					{yun:}/if{/yun}
+					{yun:}/if{/yun}
+				</ul>
+				<div class="yun_newwap_bth"> <button id="submit" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+					</div>
+               </div> 
+			</div>
+		</div>
+	</div>
+</div>
+<!--单页面结束-->
+<div id="productionhtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				 <div class="yun_wap_info_brief">
+                  <div class="yun_wap_info_brief_c">
+					<div class="yun_wap_info_brief_tit"> 自我介绍 </div>
+					<textarea class="textAreaMsg tip contenttext" id="production" name="production" value="" placeholder="重点介绍下您擅长什么！">{yun:}$row.production{/yun}</textarea></div>
+				    <a class="yun_wap_info_brief_tit_bc mui-action-back">保存</a>
+				 </div>	
+			</div>
+		</div>
+	</div>
+</div>
+<script>weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/geetest/gt.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/geetest/mobile.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/tiny_add.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script language="javascript">
+	$(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+	var sexData=[];
+	'{yun:}foreach from=$arr_data.sex key=j item=v{/yun}'
+		sexData.push({
+			value : '{yun:}$j{/yun}',
+			text : '{yun:}$v{/yun}'
+		}) 
+	'{yun:}/foreach{/yun}'
+	var expData=[];
+	'{yun:}foreach from=$userdata.user_word key=j item=v{/yun}'
+		expData.push({
+			value : '{yun:}$v{/yun}',
+			text : '{yun:}$userclass_name[$v]{/yun}'
+		}) 
+	'{yun:}/foreach{/yun}'
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

@@ -1,0 +1,928 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<script>
+    var job_auto = '{yun:}$config.job_auto{/yun}',
+        job_top = '{yun:}$config.integral_job_top{/yun}',
+        job_urgent = '{yun:}$config.com_urgent{/yun}',
+        job_rec = '{yun:}$config.com_recjob{/yun}';
+
+    var integral_online = '{yun:}$config.com_integral_online{/yun}';
+    var pro = '{yun:}$config.integral_proportion{/yun}';
+</script>
+
+<section class="wap_member">
+    {yun:}if $smarty.get.server=='1'{/yun}
+    <div class="wap_member_comp_h1"><span>自动刷新</span></div>
+    <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form_t('autojob');">
+        <div class="spread_box">
+            选择自动刷新天数 </div>
+        <div class="clear"></div>
+        <ul class="spread_box_time" id="job_auto">
+            <li class="spread_box_cur" data-day="1"><span class="spread_box_n">1天</span></li>
+            <li data-day="3"><span class="spread_box_n">3天</span></li>
+            <li data-day="7"><span class="spread_box_n">7天</span></li>
+            <li data-day="15"><span class="spread_box_n">15天</span></li>
+            <li data-day="30"><span class="spread_box_n">30天</span></li>
+            <li data-day="0"><span class="spread_box_n">自定义</span></li>
+            <div class="spread_box_text" style="display: none;" id="custom">
+                <div class="spread_box_text_c">
+                    <input id="day" type="text" oninput="myFunction(this)" onkeyup="checkDayNum('job_auto');" maxlength="6" value="" class="" placeholder="请填写天数">
+                </div>
+            </div>
+        </ul>
+        <div class="clear"></div>
+        <div class="spread_box mt10">
+            所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+            <span class="spread_box_money"><span class="pricehtml" id="r_price">{yun:}$config.integral_proportion * $config.job_auto{/yun}</span></span>
+            {yun:}else{/yun}
+            <span class="spread_box_money">￥ <span class="pricehtml" id="r_price">{yun:}$config.job_auto{/yun}</span></span>
+            {yun:}/if{/yun}
+        </div>
+
+        {yun:}if $config.com_integral_online==1{/yun}
+        <div class="spread_box mt10">
+            {yun:}$config.integral_pricename{/yun}抵扣
+            <div class="spread_box_hs">当前共有
+                <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+            </div>
+            <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                <div class="mui-switch-handle"></div>
+            </div>
+
+            <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                {yun:}$config.integral_pricename{/yun}抵扣数量：
+                <input type="text" onkeyup="checkNumT('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="rdkjf">
+            </div>
+        </div>
+        {yun:}/if{/yun}
+
+        <div class="spread_box_yfmoney">
+            应付{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+            <span class="spread_box_yfmoney_n"><span id="price">{yun:}$config.integral_proportion * $config.job_auto{/yun}</span></span>
+            {yun:}else{/yun}
+            <span class="spread_box_yfmoney_n">￥ <span id="price">{yun:}$config.job_auto{/yun}</span></span>
+            {yun:}/if{/yun}
+        </div>
+
+        <div id="zffs" {yun:}if $config.job_auto==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+            {yun:}if $paytype.alipay{/yun}
+            <div class="spread_box spread_box_bor" onclick="paycheck('alipay');">
+                <div class="spread_zf_list spread_zf_list_zfb">
+                    <i class="alipay member_set_meal_fk_xz" style="top:0"></i> 支付宝支付
+                </div>
+            </div>
+            {yun:}/if{/yun} {yun:}if  $paytype.alipay{/yun}
+            <div class="yunset_bth_box"><input type="submit" value="确认支付" name=nextstep class="reinputText2"></div>
+            {yun:}else{/yun}
+            <div class="pay_zfgb_tip">
+                <span>网站已关闭支付功能，请联系管理员！</span>
+
+            </div>
+            {yun:}/if{/yun}
+        </div>
+        <div class="getserbver_box_bth" id="qrzf_btn" {yun:}if $config.job_auto!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+            <div class="yunset_bth_box">
+                <input type="button" value="确认支付" style="color:white;border:none" onClick="integral_server_buy('autojob','{yun:}$info.id{/yun}');" class="reinputText2">
+            </div>
+        </div>
+
+        {yun:}if $config.sy_freewebtel{/yun}
+        <div class="getserbver_box_tel">
+            <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+        </div>
+        {yun:}/if{/yun}
+        <input name="server" id="server" type="hidden" value="autojob" />
+        <input name="rdays" id="days" type="hidden" value="1" />
+        <input type="hidden" value="" id="paytype" name="paytype" />
+        <input name="jobautoids" id="jobautoids" type="hidden" value="{yun:}$info.id{/yun}" />
+    </form>
+
+    {yun:}elseif $smarty.get.server=='2'{/yun}
+    <div class="wap_member_comp_h1"><span>职位置顶</span></div>
+    <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form_t('zdjob');">
+        <div class="spread_box">
+            选择置顶职位天数 </div>
+        <div class="clear"></div>
+        <ul class="spread_box_time" id="job_top">
+            <li class="spread_box_cur" data-day="1"><span class="spread_box_n">1天</span></li>
+            <li data-day="3"><span class="spread_box_n">3天</span></li>
+            <li data-day="7"><span class="spread_box_n">7天</span></li>
+            <li data-day="15"><span class="spread_box_n">15天</span></li>
+            <li data-day="30"><span class="spread_box_n">30天</span></li>
+            <li data-day="0"><span class="spread_box_n">自定义</span></li>
+            <div class="spread_box_text" style="display: none;" id="custom">
+                <div class="spread_box_text_c">
+                    <input id="day" type="text" oninput="myFunction(this)" onkeyup="checkDayNum('job_top');" maxlength="6" value="" class="" placeholder="请填写天数">
+                </div>
+            </div>
+        </ul>
+        <div class="clear"></div>
+
+        <div class="spread_box mt10">
+            所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+            <span class="spread_box_money"><span class="pricehtml" id="r_price">{yun:}$config.integral_proportion * $config.integral_job_top{/yun}</span></span>
+            {yun:}else{/yun}
+            <span class="spread_box_money">￥ <span class="pricehtml" id="r_price">{yun:}$config.integral_job_top{/yun}</span></span>
+            {yun:}/if{/yun}
+        </div>
+
+        {yun:}if $config.com_integral_online==1{/yun}
+        <div class="spread_box mt10">
+            {yun:}$config.integral_pricename{/yun}抵扣
+            <div class="spread_box_hs">当前共有
+                <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+            </div>
+            <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                <div class="mui-switch-handle"></div>
+            </div>
+
+            <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                {yun:}$config.integral_pricename{/yun}抵扣数量：
+                <input type="text" onkeyup="checkNumT('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="xsdkjf">
+            </div>
+        </div>
+
+        {yun:}/if{/yun}
+
+        <div class="spread_box_yfmoney">
+            应付{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+            <span class="spread_box_yfmoney_n"><span id="price">{yun:}$config.integral_proportion * $config.integral_job_top{/yun}</span></span>
+            {yun:}else{/yun}
+            <span class="spread_box_yfmoney_n">￥ <span id="price">{yun:}$config.integral_job_top{/yun}</span></span>
+            {yun:}/if{/yun}
+        </div>
+
+        <div id="zffs" {yun:}if $config.integral_job_top==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+             {yun:}if $paytype.alipay{/yun}
+            <div class="spread_box spread_box_bor" onclick="paycheck('alipay');">
+                <div class="spread_zf_list spread_zf_list_zfb">
+                    <i class="alipay member_set_meal_fk_xz" style="top:0"></i> 支付宝支付
+                </div>
+            </div>
+            {yun:}/if{/yun} {yun:}if  $paytype.alipay{/yun}
+            <div class="yunset_bth_box"><input type="submit" value="确认支付" name=nextstep class="reinputText2"></div>
+            {yun:}else{/yun}
+            <div class="pay_zfgb_tip">
+                <span>网站已关闭支付功能，请联系管理员！</span>
+            </div>
+            {yun:}/if{/yun}
+        </div>
+        <div class="getserbver_box_bth" id="qrzf_btn" {yun:}if $config.integral_job_top!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+            <div class="yunset_bth_box">
+                <input type="button" value="确认支付" style="color:white;border:none" onClick="integral_server_buy('zdjob','{yun:}$info.id{/yun}');" class="reinputText2">
+            </div>
+        </div>
+
+        {yun:}if $config.sy_freewebtel{/yun}
+        <div class="getserbver_box_tel">
+            <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+        </div>
+        {yun:}/if{/yun}
+        <input name="server" id="server" type="hidden" value="zdjob" />
+        <input name="xsdays" id="days" type="hidden" value="1" />
+        <input type="hidden" value="" id="paytype" name="paytype" />
+        <input name="zdjobid" id="zdjobid" type="hidden" value="{yun:}$info.id{/yun}" />
+    </form>
+
+    {yun:}elseif $smarty.get.server=='3'{/yun}
+    <div class="wap_member_comp_h1"><span>职位推荐</span></div>
+    <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form_t('recjob');">
+        <div class="spread_box">
+            选择职位推荐天数 </div>
+        <div class="clear"></div>
+        <ul class="spread_box_time" id="job_rec">
+            <li class="spread_box_cur" data-day="1"><span class="spread_box_n">1天</span></li>
+            <li data-day="3"><span class="spread_box_n">3天</span></li>
+            <li data-day="7"><span class="spread_box_n">7天</span></li>
+            <li data-day="15"><span class="spread_box_n">15天</span></li>
+            <li data-day="30"><span class="spread_box_n">30天</span></li>
+            <li data-day="0"><span class="spread_box_n">自定义</span></li>
+            <div class="spread_box_text" style="display: none;" id="custom">
+                <div class="spread_box_text_c">
+                    <input id="day" type="text" oninput="myFunction(this)" onkeyup="checkDayNum('job_rec');" maxlength="6" value="" class="" placeholder="请填写天数">
+                </div>
+            </div>
+        </ul>
+        <div class="clear"></div>
+
+        <div class="spread_box mt10">
+            所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+            <span class="spread_box_money"><span class="pricehtml" id="r_price">{yun:}$config.integral_proportion * $config.com_recjob{/yun}</span></span>
+            {yun:}else{/yun}
+            <span class="spread_box_money">￥ <span class="pricehtml" id="r_price">{yun:}$config.com_recjob{/yun}</span></span>
+            {yun:}/if{/yun}
+        </div>
+
+        {yun:}if $config.com_integral_online==1{/yun}
+        <div class="spread_box mt10">
+            {yun:}$config.integral_pricename{/yun}抵扣
+            <div class="spread_box_hs">当前共有
+                <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+            </div>
+            <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                <div class="mui-switch-handle"></div>
+            </div>
+
+            <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                {yun:}$config.integral_pricename{/yun}抵扣数量：
+                <input type="text" onkeyup="checkNumT('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="recdkjf">
+            </div>
+        </div>
+
+        {yun:}/if{/yun}
+
+        <div class="spread_box_yfmoney">
+            应付{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+            <span class="spread_box_yfmoney_n"><span id="price">{yun:}$config.integral_proportion * $config.com_recjob{/yun}</span></span>
+            {yun:}else{/yun}
+            <span class="spread_box_yfmoney_n">￥ <span id="price">{yun:}$config.com_recjob{/yun}</span></span>
+            {yun:}/if{/yun}
+        </div>
+
+        <div id="zffs" {yun:}if $config.com_recjob==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+ 			{yun:}if $paytype.alipay{/yun}
+            <div class="spread_box spread_box_bor" onclick="paycheck('alipay');">
+                <div class="spread_zf_list spread_zf_list_zfb">
+                    <i class="alipay member_set_meal_fk_xz" style="top:0"></i> 支付宝支付
+                </div>
+            </div>
+            {yun:}/if{/yun} {yun:}if  $paytype.alipay{/yun}
+            <div class="yunset_bth_box"><input type="submit" value="确认支付" name=nextstep class="reinputText2"></div>
+            {yun:}else{/yun}
+            <div class="pay_zfgb_tip">
+                <span>网站已关闭支付功能，请联系管理员！</span>
+            </div>
+            {yun:}/if{/yun}
+        </div>
+        <div class="getserbver_box_bth" id="qrzf_btn" {yun:}if $config.com_recjob!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+            <div class="yunset_bth_box">
+                <input type="button" value="确认支付" style="color:white;border:none" onClick="integral_server_buy('recjob','{yun:}$info.id{/yun}');" class="reinputText2">
+            </div>
+        </div>
+
+        {yun:}if $config.sy_freewebtel{/yun}
+        <div class="getserbver_box_tel">
+            <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+        </div>
+        {yun:}/if{/yun}
+        <input name="server" id="server" type="hidden" value="recjob" />
+        <input name="recdays" id="days" type="hidden" value="1" />
+        <input type="hidden" value="" id="paytype" name="paytype" />
+        <input name="recjobid" id="recjobid" type="hidden" value="{yun:}$info.id{/yun}" />
+    </form>
+
+    {yun:}elseif $smarty.get.server=='4'{/yun}
+    <div class="wap_member_comp_h1"><span>紧急招聘</span></div>
+    <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form_t('ujob');">
+        <div class="spread_box">
+            选择紧急招聘天数 </div>
+        <div class="clear"></div>
+        <ul class="spread_box_time" id="job_urgent">
+            <li class="spread_box_cur" data-day="1"><span class="spread_box_n">1天</span></li>
+            <li data-day="3"><span class="spread_box_n">3天</span></li>
+            <li data-day="7"><span class="spread_box_n">7天</span></li>
+            <li data-day="15"><span class="spread_box_n">15天</span></li>
+            <li data-day="30"><span class="spread_box_n">30天</span></li>
+            <li data-day="0"><span class="spread_box_n">自定义</span></li>
+            <div class="spread_box_text" style="display: none;" id="custom">
+                <div class="spread_box_text_c">
+                    <input id="day" type="text" oninput="myFunction(this)" onkeyup="checkDayNum('job_urgent');" maxlength="6" value="" placeholder="请填写天数">
+                </div>
+            </div>
+        </ul>
+        <div class="clear"></div>
+
+        <div class="spread_box mt10">
+            所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+            <span class="spread_box_money"><span class="pricehtml" id="r_price">{yun:}$config.integral_proportion * $config.com_urgent{/yun}</span></span>
+            {yun:}else{/yun}
+            <span class="spread_box_money">￥ <span class="pricehtml" id="r_price">{yun:}$config.com_urgent{/yun}</span></span>
+            {yun:}/if{/yun}
+        </div>
+
+        {yun:}if $config.com_integral_online==1{/yun}
+        <div class="spread_box mt10">
+            {yun:}$config.integral_pricename{/yun}抵扣
+            <div class="spread_box_hs">当前共有
+                <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+            </div>
+            <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                <div class="mui-switch-handle"></div>
+            </div>
+
+            <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                {yun:}$config.integral_pricename{/yun}抵扣数量：
+                <input type="text" onkeyup="checkNumT('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="urdkjf">
+            </div>
+        </div>
+
+        {yun:}/if{/yun}
+
+        <div class="spread_box_yfmoney">
+            应付{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+            <span class="spread_box_yfmoney_n"><span id="price">{yun:}$config.integral_proportion * $config.com_urgent{/yun}</span></span>
+            {yun:}else{/yun}
+            <span class="spread_box_yfmoney_n">￥ <span id="price">{yun:}$config.com_urgent{/yun}</span></span>
+            {yun:}/if{/yun}
+        </div>
+
+        <div id="zffs" {yun:}if $config.com_urgent==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+              {yun:}if $paytype.alipay{/yun}
+            <div class="spread_box spread_box_bor" onclick="paycheck('alipay');">
+                <div class="spread_zf_list spread_zf_list_zfb">
+                    <i class="alipay member_set_meal_fk_xz" style="top:0"></i> 支付宝支付
+                </div>
+            </div>
+            {yun:}/if{/yun} {yun:}if $paytype.alipay{/yun}
+            <div class="yunset_bth_box"><input type="submit" value="确认支付" name=nextstep class="reinputText2"></div>
+            {yun:}else{/yun}
+            <div class="pay_zfgb_tip">
+                <span>网站已关闭支付功能，请联系管理员！</span>
+            </div>
+            {yun:}/if{/yun}
+        </div>
+        <div class="getserbver_box_bth" id="qrzf_btn" {yun:}if $config.com_urgent!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+            <div class="yunset_bth_box">
+                <input type="button" value="确认支付" style="color:white;border:none" onClick="integral_server_buy('ujob','{yun:}$info.id{/yun}');" class="reinputText2">
+            </div>
+        </div>
+
+        {yun:}if $config.sy_freewebtel{/yun}
+        <div class="getserbver_box_tel">
+            <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+        </div>
+        {yun:}/if{/yun}
+        <input name="server" id="server" type="hidden" value="ujob" />
+        <input name="udays" id="days" type="hidden" value="1" />
+        <input type="hidden" value="" id="paytype" name="paytype" />
+        <input name="ujobid" id="ujobid" type="hidden" value="{yun:}$info.id{/yun}" />
+    </form>
+
+    {yun:}elseif $smarty.get.server=='5'{/yun}
+
+    <div class="wap_member_comp_h1"><span>刷新职位</span></div>
+    <div class="getserbver_box">
+        <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form_t('sxjob');">
+            <ul class="getserbver_box_list">
+                <li>
+                    <div class="getserbver_box_list_p">
+                        所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+                        <span class="getserbver_box_s pricehtml" id="r_price">{yun:}$config.integral_proportion * $config.integral_jobefresh*$info.count{/yun} </span>{yun:}$config.integral_pricename{/yun} {yun:}else{/yun}
+                        <span class="getserbver_box_s pricehtml" id="r_price">{yun:}$config.integral_jobefresh*$info.count{/yun}</span>元 {yun:}/if{/yun}
+                    </div>
+                </li>
+
+                {yun:}if $config.com_integral_online==3{/yun}
+                <li>
+                    <div class="getserbver_box_list_p">
+                        账户{yun:}$config.integral_pricename{/yun}：<span class="getserbver_box_s">{yun:}$statis.integral{/yun}</span> （1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）
+                    </div>
+                </li>
+                {yun:}/if{/yun} {yun:}if $config.com_integral_online==1{/yun}
+                <li>
+                    <div class="spread_box mt10">
+                        {yun:}$config.integral_pricename{/yun}抵扣
+                        <div class="spread_box_hs">当前共有
+                            <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                            {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+                        </div>
+                        <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                            <div class="mui-switch-handle"></div>
+                        </div>
+
+                        <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                            {yun:}$config.integral_pricename{/yun}抵扣数量：
+                            <input type="text" onkeyup="checkNumJ('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="sxdkjf">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="getserbver_box_list_p">账户{yun:}$config.integral_pricename{/yun}：<span class="getserbver_box_s">{yun:}$statis.integral{/yun}</span> （1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）</div>
+                </li>
+                {yun:}/if{/yun}
+
+                <li id="dkhdiv" style="display:none">
+                    <div class="getserbver_box_list_p">抵后金额：<span id="dkjfh_price" class="getserbver_box_s"></span>元</div>
+                </li>
+
+            </ul>
+
+            <div id="zffs" {yun:}if $config.integral_jobefresh==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+
+             {yun:}if $paytype.alipay{/yun}
+                <div class="spread_box spread_box_bor" onclick="paycheck('alipay');">
+                    <div class="spread_zf_list spread_zf_list_zfb">
+                        <i class="alipay member_set_meal_fk_xz" style="top:0"></i> 支付宝支付
+                    </div>
+                </div>
+                {yun:}/if{/yun} {yun:}if  $paytype.alipay{/yun}
+                <div class="yunset_bth_box"><input type="submit" value="确认支付" name=nextstep class="reinputText2"></div>
+                {yun:}else{/yun}
+                <div class="pay_zfgb_tip">
+                    <span>网站已关闭支付功能，请联系管理员！</span>
+                </div>
+                {yun:}/if{/yun}
+            </div>
+            <div class="getserbver_box_bth" id="qrzf_btn" {yun:}if $config.integral_jobefresh!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+                <div class="pay_com_lsit_right">
+                    <input type="button" value="确认支付" style="color:white;border:none" onClick="integral_server_buy('sxjob','{yun:}$info.id{/yun}');" class="reinputText2">
+                </div>
+            </div>
+
+            {yun:}if $config.sy_freewebtel{/yun}
+            <div class="getserbver_box_tel">
+                <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+            </div>
+            {yun:}/if{/yun}
+
+            <input name="server" id="server" type="hidden" value="sxjob" />
+            <input type="hidden" value="" id="paytype" name="paytype" />
+            <input name="sxjobid" id="sxjobid" type="hidden" value="{yun:}$info.id{/yun}" />
+            <input name="breakjob_num" id="breakjob_num" type="hidden" value="{yun:}$statis.breakjob_num{/yun}" />
+        </form>
+    </div>
+      
+
+    {yun:}elseif $smarty.get.server=='7'{/yun}
+    <div class="wap_member_comp_h1"><span>下载简历</span></div>
+    <div class="getserbver_box">
+        <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form('downresume');">
+            <ul class="getserbver_box_list">
+                <li>
+                    <div class="getserbver_box_list_p">
+                        所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+                        <span class="getserbver_box_s pricehtml" id="r_price">{yun:}$config.integral_proportion * $config.integral_down_resume{/yun} </span>{yun:}$config.integral_pricename{/yun} {yun:}else{/yun}
+                        <span class="getserbver_box_s pricehtml" id="r_price">{yun:}$config.integral_down_resume{/yun}</span>元 {yun:}/if{/yun}
+                    </div>
+                </li>
+                {yun:}if $config.com_integral_online==3{/yun}
+                <li>
+                    <div class="getserbver_box_list_p">
+                        账户{yun:}$config.integral_pricename{/yun}：<span class="getserbver_box_s">{yun:}$statis.integral{/yun}</span> （1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）
+                    </div>
+                </li>
+                {yun:}/if{/yun} {yun:}if $config.com_integral_online==1{/yun}
+                <li>
+                    <div class="spread_box mt10">
+                        {yun:}$config.integral_pricename{/yun}抵扣
+                        <div class="spread_box_hs">当前共有
+                            <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                            {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+                        </div>
+                        <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                            <div class="mui-switch-handle"></div>
+                        </div>
+
+                        <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                            {yun:}$config.integral_pricename{/yun}抵扣数量：
+                            <input type="text" onkeyup="checkNumJ('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="dkjf">
+                        </div>
+                    </div>
+                 
+                </li>
+                <li>
+                    <div class="getserbver_box_list_p">账户{yun:}$config.integral_pricename{/yun}：<span class="getserbver_box_s">{yun:}$statis.integral{/yun}</span> （1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）</div>
+                </li>
+                {yun:}/if{/yun}
+                <li id="dkhdiv" style="display:none">
+                    <div class="getserbver_box_list_p">抵后金额：<span id="dkjfh_price" class="getserbver_box_s"></span>元</div>
+                </li>
+
+            </ul>
+
+            <div id="zffs" {yun:}if $config.integral_down_resume==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+                {yun:}if $paytype.alipay{/yun}
+                <div class="spread_box spread_box_bor" onclick="paycheck('alipay');">
+                    <div class="spread_zf_list spread_zf_list_zfb">
+                        <i class="alipay member_set_meal_fk_xz" style="top:0"></i> 支付宝支付
+                    </div>
+                </div>
+                {yun:}/if{/yun} {yun:}if  $paytype.alipay{/yun}
+                <div class="yunset_bth_box"><input type="submit" value="确认支付" name=nextstep class="reinputText2"></div>
+                {yun:}else{/yun}
+                <div class="pay_zfgb_tip">
+                    <span>网站已关闭支付功能，请联系管理员！</span>
+                </div>
+                {yun:}/if{/yun}
+            </div>
+
+            <div class="getserbver_box_bth" id="qrzf_btn" {yun:}if $config.integral_down_resume!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+                <div class="pay_com_lsit_right">
+                    <input type="button" value="确认支付" style="color:white;border:none" onClick="integral_server_buy('downresume','{yun:}$smarty.get.id{/yun}');" class="reinputText2">
+                </div>
+            </div>
+
+            {yun:}if $config.sy_freewebtel{/yun}
+            <div class="getserbver_box_tel">
+                <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+            </div>
+            {yun:}/if{/yun}
+
+            <input type="hidden" value="" id="paytype" name="paytype" />
+            <input name="server" id="server" type="hidden" value="downresume" />
+            <input name="eid" id="eid" type="hidden" value="{yun:}$smarty.get.id{/yun}" />
+        </form>
+    </div>
+
+    {yun:}elseif $smarty.get.server=='8'{/yun}
+    <div class="wap_member_comp_h1"><span>发布职位</span></div>
+    <!--<div class="spread_tit">发布职位</div>-->
+    <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form('issue');">
+        <div class="spread_box spread_box_bor">
+            所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+            <span class="spread_box_money"><span class="pricehtml" id="r_price">{yun:}$config.integral_proportion * $config.integral_job{/yun}</span></span>
+            {yun:}else{/yun}
+            <span class="spread_box_money"><span class="pricehtml"  id="r_price">{yun:}$config.integral_job{/yun}</span>元</span>
+            {yun:}/if{/yun}
+        </div>
+
+        {yun:}if $config.com_integral_online==1{/yun}
+        <div class="spread_box spread_box_bormt10">
+            {yun:}$config.integral_pricename{/yun}抵扣
+            <div class="spread_box_hs">当前共有
+                <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+            </div>
+            <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                <div class="mui-switch-handle"></div>
+            </div>
+
+            <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                {yun:}$config.integral_pricename{/yun}抵扣数量：
+                <input type="text" onkeyup="checkNumT('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="issue_dkjf">
+            </div>
+        </div>
+
+        <div class="spread_box_yfmoney">
+            应付{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+            <span class="spread_box_yfmoney_n"><span id="price">{yun:}$config.integral_proportion * $config.integral_job{/yun}</span></span>
+            {yun:}else{/yun}
+            <span class="spread_box_yfmoney_n"><span id="price">{yun:}$config.integral_job{/yun}</span>元</span>
+            {yun:}/if{/yun}
+        </div>
+
+        {yun:}/if{/yun}
+
+        <div id="zffs" {yun:}if $config.integral_job==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+           {yun:}if $paytype.alipay{/yun}
+            <div class="spread_box spread_box_bor" onclick="paycheck('alipay');">
+                <div class="spread_zf_list spread_zf_list_zfb">
+                    <i class="alipay member_set_meal_fk_xz" style="top:0"></i> 支付宝支付
+                </div>
+            </div>
+            {yun:}/if{/yun} {yun:}if   $paytype.alipay{/yun}
+            <div class="yunset_bth_box"><input type="submit" value="确认支付" name=nextstep class="reinputText2"></div>
+            {yun:}else{/yun}
+            <div class="pay_zfgb_tip">
+                <span>网站已关闭支付功能，请联系管理员！</span>
+            </div>
+            {yun:}/if{/yun}
+        </div>
+
+        <div class="getserbver_box_bth" id="qrzf_btn" {yun:}if $config.job_auto!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+            <div class="yunset_bth_box">
+                <input type="button" value="确认支付" style="color:white;border:none" onClick="integral_server_buy('issue','');" class="reinputText2">
+            </div>
+        </div>
+
+        {yun:}if $config.sy_freewebtel{/yun}
+        <div class="getserbver_box_tel">
+            <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+        </div>
+        {yun:}/if{/yun}
+        <input name="server" id="server" type="hidden" value="issue" />
+        <input type="hidden" value="" id="paytype" name="paytype" />
+        <input type="hidden" value="1" id="issuejob" name="issuejob" />
+    </form>
+
+    {yun:}elseif $smarty.get.server=='9'{/yun}
+    <div class="wap_member_comp_h1"><span>发布兼职</span></div>
+    <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form('issuepart');">
+        <div class="member_tc_list">
+
+            <div class="member_set_meal_fk_fbox mt10">
+                <div class="member_set_meal_fk">
+                    所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额{yun:}/if{/yun}
+                    <span class="member_set_meal_fk_jg">
+                		{yun:}if $config.com_integral_online==3{/yun}
+							<span class="getserbver_box_s pricehtml" id="r_price">{yun:}$config.integral_proportion * $config.integral_partjob{/yun} </span>{yun:}$config.integral_pricename{/yun} {yun:}else{/yun}
+                    <span class="getserbver_box_s pricehtml" id="r_price">{yun:}$config.integral_partjob{/yun}</span>元 {yun:}/if{/yun}
+                    </span>
+                </div>
+                {yun:}if $config.com_integral_online==1{/yun}
+                <div class="spread_box mt10">
+                    {yun:}$config.integral_pricename{/yun}抵扣
+                    <div class="spread_box_hs">当前共有
+                        <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                        {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+                    </div>
+                    <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                        <div class="mui-switch-handle"></div>
+                    </div>
+
+                    <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                        {yun:}$config.integral_pricename{/yun}抵扣数量：
+                        <input type="text" onkeyup="checkNumT('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="issuep_dkjf">
+                    </div>
+                </div>
+                {yun:}/if{/yun}
+                <div class="member_set_meal_fk" style="margin-top: 10px;">
+                    应付{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额{yun:}/if{/yun}
+                    <span class="member_set_meal_fk_jg">
+                		{yun:}if $config.com_integral_online==3{/yun}
+							<span class="getserbver_box_s" id="price">{yun:}$config.integral_proportion * $config.integral_partjob{/yun} </span>{yun:}$config.integral_pricename{/yun} {yun:}else{/yun} ￥
+                    <span class="getserbver_box_s" id="price">{yun:}$config.integral_partjob{/yun}</span> {yun:}/if{/yun}
+                    </span>
+                </div>
+
+            </div>
+
+            <div id="zffs" {yun:}if $config.integral_partjob==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+
+                <div class="member_set_meal_fk_fbox mt10">
+                   {yun:}if $paytype.alipay{/yun}
+                    <div class="member_set_meal_fk_fs member_set_meal_fk_fs_zfb" onclick="paycheck('alipay');">
+                        <i class="alipay member_set_meal_fk_xz"></i>支付宝
+                    </div>
+                    {yun:}/if{/yun}
+                </div>
+
+                {yun:}if  $paytype.alipay{/yun}
+                <div class="member_set_meal_fk_zf">
+                    <input type="submit" value="确认支付" name="nextstep" class="member_set_meal_fk_zf_bth">
+                </div>
+                {yun:}else{/yun}
+                <div class="getserver_tip">
+                    <span>网站已关闭支付功能，请联系管理员！</span>
+                </div>
+                {yun:}/if{/yun}
+            </div>
+
+            <div class="member_set_meal_fk_zf" id="qrzf_btn" {yun:}if $config.integral_partjob!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+                <input type="button" value="确认支付" style="color:white;border:none" onClick="integral_server_buy('issuepart','');" class="member_set_meal_fk_zf_bth">
+            </div>
+        </div>
+
+        {yun:}if $config.sy_freewebtel{/yun}
+        <div class="getserbver_box_tel">
+            <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+        </div>
+        {yun:}/if{/yun}
+        <input type="hidden" value="" id="paytype" name="paytype" />
+        <input name="server" id="server" type="hidden" value="issuepart" />
+        <input name="issuepart" type="hidden" value="1" />
+    </form>
+
+     {yun:}elseif $smarty.get.server=='11'{/yun}
+    <div class="wap_member_comp_h1"><span>邀请面试</span></div>
+    <div class="getserbver_box">
+        <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form_t('invite');">
+            <ul class="getserbver_box_list">
+                <li>
+                    <div class="getserbver_box_list_p">
+                        所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+                        <span class="getserbver_box_s pricehtml" id="r_price">{yun:}$config.integral_proportion * $config.integral_interview{/yun} </span>{yun:}$config.integral_pricename{/yun} {yun:}else{/yun}
+                        <span class="getserbver_box_s pricehtml" id="r_price">{yun:}$config.integral_interview{/yun}</span>元 {yun:}/if{/yun}
+                    </div>
+                </li>
+
+                {yun:}if $config.com_integral_online==3{/yun}
+                <li>
+                    <div class="getserbver_box_list_p">
+                        账户{yun:}$config.integral_pricename{/yun}：<span class="getserbver_box_s">{yun:}$statis.integral{/yun}</span> （1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）
+                    </div>
+                </li>
+                {yun:}/if{/yun} {yun:}if $config.com_integral_online==1{/yun}
+                <li>
+                    <div class="spread_box mt10">
+                        {yun:}$config.integral_pricename{/yun}抵扣
+                        <div class="spread_box_hs">当前共有
+                            <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                            {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+                        </div>
+                        <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                            <div class="mui-switch-handle"></div>
+                        </div>
+
+                        <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                            {yun:}$config.integral_pricename{/yun}抵扣数量：
+                            <input type="text" onkeyup="checkNumJ('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="invite_dkjf">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="getserbver_box_list_p">账户{yun:}$config.integral_pricename{/yun}：<span class="getserbver_box_s">{yun:}$statis.integral{/yun}</span> （1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）</div>
+                </li>
+                {yun:}/if{/yun}
+                <li id="dkhdiv" style="display:none">
+                    <div class="getserbver_box_list_p">抵后金额：<span id="dkjfh_price" class="getserbver_box_s"></span>元</div>
+                </li>
+
+            </ul>
+
+            <div id="zffs" {yun:}if $config.integral_interview==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+               {yun:}if $paytype.alipay{/yun}
+                <div class="spread_box spread_box_bor" onclick="paycheck('alipay');">
+                    <div class="spread_zf_list spread_zf_list_zfb">
+                        <i class="alipay member_set_meal_fk_xz" style="top:0"></i> 支付宝支付
+                    </div>
+                </div>
+                {yun:}/if{/yun} {yun:}if  $paytype.alipay{/yun}
+                <div class="yunset_bth_box"><input type="submit" value="确认支付" name=nextstep class="reinputText2"></div>
+                {yun:}else{/yun}
+                <div class="pay_zfgb_tip">
+                    <span>网站已关闭支付功能，请联系管理员！</span>
+                </div>
+                {yun:}/if{/yun}
+            </div>
+            <div class="getserbver_box_bth" id="qrzf_btn" {yun:}if $config.integral_interview!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+                <div class="pay_com_lsit_right">
+                    <input type="button" value="确认支付" style="color:white;border:none" onClick="integral_server_buy('invite','{yun:}$smarty.get.id{/yun}');" class="reinputText2">
+                </div>
+            </div>
+
+            {yun:}if $config.sy_freewebtel{/yun}
+            <div class="getserbver_box_tel">
+                <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+            </div>
+            {yun:}/if{/yun}
+
+            <input type="hidden" value="" id="paytype" name="paytype" />
+            <input name="server" id="server" type="hidden" value="invite" />
+            <input name="invite" type="hidden" value="1" />
+        </form>
+    </div>
+
+    {yun:}elseif $smarty.get.server=='12'{/yun}
+    <div class="wap_member_comp_h1"><span>下载简历</span></div>
+    <div class="getserbver_box">
+        <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form('downresume');">
+            <ul class="getserbver_box_list">
+                <li>
+                    <div class="getserbver_box_list_p">
+                        所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+                        <span class="getserbver_box_s pricehtml">{yun:}$config.integral_proportion * $config.integral_lt_downresume{/yun} </span>{yun:}$config.integral_pricename{/yun} {yun:}else{/yun}
+                        <span class="getserbver_box_s pricehtml">{yun:}$config.integral_lt_downresume{/yun}</span>元 {yun:}/if{/yun}
+                    </div>
+                </li>
+                {yun:}if $config.com_integral_online==3{/yun}
+                <li>
+                    <div class="getserbver_box_list_p">
+                        账户{yun:}$config.integral_pricename{/yun}：<span class="getserbver_box_s">{yun:}$statis.integral{/yun}</span> （1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）
+                    </div>
+                </li>
+                {yun:}/if{/yun} {yun:}if $config.com_integral_online==1{/yun}
+                <li>
+                    <div class="spread_box mt10">
+                        {yun:}$config.integral_pricename{/yun}抵扣
+                        <div class="spread_box_hs">当前共有
+                            <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                            {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+                        </div>
+                        <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                            <div class="mui-switch-handle"></div>
+                        </div>
+
+                        <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                            {yun:}$config.integral_pricename{/yun}抵扣数量：
+                            <input type="text" onkeyup="checkNumJ('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="dkjf">
+                        </div>
+                    </div>
+                  
+                </li>
+                <li>
+                    <div class="getserbver_box_list_p">账户{yun:}$config.integral_pricename{/yun}：<span class="getserbver_box_s">{yun:}$statis.integral{/yun}</span> （1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）</div>
+                </li>
+                {yun:}/if{/yun}
+
+                <li id="dkhdiv" style="display:none">
+                    <div class="getserbver_box_list_p">抵后金额：<span id="dkjfh_price" class="getserbver_box_s"></span>元</div>
+                </li>
+
+            </ul>
+
+            <div id="zffs" {yun:}if $config.integral_lt_downresume==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+                {yun:}if $paytype.alipay{/yun}
+                <div class="spread_box spread_box_bor" onclick="paycheck('alipay');">
+                    <div class="spread_zf_list spread_zf_list_zfb">
+                        <i class="alipay member_set_meal_fk_xz" style="top:0"></i> 支付宝支付
+                    </div>
+                </div>
+                {yun:}/if{/yun} {yun:}if  $paytype.alipay{/yun}
+                <div class="yunset_bth_box"><input type="submit" value="确认支付" name=nextstep class="reinputText2"></div>
+                {yun:}else{/yun}
+                <div class="pay_zfgb_tip">
+                    <span>网站已关闭支付功能，请联系管理员！</span>
+                </div>
+                {yun:}/if{/yun}
+            </div>
+
+            <div class="getserbver_box_bth" id="qrzf_btn" {yun:}if $config.integral_lt_downresume!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+                <div class="pay_com_lsit_right">
+                    <input type="button" value="确认支付" style="color:white:border:none" onClick="integral_server_buy('downresume','{yun:}$smarty.get.id{/yun}');" class="reinputText2">
+                </div>
+            </div>
+
+            {yun:}if $config.sy_freewebtel{/yun}
+            <div class="getserbver_box_tel">
+                <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+            </div>
+            {yun:}/if{/yun}
+
+            <input type="hidden" value="" id="paytype" name="paytype" />
+            <input name="server" id="server" type="hidden" value="downresume" />
+            <input name="eid" id="eid" type="hidden" value="{yun:}$smarty.get.id{/yun}" />
+        </form>
+    </div>
+    {yun:}elseif $smarty.get.server=='13'{/yun}
+
+    <div class="wap_member_comp_h1"><span>兼职刷新</span></div>
+    <div class="getserbver_box">
+        <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form_t('sxpart');">
+            <ul class="getserbver_box_list">
+                <li>
+                    <div class="getserbver_box_list_p">
+                        所需{yun:}if $config.com_integral_online==3{/yun}{yun:}$config.integral_pricename{/yun}：{yun:}else{/yun}金额：{yun:}/if{/yun} {yun:}if $config.com_integral_online==3{/yun}
+                        <span class="getserbver_box_s pricehtml" id="r_price">{yun:}$config.integral_proportion * $config.integral_partjobefresh*$info.count{/yun} </span>{yun:}$config.integral_pricename{/yun} {yun:}else{/yun}
+                        <span class="getserbver_box_s pricehtml" id="r_price">{yun:}$config.integral_partjobefresh*$info.count{/yun}</span>元 {yun:}/if{/yun}
+                    </div>
+                </li>
+
+                {yun:}if $config.com_integral_online==3{/yun}
+                <li>
+                    <div class="getserbver_box_list_p">
+                        账户{yun:}$config.integral_pricename{/yun}：<span class="getserbver_box_s">{yun:}$statis.integral{/yun}</span> （1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）
+                    </div>
+                </li>
+                {yun:}/if{/yun} {yun:}if $config.com_integral_online==1{/yun}
+                <li>
+                    <div class="spread_box mt10">
+                        {yun:}$config.integral_pricename{/yun}抵扣
+                        <div class="spread_box_hs">当前共有
+                            <font color="#3399FF">{yun:}$statis.integral{/yun}</font>
+                            {yun:}$config.integral_pricename{/yun} (1元=10{yun:}$config.integral_pricename{/yun})
+                        </div>
+                        <div class="mui-switch mui-switch-mini" id="integral_switch" style="position: absolute;right: 10px;top: 15px;">
+                            <div class="mui-switch-handle"></div>
+                        </div>
+
+                        <div class="spread_box_hs_sl" id="spread_integral_box" style="display:none">
+                            {yun:}$config.integral_pricename{/yun}抵扣数量：
+                            <input type="text" onkeyup="checkNumJ('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" value="" class="member_set_meal_dk" placeholder="" id="integral_pay" name="sxdkjf">
+                        </div>
+                    </div>
+                    
+                </li>
+                <li>
+                    <div class="getserbver_box_list_p">账户{yun:}$config.integral_pricename{/yun}：<span class="getserbver_box_s">{yun:}$statis.integral{/yun}</span> （1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）</div>
+                </li>
+                {yun:}/if{/yun}
+
+                <li id="dkhdiv" style="display:none">
+                    <div class="getserbver_box_list_p">抵后金额：<span id="dkjfh_price" class="getserbver_box_s"></span>元</div>
+                </li>
+
+            </ul>
+
+            <div id="zffs" {yun:}if $config.integral_partjobefresh==0 || $config.com_integral_online==3{/yun}style="display:none" {yun:}/if{/yun}>
+
+                {yun:}if $paytype.alipay{/yun}
+                <div class="spread_box spread_box_bor" onclick="paycheck('alipay');">
+                    <div class="spread_zf_list spread_zf_list_zfb">
+                        <i class="alipay member_set_meal_fk_xz" style="top:0"></i> 支付宝支付
+                    </div>
+                </div>
+                {yun:}/if{/yun} {yun:}if  $paytype.alipay{/yun}
+                <div class="yunset_bth_box"><input type="submit" value="确认支付" name=nextstep class="reinputText2"></div>
+                {yun:}else{/yun}
+                <div class="pay_zfgb_tip">
+                    <span>网站已关闭支付功能，请联系管理员！</span>
+                </div>
+                {yun:}/if{/yun}
+            </div>
+            <div class="getserbver_box_bth" id="qrzf_btn" {yun:}if $config.integral_partjobefresh!=0 && $config.com_integral_online!=3{/yun}style="display:none" {yun:}/if{/yun}>
+                <div class="pay_com_lsit_right">
+                    <input type="button" value="确认支付" style="color:white;border:none" onClick="integral_server_buy('sxpart','{yun:}$info.id{/yun}');" class="reinputText2">
+                </div>
+            </div>
+
+            {yun:}if $config.sy_freewebtel{/yun}
+            <div class="getserbver_box_tel">
+                <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+            </div>
+            {yun:}/if{/yun}
+
+            <input name="server" id="server" type="hidden" value="sxpart" />
+            <input type="hidden" value="" id="paytype" name="paytype" />
+            <input name="sxpartid" id="sxpartid" type="hidden" value="{yun:}$info.id{/yun}" />
+            <input name="breakpart_num" id="breakpart_num" type="hidden" value="{yun:}$statis.breakpart_num{/yun}" />
+        </form>
+    </div>
+
+    {yun:}/if{/yun}
+</section>
+<script src="{yun:}$wap_style{/yun}/js/pay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

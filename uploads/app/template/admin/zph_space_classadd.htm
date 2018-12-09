@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script language="javascript">
+		function save(){
+			var position=$("#position").val();
+			if($.trim(position)==''){
+				parent.layer.msg('类别名称不能为空！', 2, 8);return false;
+			}
+			$("#spaceform").submit();
+		}
+		function selectclass(id){
+			if(id>0){
+				$.get("index.php?m=zph_space&c=ajaxjob&ajax=1&id="+id,function(data){	
+					$("#keyid").html(data);
+				});	
+			}
+			if(id>0){
+				$("#content").hide();
+			}else{
+				$("#content").show();
+				$("#keyid").html('<option value="">--请选择--</option>');
+			}
+		}
+		function selecttwo(id){
+			if(id>0){
+				$("#pricelist").show();
+			}else{
+				$("#pricelist").hide();
+			}
+		}
+		var weburl="{yun:}$config.sy_weburl{/yun}";
+	</script>
+
+<title>后台管理</title>
+
+</head>
+
+<body class="body_ifm">
+<div class="infoboxp"> 
+
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">添加招聘会区域功能：管理员根据自己需求，填写该场招聘会区域设置！如A、B区域等个性化设置。</div>
+</div>
+</div>
+<div class="clear"></div>
+
+ <div class="tag_box mt10"> 
+    <iframe id="supportiframe"  name="supportiframe"  onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form id="spaceform" name="myform" action="index.php?m=zph_space&c=save" method="post" target="supportiframe" enctype="multipart/form-data" class="layui-form">
+      <table width="100%" class="table_form" style="background:#fff;">
+       <tr class="admin_table_trbg">
+          <th colspan="4" bgcolor="#f0f6fb"><span class="admin_bold">{yun:}if $smarty.get.id{/yun}修改区域{yun:}else{/yun}添加区域{yun:}/if{/yun}</span></th>
+    </tr>
+        <tr >
+          <th width="120">区域名称：</th>
+          <td>
+          <div class="layui-form-item">
+	        <div class="layui-input-block">
+	          <input type="text" name="position" id="position"  lay-verify="required" placeholder="请输入区域名称" value="{yun:}$info.name{/yun}" size="40" style="width:227px;" autocomplete="off" class="layui-input input-text">
+	        </div>
+	      </div>
+          </td>
+        </tr>
+		{yun:}if !$info.id{/yun}
+        <tr class="admin_table_trbg" >
+          <th>一级分类：</th>
+          <td>
+	        <div class="layui-input-inline" style='float:left'>
+	        <input name="nid" type="hidden" id="job_nid_val" value=""><!--这块后加-->
+		      <select name="job_nid_name" id='job_nid_name' lay-filter="swId">
+			    <option value="">请选择</option>
+		        {yun:}if !$info.id{/yun}
+			        {yun:}foreach item=v from=$position{/yun}
+	                	<option value="{yun:}$v.id{/yun}">{yun:}$v.name{/yun}</option>
+	                {yun:}/foreach{/yun}
+	            {yun:}/if{/yun}
+		      </select>
+		    </div><span class="admin_web_tip">一级分类已选择为添加二级分类，不选择为添加一级分类</span>
+          </td>
+        </tr>
+        <tr >
+          <th>二级分类：</th>
+          <td>         
+	        <div class="layui-input-inline" style='float:left'>
+	         <input name="keyid" type="hidden" id="job_keyid_val" value=""> 
+		      <select name="job_keyid_select" id='job_keyid_select' lay-filter="swIds">
+			    <option value="">请选择</option>
+		        {yun:}if !$info.id{/yun}
+			        {yun:}foreach item=v from=$class2{/yun}
+	                	<option value="{yun:}$v.id{/yun}">{yun:}$v.name{/yun}</option>
+	                {yun:}/foreach{/yun}
+	            {yun:}/if{/yun}
+		      </select>
+		    </div><span class="admin_web_tip">二级分类已选择为添加三级分类，不选择为添加二级分类(需先选择一级分类)</span>
+          </td>
+        </tr>
+        {yun:}/if{/yun}
+        <tr class="admin_table_trbg" id="content">
+          <th>展位平面图 ： </th>
+ 			<td>
+				<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'pic',imgid: 'imgicon',parentid: 'imgparent'}">上传图片</button>
+				<input type="hidden" id="layupload_type" value="2"/>
+				<input type="hidden" id="upload_path" value="zhaopinhui"/>
+				<input type="hidden" name="pic" value="{yun:}$info.pic{/yun}"/>
+			</td>
+         </tr>
+        <tr id="imgparent" class="admin_table_trbg {yun:}if !$info.pic{/yun}none{yun:}/if{/yun}">
+          <th>展位图预览 ： </th>
+          <td><img id="imgicon" src="{yun:}$config.sy_weburl{/yun}/{yun:}$info.pic{/yun}" width="100" height="100" id="pic_view"></td>
+        </tr>
+        <tr id="pricelist" style="display:none;">
+          <th>展位价格：</th>
+          <td><input class="input-text" type="text" name="price" value="{yun:}$info.price{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/> {yun:}$config.integral_pricename{/yun}</td>
+        </tr>
+        <tr>
+          <th>排序：</th>
+          <td>
+          <div class="layui-form-item">
+	        <div class="layui-input-block">
+	          <input type="text" name="sort" id="sort"  lay-verify="required" value="{yun:}$info.sort{/yun}" size="40" style="display:inline;width:227px;" autocomplete="off" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="layui-input input-text">&nbsp;&nbsp;&nbsp;越小越在前
+	        </div>
+	      </div>   
+            </td>
+        </tr>
+		<tr class="admin_table_trbg">
+			<th width="120">使用说明：</th>
+			<td>
+ 				<script id="myEditor" name="content" type="text/plain" style="width:800px;height:300px;">{yun:}$info.content{/yun}</script>
+			</td>
+		</tr>
+        <tr  >
+          <td align="center" colspan="2"> {yun:}if $info.id{/yun}
+            <input type="hidden" name="id"   value="{yun:}$info.id{/yun}"/>
+            <input class="layui-btn layui-btn-normal" type="button" onclick="save()" value="&nbsp;更 新&nbsp;"  />
+            {yun:}else{/yun}
+            <input class="layui-btn layui-btn-normal" type="button" onclick="save()" value="&nbsp;添 加&nbsp;"  />
+            {yun:}/if{/yun}
+            <input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+        </tr>
+      </table>
+	  <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+    </form>
+  </div>
+</div>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript">
+	UE.getEditor('myEditor',{
+		toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|','link', 'unlink', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],
+		wordCount:false,
+		elementPathEnabled:false,
+		initialFrameHeight:300
+	});
+</script>
+
+<script language="javascript">
+  layui.use(['layer', 'form','element'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+	,element = layui.element
+    ,$ = layui.$;
+	form.on('select(swId)',function(data){
+		val = $('#job_nid_name').val();
+		valname = $('select option:selected').text()
+		name = 'job_nid'; type = 'job_keyid';
+		//招聘会场地
+		if(val>0&&type=='job_keyid'){
+			$("#content").hide();
+			$("#pricelist").show();
+			$.get("index.php?m=zph_space&c=ajaxspace&ajax=1&id="+val,function(data){	
+                $("#job_keyid_select").html(data);
+				form.render();
+			});	
+			$('#job_nid_val').val(val);
+		}else{
+			$("#job_keyid_select").html('<option value="">请选择</option>');$('#job_nid_val').val('');form.render();
+		}
+	});
+	form.on('select(swIds)',function(data){
+		$('#job_keyid_val').val($('#job_keyid_select').val());
+	});
+  });	 
+ </script>
+ <script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+<style>
+.layui-form-item {
+    margin-bottom: 0px;
+    clear: both;
+}
+</style>
+</body>
+</html>

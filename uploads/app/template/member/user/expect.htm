@@ -1,0 +1,1278 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+{yun:}include file="$tplstyle/public_search/index_search.htm"{/yun}
+<link href="{yun:}$user_style{/yun}/images/m_resume.css?v={yun:}$config.cachecode{/yun}" type="text/css" rel="stylesheet"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/class.public.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<script type="text/javascript" src="{yun:}$user_style{/yun}/js/resume.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/job.cache.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/class.public.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script> 
+<script type="text/javascript" src="{yun:}$user_style{/yun}/js/search.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript" src="{yun:}$user_style{/yun}/js/jquery.scrollto.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+var user_sqintegrity = '{yun:}$config.user_sqintegrity{/yun}';
+function addEdu(){
+	$("#addedu").append(function(){
+		$(".lastupbox").removeClass("lastupbox");
+		var randnum='e'+parseInt(Math.random()*1000); 
+		var html="<li class='yun_resume_popup newresumebox lastupbox' id='"+randnum+"'><i class='yun_resume_popup_del showedunum' id='ie"+randnum+"' onclick=\"deleteupbox('"+randnum+"','ie"+randnum+"','showedunum','edu')\">-</i><input type='hidden' name='id[]' value='' class='"+randnum+"'/><input type='hidden' name='nameid[]' value='n"+randnum+"'><input type='hidden' name='sdateid[]' value='s"+randnum+"'><input type='hidden' name='edateid[]' value='ed"+randnum+"'><input type='hidden' name='timeid[]' value='ie"+randnum+"'><input type='hidden' class='usededu' name='usedid[]' value=''><div class='yun_resume_popup_list'><span class='yun_resume_popup_name'>学校名称：</span><div class='yun_resume_popup_qyname'><input type='text' name='name[]' id='edu_name' value='' onfocus=\"hidemsg('medun"+randnum+"')\" onblur=\"hidemsg('medun"+randnum+"')\" class='yun_resume_popup_text'><i class='yun_resume_popup_qyname_tip' id='medun"+randnum+"' style='display:none'>请填写学校名称</i></div></div><div class='yun_resume_popup_list'><span class='yun_resume_popup_name'>在校时间：</span><div class='yun_resume_popup_list_box'><input type='text' id='edu_sdate"+randnum+"' name='sdate[]' value='' onfocus=\"hidemsg('medus"+randnum+"','meduie"+randnum+"')\" onblur=\"hidemsg('medus"+randnum+"','meduie"+randnum+"')\" class='yun_resume_popup_text yun_resume_popup_textw90'><script>layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#edu_sdate"+randnum+"');monthclick(laydate,'#edu_edate"+randnum+"');});<\/script><i class='yun_resume_popup_list_box_tip' id='medus"+randnum+"' style='display:none'>请选择开始日期</i></div><span class='yun_resume_popup_time'>至</span><div class='yun_resume_popup_list_box'><input type='text' id='edu_edate"+randnum+"' name='edate[]' value='' onfocus=\"hidemsg('meduie"+randnum+"','medued"+randnum+"')\" onblur=\"hidemsg('meduie"+randnum+"','medued"+randnum+"')\" class='yun_resume_popup_text yun_resume_popup_textw90'><i class='yun_resume_popup_list_box_tip' id='meduie"+randnum+"' style='display:none'>请确认日期先后顺序</i><i class='yun_resume_popup_list_box_tip' id='medued"+randnum+"' style='display:none'>请选择结束日期</i></div></div><div class='yun_resume_popup_list'><span class='yun_resume_popup_name'>学历：</span><div class='yun_resume_popup_chose_box yun_resume_zindex11'><div class='layui-form-item'><div class='layui-input-inline' style='width:384px; height:30px;'><select name='education[]' lay-filter='' id='educationc"+randnum+"id'><option value=''>请选择最高学历</option>{yun:}foreach from=$userdata.user_edu key=j item=v{/yun}<option value='{yun:}$v{/yun}'>{yun:}$userclass_name[$v]{/yun}</option>{yun:}/foreach{/yun}</select></div></div></div></div><div class='yun_resume_popup_list'><span class='yun_resume_popup_name'>所学专业：</span><input type='text' name='specialty[]' id='edu_specialty' value='' class='yun_resume_popup_text'></div><div class='yun_resume_popup_list'><span class='yun_resume_popup_name'>班级职位：</span><input type='text' name='title[]' id='title' value='' class='yun_resume_popup_text'></div></li>";
+		
+        return html;
+    });
+    layui.use(['form'], function(){
+      layui.form.render();
+    });
+	$(".showedunum").show();
+	var div = document.getElementById('edu_div');
+	$("#edu_div").animate({scrollTop:div.scrollHeight},1000);
+} 
+$(window).load(function(){ 
+	if($("#work_have").val()!=1){
+		$("#work_empty").show();
+	}
+	if($("#edu_have").val()!=1){
+		$("#edu_empty").show();
+	}
+	if($("#training_have").val()!=1){
+		$("#training_empty").show();
+	}
+	if($("#skill_have").val()!=1){
+		$("#skill_empty").show();
+	}
+	if($("#project_have").val()!=1){
+		$("#project_empty").show();
+	}
+	if($("#other_have").val()!=1){
+		$("#other_empty").show();
+	}
+	$(".yun_resume_select_box").hover(function(){ 
+		$(this).find(".yun_resume_select_list").show();
+	},function(){ 
+		$(this).find(".yun_resume_select_list").hide();
+	});
+});  
+$(document).ready(function (e) {
+$(".warn").text("overflow:" + document.body.style.overflow + "， scroll:" + document.body.scroll + ",scrollHeight:" + document.body.scrollHeight + ",offsetHeight:" + document.body.offsetHeight);
+    var scrollbottom = $(document).height() - $(window).height() - $(window).scrollTop();
+    if (parseInt(scrollbottom) < 200) {
+        $("#right_box").parent().css("bottom", (350 - (parseInt(scrollbottom))) + "px");
+    } else if ($(window).scrollTop() < 200) {
+        $("#right_box").parent().css("top", "200px");
+    } else {
+        $("#right_box").parent().css("bottom", "150px");
+    }
+    if ($(window).scrollTop() < 83) {
+        $("#right_box").css("position", "");
+    }
+    $("#right_box").parent().slideDown();
+    if (document.body.style.overflow != "hidden" && document.body.scroll != "no" && document.body.scrollHeight < document.body.offsetHeight) {
+        $("#right_box").hide();
+    } else {
+        $(window).scroll(function () {
+            var scrolltop = $(this).scrollTop();
+            var scrollbottom = $(document).height() - $(this).height() - $(this).scrollTop();
+            if (parseInt(scrolltop) > 83) {
+                $("#right_box").css("position", "fixed");
+                $("#right_box").css("top", "0px");
+            } else {
+                $("#right_box").css("position", "");
+                $("#right_box").css("top", parseInt(scrolltop) + "px");
+            }
+            if (parseInt(scrollbottom) < 200) {
+                $("#right_box").parent().css("bottom", ((200 - scrollbottom) + 150) + "px");
+            } else {
+                $("#right_box").parent().css("bottom", "150px");
+            }
+        });
+    }
+});
+
+</script>
+<div class="yun_resume_content">
+<div class="yun_resume_left_box mt20">
+<div class="yun_resume_operation_p">
+<div class="yun_resume_resumename_l">我的简历</div>
+  <div class="yun_resume_resumename">
+
+   
+    {yun:}if $row.id{/yun}
+    <div class="yun_resume_resumename_name">
+    <div class="yun_resume_select_name">切换简历：</div>
+    <div class="yun_resume_select_box">
+    <input type="button" value="{yun:}$row.name{/yun}" class="yun_resume_select">
+    <div class="yun_resume_select_list" style="display:none">
+    <ul>
+	 {yun:}foreach from=$ResumeList item=one{/yun}
+    <li><a href="index.php?c=expect{yun:}if $one.doc{/yun}q{yun:}/if{/yun}&e={yun:}$one.id{/yun}">{yun:}$one.name{/yun}</a></li>
+	 {yun:}/foreach{/yun} 
+    </ul>
+    </div>
+    </div> 
+    </div>
+    {yun:}/if{/yun}
+  </div>
+
+</div>
+<!--/*简历开始*/-->
+<div class="yun_resume_box"> 
+  <!--基本信息-->
+  <div class="yun_resume_info ">
+  <div class="yun_resume_info_bj " id="info_upbox" onclick="showMore('info','550','500','基本信息');" onmousemove="movelook('info');" onmouseout="outlook('info');"><div id="compile_info" class="yun_resume_handle" style="display:none">编辑</div>
+    <div class="yun_resume_name">{yun:}$resume.name{/yun}</div>
+    <div class="yun_resume_p">    
+    {yun:}$arr_data.sex[$resume.sex]{/yun}<span class="yun_resume_info_line">|</span>    
+  {yun:}if $resume.age{/yun}{yun:}$resume.age{/yun}岁<span class="yun_resume_info_line">|</span>{yun:}/if{/yun}{yun:}if $resume.living{/yun}{yun:}$resume.living{/yun} <span class="yun_resume_info_line">|</span>{yun:}/if{/yun}{yun:}if $userclass_name[$resume.edu]{/yun}{yun:}$userclass_name[$resume.edu]{/yun}学历<span class="yun_resume_info_line">|</span>{yun:}/if{/yun}{yun:}if $userclass_name[$resume.exp]{/yun}{yun:}$userclass_name[$resume.exp]{/yun}经验{yun:}/if{/yun}</div>
+    <div class="yun_resume_p">{yun:}if $resume.marriage{/yun}{yun:}$userclass_name[$resume.marriage]{/yun}<span class="yun_resume_info_line">|</span>{yun:}/if{/yun} {yun:}if $resume.height{/yun}{yun:}$resume.height{/yun}cm{yun:}/if{/yun}
+	{yun:}if $resume.height && $resume.weight{/yun}/{yun:}/if{/yun}
+	{yun:}if $resume.weight{/yun}{yun:}$resume.weight{/yun}kg{yun:}/if{/yun} {yun:}if $resume.weight || $resume.height{/yun}<span class="yun_resume_info_line">|</span>{yun:}/if{/yun} {yun:}if $resume.nationality{/yun}{yun:}$resume.nationality{/yun}<span class="yun_resume_info_line">|</span>{yun:}/if{/yun} {yun:}if $resume.domicile{/yun}{yun:}$resume.domicile{/yun}<span class="yun_resume_info_line">|</span>{yun:}/if{/yun} {yun:}if $resume.telphone{/yun}{yun:}$resume.telphone{/yun}{yun:}/if{/yun}{yun:}if $resume.email{/yun}<span class="yun_resume_info_line">|</span>{yun:}$resume.email{/yun}{yun:}/if{/yun}</div>
+    </div>
+    <div class="expect_photo_box">
+    <div class="expect_photo">
+   
+     {yun:}if $row.sex==1{/yun}
+    <img src=".{yun:}$user_photo{/yun}" width="80" height="80" id="logo" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);">
+    {yun:}else{/yun}
+    <img src=".{yun:}$user_photo{/yun}" width="80" height="80" id="logo" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_iconv{/yun}',2);">
+     {yun:}/if{/yun}        
+   	<div>
+		<button type="button" class="yun_bth_pic mt10 adminupload" lay-data="{imgid: 'logo',path: 'user'}">上传头像</button>
+		<input type="hidden" id="layupload_type" value="2"/>
+		<input type="hidden" id="upload_path" value="user"/>
+	 </div>
+	</div>
+    </div>
+  </div>
+  
+  <!--求职意向-->
+  <div class="yun_resume_job_intention" style="display:block;" id="expect_upbox" onclick="showMore('expect','530','550','求职意向');" onmousemove="movelook('expect');" onmouseout="outlook('expect');">
+    <div class="yun_resume_h1" ><span class="yun_resume_h1_s"><i class="yun_resume_h1_icon yun_resume_h1_iconyx"></i>求职意向</span></div>
+    <div id="compile_expect" class="yun_resume_handle" style="dispaly:none">编辑</div>
+    <ul class="yun_resume_job_intention_list " id="expect">
+	<li>期望岗位：{yun:}$row.name{/yun}</li>
+	 <li>工作职能：{yun:}$job_classname{/yun}</li>
+	 <li>期望工作地点：{yun:}$city_classname{/yun}</li>
+      <li>期望从事行业：{yun:}$industry_name[$row.hy]{/yun}</li>
+      
+      <li>期望薪资：{yun:}if $row.maxsalary{/yun}{yun:}$row.minsalary{/yun}-{yun:}$row.maxsalary{/yun}元/月{yun:}else{/yun}{yun:}$row.minsalary{/yun}元以上/月{yun:}/if{/yun}</li>
+      <li>到岗时间：{yun:}$userclass_name[$row.report]{/yun}</li>
+      
+      <li>期望工作性质：{yun:}$userclass_name[$row.type]{/yun}</li>
+	  <li>求职状态：{yun:}$userclass_name[$row.jobstatus]{/yun}</li>
+     
+    </ul>
+  </div>
+  <!--工作经历-->
+  <div class="yun_resume_joblist" style="display: block;" id="work_upbox" onclick="showMore('work','520','487','工作经历');" onmousemove="movelook('work');" onmouseout="outlook('work');">
+    <div class="yun_resume_h1" ><span class="yun_resume_h1_s"><i class="yun_resume_h1_icon yun_resume_h1_iconjl"></i>工作经历</span></div>
+    <div id="compile_work" class="yun_resume_handle" style="dispaly:none">编辑</div>
+    <ul class="yun_resume_tabulation" id="work">
+    {yun:}if is_array($work) && !empty($work){/yun}
+     {yun:}foreach item=v from=$work{/yun}
+      <li class="yun_resume_exp_list" id="work{yun:}$v.id{/yun}">
+        <input type="hidden" id="work_have" value="1">
+        <div class="yun_resume_exp_timt">{yun:}$v.sdate|date_format:"%Y.%m"{/yun}-{yun:}if $v.edate{/yun}{yun:}$v.edate|date_format:"%Y.%m"{/yun}{yun:}else{/yun}&nbsp;&nbsp;至今{yun:}/if{/yun}</div>
+        <div class="yun_resume_exp_r">
+          <div class="yun_resume_exp_name">{yun:}$v.name{/yun}<span class="yun_resume_exp_name_job">{yun:}$v.title{/yun}</span></div>
+          <div class="yun_resume_exp_p">{yun:}$v.content|nl2br{/yun}</div>
+        </div>
+      </li>
+      {yun:}/foreach{/yun}
+      {yun:}/if{/yun}
+    </ul>
+    <ul id="work_empty" style="display:none">
+     <li class="yun_resume_exp_list  yun_resume_exp_list_color">
+        <div class="yun_resume_exp_timt">2009.8-至今</div>
+        <div class="yun_resume_exp_r">
+          <div class="yun_resume_exp_name">XXX有限公司<span class="yun_resume_exp_name_job">产品研发</span></div>
+          <div class="yun_resume_exp_p">
+          1、主导XXX的版本迭代，并负责主要需求，协调开发、设计资源，推动项目进度，保证产品质量，打磨细节体验<br/>
+          2、参与讨论及制订XXX的各版本需求，根据行业热点及用户反馈，提出有效的产品方案<br/>
+          3、负责版本上线后的推广工作，通过官方网站和论坛等渠道将新功能触达用户<br/>
+          4、跟进用户反馈并分析数据，持续优化已有功能
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+    <!--教育经历-->
+    <div class="yun_resume_joblist" style="display: block;" id="edu_upbox" onclick="showMore('edu','520','451','教育经历');" onmousemove="movelook('edu');" onmouseout="outlook('edu');">
+      <div class="yun_resume_h1" ><span class="yun_resume_h1_s"><i class="yun_resume_h1_icon yun_resume_h1_iconjy"></i>教育经历</span></div><div id="compile_edu" style="dispaly:none" class="yun_resume_handle">编辑</div>
+      <ul class="yun_resume_tabulation" id="edu">
+      {yun:}if is_array($edu) && !empty($edu){/yun}
+      {yun:}foreach item=v from=$edu{/yun}
+        <li class="yun_resume_exp_list " id="edu{yun:}$v.id{/yun}">
+          <input type="hidden" id="edu_have" value="1">
+          <div class="yun_resume_exp_timt">{yun:}$v.sdate|date_format:"%Y.%m"{/yun}-{yun:}$v.edate|date_format:"%Y.%m"{/yun}</div>
+          <div class="yun_resume_exp_r">
+             <div class="yun_resume_exp_name">{yun:}$v.name{/yun}<span class="yun_resume_exp_name_job">{yun:}$userclass_name[$v.education]{/yun}</span></div>
+            <div class="yun_resume_exp_p">{yun:}$v.specialty{/yun}<span class="yun_resume_exp_name_job"></span>{yun:}$v.title{/yun}</div>
+          </div>
+        </li>
+       {yun:}/foreach{/yun}
+       {yun:}/if{/yun}
+      </ul>
+      <ul id="edu_empty" style="display:none">
+       <li class="yun_resume_exp_list  yun_resume_exp_list_color" >
+          <div class="yun_resume_exp_timt">2009.8-2013.6</div>
+          <div class="yun_resume_exp_r">
+             <div class="yun_resume_exp_name">XXX大学<span class="yun_resume_exp_name_job">本科</span></div>
+            <div class="yun_resume_exp_p">计算机<span class="yun_resume_exp_name_job"></span>班长</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+	 <!--项目经历-->
+    <div class="yun_resume_joblist" style="display: block;" id="project_upbox" onclick="showMore('project','520','480','项目经历');" onmousemove="movelook('project');" onmouseout="outlook('project');">
+      <div class="yun_resume_h1" ><span class="yun_resume_h1_s"><i class="yun_resume_h1_icon yun_resume_h1_iconxm"></i>项目经历</span></div>
+      <div id="compile_project" class="yun_resume_handle" style="dispaly:none">编辑</div>
+      <ul class="yun_resume_tabulation" id="project">
+      {yun:}if is_array($project) && !empty($project){/yun}
+      {yun:}foreach item=v from=$project{/yun}
+        <li class="yun_resume_exp_list " id="project{yun:}$v.id{/yun}">
+          <input type="hidden" id="project_have" value="1">
+          <div class="yun_resume_exp_timt">{yun:}$v.sdate|date_format:"%Y.%m"{/yun}-{yun:}$v.edate|date_format:"%Y.%m"{/yun}</div>
+          <div class="yun_resume_exp_r">
+            <div class="yun_resume_exp_name">{yun:}$v.name{/yun}<span class="yun_resume_exp_name_job">{yun:}$v.title{/yun}</span></div>
+            <div class="yun_resume_exp_p">{yun:}$v.content{/yun}</div>
+          </div>
+        </li>
+        {yun:}/foreach{/yun}
+        {yun:}/if{/yun}
+      </ul>
+      <ul id="project_empty" style="display:none">
+       <li class="yun_resume_exp_list  yun_resume_exp_list_color">
+          <div class="yun_resume_exp_timt">2013.8-2015.8</div>
+          <div class="yun_resume_exp_r">
+            <div class="yun_resume_exp_name">“温暖明天”爱护行动<span class="yun_resume_exp_name_job">项目设计</span></div>
+            <div class="yun_resume_exp_p">
+            1、引导用户爱护身边每一样东西，倡导资源节约和合理利用。将节约下来的运营成本投入公益项目，帮助有困难的人<br/>
+            2、项目上线期间，参与用户超过60万，引发了社会热议，许多网友对项目创意给予了高度的肯定<br/>
+            3、项目获得XXX大学求是杯“云文化奖”金奖和XXX大学创新大赛微创新奖
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!--培训经历-->
+    <div class="yun_resume_joblist" style="display: block;" id="training_upbox" onclick="showMore('training','520','480','培训经历');" onmousemove="movelook('training');" onmouseout="outlook('training');">
+      <div class="yun_resume_h1" ><span class="yun_resume_h1_s"><i class="yun_resume_h1_icon yun_resume_h1_iconpx"></i>培训经历</span></div>
+      <div id="compile_training" class="yun_resume_handle"  style="dispaly:none">编辑</div>
+      <ul class="yun_resume_tabulation" id="training">
+        {yun:}if is_array($training) && !empty($training){/yun}
+        {yun:}foreach item=v from=$training{/yun}
+        <li class="yun_resume_exp_list" id="training{yun:}$v.id{/yun}">
+          <input type="hidden" id="training_have" value="1">
+          <div class="yun_resume_exp_timt">{yun:}$v.sdate|date_format:"%Y.%m"{/yun}-{yun:}$v.edate|date_format:"%Y.%m"{/yun}</div>
+          <div class="yun_resume_exp_r ">
+            <div class="yun_resume_exp_name">{yun:}$v.name{/yun}<span class="yun_resume_exp_name_job">{yun:}$v.title{/yun}</span></div>
+            <div class="yun_resume_exp_p">{yun:}$v.content{/yun}</div>
+          </div>
+        </li>
+        {yun:}/foreach{/yun}
+        {yun:}/if{/yun}
+      </ul>
+      <ul id="training_empty" style="display:none">
+        <li class="yun_resume_exp_list yun_resume_exp_list_color">
+          <div class="yun_resume_exp_timt">2009.8-2010.8</div>
+          <div class="yun_resume_exp_r ">
+            <div class="yun_resume_exp_name">XXX培训中心<span class="yun_resume_exp_name_job">XXX系统培训</span></div>
+            <div class="yun_resume_exp_p">
+            1、XXX的各方面功能培训<br/>
+            2、XXX培训<br/>
+            3、美工培训
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!--专业技能-->
+    <div class="yun_resume_joblist" style="display: block;" id="skill_upbox" onclick="showMore('skill','520','350','职业技能');" onmousemove="movelook('skill');" onmouseout="outlook('skill');">
+      <div class="yun_resume_h1" ><span class="yun_resume_h1_s"><i class="yun_resume_h1_icon yun_resume_h1_iconjn"></i>职业技能</span></div>
+      <div id="compile_skill" class="yun_resume_handle" style="dispaly:none">编辑</div>
+      <ul class="resume_skill" id="skill">
+       {yun:}if is_array($skill) && !empty($skill){/yun}
+       {yun:}foreach from=$skill item=v{/yun}
+       <li class="yun_resume_exp_list" id="skill{yun:}$v.id{/yun}">
+       <input type="hidden" id="skill_have" value="1">
+          <i class="resume_skill_icon"></i>
+                           技能名称：<span class="resume_table_blod">{yun:}$v.name{/yun}</span> 
+              <span class="yun_resume_exp_name_job">掌握时间：{yun:}$v.longtime{/yun}年</span>
+          {yun:}if $v.pic{/yun}
+          <div class="zs_imgbox">技能证书： <img src=".{yun:}$v.pic{/yun}"  style="vertical-align:middle"> </div>
+          {yun:}/if{/yun}
+          </li>
+        {yun:}/foreach{/yun}
+        {yun:}/if{/yun}
+      </ul>
+      <ul id="skill_empty" style="display:none">
+      <li class="yun_resume_exp_list  yun_resume_exp_list_color">
+          <i class="resume_skill_icon"></i>技能名称：<span class="resume_table_blod">英语CET6、粤语</span> <span class="yun_resume_exp_name_job">掌握时间：3年</span>
+            <div class="zs_imgbox">技能证书： <img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_skill{/yun}"  style="vertical-align:middle"> </div>
+      </li>
+      </ul>
+    </div>
+   
+    <!--其他信息-->
+    <div class="yun_resume_joblist" style="display: block;" id="other_upbox" onclick="showMore('other','540','380','其他信息');" onmousemove="movelook('other');" onmouseout="outlook('other');">
+      <div class="yun_resume_h1" ><span class="yun_resume_h1_s"><i class="yun_resume_h1_icon yun_resume_h1_iconqt"></i>其他信息</span></div>
+      <div id="compile_other" class="yun_resume_handle" style="dispaly:none">编辑</div>
+      <ul class="resume_skill" id="other">
+      {yun:}if is_array($other) && !empty($other){/yun}
+      {yun:}foreach item=v from=$other{/yun}
+        <li class="yun_resume_exp_list" id="other{yun:}$v.id{/yun}">
+         <input type="hidden" id="other_have" value="1">
+          <i class="resume_skill_icon"></i><span class="resume_table_blod">标题：{yun:}$v.name{/yun}</span>
+          <div class="yun_resume_exp_p">内容：
+            {yun:}$v.content{/yun}</div>
+        </li>
+        {yun:}/foreach{/yun}
+        {yun:}/if{/yun}
+      </ul>
+      <ul  id="other_empty" style="display:none">
+        <li class="yun_resume_exp_list yun_resume_exp_list_color">
+          <i class="resume_skill_icon"></i><span class="resume_table_blod">标题：校内经历</span>
+          <div class="yun_resume_exp_p">内容：
+          1、主导的多个版本的立项、资源协调、进度管理和对外合作工作。
+          2、负责XXX网页版、XXX手机客户端、XXX版等项目，运营了XXX--“温暖明天”爱护行动
+            </div>
+        </li>
+      </ul>
+    </div>
+    <!--自我评价-->
+    <div class="yun_resume_joblist" style="display: block;" id="description_upbox" onclick="showMore('description','550','{yun:}if count($resume.arrayTag)>3{/yun}500{yun:}else{/yun}485{yun:}/if{/yun}','自我评价');" onmousemove="movelook('description');" onmouseout="outlook('description');">
+      <div class="yun_resume_h1" ><span class="yun_resume_h1_s"><i class="yun_resume_h1_icon yun_resume_h1_iconpj"></i>自我评价</span></div>
+      <div id="compile_description" class="yun_resume_handle"  style="dispaly:none">编辑</div>
+      <ul class="resume_skill" id="description">
+      {yun:}if $resume.description{/yun}
+        <li class=" yun_resume_exp_list"><i class="resume_skill_icon"></i>
+          <div class="yun_resume_exp_p">
+            <em>{yun:}$resume.description|nl2br{/yun}</em>
+          </div>
+        </li>
+		{yun:}if $resume.arrayTag{/yun}
+		<li class=" yun_resume_exp_list"><i class="resume_skill_icon"></i>
+          <div class="yun_resume_p_bbq" >
+		    {yun:}foreach from=$resume.arrayTag item=v{/yun}
+            <span>{yun:}$v{/yun}</span> 
+			{yun:}/foreach{/yun}
+          </div>
+        </li>
+		{yun:}/if{/yun}
+        {yun:}else{/yun}
+        <li class=" yun_resume_exp_list yun_resume_exp_list_color"><i class="resume_skill_icon"></i>
+          <div class="yun_resume_exp_p">
+            <em>
+            热爱XXX行业，关注行业动态<br/>
+                                 学习能力强，对新事物充满好奇<br/>
+                                工作态度认真负责，具有团队合作精神</em>
+          </div>
+        </li>
+            {yun:}/if{/yun}
+      </ul>
+    </div>
+    
+     <!--作品案例--> 
+      <div class="yun_resume_zpbox" >
+      <div class="yun_resume_h1" ><span class="yun_resume_h1_s"><i class="yun_resume_h1_icon yun_resume_h1_iconzp"></i>作品案例</span></div>
+     <ul class="resume_skill" id="description"> 
+        <li class=" yun_resume_exp_list yun_resume_exp_list_color"><i class="resume_skill_icon"></i>
+          <div class="yun_resume_exp_p">
+            <em>PS：上传作品更受企业青睐，可提升5倍面试邀约率！<a href="index.php?c=show&eid={yun:}$smarty.get.e{/yun}" class="yun_resume_zpbox_bth">上传作品案例</a></em>
+          </div>
+        </li> 
+      </ul>
+      </div>
+  <!--作品案例--> 
+  </div>
+  <!--/*简历结束*/--> 
+ 
+</div>
+<!--  右侧开始-->
+
+
+<div class="resume_right_fixedcont" style="margin-top:20px;">
+<div class="" id="right_box">
+<div class="resume_right_box">
+<div class="resume_right_box_tit">
+  <ul>
+    <li class="resume_right_box_tit_cur" id="module"><a href="javascript:;" style="text-decoration:none;" onclick="checkModel('1')">简历模块</a></li>
+    <li class="" id="template"><a href="javascript:;" style="text-decoration:none;" onclick="checkModel('2')">简历模板</a></li>
+  </ul>
+</div>
+<div class="yun_integrity_box" id="resume_module">
+  <div class="yun_resume_integrity_box mt8">
+    <div class="cont">
+    <div class="yun_resume_wzd_name">简历完整度：</div>
+      <div id="_ctl0_UserManage_LeftTree1_progressDiv" class="bar" style="width:140px">
+        <div class="play" style="width:{yun:}$numresume{/yun}%"></div>
+      </div>
+      <div class="value"><b id="numresume">{yun:}$numresume{/yun}%</b></div>
+      <div id="_ctl0_UserManage_LeftTree1_msnInfo" class="yun_resume_wzdintro"> 
+      {yun:}if  $numresume lt $config.user_sqintegrity{/yun}  您现在的简历完整度太低，还不能够使用此简历应聘!
+      {yun:}else{/yun}  您的简历已符合要求！{yun:}/if{/yun}
+      </div>
+    </div>
+  </div>
+  <ul class="yun_integrity_degree_list">
+    <li class=" {yun:}if $resume.name!=''{/yun} state_done {yun:}/if{/yun}"><a href="javascript:;" onclick="showMore('info','550','500','基本信息');">
+    <em class="integrity_degree_name">基本信息<span class="integrity_degree">+20%</span></em>
+<i class="yun_yt_icon"></i></a></li>
+    <li class="{yun:}if $resume_row.expect eq 1{/yun} state_done resume_expect{yun:}/if{/yun}"><a href="javascript:;" onclick="showMore('expect','520','470','求职意向');"><em class="integrity_degree_name">求职意向<span class="integrity_degree">+35%</span></em><i class="yun_yt_icon"></i><i class="yun_yt_icon"></i></a>
+    </li>
+    <li id="m_right3" class=" {yun:}if $work|@count >= 1{/yun} state_done resume_work{yun:}/if{/yun}"><a href="javascript:;" onclick="showMore('work','520','487','工作经历');"><em class="integrity_degree_name">工作经历<span class="integrity_degree">+10%</span></em><i class="yun_yt_icon"></i><i class="yun_jl_tj">添加</i></a></li>
+    <li id="m_right4" class="{yun:}if $edu|@count >= 1{/yun} state_done resume_edu{yun:}/if{/yun}"><a href="javascript:;" onclick="showMore('edu','520','451','教育经历');"><em class="integrity_degree_name">教育经历<span class="integrity_degree">+10%</span></em><i class="yun_yt_icon"></i><i class="yun_jl_tj">添加</i></a></li>
+    <li id="m_right5" class="{yun:}if $training|@count >= 1{/yun} state_done resume_training{yun:}/if{/yun}"><a href="javascript:;" onclick="showMore('training','520','480','培训经历');"><em class="integrity_degree_name">培训经历<span class="integrity_degree">+7%</span></em><i class="yun_yt_icon"></i><i class="yun_jl_tj">添加</i></a></li>
+    <li id="m_right6" class="{yun:}if $skill|@count >= 1{/yun} state_done {yun:}/if{/yun}"><a href="javascript:;" onclick="showMore('skill','520','350','职业技能');"><em class="integrity_degree_name">职业技能<span class="integrity_degree">+10%</span></em><i class="yun_yt_icon"></i><i class="yun_jl_tj">添加</i></a></li>
+  
+    <li id="m_right7" class="{yun:}if $project|@count >= 1{/yun} state_done resume_project{yun:}/if{/yun}"><a href="javascript:;" onclick="showMore('project','520','480','项目经历');"><em class="integrity_degree_name">项目经历<span class="integrity_degree ">+8%</span></em><i class="yun_yt_icon"></i><i class="yun_jl_tj">添加</i></a></li>
+    <li class="{yun:}if $other|@count >= 1{/yun} state_done resume_other{yun:}/if{/yun}"><a href="javascript:;" onclick="showMore('other','540','380','其他信息');"><em class="integrity_degree_name">其他信息</em><i class="yun_yt_icon"></i><i class="yun_yt_icon"></i><i class="yun_jl_tj">添加</i></a></li>
+    
+    <li  class="{yun:}if $resume|@count >= 1{/yun} state_done resume_resume{yun:}/if{/yun}"><a href="javascript:;" onclick="showMore('description','550','{yun:}if count($resume.arrayTag)>3{/yun}500{yun:}else{/yun}485{yun:}/if{/yun}','自我评价');"><em class="integrity_degree_name">自我评价</em><i class="yun_yt_icon"></i><i class="yun_jl_tj">添加</i></a></li>
+    
+    <li><a href="index.php?c=show&eid={yun:}$smarty.get.e{/yun}" ><em class="integrity_degree_name">上传作品案例</em><i class="yun_yt_icon"></i><i class="yun_jl_tj">上传</i></a></li>
+  </ul>
+   <div class="yun_resume_operation_r"><a href="{yun:}url m=resume c=show id={yun:}$smarty.get.e{/yun}{/yun}" target="_blank" class="yun_resume_operation_preview ">预览简历</a></div>
+</div>
+<div class="yun_integrity_box" style="display:block;display:none" id="resume_template">
+<ul class="yun_template_box">
+<li {yun:}if $row.tmpid==''||$row.tmpid=='d'{/yun}class="yun_template_cur"{yun:}/if{/yun}><a href="javascript:;" onclick="changeModel('{yun:}url m=resume c=show id=$smarty.get.e tmp=2 see=member{/yun}','默认模板','900')"><img src="{yun:}$user_style{/yun}/images/mr.png">
+<div class="yun_template_box_yl">默认模板</div>
+</a>
+</li>
+{yun:}foreach from=$rows item=style{/yun} 
+<li {yun:}if $statis.tpl==$style.id{/yun}class="yun_template_cur "{yun:}/if{/yun}><a href="javascript:;" onclick="changeModel('{yun:}url m=resume c=show id=$smarty.get.e tmp=$style.id see=member{/yun}','{yun:}$style.name{/yun}','900')"><img src="../{yun:}$style.pic{/yun}">
+<div class="yun_template_box_yl">{yun:}$style.name{/yun}</div>
+</a></li>
+{yun:}/foreach{/yun} 
+
+ 
+</ul>
+
+</div>
+
+
+ 
+</div></div></div>
+<!--  右侧结束-->
+
+</div>
+  <!--  基本信息-->
+    <div id="saveinfo" style="background:#fff;display:none">
+      <form name="MyForm" method="post" action="index.php?c=info&act=save" target="supportiframe" autocomplete="off" onsubmit="return CheckPost();" enctype="multipart/form-data" class="layui-form">
+      <div class="yun_resume_popup_box" style="width: 100%; max-height: 401px; overflow: auto; overflow-x:hidden ;position: relative; ">
+        <ul>
+          <li class="yun_resume_popup">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>姓名：</span>
+              <input type="text" name="name" id="name" value="{yun:}$resume.name{/yun}" class="yun_resume_popup_text yun_resume_popup_text_bx">
+            <span class="yun_resume_popup_name" style="width:70px;"><i class="yun_resume_popup_bt">*</i>性别：</span>
+            
+            <input type="hidden" id="sex" name="sex" value="{yun:}$row.sex{/yun}" />                        
+              {yun:}foreach from=$arr_data.sex key=j item=v{/yun}
+              <span class="yun_info_sex {yun:}if $j eq $row.sex{/yun}yun_info_sex_cur{yun:}/if{/yun}" id="sex{yun:}$j{/yun}" onclick="checksex('{yun:}$j{/yun}')"><i class="usericon_sex usericon_sex{yun:}$j{/yun}"></i>{yun:}$v{/yun}</span>                     
+              {yun:}/foreach{/yun}     
+           
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>出生年月：</span>
+               <input type="text" id="birthday" name="birthday" value="{yun:}$row.birthday{/yun}" class="yun_resume_popup_text"/> 
+            </div>
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>现居住地：</span>
+              <input type="text" id="living" name="living" value="{yun:}$resume.living{/yun}" class="yun_resume_popup_text">
+            </div>
+             <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>最高学历：</span>        
+             <div class="yun_resume_popup_chose_box  yun_resume_zindex11"> 
+             	<div class="layui-form-item">
+                  <div class="layui-input-inline" style="width:384px; height:30px;">
+                    <select name="edu" lay-filter="" id="educid">
+                      <option value="">请选择最高学历</option>
+                      {yun:}foreach from=$userdata.user_edu key=j item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $row.edu==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                  </div>
+                </div>
+             </div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>工作经验：</span><div class="yun_resume_popup_chose_box  yun_resume_zindex10"> 
+             	<div class="layui-form-item">
+                  <div class="layui-input-inline" style="width:384px; height:30px;">
+                    <select name="exp" lay-filter="" id="expid">
+                      <option value="">请选择工作经验</option>
+                      {yun:}foreach from=$userdata.user_word key=j item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $resume.exp==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                  </div>
+                </div>
+             </div>
+            </div>
+             <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>手机：</span>
+              {yun:}if $resume.moblie_status==1{/yun}
+               <span class="info_phe_ok">{yun:}$resume.telphone{/yun}</span> <a href="index.php?c=passwd"  style="color:#1178c3;padding-left:10px;">重新认证</a>
+               <input type="hidden" id="telphone" value="{yun:}$resume.telphone{/yun}">
+              {yun:}else{/yun}
+              <input type="text" name="telphone" id="telphone" value="{yun:}$resume.telphone{/yun}" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" class="yun_resume_popup_text">
+              {yun:}/if{/yun}
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">邮箱：</span>
+              {yun:}if $resume.email_status==1{/yun}
+              <span class="info_email_ok">
+               {yun:}$resume.email{/yun}
+               </span><a href="index.php?c=passwd" style="color:#1178c3;padding-left:10px;"">重新认证</a>
+               <input type="hidden" id="email" value="{yun:}$resume.email{/yun}">
+               {yun:}else{/yun}
+              <input type="text" name="email" id="email" value="{yun:}$resume.email{/yun}" class="yun_resume_popup_text">
+              {yun:}/if{/yun}
+            </div>
+         
+           <div class="yun_resume_popup_list_tw"><span class="yun_resume_popup_name">身高：</span> <input type="text" name="height" value="{yun:}$resume.height{/yun}" class="yun_resume_popup_text yun_resume_popup_textw150" onkeyup="this.value=this.value.replace(/[^0-9-.]/g,'')"><span class="yun_resume_popudw">CM</span></div>
+           <div class="yun_resume_popup_list_tw"><span class="yun_resume_popup_name">民族：</span><input type="text" name="nationality" value="{yun:}$resume.nationality{/yun}" class="yun_resume_popup_text yun_resume_popup_textw150"></div>
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">体重：</span><input type="text" name="weight" value="{yun:}$resume.weight{/yun}" class="yun_resume_popup_text yun_resume_popup_textw150" onkeyup="this.value=this.value.replace(/[^0-9-.]/g,'')"><span class="yun_resume_popudw">KG</span></div>
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">婚姻： </span><div class="yun_resume_popup_chose_box  yun_resume_zindex9" style="height:34px;"> 
+             	<div class="layui-form-item">
+                 
+                    {yun:}foreach from=$userdata.user_marriage key=j item=v{/yun}
+                    <input type="radio" id="marriage{yun:}$j{/yun}" name="marriage" value="{yun:}$v{/yun}" {yun:}if $resume.marriage==$v{/yun}checked="checked"{yun:}/if{/yun} title="{yun:}$userclass_name[$v]{/yun}" />
+                    {yun:}/foreach{/yun}
+                  
+                </div>
+             </div>
+           </div>
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">户籍所在地：</span> <input type="text" name="domicile" value="{yun:}$resume.domicile{/yun}" class="yun_resume_popup_text"></div>
+          
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">QQ：</span><input type="text" name="qq" id="qq" value="{yun:}$resume.qq{/yun}" class="yun_resume_popup_text" onkeyup="this.value=this.value.replace(/[^0-9-.]/g,'')"></div>
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">个人二维码：</span>
+		   <button type="button" style="float:left" class="yun_bth_pic adminupload" lay-data="{imgid: 'ewm',path: 'user',parentid:'imgparent'}">上传二维码</button>
+          <div id="imgparent" class="{yun:}if !$resume.wxewm{/yun}none{yun:}/if{/yun}" style="width:38px; padding-left:10px;float:left;"><img src="{yun:}$resume.wxewm{/yun}" id="ewm" width="38" height="38"/></div>
+          </div>
+          
+         
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">个人主页：</span><input type="text" name="homepage" value="{yun:}$resume.homepage{/yun}" class="yun_resume_popup_text"></div>
+          </li>
+        </ul>
+      </div>
+      <div class="yun_resume_popup_bot">
+        <input type="hidden" id="getinfoid" value="{yun:}if $resume.name!=" "{/yun}1{yun:}/if{/yun}">
+      
+        <input type="submit" name="submitBtn" value="保存" class="expect_test_bth">
+          <a href="javascript:;" onclick="hideMore('info')" class="expect_test_bth_qx">取消</a>
+      </div>
+      </form>
+    </div> 
+     <!-- 基本信息出框 end-->
+       <!--求职意向-->
+    <div id="saveexpect" style="background:#fff;display:none">
+      <form class="layui-form">
+      <div class="yun_resume_popup_box" style="width: 100%; max-height: 442px; overflow: auto; overflow-x:hidden ;position: relative; ">
+        <ul>
+           <li class="yun_resume_popup">
+		   
+		   <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>期望岗位：</span>        
+            <div class="yun_resume_popup_chose_box yun_resume_zindex10"> 
+             <input type="text" name="name" id="nameid" value="{yun:}$row.name{/yun}"  class="yun_resume_popup_text">
+             </div>
+             </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>工作职能：</span>        
+            <div class="yun_resume_popup_chose_box yun_resume_zindex10"> 
+            <input type="button" value="{yun:}if $job_classname{/yun}{yun:}$job_classname{/yun}{yun:}else{/yun}请选择职位{yun:}/if{/yun}" onclick="index_job(5,'#workadds_job','#job_class','left:100px;top:100px; position:absolute;','{yun:}$row.job_classid{/yun}');" id="workadds_job" class="yun_resume_popup_chose_box_text"/>
+            <input type="hidden" name="job_class" id="job_class" value="{yun:}$row.job_classid{/yun}"/>
+             </div>
+             </div>
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>从事行业：</span>        
+           <div class="yun_resume_popup_chose_box yun_resume_zindex11"> 
+             	<div class="layui-form-item">
+                  <div class="layui-input-inline" style="width:384px; height:30px;">
+                    <select name="hy" lay-filter="" id="hyid">
+                      <option value="">请选择行业</option>
+                      {yun:}foreach from=$industry_index key=j item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $row.hy==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$industry_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                  </div>
+                </div>
+             </div>
+            </div>
+			<div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>工作地点：</span>        
+            <div class="yun_resume_popup_chose_box yun_resume_zindex10"> 
+             <input type="button" value="{yun:}if $city_classname{/yun}{yun:}$city_classname{/yun}{yun:}else{/yun}请选择工作地点{yun:}/if{/yun}" onclick="index_city(5,'#workadds_city','#city_class','left:100px;top:100px; position:absolute;','{yun:}$row.city_classid{/yun}');" id="workadds_city" class="yun_resume_popup_chose_box_text"/>
+             <input type="hidden" name="city_class" id="city_class" value="{yun:}$row.city_classid{/yun}"/>
+             </div>
+             </div>
+
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>期望薪资：</span>        
+           <div class="yun_resume_popup_chose_box"> 
+           
+             <input type="text" class="expect_qwxz_text" id="minsalary" name="minsalary" size="6" value="{yun:}$row.minsalary{/yun}"/>
+                <span class="expect_xz_dw">元/月</span>
+         
+             <span class="expect_xzline">-</span>
+             
+             <input type="text" class="expect_qwxz_text" id="maxsalary" name="maxsalary" size="6" value="{yun:}$row.maxsalary{/yun}"/>
+                <span class="expect_xz_dw">元/月</span>
+          
+             </div>
+            </div>
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>工作性质：</span>        
+           <input type="hidden" id="typeid" {yun:}if $row.type{/yun} value="{yun:}$row.type{/yun}" {yun:}/if{/yun} />       
+           <div class="yun_resume_popup_chose_box" >  
+               <div class="layui-form-item" style="margin-bottom:0px;">
+                  <div class="layui-input-inline" style="width:100%;">
+                    {yun:}foreach from=$userdata.user_type key=j item=v{/yun}
+                    <input type="radio" id="type{yun:}$j{/yun}" name="type" value="{yun:}$v{/yun}" {yun:}if $row.type==$v{/yun}checked="checked"{yun:}/if{/yun} title="{yun:}$userclass_name[$v]{/yun}" />
+                    {yun:}/foreach{/yun}
+                  </div>
+                </div>
+               </div>
+            </div>
+         <div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i>到岗时间：</span>        
+         <div class="yun_resume_popup_chose_box yun_resume_zindex7">  
+             	<div class="layui-form-item">
+                  <div class="layui-input-inline" style="width:384px; height:30px;">
+                    <select name="report" lay-filter="" id="reportid">
+                      <option value="">请选择到岗时间</option>
+                      {yun:}foreach from=$userdata.user_report key=j item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $row.report==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                  </div>
+                </div>
+             </div>
+            </div>
+			<div class="yun_resume_popup_list"><span class="yun_resume_popup_name"><i class="yun_resume_popup_bt">*</i> 求职状态：</span>        
+               <div class="yun_resume_popup_chose_box yun_resume_zindex6">  
+             	<div class="layui-form-item">
+                  <div class="layui-input-inline" style="width:384px; height:30px;">
+                    <select name="jobstatus" lay-filter="" id="statusid">
+                      <option value="">请选择到岗时间</option>
+                      {yun:}foreach from=$userdata.user_jobstatus key=j item=v{/yun}
+                      <option value="{yun:}$v{/yun}" {yun:}if $row.jobstatus==$v{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                  </div>
+                </div>
+             </div>
+            </div></li>
+        </ul>
+      </div>
+      <div class="yun_resume_popup_bot">
+        
+        <input type="button" name="submit" value="{yun:}if $smarty.get.e{/yun}修改{yun:}else{/yun}保存{yun:}/if{/yun}" onclick="saveexpect();" class="expect_test_bth">
+          <a href="javascript:;" onclick="hideMore('expect')" class="expect_test_bth_qx">取消</a>
+    
+      </div></form>
+    </div> 
+     <!--  求职意向弹出框 end-->
+     
+  <!--  工作经历弹出框-->
+    <div id="savework" style="background:#fff;display:none">
+      <form  method="post" action="index.php?c=expect&act=saveall" target="tanchukuang" autocomplete="off">
+      <div class="yun_resume_popup_box" style="width:100%; max-height: 391px; overflow: auto; overflow-x:hidden ;position: relative; " id="work_div">
+        <ul id="addwork">
+        {yun:}if $work{/yun}
+        {yun:}foreach item=v from=$work{/yun}
+          <li class="yun_resume_popup" id="wh{yun:}$v.id{/yun}">
+            {yun:}if $resume_row.work==1{/yun}<i class="yun_resume_popup_del hidepic showworknum" id="iw{yun:}$v.id{/yun}" onclick="deleteupbox('wh{yun:}$v.id{/yun}','iw{yun:}$v.id{/yun}','showworknum','work')">-</i>{yun:}else{/yun}<i class="yun_resume_popup_del showworknum" id="iw{yun:}$v.id{/yun}" onclick="deleteupbox('wh{yun:}$v.id{/yun}','iw{yun:}$v.id{/yun}','showworknum','work')">-</i>{yun:}/if{/yun}
+            <input type="hidden" class="wh{yun:}$v.id{/yun}" name="id[]" value="{yun:}$v.id{/yun}">
+            <input type="hidden" name="timeid[]" value="{yun:}$v.id{/yun}">
+            <input type="hidden" name="nameid[]" value="n{yun:}$v.id{/yun}">
+            <input type="hidden" name="sdateid[]" value="s{yun:}$v.id{/yun}">
+			<input type="hidden" name="edateid[]" value="ed{yun:}$v.id{/yun}">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">公司名称：</span>
+              <div class="yun_resume_popup_qyname"><input type="text" name="name[]" id="work_name" value="{yun:}$v.name{/yun}" onfocus="hidemsg('mworkn{yun:}$v.id{/yun}')" onblur="hidemsg('mworkn{yun:}$v.id{/yun}')" class="yun_resume_popup_text">
+                <i class="yun_resume_popup_qyname_tip" id="mworkn{yun:}$v.id{/yun}" style="display:none">请填写公司名称</i>
+                </div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">担任职位：</span>
+              <input type="text" name="title[]" id="work_title" value="{yun:}$v.title{/yun}" class="yun_resume_popup_text">
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">工作时间：</span>
+            <div class="yun_resume_popup_list_box">
+              <input type="text" id="work_sdate{yun:}$v.id{/yun}" name="sdate[]" value="{yun:}$v.sdate|date_format:'%Y-%m'{/yun}" onfocus="hidemsg('mwork{yun:}$v.id{/yun}','mworks{yun:}$v.id{/yun}')" onblur="hidemsg('mwork{yun:}$v.id{/yun}','mworks{yun:}$v.id{/yun}')" class="yun_resume_popup_text yun_resume_popup_textw90 worksdate">
+             <script>
+			    layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#work_sdate{yun:}$v.id{/yun}');monthclick(laydate,'#work_edate{yun:}$v.id{/yun}');});
+			  </script>
+			  <i class="yun_resume_popup_list_box_tip" id="mworks{yun:}$v.id{/yun}" style="display:none">请选择开始日期</i>
+            </div>
+              <span class="yun_resume_popup_time">-</span>
+              <div class="yun_resume_popup_list_box">
+               <input type="text" id="work_edate{yun:}$v.id{/yun}" name="edate[]" value="{yun:}if $v.edate{/yun}{yun:}$v.edate|date_format:'%Y-%m'{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}" onfocus="hidemsg('mwork{yun:}$v.id{/yun}','mworked{yun:}$v.id{/yun}')" onblur="hidemsg('mwork{yun:}$v.id{/yun}','mworked{yun:}$v.id{/yun}')" class="yun_resume_popup_text yun_resume_popup_textw90 workedate" {yun:}if !$v.edate{/yun}disabled="disabled"{yun:}/if{/yun}/>
+			   <input id="work_edate{yun:}$v.id{/yun}un" type="hidden" name="edate[]" value="至今" {yun:}if $v.edate{/yun}disabled="disabled"{yun:}/if{/yun}/>
+              <i class="yun_resume_popup_list_box_tip" id="mwork{yun:}$v.id{/yun}" style="display:none">请确认日期先后顺序</i>
+			  <i class="yun_resume_popup_list_box_tip" id="mworked{yun:}$v.id{/yun}" style="display:none">请选择结束日期</i>
+               </div>
+               <input type="hidden" id="to{yun:}$v.id{/yun}" name="totoday[]" value="{yun:}if !$v.edate{/yun}2{yun:}else{/yun}1{yun:}/if{/yun}">
+               <input type='checkbox' value='1' onclick="untiltoday('totoday{yun:}$v.id{/yun}','work_edate{yun:}$v.id{/yun}','mwork{yun:}$v.id{/yun}','to{yun:}$v.id{/yun}','mworked{yun:}$v.id{/yun}')" id='totoday{yun:}$v.id{/yun}' {yun:}if $v.edate==0{/yun}checked{yun:}/if{/yun} class="yun_resume_popup_checkbox"><label for='totoday'><span class="yun_resume_popup_checkbox_s">至今</span></label>
+           </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">工作内容：</span>
+              <textarea rows="5" cols="50" name="content[]" id="work_content" class="infor_textarea ">{yun:}$v.content{/yun}</textarea>
+            </div>
+          </li>
+          {yun:}/foreach{/yun}
+          {yun:}else{/yun}
+          <li class="yun_resume_popup" id="wh">
+            <i class="yun_resume_popup_del hidepic showworknum" id="iwork" onclick="deleteupbox('wh','iwork','showworknum','work')">-</i>
+            <input type="hidden" class="wh" name="id[]" value="">
+            <input type="hidden" name="timeid[]" value="wh">
+            <input type="hidden" name="nameid[]" value="nwh">
+            <input type="hidden" name="sdateid[]" value="swh">
+			<input type="hidden" name="edateid[]" value="edwh">
+            <input type="hidden" class="usedwork" name="usedid[]" value="">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">公司名称：</span>
+            <div class="yun_resume_popup_qyname">
+              <input type="text" name="name[]" id="work_name" value="" onfocus="hidemsg('mworknwh')" onblur="hidemsg('mworknwh')" class="yun_resume_popup_text work_name">
+               <i class="yun_resume_popup_qyname_tip" id="mworknwh" style="display:none">请填写公司名称</i>
+               </div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">担任职位：</span>
+              <input type="text" name="title[]" id="work_title" value="" class="yun_resume_popup_text work_itle">
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">工作时间：</span>
+            <div class="yun_resume_popup_list_box">
+              <input type="text" id="work_sdate" name="sdate[]" value="" onfocus="hidemsg('mworkwh','mworkswh')" onblur="hidemsg('mworkwh','mworkswh')" class="yun_resume_popup_text yun_resume_popup_textw90 work_sdate">
+             <script>
+			    layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#work_sdate');monthclick(laydate,'#work_edate');});
+			  </script>
+			  <i class="yun_resume_popup_list_box_tip" id="mworkswh" style="display:none">请选择开始日期</i>
+            </div>
+              <span class="yun_resume_popup_time">-</span>
+              <div class="yun_resume_popup_list_box">
+               <input type="text" id="work_edate" name="edate[]" value="" onfocus="hidemsg('mworkwh','mworkedwh')" onblur="hidemsg('mworkwh','mworkedwh')" class="yun_resume_popup_text yun_resume_popup_textw90 work_edate">
+			   <input id="work_edateun" type="hidden" name="edate[]" value="至今" disabled="disabled"/>
+			  <i class="yun_resume_popup_list_box_tip" id="mworkwh" style="display:none">请确认日期先后顺序</i>
+			  <i class="yun_resume_popup_list_box_tip" id="mworkedwh" style="display:none">请选择结束日期</i>
+               </div>
+               <input type="hidden" id="towork" name="totoday[]" value="1">
+              <input type='checkbox' value='1' onclick="untiltoday('totoday','work_edate','mworkwh','towork','mworkedwh')" id='totoday' class="yun_resume_popup_checkbox"><label for='totoday'><span class="yun_resume_popup_checkbox_s">至今</span></label> </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">工作内容：</span>
+              <textarea rows="5" cols="50" name="content[]" id="work_content" class="infor_textarea work_content"></textarea>
+            </div>
+          </li>
+          {yun:}/if{/yun}
+        </ul>
+        <div class="yun_resume_add_to"><a href="javascript:;" onclick="addWork();">+ 添加工作经历</a></div>
+      </div>
+      <div class="yun_resume_popup_bot">
+        <input name="eid" id="eid" type="hidden" value="{yun:}$smarty.get.e{/yun}" />
+        <input type="hidden" name="table" value="work">
+        
+         <input type="submit" name="submit" value="保存" class="expect_test_bth" >
+         <a href="javascript:;" onclick="hideMore('work')" class="expect_test_bth_qx" >取消</a>
+      </div>
+      </form>
+    </div> 
+     <!--  工作经历弹出框 end-->
+      <!--  教育经历弹出框-->
+    <div id="saveedu" style="background:#fff ;display:none">
+     <form  method="post" action="index.php?c=expect&act=saveall" target="tanchukuang" autocomplete="off" class="layui-form">
+      <div class="yun_resume_popup_box" style="width: 100%; max-height: 355px; overflow: auto; overflow-x:hidden ;position: relative; " id="edu_div">
+        <ul id="addedu">
+       {yun:}if $edu{/yun}
+        {yun:}foreach item=v from=$edu{/yun}
+          <li class="yun_resume_popup" id="eh{yun:}$v.id{/yun}">
+           {yun:}if $resume_row.edu==1{/yun}<i class="yun_resume_popup_del hidepic showedunum" id="ie{yun:}$v.id{/yun}" onclick="deleteupbox('eh{yun:}$v.id{/yun}','ie{yun:}$v.id{/yun}','showedunum','edu')">-</i>{yun:}else{/yun}<i class="yun_resume_popup_del showedunum" id="ie{yun:}$v.id{/yun}" onclick="deleteupbox('eh{yun:}$v.id{/yun}','ie{yun:}$v.id{/yun}','showedunum','edu')">-</i>{yun:}/if{/yun}
+            <input type="hidden" class="eh{yun:}$v.id{/yun}" name="id[]" value="{yun:}$v.id{/yun}">
+            <input type="hidden" name="timeid[]" value="{yun:}$v.id{/yun}">
+            <input type="hidden" name="nameid[]" value="n{yun:}$v.id{/yun}">
+            <input type="hidden" name="sdateid[]" value="s{yun:}$v.id{/yun}">
+			<input type="hidden" name="edateid[]" value="ed{yun:}$v.id{/yun}">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">学校名称：</span>
+               <div class="yun_resume_popup_qyname"><input type="text" name="name[]" id="edu_name" value="{yun:}$v.name{/yun}" onfocus="hidemsg('medun{yun:}$v.id{/yun}')" onblur="hidemsg('medun{yun:}$v.id{/yun}')" class="yun_resume_popup_text">
+              <i class="yun_resume_popup_qyname_tip" id="medun{yun:}$v.id{/yun}" style="display:none">请填写学校名称</i></div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">在校时间：</span>
+            <div class="yun_resume_popup_list_box">
+              <input type="text" id="edu_sdate{yun:}$v.id{/yun}" name="sdate[]" value="{yun:}$v.sdate|date_format:'%Y-%m'{/yun}" onfocus="hidemsg('medu{yun:}$v.id{/yun}','medus{yun:}$v.id{/yun}')" onblur="hidemsg('medu{yun:}$v.id{/yun}','medus{yun:}$v.id{/yun}')" class="yun_resume_popup_text yun_resume_popup_textw90">
+             <script>
+			   layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#edu_sdate{yun:}$v.id{/yun}');monthclick(laydate,'#edu_edate{yun:}$v.id{/yun}');});
+			  </script>
+			  <i class="yun_resume_popup_list_box_tip" id="medus{yun:}$v.id{/yun}" style="display:none">请选择开始日期</i>
+            </div>
+              <span class="yun_resume_popup_time">至</span>
+              <div class="yun_resume_popup_list_box">
+               <input type="text" id="edu_edate{yun:}$v.id{/yun}" name="edate[]" value="{yun:}$v.edate|date_format:'%Y-%m'{/yun}" onfocus="hidemsg('medu{yun:}$v.id{/yun}','medued{yun:}$v.id{/yun}')" onblur="hidemsg('medu{yun:}$v.id{/yun}','medued{yun:}$v.id{/yun}')" class="yun_resume_popup_text yun_resume_popup_textw90">
+			  <i class="yun_resume_popup_list_box_tip" id="medu{yun:}$v.id{/yun}" style="display:none">请确认日期先后顺序</i>
+			  <i class="yun_resume_popup_list_box_tip" id="medued{yun:}$v.id{/yun}" style="display:none">请选择结束日期</i>
+               </div>
+             </div>  <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">学历：</span>
+             <div class="yun_resume_popup_chose_box yun_resume_zindex11"> 
+             	<div class="layui-form-item">
+                  <div class="layui-input-inline" style="width:384px; height:30px;">
+                    <select name="education[]" lay-filter="" id="educationc{yun:}$v.id{/yun}id">
+                      <option value="">请选择最高学历</option>
+                      {yun:}foreach from=$userdata.user_edu key=j item=data{/yun}
+                      <option value="{yun:}$data{/yun}" {yun:}if $v.education==$data{/yun}selected="selected"{yun:}/if{/yun}>{yun:}$userclass_name[$data]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                  </div>
+                </div>
+             </div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">所学专业：</span>
+              <input type="text" name="specialty[]" id="edu_specialty" value="{yun:}$v.specialty{/yun}" class="yun_resume_popup_text">
+            </div>
+               <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">班级职务：</span>
+              <input type="text" name="title[]" id="title" value="{yun:}$v.title{/yun}" class="yun_resume_popup_text">
+            </div>
+             
+          </li>
+          {yun:}/foreach{/yun}
+         {yun:}else{/yun}
+          <li class="yun_resume_popup" id="eh">
+            <i class="yun_resume_popup_del hidepic showedunum" id="iedu" onclick="deleteupbox('eh','iedu','showedunum','edu')">-</i>
+             <input type="hidden" class="eh" name="id[]" value="">
+             <input type="hidden" name="timeid[]" value="eh">
+             <input type="hidden" name="nameid[]" value="neh">
+             <input type="hidden" name="sdateid[]" value="seh">
+			 <input type="hidden" name="edateid[]" value="edeh">
+             <input type="hidden" class="usededu" name="usedid[]" value="">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">学校名称：</span>
+               <div class="yun_resume_popup_qyname"><input type="text" name="name[]" id="edu_name" value="" onfocus="hidemsg('meduneh')" onblur="hidemsg('meduneh')" class="yun_resume_popup_text">
+              <i class="yun_resume_popup_qyname_tip" id="meduneh" style="display:none">请填写学校名称</i></div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">在校时间：</span>
+            <div class="yun_resume_popup_list_box">
+              <input type="text" id="edu_sdate" name="sdate[]" value="" onfocus="hidemsg('medueh','meduseh')" onblur="hidemsg('medueh','meduseh')" class="yun_resume_popup_text yun_resume_popup_textw90">
+             <script>
+			    layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#edu_sdate');monthclick(laydate,'#edu_edate');});
+			  </script>
+			  <i class="yun_resume_popup_list_box_tip" id="meduseh" style="display:none">请选择开始日期</i>
+            </div>
+              <span class="yun_resume_popup_time">至</span>
+              <div class="yun_resume_popup_list_box">
+               <input type="text" id="edu_edate" name="edate[]" value="" onfocus="hidemsg('medueh','meduedeh')" onblur="hidemsg('medueh','meduedeh')" class="yun_resume_popup_text yun_resume_popup_textw90">
+			  <i class="yun_resume_popup_list_box_tip" id="medueh" style="display:none">请确认日期先后顺序</i>
+			  <i class="yun_resume_popup_list_box_tip" id="meduedeh" style="display:none">请选择结束日期</i>
+               </div>
+             </div><div class="yun_resume_popup_list"><span class="yun_resume_popup_name">学历：</span>
+             <div class="yun_resume_popup_chose_box"> 
+             	<div class="layui-form-item">
+                  <div class="layui-input-inline" style="width:384px; height:30px;">
+                    <select name="education[]" lay-filter="" id="educationcid">
+                      <option value="">请选择最高学历</option>
+                      {yun:}foreach from=$userdata.user_edu key=j item=v{/yun}
+                      <option value="{yun:}$v{/yun}">{yun:}$userclass_name[$v]{/yun}</option>
+                      {yun:}/foreach{/yun}
+                    </select>
+                  </div>
+                </div>
+             </div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">所学专业：</span>
+              <input type="text" name="specialty[]" id="edu_specialty" value="" class="yun_resume_popup_text">
+            </div>
+               <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">班级职务：</span>
+              <input type="text" name="title[]" id="title" value="" class="yun_resume_popup_text">
+            </div>
+            
+          </li> 
+         {yun:}/if{/yun}
+        </ul>
+        <div class="yun_resume_add_to"><a href="javascript:;" onclick="addEdu();">+ 添加教育经历</a></div>
+      </div>
+      <div class="yun_resume_popup_bot">
+        <input name="eid" id="eid" type="hidden" value="{yun:}$smarty.get.e{/yun}" />
+        <input type="hidden" name="table" value="edu">
+        <input type="submit" name="submit" value="保存"  class="expect_test_bth" >
+        <a href="javascript:;" onclick="hideMore('edu')" class="expect_test_bth_qx">取消</a>
+      </div>
+      </form>
+    </div> 
+     <!--  教育经历弹出框 end-->
+     <!--  培训经历弹出框-->
+    <div id="savetraining" style="background:#fff ;display:none">
+    <form  method="post" action="index.php?c=expect&act=saveall" target="tanchukuang" autocomplete="off">
+      <div class="yun_resume_popup_box" style="width: 100%; max-height: 389px; overflow: auto; overflow-x:hidden ;position: relative; " id="training_div">
+        <ul id="addtraining">
+        {yun:}if $training{/yun}
+        {yun:}foreach item=v from=$training{/yun}
+          <li class="yun_resume_popup" id="th{yun:}$v.id{/yun}">
+          {yun:}if $resume_row.training==1{/yun}<i class="yun_resume_popup_del hidepic showtrainingnum" id="it{yun:}$v.id{/yun}" onclick="deleteupbox('th{yun:}$v.id{/yun}','it{yun:}$v.id{/yun}','showtrainingnum','training')">-</i>{yun:}else{/yun}<i class="yun_resume_popup_del showtrainingnum" id="it{yun:}$v.id{/yun}" onclick="deleteupbox('th{yun:}$v.id{/yun}','it{yun:}$v.id{/yun}','showtrainingnum','training')">-</i>{yun:}/if{/yun}
+            <input type="hidden" class="th{yun:}$v.id{/yun}" name="id[]" value="{yun:}$v.id{/yun}">
+            <input type="hidden" name="timeid[]" value="{yun:}$v.id{/yun}">
+            <input type="hidden" name="nameid[]" value="n{yun:}$v.id{/yun}">
+            <input type="hidden" name="sdateid[]" value="s{yun:}$v.id{/yun}">
+			<input type="hidden" name="edateid[]" value="ed{yun:}$v.id{/yun}">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">培训中心：</span>
+               <div class="yun_resume_popup_qyname"><input type="text" name="name[]" id="training_name" value="{yun:}$v.name{/yun}" onfocus="hidemsg('mtrainingn{yun:}$v.id{/yun}')" onblur="hidemsg('mtrainingn{yun:}$v.id{/yun}')" class="yun_resume_popup_text">
+              <i class="yun_resume_popup_qyname_tip" id="mtrainingn{yun:}$v.id{/yun}" style="display:none">请填写培训中心名称</i></div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">培训方向：</span>
+              <input type="text" name="title[]" id="training_title" value="{yun:}$v.title{/yun}" class="yun_resume_popup_text">
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">培训时间：</span>
+             <div class="yun_resume_popup_list_box">
+              <input type="text" id="training_sdate{yun:}$v.id{/yun}" name="sdate[]" value="{yun:}$v.sdate|date_format:'%Y-%m'{/yun}" onfocus="hidemsg('mtraining{yun:}$v.id{/yun}','mtrainings{yun:}$v.id{/yun}')" onblur="hidemsg('mtraining{yun:}$v.id{/yun}','mtrainings{yun:}$v.id{/yun}')" class="yun_resume_popup_text yun_resume_popup_textw90">
+             <script>
+			    layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#training_sdate{yun:}$v.id{/yun}');monthclick(laydate,'#training_edate{yun:}$v.id{/yun}')});
+			  </script>
+			  <i class="yun_resume_popup_list_box_tip" id="mtrainings{yun:}$v.id{/yun}" style="display:none">请选择开始日期</i>
+            </div>
+              <span class="yun_resume_popup_time">至</span>
+              <div class="yun_resume_popup_list_box">
+               <input type="text" id="training_edate{yun:}$v.id{/yun}" name="edate[]" value="{yun:}$v.edate|date_format:'%Y-%m'{/yun}" onfocus="hidemsg('mtraining{yun:}$v.id{/yun}','mtraininged{yun:}$v.id{/yun}')" onblur="hidemsg('mtraining{yun:}$v.id{/yun}','mtraininged{yun:}$v.id{/yun}')" class="yun_resume_popup_text yun_resume_popup_textw90">
+			  <i class="yun_resume_popup_list_box_tip" id="mtraining{yun:}$v.id{/yun}" style="display:none">请确认日期先后顺序</i>
+			  <i class="yun_resume_popup_list_box_tip" id="mtraininged{yun:}$v.id{/yun}" style="display:none">请选择结束日期</i>
+               </div>
+             </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">培训内容：</span>
+              <textarea rows="5" cols="50" name="content[]" id="training_content" class="infor_textarea ">{yun:}$v.content{/yun}</textarea>
+            </div>
+          </li>
+          {yun:}/foreach{/yun}
+          {yun:}else{/yun}
+          <li class="yun_resume_popup" id="th">
+           <i class="yun_resume_popup_del hidepic showtrainingnum" id="itraining" onclick="deleteupbox('th','itraining','showtrainingnum','training')">-</i>
+            <input type="hidden" class="th" name="id[]" value="">
+            <input type="hidden" name="timeid[]" value="th">
+            <input type="hidden" name="nameid[]" value="nth">
+             <input type="hidden" name="sdateid[]" value="sth">
+			 <input type="hidden" name="edateid[]" value="edth">
+            <input type="hidden" class="usedtraining" name="usedid[]" value="">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">培训中心：</span>
+             <div class="yun_resume_popup_qyname">
+              <input type="text" name="name[]" id="training_name" value="" onfocus="hidemsg('mtrainingnth')" onblur="hidemsg('mtrainingnth')" class="yun_resume_popup_text">
+              <i class="yun_resume_popup_qyname_tip" id="mtrainingnth" style="display:none">请填写培训中心名称</i>
+              </div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">培训方向：</span>
+              <input type="text" name="title[]" id="training_title" value="" class="yun_resume_popup_text">
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">培训时间：</span>
+             <div class="yun_resume_popup_list_box">
+              <input type="text" id="training_sdate" name="sdate[]" value="" onfocus="hidemsg('mtrainingth','mtrainingsth')" onblur="hidemsg('mtrainingth','mtrainingsth')" class="yun_resume_popup_text yun_resume_popup_textw90">
+             <script>
+			    layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#training_sdate');monthclick(laydate,'#training_edate');});
+			  </script>
+			   <i class="yun_resume_popup_list_box_tip" id="mtrainingsth" style="display:none">请选择开始日期</i>
+            </div>
+              <span class="yun_resume_popup_time">至</span>
+              <div class="yun_resume_popup_list_box">
+               <input type="text" id="training_edate" name="edate[]" value="" onfocus="hidemsg('mtrainingth','mtrainingedth')" onblur="hidemsg('mtrainingth','mtrainingedth')" class="yun_resume_popup_text yun_resume_popup_textw90">
+			  <i class="yun_resume_popup_list_box_tip" id="mtrainingth" style="display:none">请确认日期先后顺序</i>
+			  <i class="yun_resume_popup_list_box_tip" id="mtrainingedth" style="display:none">请选择结束日期</i>
+               </div>
+             </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">培训内容：</span>
+              <textarea rows="5" cols="50" name="content[]" id="training_content" class="infor_textarea "></textarea>
+            </div>
+          </li>
+          {yun:}/if{/yun}
+        </ul>
+        <div class="yun_resume_add_to"><a href="javascript:;" onclick="addTraining();">+ 添加培训经历</a></div>
+      </div>
+      <div class="yun_resume_popup_bot">
+        <input name="eid" id="eid" type="hidden" value="{yun:}$smarty.get.e{/yun}" />
+        <input type="hidden" name="table" value="training">
+       
+        <input type="submit" name="submit" value="保存" class="expect_test_bth" >   
+         <a href="javascript:;" onclick="hideMore('training')" class="expect_test_bth_qx">取消</a>
+      </div>
+      </form>
+    </div> 
+     <!--  培训经历弹出框 end-->
+    <!--  技能弹出框-->
+    <div id="saveskill" style="background:#fff ;display:none">
+    <form  method="post" action="index.php?c=expect&act=saveall" target="tanchukuang" enctype="multipart/form-data" autocomplete="off">
+      <div class="yun_resume_popup_box" style="width: 100%; max-height: 258px; overflow: auto; overflow-x:hidden ;position: relative; " id="skill_div">
+        <ul id="addskill">
+         {yun:}if $skill{/yun}
+          {yun:}foreach from=$skill item=v{/yun}
+          <li class="yun_resume_popup" id="sh{yun:}$v.id{/yun}">
+          {yun:}if $resume_row.skill==1{/yun}<i class="yun_resume_popup_del hidepic showskillnum" id="is{yun:}$v.id{/yun}" onclick="deleteupbox('sh{yun:}$v.id{/yun}','is{yun:}$v.id{/yun}','showskillnum','skill')">-</i>{yun:}else{/yun}<i class="yun_resume_popup_del showskillnum" id="is{yun:}$v.id{/yun}" onclick="deleteupbox('sh{yun:}$v.id{/yun}','is{yun:}$v.id{/yun}','showskillnum','skill')">-</i>{yun:}/if{/yun}
+            <input type="hidden" class="sh{yun:}$v.id{/yun}" name="id[]" value="{yun:}$v.id{/yun}">
+            <input type="hidden" name="nameid[]" value="n{yun:}$v.id{/yun}">
+            <input type="hidden" name="timeid[]" value="{yun:}$v.id{/yun}">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">技能名称：</span>
+               <div class="yun_resume_popup_qyname"><input type="text" name="name[]" id="skill_name" value="{yun:}$v.name{/yun}" onfocus="hidemsg('mskilln{yun:}$v.id{/yun}')" onblur="hidemsg('mskilln{yun:}$v.id{/yun}')" class="yun_resume_popup_text">
+              <i class="yun_resume_popup_qyname_tip" id="mskilln{yun:}$v.id{/yun}" style="display:none">请填写技能名称</i>
+            </div></div>
+            <div class="yun_resume_popup_list" style="line-height:30px;"><span class="yun_resume_popup_name">掌握时间：</span>
+              <input type="text" name="longtime[]" id="skill_longtime" value="{yun:}$v.longtime{/yun}" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" class="yun_resume_popup_text yun_resume_popup_text_w80">年
+            </div>
+           
+           <div class="yun_resume_popup_list"><span class="yun_resume_popup_name" style="line-height:38px;">上传证书：</span>
+	       <div class="photo_submit fl">
+		   <button type="button" class="yun_bth_pic resumeupload" lay-data="{fileid: 'sfile{yun:}$v.id{/yun}',imgid: 'simg{yun:}$v.id{/yun}',parentid: 'sparent{yun:}$v.id{/yun}'}">上传图片</button>
+			<input id="sfile{yun:}$v.id{/yun}" type="hidden" name="cert[]" value="{yun:}$v.pic{/yun}"/>
+			<div id="sparent{yun:}$v.id{/yun}" class="photo_submit_pic {yun:}if !$v.pic{/yun}none{yun:}/if{/yun}"> <img id="simg{yun:}$v.id{/yun}" src=".{yun:}$v.pic{/yun}" width="38" height="38"></div>
+			</div>
+             </div>
+          </li>
+          {yun:}/foreach{/yun}
+          {yun:}else{/yun}
+          <li class="yun_resume_popup" id="skillhide">
+          <i class="yun_resume_popup_del hidepic showskillnum" id="iskill" onclick="deleteupbox('skillhide','iskill','showskillnum','skill')">-</i>
+            <input type="hidden" class="skillhide" name="id[]" value="">
+            <input type="hidden" name="nameid[]" value="nsh">
+            <input type="hidden" name="timeid[]" value="skillhide">
+            <input type="hidden" class="usedskill" name="usedid[]" value="">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">技能名称：</span>
+               <div class="yun_resume_popup_qyname"><input style="width:240px;" type="text" name="name[]" id="skill_name" value="" onfocus="hidemsg('mskillnsh')" onblur="hidemsg('mskillnsh')" class="yun_resume_popup_text">
+              <i class="yun_resume_popup_qyname_tip" id="mskillnsh" style="display:none">请填写技能名称</i></div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">掌握时间：</span>
+              <input style="width:240px;" type="text" name="longtime[]" id="skill_longtime" value="" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" class="yun_resume_popup_text"> <span style="line-height:30px;padding-left:10px;">年</span>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name" style="line-height:38px;">上传证书：</span>
+              <div class="photo_submit fl">
+				<button type="button" class="yun_bth_pic resumeupload" lay-data="{fileid: 'sfile',imgid: 'simg',parentid: 'sparent'}">上传图片</button>
+				<input id="sfile" type="hidden" name="cert[]" value=""/>
+				<div id="sparent" class="photo_submit_pic none"> <img id="simg" src="" width="38" height="38"></div>
+			  </div>
+            </div>
+          </li>
+          {yun:}/if{/yun}
+        </ul>
+        <div class="yun_resume_add_to"><a href="javascript:;" onclick="addSkill();">+ 添加职业技能</a></div>
+      </div>
+      <div class="yun_resume_popup_bot">
+        <input name="eid" id="eid" type="hidden" value="{yun:}$smarty.get.e{/yun}" />
+        <input type="hidden" name="table" value="skill">
+       
+        <input type="submit" name="submit" value="保存"  class="expect_test_bth">
+         <a href="javascript:;" onclick="hideMore('skill')" class="expect_test_bth_qx">取消</a>
+      </div>
+      </form>
+    </div> 
+     <!--  技能历弹出框 end-->
+        <!--  项目经历弹出框-->
+    <div id="saveproject" style="background:#fff ;display:none">
+    <form  method="post" action="index.php?c=expect&act=saveall" target="tanchukuang" autocomplete="off">
+      <div class="yun_resume_popup_box" style="width: 100%; max-height: 389px; overflow: auto; overflow-x:hidden ;position: relative; " id="project_div">
+        <ul id="addproject">
+        {yun:}if $project{/yun}
+        {yun:}foreach item=v from=$project{/yun}
+         <li class="yun_resume_popup" id="ph{yun:}$v.id{/yun}">
+         {yun:}if $resume_row.project==1{/yun}<i class="yun_resume_popup_del hidepic showprojectnum" id="ip{yun:}$v.id{/yun}" onclick="deleteupbox('ph{yun:}$v.id{/yun}','ip{yun:}$v.id{/yun}','showprojectnum','project')">-</i>{yun:}else{/yun}<i class="yun_resume_popup_del showprojectnum" id="ip{yun:}$v.id{/yun}" onclick="deleteupbox('ph{yun:}$v.id{/yun}','ip{yun:}$v.id{/yun}','showprojectnum','project')">-</i>{yun:}/if{/yun}
+          <input type="hidden" class="ph{yun:}$v.id{/yun}" name="id[]" value="{yun:}$v.id{/yun}"> 
+          <input type="hidden" name="nameid[]" value="n{yun:}$v.id{/yun}">
+          <input type="hidden" name="timeid[]" value="{yun:}$v.id{/yun}">
+		  <input type="hidden" name="sdateid[]" value="s{yun:}$v.id{/yun}">
+		  <input type="hidden" name="edateid[]" value="ed{yun:}$v.id{/yun}">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">项目名称：</span>
+             <div class="yun_resume_popup_qyname">
+              <input type="text" name="name[]" id="project_name" value="{yun:}$v.name{/yun}" onfocus="hidemsg('mprojectn{yun:}$v.id{/yun}')" onblur="hidemsg('mprojectn{yun:}$v.id{/yun}')" class="yun_resume_popup_text">
+              <i class="yun_resume_popup_qyname_tip" id="mprojectn{yun:}$v.id{/yun}" style="display:none">请填写项目名称</i></div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">担任职位：</span>
+              <input type="text" name="title[]" id="project_title" value="{yun:}$v.title{/yun}" class="yun_resume_popup_text">
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">项目时间：</span>
+            <div class="yun_resume_popup_list_box">
+              <input type="text" id="project_sdate{yun:}$v.id{/yun}" name="sdate[]" value="{yun:}$v.sdate|date_format:'%Y-%m'{/yun}" onblur="hidemsg('mproject{yun:}$v.id{/yun}','mprojects{yun:}$v.id{/yun}')" onfocus="hidemsg('mproject{yun:}$v.id{/yun}','mprojects{yun:}$v.id{/yun}')" class="yun_resume_popup_text yun_resume_popup_textw90">
+             <script>
+			    layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#project_sdate{yun:}$v.id{/yun}');monthclick(laydate,'#project_edate{yun:}$v.id{/yun}');}); 
+			  </script>
+			  <i class="yun_resume_popup_list_box_tip" id="mprojects{yun:}$v.id{/yun}" style="display:none">请选择开始日期</i>
+            </div>
+              <span class="yun_resume_popup_time">至</span>
+              <div class="yun_resume_popup_list_box">
+               <input type="text" id="project_edate{yun:}$v.id{/yun}" name="edate[]" value="{yun:}$v.edate|date_format:'%Y-%m'{/yun}" onblur="hidemsg('mproject{yun:}$v.id{/yun}','mprojected{yun:}$v.id{/yun}')" onfocus="hidemsg('mproject{yun:}$v.id{/yun}','mprojected{yun:}$v.id{/yun}')" class="yun_resume_popup_text yun_resume_popup_textw90">
+			  <i class="yun_resume_popup_list_box_tip" id="mproject{yun:}$v.id{/yun}" style="display:none">请确认日期先后顺序</i>
+			  <i class="yun_resume_popup_list_box_tip" id="mprojected{yun:}$v.id{/yun}" style="display:none">请选择结束日期</i>
+               </div>
+              </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">项目内容：</span>
+              <textarea rows="5" cols="50" name="content[]" id="project_content" class="infor_textarea ">{yun:}$v.content{/yun}</textarea>
+            </div>
+          </li>
+          {yun:}/foreach{/yun}
+          {yun:}else{/yun}
+          <li class="yun_resume_popup" id="ph">
+          <i class="yun_resume_popup_del hidepic showprojectnum" id="iproject" onclick="deleteupbox('ph','iproject','showprojectnum','project')">-</i>
+             <input type="hidden" class="ph" name="id[]" value="">
+            <input type="hidden" name="timeid[]" value="ph">
+            <input type="hidden" name="nameid[]" value="nph">
+             <input type="hidden" name="sdateid[]" value="sph">
+			 <input type="hidden" name="edateid[]" value="edph">
+            <input type="hidden" class="usedproject" name="usedid[]" value="">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">项目名称：</span> <div class="yun_resume_popup_qyname">
+              <input type="text" name="name[]" id="project_name" value="" onfocus="hidemsg('mprojectnph')" onblur="hidemsg('mprojectnph')" class="yun_resume_popup_text">
+              <i class="yun_resume_popup_qyname_tip" id="mprojectnph" style="display:none">请填写项目名称</i>
+              </div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">担任职位：</span>
+              <input type="text" name="title[]" id="project_title" value="" class="yun_resume_popup_text">
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">项目时间：</span>
+            <div class="yun_resume_popup_list_box">
+              <input type="text" id="project_sdate" name="sdate[]" value="" onfocus="hidemsg('mprojectph','mprojectsph')" onblur="hidemsg('mprojectph','mprojectsph')" class="yun_resume_popup_text yun_resume_popup_textw90">
+             <script>
+			    layui.use(['laydate'], function(){var laydate = layui.laydate;monthclick(laydate,'#project_sdate');monthclick(laydate,'#project_edate');}); 
+			  </script>
+			  <i class="yun_resume_popup_list_box_tip" id="mprojectsph" style="display:none">请选择开始日期</i>
+            </div>
+              <span class="yun_resume_popup_time">至</span>
+              <div class="yun_resume_popup_list_box">
+               <input type="text" id="project_edate" name="edate[]" value="" onfocus="hidemsg('mprojectph','mprojectedph')" onblur="hidemsg('mprojectph','mprojectedph')" class="yun_resume_popup_text yun_resume_popup_textw90">
+			  <i class="yun_resume_popup_list_box_tip" id="mprojectph" style="display:none">请确认日期先后顺序</i>
+			  <i class="yun_resume_popup_list_box_tip" id="mprojectedph" style="display:none">请选择结束日期</i>
+               </div>
+              </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">项目内容：</span>
+              <textarea rows="5" cols="50" name="content[]" id="project_content" class="infor_textarea "></textarea>
+            </div>
+          </li>
+          {yun:}/if{/yun}
+        </ul>
+        <div class="yun_resume_add_to"><a href="javascript:;" onclick="addProject();">+ 添加项目经历</a></div>
+      </div>
+      <div class="yun_resume_popup_bot">
+        <input name="eid" id="eid" type="hidden" value="{yun:}$smarty.get.e{/yun}" />
+        <input type="hidden" name="table" value="project">
+      
+        <input type="submit" name="submit" value="保存" class="expect_test_bth">
+          <a href="javascript:;" onclick="hideMore('project')" class="expect_test_bth_qx">取消</a>
+      </div>
+      </form>
+    </div> 
+     <!--  项目经历弹出框 end-->
+    <!--  附加信息弹出框-->
+    <div id="saveother" style="background:#fff ;display:none">
+    <form  method="post" action="index.php?c=expect&act=saveall" target="tanchukuang" autocomplete="off">
+      <div class="yun_resume_popup_box" style="width: 100%; max-height: 290px; overflow: auto; overflow-x:hidden ;position: relative; " id="other_div">
+        <ul id="addother">
+        {yun:}if $other{/yun}
+        {yun:}foreach item=v from=$other{/yun}
+         <li class="yun_resume_popup" id="oh{yun:}$v.id{/yun}">
+         {yun:}if $resume_row.cert==1{/yun}<i class="yun_resume_popup_del hidepic showothernum" id="io{yun:}$v.id{/yun}" onclick="deleteupbox('oh{yun:}$v.id{/yun}','io{yun:}$v.id{/yun}','showothernum','other')">-</i>{yun:}else{/yun}<i class="yun_resume_popup_del showothernum" id="io{yun:}$v.id{/yun}" onclick="deleteupbox('oh{yun:}$v.id{/yun}','io{yun:}$v.id{/yun}','showothernum','other')">-</i>{yun:}/if{/yun}
+            <input type="hidden" class="oh{yun:}$v.id{/yun}" name="id[]" value="{yun:}$v.id{/yun}"> 
+            <input type="hidden" name="nameid[]" value="n{yun:}$v.id{/yun}">
+            <input type="hidden" name="timeid[]" value="{yun:}$v.id{/yun}">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">标题：</span>
+              <div class="yun_resume_popup_qyname"> <input type="text" name="name[]" id="other_title" value="{yun:}$v.name{/yun}" onfocus="hidemsg('mothern{yun:}$v.id{/yun}')" onblur="hidemsg('mothern{yun:}$v.id{/yun}')" class="yun_resume_popup_text">
+              <i class="yun_resume_popup_qyname_tip" id="mothern{yun:}$v.id{/yun}" style="display:none">请填写标题</i></div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">内容：</span>
+              <textarea rows="5" cols="50" name="content[]" id="other_content" class="infor_textarea infor_textarea_h80">{yun:}$v.content{/yun}</textarea>
+            </div>
+          </li>
+          {yun:}/foreach{/yun}
+          {yun:}else{/yun}
+          <li class="yun_resume_popup" id="otherhide">
+          <i class="yun_resume_popup_del hidepic showothernum" id="iother" onclick="deleteupbox('otherhide','iother','showothernum','other')">-</i>
+            <input type="hidden" class="otherhide" name="id[]" value="">
+            <input type="hidden" name="nameid[]" value="noh">
+            <input type="hidden" name="timeid[]" value="otherhide">
+            <input type="hidden" class="usedother" name="usedid[]" value="">
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">标题：</span>
+              <div class="yun_resume_popup_qyname"> <input type="text" name="name[]" id="other_title" value="" onfocus="hidemsg('mothernoh')" onblur="hidemsg('mothernoh')" class="yun_resume_popup_text">
+              <i class="yun_resume_popup_qyname_tip" id="mothernoh" style="display:none">请填写标题</i></div>
+            </div>
+            <div class="yun_resume_popup_list"><span class="yun_resume_popup_name">内容：</span>
+              <textarea rows="5" cols="50" name="content[]" id="other_content" class="infor_textarea infor_textarea_h80"></textarea>
+            </div>
+          </li>
+          {yun:}/if{/yun}
+        </ul>
+        <div class="yun_resume_add_to"><a href="javascript:;" onclick="addOther();">+ 添加其他信息</a></div>
+      </div>
+      <div class="yun_resume_popup_bot">
+        <input name="eid" id="eid" type="hidden" value="{yun:}$smarty.get.e{/yun}" />
+        <input type="hidden" name="table" value="other">
+       
+         <input type="submit" name="submit" value="保存" class="expect_test_bth">
+          <a href="javascript:;" onclick="hideMore('other')" class="expect_test_bth_qx">取消</a>
+      </div>
+      </form>
+    </div> 
+     <!-- 附加信息弹出框 end-->
+               
+        <!-- 自我评价弹出框-->
+    <div id="savedescription" style="background:#fff ;display:none">
+    <form  method="post" action="index.php?c=expect&act=saveall" target="tanchukuang" onsubmit="return checkdes()" autocomplete="off">
+      <div class="yun_resume_popup_box" style="width: 100%;position: relative; ">
+      <div class="resume_pj_my_cont">
+        <div class="resume_pj_my_left">自我评价：</div>
+		 <div class="resume_pj_my_right"> 
+		 <textarea rows="5" cols="50" name="description" id="check_des" class="resume_pj_my_conttextarea " onfocus="hidemsg('des_show')" onblur="hidemsg('des_show')">{yun:}$resume.description{/yun}</textarea>
+		 <i class="yun_resume_popup_qyname_tip yun_resume_popup_tip_pj" id="des_show" style="display:none">请填写评价内容</i>
+		 </div>
+		
+         <div class="yun_resume_popup_pj">
+         
+            <div class="yun_resume_popup_pj_sl">
+              <div class="eva_ex_tit"><a href="javascript:void(0);" id="opendiv" onclick="opendiv();">不知道怎么写？看看示例</a></div>
+                <div class="eva_ex_list" style="display: none;" id="divopen">
+                   <div class="eva_ex_list_bx">
+                     <span class="eva_ex_list_bx_img"></span>
+                     <div class="eva_ex_list_ct">
+                       <div class="ct_cs">
+                          <span class="ct_cs_tit">示例一：社会岗位</span>
+                          <span>6年销售经验，曾获得”最佳销售员工”荣誉，对市场，渠道和经销商管理有丰富的经验。</span>
+                       </div>
+                       <div class="ct_cs">
+                          <span class="ct_cs_tit">示例二：技术岗位</span>
+                          <span>A2驾照，5年金杯车驾驶经验，2年出租车经验，熟悉周边路况，安全驶行超过20000公里。</span>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+             </div>
+             </div>         
+         
+         
+		 <div class="resume_pj_my_left">个人标签：</div>
+		 <div class="resume_pj_my_right"> 
+		 <div class="resume_pop_bq fl">
+		 <ul id="newtag">
+		    {yun:}foreach from=$resume.arrayTag key=key item=tv{/yun}
+			 <li class="changetag resume_pop_bq_cur" data-tag="{yun:}$tv{/yun}" tag-class="2"><em>{yun:}$tv{/yun}</em></li> 
+			 {yun:}/foreach{/yun}
+		 </ul>
+		 <ul>
+		 {yun:}foreach from=$userdata.user_tag key=key item=v{/yun}
+			 {yun:}if !in_array($userclass_name[$v],$resume.arrayTag){/yun}
+				<li class="changetag " data-tag="{yun:}$userclass_name[$v]{/yun}" tag-class="1"><em>{yun:}$userclass_name[$v]{/yun}</em></li> 
+			 {yun:}/if{/yun}
+		 
+		 {yun:}/foreach{/yun}
+		 </ul>
+		 </div>
+
+		 </div>
+		 </div>
+		 <div class="fl" style="margin-top:10px;">
+		 <div class="resume_pj_my_left">&nbsp;</div>
+		 <input class="yun_resume_bc" type="inputText" tabindex="1000" id="addfuli" ><a class="checkboxAddBton">添加标签</a>
+		 <input type="hidden" name="tag" id="tag" value="{yun:}$resume.tag{/yun}">
+		 </div>         
+         
+         
+            </div>
+
+            <div class="clear"></div>
+
+         <div class="yun_resume_popup_bot" style="margin-top:15px;">
+        <input name="eid" id="eid" type="hidden" value="{yun:}$smarty.get.e{/yun}" />
+        <input type="hidden" name="table" value="description">
+       
+        <input type="submit" name="submit" value="保存"  class="expect_test_bth">
+         <a href="javascript:;" onclick="hideMore('description')" class="expect_test_bth_qx">取消</a>
+      </div>
+      </form>
+    </div> 
+     <!-- 自我评价弹出框 end-->
+	
+<iframe id="tanchukuang" name="tanchukuang" onload="resumeFanhui('tanchukuang');" style="display:none"></iframe>
+<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+<script>
+layui.use(['layer', 'form','laydate'], function(){
+    var layer = layui.layer
+    ,laydate = layui.laydate
+    ,$ = layui.$;
+
+    form = layui.form;
+	laydate.render({
+		elem: '#birthday'
+		,max: -5113
+	});
+	$("input[name='type']").each(function(){
+		$(this).next().click(function(){
+			var val = $(this).prev().val();
+			if(val){
+				$("#typeid").val(val);
+			}
+		});
+	});
+});
+</script>
+{yun:}include file="$userstyle/footer.htm"{/yun}

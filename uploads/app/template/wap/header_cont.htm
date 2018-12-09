@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta http-equiv="Cache-Control" content="no-cache" />
+        <title>{yun:}$title{/yun}</title>
+        <meta http-equiv="keywords" content="{yun:}$keywords{/yun},wap" />
+        <meta http-equiv="description" content="{yun:}$description{/yun}" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width" initial-scale="1" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="format-detection" content="telephone=no,email=no" />
+        <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/mui/css/mui.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/mui/css/mui.picker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/job.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <script>
+            weburl = "{yun:}$config.sy_weburl{/yun}";
+        </script>
+    </head>
+
+    <body>
+
+        <div class="body_wap">
+            <header class="header_h">
+                <div class="header_fixed">
+                    <div class="header">
+                        <div class="header_bg  {yun:}if $tplmoblie.color{/yun}bg{yun:}$tplmoblie.color{/yun}{yun:}/if{/yun}">
+                            <a class="hd-lbtn {yun:}if !$backurl{/yun}mui-action-back{yun:}/if{/yun}" href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:history.back();{yun:}/if{/yun}"><i class="header_top_l"></i></a>
+                            <div class="header_h1">
+                                {yun:}if $topplaceholder{/yun}
+                                <div class="header_fx_search">
+                                    
+                                    <form method="get" action="{yun:}$config_wapdomain{/yun}/index.php">
+                                        <input type="hidden" name="c" value="{yun:}$smarty.get.c{/yun}" />
+                                        <div class="formFiled">
+                                            <input type="text" value="{yun:}$smarty.get.keyword{/yun}" name="keyword" class="input_search" placeholder="{yun:}$topplaceholder{/yun}">
+                                        <span class="formFiled_bth">    <input type="submit" value=" " class=" "></span>
+                                         </div>
+                                    </form>
+
+                                </div>
+                                {yun:}else{/yun}
+                                <div class="header_p_z"> {yun:}$headertitle{/yun}</div>
+                                {yun:}/if{/yun}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>

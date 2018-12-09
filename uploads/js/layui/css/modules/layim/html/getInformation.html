@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>好友/群资料</title>
+<link rel="stylesheet" href="../../../layui.css">
+<link rel="stylesheet" href="../../../layui.demo.css">
+<style type="text/css">
+.layim-msgbox{margin: 15px;}
+.layim-msgbox li{position: relative; margin-bottom: 10px; padding: 0 110px 10px 60px; padding-bottom: 10px; line-height: 22px; border-bottom: 1px dotted #e2e2e2;width: 200px;}
+.layim-msgbox .layim-msgbox-tips{margin: 0; padding: 10px 0; border: none; text-align: center; color: #999;}
+.layim-msgbox .layim-msgbox-system{padding: 0 10px 10px 10px;}
+.layim-msgbox li p span{padding-left: 5px; color: #999;}
+.layim-msgbox li p em{font-style: normal; color: #FF5722;}
+.layim-msgbox-avatar{position: absolute; left: 0; top: 0; width: 50px; height: 50px;}
+.layim-msgbox-user{padding-top: 5px;}
+.layim-msgbox-content{margin-top: 3px;}
+.layim-msgbox .layui-btn-small{padding: 0 15px; margin-left: 5px;}
+.layim-msgbox-btn{position: absolute; right: 0; top: 12px; color: #999;}
+.pt15{padding-top: 15px;}
+.pt10{padding-top: 10px;}
+.pt30{padding-top: 30px;}
+.pd0{padding: 0px;}
+.chat{
+    float: right;
+    margin-top: -45px;  
+    margin-right: -110px;
+    z-index: 999999;
+}
+.label{    
+    float: left;
+    display: block;
+    padding: 9px 5px 9px 20px;
+    width: 40px;
+    font-weight: 400;
+    text-align: right;
+  }
+.label_key{    
+    float: left;
+    display: block;
+    padding: 9px 5px;
+    font-weight: 400;
+  }
+.block {
+    margin-left: 70px;
+    min-height: 36px;
+}
+.layui-input, .layui-textarea {
+    display: block;
+    width: 90%;
+    padding-left: 10px;
+}
+.noresize{
+  resize:none;
+}
+.select{
+    height: 38px;
+    line-height: 38px;
+    border: 1px solid #e6e6e6;
+    background-color: #fff;
+    border-radius: 2px;
+}
+.label_chatname{ font-size:14px;}
+.label_chatpd{width:100%; text-align:center}
+</style>
+</head>
+<body>	    
+<div class="layui-form" id="LAY_view">
+      
+</div>
+
+<script type="text/html" title="资料模版" id="LAY_tpl" style="display:none;">
+{{# if(d.data.type == 'friend'){ }}
+  {{# if(d.mine == d.data.uid){ }}
+    <form class="layui-form" action="">
+      <div class="layui-col-xs12 pt15">
+        <div class="layui-col-xs6 ">
+          <label class="label label_chatname">昵&nbsp;&nbsp;称</label>
+          <div class="block">
+            <input type="text" class="layui-input" name="nickname" id="nickname" lay-verify="required" autocomplete="off" value="{{d.data.nickname}}">
+          </div>
+        </div>                    
+      <div class="layui-col-xs12 pt15">
+          <label class="label label_chatname">签&nbsp;&nbsp;名</label>
+          <div class="block">
+            <textarea name="signature" placeholder="请输入内容" class="layui-textarea noresize">{{d.data.signature}}</textarea>
+          </div>
+      </div>   
+      <div class="layui-form-item pt30 ">
+        <div class="layui-input-block label_chatpd">
+          <button type="button" class="layui-btn" lay-submit lay-filter="*">保存</button>
+          <button type="button" id="close" class="layui-btn layui-btn-primary">关闭</button>
+        </div>
+      </div> 
+    </form>  
+  {{# }else{ }}   
+         
+  {{# } }}    
+{{# } }}
+</script>  
+</body>
+<script src="../../../../layui.js"></script>
+<script>
+layui.use(['laydate','form','laytpl'], function(){
+	var layim = layui.layim
+	, layer = layui.layer
+	,laytpl = layui.laytpl
+	,$ = layui.jquery
+	,form = layui.form
+	//,laydate = layui.laydate;
+
+	param =  location.search;//获得URL参数。该窗口url会携带会话id和type
+	var cache = parent.layui.layim.cache();  
+	var url = cache.base.getInformation.url || {};  //获得URL参数。
+	if(param.indexOf("id")>-1){
+		url = url+'&'+param;
+	}else{
+		url = url+'&type=friend';
+
+	}
+	$.get(url, {}, function(data){
+		var res = eval('(' + data + ')');
+		if(res.code != 0){
+		  return layer.msg('提交出错',{icon: 5});
+		} 
+		var html = laytpl(LAY_tpl.innerHTML).render({
+			data: res.data,
+			mine: cache.mine.id
+		});
+		$('#LAY_view').html(html);
+		/*      laydate.render({ 
+		elem: '#birthday'
+		,max: -5113
+		,format: 'yyyy年MM月dd日' //可任意组合
+		});  */
+	  	form.on('submit(*)', function(submitData){
+			var save_url = cache.base.saveMyInformation.url || {};  //获得URL参数。
+			var key_value = submitData.field;
+			$.post(save_url, key_value, function (data) {
+				var res = eval('(' + data + ')');
+				if(res.code != 0){
+					 return layer.msg('提交出错',{icon: 5});
+				}else {
+					parent.window.location.reload();
+				}
+			});    
+		});
+		$('body').on('click', '.chat', function () {
+			var othis = $(this), type = othis.data('type');
+			chat.call(this, othis);
+		});           
+		function chat(othis){//发起好友聊天
+			var  uid = othis.data('uid'), avatar = "./uploads/person/"+uid+'.jpg';            
+			parent.layui.layim.chat({
+				name: othis.data('name')
+				,type: othis.data('chattype')
+				,avatar: avatar
+				,id: uid
+			});
+		}        
+
+		$("#close").click(function(){
+			var index = parent.layer.getFrameIndex(window.name); 
+			parent.layer.close(index);
+		});
+	});     
+}); 
+
+</script>
+</html>

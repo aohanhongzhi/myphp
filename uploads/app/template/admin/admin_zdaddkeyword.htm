@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp"> 
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">运营人员可以针对微信公众号设置“回复关健词”方式后，用户在微信公众号上回复该关健词可以自动返回已设置的关健词或用户解决日常问题！</div>
+</div>
+</div>
+<div class="clear"></div>
+<div style="height:10px;"></div>
+
+  <div class="tag_box">
+    <div class="">
+      <div>
+        <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+        <form name="myform" target="supportiframe" action="index.php?m=wx&c=zdaddkeyword" method="post" enctype="multipart/form-data">
+          <table width="100%" class="table_form">
+            <tr class="admin_table_trbg">
+              <th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">添加规则</span></th>
+            </tr>
+            <tr>
+              <th width="160">规则名：</th>
+              <td><input class="input-text" type="text" name="title" id="title" size="30" value="{yun:}$row.title{/yun}" maxlength="255" ></td>
+            </tr>
+            <tr>
+              <th width="160">关键字：</th>
+              <td><textarea  name="keyword" id="keyword" rows="10" cols='40' maxlength="255" class="wx_search_textarea web_text_textarea">{yun:}$row.keyword{/yun}</textarea></td>
+            </tr>
+            <tr>
+              <th width="160">回复：</th>
+              <td><textarea  name="content" id="content" rows="10" cols='40'  maxlength="255" class="wx_search_textarea web_text_textarea">{yun:}$row.content{/yun}</textarea></td>
+            </tr>
+            <tr class="admin_table_trbg">
+            <th width="160">&nbsp;</th>
+              <td align="left"><input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}"/>
+              {yun:}if $row.id{/yun}
+              <input type="hidden" name="id" id="id" value="{yun:}$row.id{/yun}"/>
+              <input class="admin_button" type="submit" name="update" value="修改" />
+              {yun:}else{/yun}                
+              <input class="admin_button" type="submit" name="submit" value="提交" />                
+              {yun:}/if{/yun}
+                &nbsp;&nbsp;
+                <input class="admin_button" type="reset" value="重置" /></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

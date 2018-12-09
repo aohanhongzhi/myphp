@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />  
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+ 
+</div>
+<div class="clear"></div>
+  <div class="tag_box mt10">
+  <form class="layui-form">
+   <input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+    <table width="100%" class="table_form">
+        <tbody>
+      <tr class="ui_td_11" >
+        <th width="80">类别名称：</th>
+        <td><div><input type="text" name="add_name" value="{yun:}$info.class_name{/yun}" id="class_name" class="input-text" /></div></td>
+      </tr>
+      <tr class="ui_td_11">
+        <th>排  序：</th>
+        <td><input type="text" name="orders" id='orders' size='5'  value="{yun:}$info.orders{/yun}" class="input-text" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"/></td>
+      </tr>
+       
+      <tr class="ui_td_11">
+        <input name='id' value='{yun:}$info.id{/yun}' type='hidden' id='id'/>
+        <td  class="ui_content_wrap" colspan='2'>
+		<input class="layui-btn layui-btn-normal" type="button" name="add" value="&nbsp;提  交&nbsp;" onclick="save_adclass()"/>
+        <input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+      </tr>
+    </tbody>
+    </table>
+  </form>
+</div></div>
+<script type="text/javascript">
+var weburl = '{yun:}$config.sy_weburl{/yun}';
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+	 
+});
+function save_adclass(){
+	var id=$("#id").val(); 
+	var class_name=$("#class_name").val(); 
+	var orders=$("#orders").val();
+ 
+	if($.trim(class_name)==''){
+		parent.layer.msg('广告类别名称不能为空！', 2,8);return false;
+	}
+	 
+	loadlayer();
+	$.post("index.php?m=advertise&c=addclass",{class_name:class_name,orders:orders,id:id,pytoken:pytoken},function(msg){
+    parent.layer.closeAll('loading');
+ 		if(msg==1){
+			parent.layer.msg('提交成功！', 2,9,function(){location='index.php?m=advertise&c=class';});return false;
+		}else{
+			parent.layer.msg('提交失败！', 2,8,function(){location=location ;});return false;
+		}
+	});
+}
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+</body>
+</html>

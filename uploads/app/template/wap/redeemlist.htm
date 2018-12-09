@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<title>{yun:}$title{/yun} -  手机人才网</title>
+<meta http-equiv="keywords" content="{yun:}$keywords{/yun},wap" />
+<meta http-equiv="description" content="{yun:}$description{/yun}" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-compatible"content="IE=edge"/>
+<meta name="viewport" content="width=device-width" initial-scale="1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="format-detection" content="telephone=no,email=no"/>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width"/>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/job.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/itwap.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+</head>
+<body> 
+<div class="">
+<div class="body_wap">
+<header class="header_h">
+<div class="header_fixed">
+   <div class="header">
+    <div class="header_bg"  style="background:{yun:}if $tplmoblie.color{/yun}{yun:}$tplmoblie.color{/yun}{yun:}/if{/yun}"> <a class="hd-lbtn" href="{yun:}url m=wap c=redeem{/yun}"><i class="header_top_l"></i></a>
+       <div class="header_h1"> 
+	  
+   <div class="header_p_z"> {yun:}$headertitle{/yun}</div>
+	
+	</div>
+
+     </div>
+  </div>
+    </div>
+ </header>
+   </div>
+</div>
+<!--分类-->
+<div class="redeemheader_px">
+<table>
+<td>
+<a href="{yun:}url m=wap c=redeem a=list{/yun}" class="redeemheader_px_a {yun:}if $smarty.get.hot==''&&$smarty.get.rec==''&&$smarty.get.nid==''&&$smarty.get.order==''{/yun}redeemheader_px_a_cur{yun:}/if{/yun}">综合</a> 
+</td>
+<td>
+<a href="{yun:}url m=wap c=redeem a=list hot=1 {/yun}" class="redeemheader_px_a {yun:}if $smarty.get.hot=='1'{/yun}redeemheader_px_a_cur{yun:}/if{/yun}">热门</a>
+</td>
+<td>
+<a href="{yun:}url m=wap c=redeem a=list rec=1 {/yun}" class="redeemheader_px_a {yun:}if $smarty.get.rec=='1'{/yun}redeemheader_px_a_cur{yun:}/if{/yun}">精选</a>
+</td>
+<td>
+<a href="{yun:}url m=wap c=redeem a=list order=sdate sort=desc {/yun}" class="redeemheader_px_a {yun:}if $smarty.get.order=='sdate'{/yun}redeemheader_px_a_cur{yun:}/if{/yun}">新品</a>
+</td>
+<td>
+{yun:}if $smarty.get.order=='integral'&&$smarty.get.sort=='desc'{/yun}
+<a href="{yun:}url m=wap c=redeem a=list order=integral sort=asc {/yun}" class=" redeemheader_px_jg redeemheader_px_jg_down  {yun:}if $smarty.get.order=='integral'{/yun}redeemheader_px_a_cur{yun:}/if{/yun}">积分</a>
+{yun:}else{/yun}
+<a href="{yun:}url m=wap c=redeem a=list order=integral sort=desc {/yun}" class=" redeemheader_px_jg  {yun:}if $smarty.get.order=='integral'{/yun}redeemheader_px_jg_up redeemheader_px_a_cur{yun:}/if{/yun}">积分</a>
+{yun:}/if{/yun}
+</td>
+<td>
+<div class="nav_ft">
+<ul>
+<li class="redeem popup" data-pop="redeem"><a href="javascript:void(0);" class="searchOptions_list_a redeemheader_px_xs"><span class="redeemheader_px_xp">{yun:}if $redeem_name[$smarty.get.tnid]{/yun}{yun:}$redeem_name[$smarty.get.tnid]{/yun}{yun:}elseif $redeem_name[$smarty.get.nid]{/yun}{yun:}$redeem_name[$smarty.get.nid]{/yun}{yun:}else{/yun}筛选{yun:}/if{/yun}</span><i class="itwap_top_icon"></i></a></li>
+      <input type="hidden" id="searchurl" value="{yun:}$searchurl{/yun}" />
+      <input type="hidden" id="waptype" value="1" /> 
+     </ul>
+</div> 
+</td>
+</table>
+</div>
+
+<!--栏目end-->
+
+{yun:}redeem item=val limit=10 ispage=1 order='auto.order' sort='auto.sort' nid='auto.nid'   tnid='auto.tnid' hot='auto.hot' rec='auto.rec' intinfo='auto.intinfo' islt=6{/yun}
+
+<a href="{yun:}$val.url{/yun}">
+<div class="wap_list_ct">
+     <dl>
+        <dt><img width="60px" height="60px" src="{yun:}$val.pic{/yun}" /></dt>
+        <dd class="wap_list_ct_ve">{yun:}$val.name{/yun}</dd>
+        <dd class="wap_list_ct_fn"><em>{yun:}$val.integral{/yun}</em>{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}</dd>
+     </dl>
+</div>
+</a>
+{yun:}redeemelse{/yun}
+<div class="wap_member_no">暂无商品信息<div><a class="wap_mb_no_sr" href="{yun:}url m=wap c=redeem a=list{/yun}">重新搜索</a></div></div>
+{yun:}/redeem{/yun}
+ <div class="pages" style="margin-top:10px;">{yun:}$pagenav{/yun}</div>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/redeem.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/search.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/demo.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/demo.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+{yun:}include file="$wapstyle/publictwo.htm"{/yun}
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

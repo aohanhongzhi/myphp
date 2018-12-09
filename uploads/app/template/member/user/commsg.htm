@@ -1,0 +1,80 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+    
+            <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">求职咨询</span> <i class="member_right_h1_icon user_bg"></i></div>
+        <div  class="resume_Prompt_box">
+        <div  class="resume_Prompt"><i class="resume_Prompt_icon"></i>求职咨询,请耐心等待企业回复！</div></div>
+       
+       
+       
+       
+       
+        <div id="gms_showclew"></div>
+        <div id="" class="resume_box_list">
+        {yun:}if !empty($rows){/yun}
+            <div class="job_Consulting_tit">
+                <span class="job_Consulting_span job_Consulting_jobname"><em class="List_Title_span_name">职位名称</em></span>
+                <span class="job_Consulting_span job_Consulting_comname">企业名称</span>
+                <span class="job_Consulting_span job_Consulting_jobtime">咨询时间</span>
+                <span class="job_Consulting_span job_Consulting_jobcz">操作</span>
+            </div>
+            {yun:}/if{/yun}
+            {yun:}foreach item=log from=$rows{/yun}
+            <div class="job_Consulting_list ">
+            
+            <div class="job_Consulting_span  job_Consulting_jobname">
+            
+                    <a href="{yun:}url m=job c=comapply id='`$log.jobid`'{/yun}" class="job_Consulting_jobname_a" target="_blank">{yun:}$log.job_name{/yun}</a> 
+                   
+                    </div>
+            
+            
+            
+               
+                 <div class="job_Consulting_span job_Consulting_comname">
+				 
+                    <a href="{yun:}url m=company c=show id='`$log.job_uid`'{/yun}" target="_blank">{yun:}$log.com_name{/yun}</a>
+					 
+                </div>
+                  <div class="job_Consulting_span job_Consulting_jobtime">{yun:}$log.datetime|date_format:'%Y-%m-%d'{/yun}</div>
+                 <div class="job_Consulting_span job_Consulting_jobcz">
+                    <a href="javascript:void(0)" onclick="layer_del('确定要删除？', 'index.php?c=commsg&act=del&id={yun:}$log.id{/yun}');" class="List_dete cblue">删除</a>
+                </div>
+                <div class="job_Consulting_box">
+                    <i class="List_Title_span_zx_icon"></i>
+                    
+                    
+                    
+                   <div class="job_Consulting_my">
+                   <div class="job_Consulting_my_box">
+                   <span class="job_Consulting_my_ask">我的咨询：</span>{yun:}$log.content{/yun}</div>
+                   </div>
+                   <span class="List_Title_content_Advisory_r">
+                    {yun:}if $log.reply!=""{/yun}
+                    <a href="javascript:;" class="" id="{yun:}$log.id{/yun}"></a>
+                    {yun:}else{/yun}
+                      <div class="job_Consulting_my">  <div class=""><span class="job_Consulting_zt"><i class="job_Consulting_zticon"></i>该企业尚未回复，请耐心等待,您也可以拨打该企业电话进行电话咨询</span></div></div>
+                    {yun:}/if{/yun}
+                    {yun:}if $log.reply!=""{/yun}
+                       <div class="job_Consulting_my">
+                     <div class="job_Consulting_com">
+                        <i class="job_Consulting_icon"></i>
+                    <div class="" id="msg{yun:}$log.id{/yun}">
+                    企业回复：{yun:}$log.reply{/yun}
+                       <div class="job_Consulting_hftime">  回复时间：{yun:}$log.reply_time|date_format:'%Y-%m-%d'{/yun}</div>
+                        
+                    </div> </div>
+                    </div>
+                    {yun:}/if{/yun}
+                </div>
+            </div>
+            {yun:}foreachelse{/yun}
+            <div class="msg_no"> 您还没有咨询信息。</div>
+            {yun:}/foreach{/yun}
+        </div>
+        <div class="diggg">{yun:}$pagenav{/yun}</div>
+    </div>
+</div>
+{yun:}include file="$userstyle/footer.htm"{/yun} 
